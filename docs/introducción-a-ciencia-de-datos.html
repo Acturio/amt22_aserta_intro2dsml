@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 1 Introducción a Ciencia de Datos | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="introducción-a-r.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Introducción a Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#objetivo-de-la-ciencia-de-datos"><i class="fa fa-check"></i><b>1.2</b> Objetivo de la Ciencia de Datos</a></li>
+<li class="chapter" data-level="1.3" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#qué-se-requiere-para-hacer-ciencia-de-datos"><i class="fa fa-check"></i><b>1.3</b> ¿Qué se requiere para hacer Ciencia de Datos?</a></li>
+<li class="chapter" data-level="1.4" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#aplicaciones-de-ciencia-de-datos"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones de Ciencia de Datos</a></li>
+<li class="chapter" data-level="1.5" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.5</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#ciclo-de-un-proyecto-de-ciencia-de-datos"><i class="fa fa-check"></i><b>1.6</b> Ciclo de un proyecto de Ciencia de Datos</a></li>
+<li class="chapter" data-level="1.7" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.7</b> <em>Scoping</em></a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="introducción-a-ciencia-de-datos.html"><a href="introducción-a-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.7.1</b> Data Maturity Framework</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.1</b> Variables</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.2</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.3</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.4</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.5</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.6</b> Listas</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.7</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducción-a-ciencia-de-datos" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Capítulo 1</span> Introducción a Ciencia de Datos<a href="introducción-a-ciencia-de-datos.html#introducción-a-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="qué-es-ciencia-de-datos" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> ¿Qué es Ciencia de Datos?<a href="introducción-a-ciencia-de-datos.html#qué-es-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="img/01-intro2ds/12_data-science-applications.jpeg" width="500pt" height="500pt" style="display: block; margin: auto;" /></p>
+<div id="definiendo-conceptos" class="section level3 unnumbered hasAnchor">
+<h3>Definiendo conceptos:<a href="introducción-a-ciencia-de-datos.html#definiendo-conceptos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Estadistica</strong> Disciplina que recolecta, organiza, analiza e interpreta datos. Lo hace a través de una población muestral generando estadística descriptiva y estadística inferencial.</p>
+<ul>
+<li><p>La <a href="">estadística descriptiva</a>, como su nombre lo indica, se encarga de describir datos y obtener conclusiones. Se utilizan números (media, mediana, moda, mínimo, máximo, etc) para analizar datos y llegar a conclusiones de acuerdo a ellos.</p></li>
+<li><p>La <a href="">estadística inferencial</a> argumenta o infiere sus resultados a partir de las muestras de una población. Se intenta conseguir información al utilizar un procedimiento ordenado en el manejo de los datos de la muestra.</p></li>
+<li><p>La <a href="">estadística predictiva</a> busca estimar valores y escenarios futuros más probables de ocurrir a partir de referencias históricas previas. Se suelen ocupar como apoyo características y factores áltamente asociados al fenómeno que se desea predecir.</p></li>
+</ul>
+<p><img src="img/01-intro2ds/01_muestra.jpg" width="512" style="display: block; margin: auto;" /></p>
+<p><strong>Business Intelligence</strong>: BI aprovecha el software y los servicios para transformar los datos en conocimientos prácticos que informan las decisiones empresariales estratégicas y tácticas de una organización. Las herramientas de BI acceden y analizan conjuntos de datos y presentan hallazgos analíticos en informes, resúmenes, tableros, gráficos, cuadros, -indicadores- o KPI’s y mapas para proporcionar a los usuarios <strong>inteligencia detallada sobre el estado del negocio</strong>. BI esta enfocado en analizar la historia pasada para tomar decisiones hacia el futuro.</p>
+<p>¿Qué característicastiene un KPI?</p>
+<ul>
+<li>Específicos</li>
+<li>Continuos y periódicos</li>
+<li>Objetivos</li>
+<li>Cuantificables</li>
+<li>Medibles</li>
+<li>Realistas</li>
+<li>Concisos</li>
+<li>Coherentes</li>
+<li>Relevantes</li>
+</ul>
+<p><img src="img/01-intro2ds/04_bi.png" width="440" style="display: block; margin: auto;" /></p>
+<p><strong>Machine Learning</strong>: Machine learning –aprendizaje de máquina– es una <strong>rama de la inteligencia artificial</strong> que permite que las máquinas aprendan de los patrones existentes en los datos. Se usan métodos computacionales para aprender de datos con el fin de producir reglas para mejorar el desempeño en alguna tarea o toma de decisión. (Está enfocado en la programación de máquinas para aprender de los patrones existentes en datos principalmente estructurados y anticiparse al futuro)</p>
+<p><img src="img/01-intro2ds/02_ml.png" width="600pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/03_supervisado_robo.png" width="413" style="display: block; margin: auto;" /></p>
+<p><strong>Deep Learning</strong>: El aprendizaje profundo es un subcampo del aprendizaje automático que se ocupa de los algoritmos <strong>inspirados en la estructura y función del cerebro llamados redes neuronales artificiales.</strong></p>
+<p>En <em>Deep Learning</em>, un modelo de computadora aprende a realizar tareas de clasificación directamente a partir de imágenes, texto o sonido. Los modelos de aprendizaje profundo pueden lograr una precisión de vanguardia, a veces superando el rendimiento a nivel humano. Los modelos se entrenan mediante el uso de un gran conjunto de datos etiquetados y arquitecturas de redes neuronales que contienen muchas capas. (Está enfocado en la programación de máquinas para el reconocimiento de imagenes y audio (datos no estructurados))</p>
+<p><img src="img/01-intro2ds/05_reconocimiento.png" width="325" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/06_ml1.png" width="408" style="display: block; margin: auto;" /></p>
+<p><strong>Big data</strong> se refiere a los grandes y diversos conjuntos de información que crecen a un ritmo cada vez mayor. Abarca el volumen de información, la velocidad a la que se crea y recopila, y la variedad o alcance de los puntos de datos que se cubren. Los macrodatos a menudo provienen de la minería de datos y llegan en múltiples formatos.</p>
+<p><img src="img/01-intro2ds/07_big-data-8vs.jpg" width="600pt" style="display: block; margin: auto;" /></p>
+<p>Es comun que se confunda los conceptos de <em>Big Data</em> y <em>Big Compute</em>, como habiamos mencionado <em>Big Data</em> se refiere a el procesamiento de conjuntos de datos que son más voluminosos y complejos que los tradicionales y <em>Big Compute</em> a herramientas y enfoques que utilizan una gran cantidad de recursos de CPU y memoria de forma coordinada para resolver problemas que usan algoritmos muy complejos.</p>
+<p><img src="img/01-intro2ds/07_bigdata.jpg" width="600pt" style="display: block; margin: auto;" /></p>
+<p>Curiosidad: <a href="https://www.xatakawindows.com/actualidad-en-redmond/servidores-liquido-hirviendo-esta-idea-microsoft-para-evitar-calentamiento-sus-equipos#:~:text=Con%20este%20sistema%2C%20el%20dispositivo,fr%C3%ADo%2C%20emplea%20uno%20en%20ebullici%C3%B3n.">Servidores en líquido para ser enfriados</a></p>
+<p>Curiosidad 2: <a href="https://www.bbc.com/mundo/noticias/2016/02/160202_microsoft_centro_datos_debajo_agua_mar_subamino_all">Centro de datos en el océano</a></p>
+<p></br> <strong>Entonces, ¿qué NO es ciencia de datos?</strong></p>
+<ul>
+<li>No es una tecnología</li>
+<li>No es una herramienta</li>
+<li>No es desarrollo de software</li>
+<li>No es Business Intelligence*</li>
+<li>No es Big Data*</li>
+<li>No es Inteligencia Artificial*</li>
+<li>No es (solo) machine learning</li>
+<li>No es (solo) deep learning</li>
+<li>No es (solo) visualización</li>
+<li>No es (solo) hacer modelos</li>
+</ul>
+</div>
+</div>
+<div id="objetivo-de-la-ciencia-de-datos" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Objetivo de la Ciencia de Datos<a href="introducción-a-ciencia-de-datos.html#objetivo-de-la-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Los científicos de datos analizan qué preguntas necesitan respuesta y dónde encontrar los datos relacionados. Tienen conocimiento de negocio y habilidades analíticas, así como la capacidad de extraer, limpiar y presentar datos. Las empresas utilizan científicos de datos para obtener, administrar y analizar grandes cantidades de datos no estructurados. Luego, los resultados se sintetizan y comunican a las partes interesadas clave para impulsar la toma de decisiones estratégicas en la organización.</li>
+</ul>
+<p><img src="img/01-intro2ds/08_data_science_vd.png" width="600pt" height="500pt" style="display: block; margin: auto;" /></p>
+<p>Fuente: <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Blog post de Drew Conway</a></p>
+<p>Más sobre Conway: <a href="https://www.forbes.com/sites/joshwolfe/2016/03/03/using-data-science-for-the-physical-world/?sh=614ac5b0150e">Forbes 2016</a></p>
+</div>
+<div id="qué-se-requiere-para-hacer-ciencia-de-datos" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> ¿Qué se requiere para hacer Ciencia de Datos?<a href="introducción-a-ciencia-de-datos.html#qué-se-requiere-para-hacer-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p><strong>Background científico:</strong> Conocimientos generales de probabilidad, estadística, álgebra lineal, cálculo, geometría análitica, programación, conocimientos computacionales… etc</p></li>
+<li><p><strong>Datos relevantes y suficientes:</strong> Es indispensable saber si los datos con los que se trabajará son relevantes y suficientes, debemos evaluar qué preguntas podemos responder con los datos con los que contamos.</p>
+<ul>
+<li><p><strong>Suficiencia:</strong> Los datos con los que trabajamos tienen que ser representativos de la población en general, necesitamos que las características representadas en la información sean suficientes para aproximar a la población objetivo.</p></li>
+<li><p><strong>Relevancia:</strong> De igual manera los datos tienen que tener relevancia para la tarea que queremos resolver, por ejemplo, es probable que información sobre gusto en alimentos sea irrelevante para predecir número de hijos.</p></li>
+</ul></li>
+</ul>
+<p><img src="img/01-intro2ds/09_relevancia_suficiencia.png" width="880" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Etiquetas:</strong> Se necesita la intervención humana para etiquetar, clasificar e introducir los datos en el algoritmo.</li>
+</ul>
+<p><img src="img/01-intro2ds/10_etiquetas.png" width="600pt" height="400pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Software:</strong> Existen distintos lenguajes de programación para realizar ciencia de datos:</li>
+</ul>
+<p><img src="img/01-intro2ds/11_lenguajes.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="aplicaciones-de-ciencia-de-datos" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Aplicaciones de Ciencia de Datos<a href="introducción-a-ciencia-de-datos.html#aplicaciones-de-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Dependiendo de la industria en la que se quiera aplicar Machine Learning, podemos pensar en distintos enfoques, en la siguiente imagen se muestran algunos ejemplos:</p>
+<p><img src="img/01-intro2ds/12_applications-finances.png" width="600pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Podemos pensar en una infinidad de aplicaciones comerciales basadas en el análisis de datos. Con la intención de estructurar las posibles aplicaciones, se ofrece a contiuación una categorización que, aunque no es suficiente para englobar todos los posibles casos de uso, sí es sorprendente la cantidad de aplicaciones que abarca.</p>
+<p><strong>1. Aplicaciones centradas en los clientes</strong></p>
+<ul>
+<li>Incrementar beneficio al mejorar recomendaciones de productos</li>
+<li>Upselling</li>
+<li>Cross-selling</li>
+<li>Reducir tasas de cancelación y mejorar tasas de retención</li>
+<li>Personalizar experiencia de usuario</li>
+<li>Mejorar el marketing dirigido</li>
+<li>Análisis de sentimientos</li>
+<li>Personalización de productos o servicios</li>
+</ul>
+<p><strong>2. Optimización de problemas</strong></p>
+<ul>
+<li>Optimización de precios</li>
+<li>Ubicación de nuevas sucursales</li>
+<li>Maximización de ganancias mediante producción de materias primas</li>
+<li>Construcción de portafolios de inversión</li>
+</ul>
+<p><strong>3. Predicción de demanda</strong></p>
+<ul>
+<li>Número futuro de clientes</li>
+<li>Número esperado de viajes en avión / camión / bicis</li>
+<li>Número de contagios por un virus (demanda médica / medicamentos / etc)</li>
+<li>Predicción de uso de recursos (luz / agua / gas)</li>
+</ul>
+<p><strong>4. Análisis de detección de fraudes</strong></p>
+<ul>
+<li>Detección de robo de identidad</li>
+<li>Detección de transacciones ilícitas</li>
+<li>Detección de servicios fraudulentos</li>
+<li>Detección de zonas geográficas con actividades ilícitas</li>
+</ul>
+</div>
+<div id="tipos-de-aprendizaje" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Tipos de aprendizaje<a href="introducción-a-ciencia-de-datos.html#tipos-de-aprendizaje" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los algoritmos de Machine Learning se dividen en tres categorías, siendo las dos primeras las más comunes:</p>
+<p><img src="img/01-intro2ds/13_tipo_aprendizaje.png" width="750pt" height="500pt" style="display: block; margin: auto;" /></p>
+<p>La diferencia entre el análisis supervisado y el no supervisado es la etiqueta, es decir, en el análisis supervisado tenemos una etiqueta “correcta” y el objetivo de los algoritmos es predecir esta etiqueta.</p>
+<div id="aprendizaje-supervisado" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Aprendizaje supervisado<a href="introducción-a-ciencia-de-datos.html#aprendizaje-supervisado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el aprendizaje supervisado, la idea principal es <strong>aprender bajo supervisión</strong>, donde la señal de supervisión se nombra como valor objetivo o etiqueta. Estos algoritmos cuentan con un aprendizaje previo basado en un <strong>sistema de etiquetas</strong> asociadas a unos datos que les permiten tomar decisiones o hacer predicciones.</p>
+<ul>
+<li><p>Conocemos la respuesta correcta de antemano.</p></li>
+<li><p>Esta respuesta correcta fue “etiquetada” por un humano (la mayoría de las veces, en algunas circunstancias puede ser generada por otro algoritmo).</p></li>
+<li><p>Debido a que conocemos la respuesta correcta, existen muchas métricas de desempeño del modelo para verificar que nuestro algoritmo está haciendo las cosas “bien.”</p></li>
+</ul>
+<p>Algunos ejemplos son:</p>
+<pre><code>- Un detector de spam que etiqueta un e-mail como spam o no.
+
+- Predecir precios de casas
+
+- Clasificación de imagenes
+
+- Predecir el clima
+
+- ¿Quiénes son los clientes descontentos?</code></pre>
+<div id="tipos-de-aprendizaje-supervisado-regresión-vs-clasificación" class="section level4 unnumbered hasAnchor">
+<h4>Tipos de aprendizaje supervisado (Regresión vs clasificación)<a href="introducción-a-ciencia-de-datos.html#tipos-de-aprendizaje-supervisado-regresión-vs-clasificación" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Existen dos tipos principales de aprendizaje supervisado, esto depende del tipo de la variable respuesta:</p>
+</div>
+<div id="clasificación" class="section level4 unnumbered hasAnchor">
+<h4>Clasificación<a href="introducción-a-ciencia-de-datos.html#clasificación" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>En el aprendizaje supervisado, los algoritmos de clasificación se usan cuando el resultado es una <strong>etiqueta discreta.</strong> Esto quiere decir que se utilizan cuando la respuesta se fundamenta en conjunto finito de resultados.</p>
+</div>
+<div id="regresión" class="section level4 unnumbered hasAnchor">
+<h4>Regresión<a href="introducción-a-ciencia-de-datos.html#regresión" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>El análisis de regresión es un subcampo del aprendizaje automático supervisado cuyo objetivo es <strong>establecer un método para la relación entre un cierto número de características y una variable objetivo continua.</strong></p>
+<p><br/></p>
+<p><img src="img/01-intro2ds/13_regresion_clasificacion.png" width="700pt" height="450pt" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="aprendizaje-no-supervisado" class="section level3 hasAnchor" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Aprendizaje no supervisado<a href="introducción-a-ciencia-de-datos.html#aprendizaje-no-supervisado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el aprendizaje no supervisado, <strong>carecemos de etiquetas</strong>. Por lo tanto, necesitamos encontrar nuestro camino sin ninguna supervisión ni guía. Esto simplemente significa que necesitamos descubrir ¿qué es qué? por nosotros mismos.</p>
+<ul>
+<li><p>Aquí no tenemos la respuesta correcta de antemano ¿cómo podemos saber que el algoritmo está bien o mal?</p></li>
+<li><p>Estadísticamente podemos verificar que el algoritmo está bien</p></li>
+<li><p>Siempre tenemos que verificar con el cliente si los resultados que estamos obteniendo tienen sentido de negocio. Por ejemplo, número de grupos y características</p></li>
+</ul>
+<p><img src="img/01-intro2ds/14_nosupervisado_robo.png" width="473" style="display: block; margin: auto;" /></p>
+<p>Algunos ejemplos son:</p>
+<pre><code>- Encontrar segmentos de clientes.
+
+- Reducir la complejidad de un problema
+
+- Selección de variables
+
+- Encontrar grupos
+
+- Reducción de dimensionalidad</code></pre>
+</div>
+<div id="aprendizaje-por-refuerzo" class="section level3 hasAnchor" number="1.5.3">
+<h3><span class="header-section-number">1.5.3</span> Aprendizaje por refuerzo<a href="introducción-a-ciencia-de-datos.html#aprendizaje-por-refuerzo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Su objetivo es que un algoritmo aprenda a partir de la propia experiencia. Esto es, que sea capaz de tomar la mejor decisión ante diferentes situaciones de acuerdo a un proceso de prueba y error en el que se recompensan las decisiones correctas.</p>
+<p><img src="img/01-intro2ds/14_reinforcement_robot.png" width="500pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Algunos ejemplos son:</p>
+<pre><code>- Optimización de campañas de marketing
+
+- Reconocimiento facial
+
+- Diagnósticos médicos
+
+- Clasificar secuencias de ADN</code></pre>
+</div>
+</div>
+<div id="ciclo-de-un-proyecto-de-ciencia-de-datos" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Ciclo de un proyecto de Ciencia de Datos<a href="introducción-a-ciencia-de-datos.html#ciclo-de-un-proyecto-de-ciencia-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="img/01-intro2ds-ciclo/01-etapas.png" width="800pt" height="600pt" style="display: block; margin: auto;" /></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Identificación del problema</strong></p>
+<ul>
+<li>Debemos conocer si el problema es significativo, si el problema se puede resolver con ciencia de datos, y si habrá un compromiso real del lado de cliente/usuario/partner para implementar la solución con todas sus implicaciones: recursos físicos y humanos.</li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/02-identificacion.jpg" width="200pt" height="200pt" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p><strong>Scoping</strong></p>
+<ul>
+<li><p>El objetivo es definir el alcance del proyecto y por lo tanto definir claramente los objetivos.</p></li>
+<li><p>Conocer las acciones que se llevarán a cabo para cada objetivo. Estas definirán las soluciones analíticas a hacer.</p></li>
+<li><p>Queremos saber si los datos con los que contamos son relevantes y suficientes.</p></li>
+<li><p>Hacer visible los posibles conflictos éticos que se pueden tener en esta fase.</p></li>
+<li><p>Debemos definir el cómo evaluaremos que el análisis de esos datos será balanceada entre eficiencia, efectividad y equidad.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/03-alcance.png" width="200pt" height="200pt" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p><strong>Adquisición de datos</strong></p>
+<ul>
+<li><p>Adquisición, almacenamiento, entendimiento y preparación de los datos para después poder hacer analítica sober ellos.</p></li>
+<li><p>Asegurar que en la transferencia estamos cumpliendo con el manejo adecuado de datos sensibles y privados.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/04-data-adquisition.webp" width="200pt" height="300pt" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p><strong>EDA</strong></p>
+<ul>
+<li><p>El objetivo en esta fase es conocer los datos con los que contamos y contexto de negocio explicado a través de los mismos.</p></li>
+<li><p>Identificamos datos faltantes, sugerimos cómo imputarlos.</p></li>
+<li><p>Altamente apoyado de visualización y procesos de adquisición y limpieza de datos.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/05-eda.jpg" width="600pt" height="350pt" style="display: block; margin: auto;" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li><p><strong>Formulación analítica</strong></p>
+<ul>
+<li>Esta fase incluye empezar a formular nuestro problema como uno de ciencia de datos, el conocimiento adquirido en la fase de exploración nos permite conocer a mayor detalle del problema y por lo tanto de la solución adecuada.</li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/05-analytical-thinking.jpg" width="450pt" height="300pt" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li><p><strong>Modelado</strong></p>
+<ul>
+<li><p>Proceso iterativo para desarrollar diferentes “experimentos.”</p>
+<ul>
+<li>Mismo algoritmo/método diferentes hiperparámetros (grid search).</li>
+<li>Diferentes algortimos.</li>
+</ul></li>
+<li><p>Selección de un muy pequeño conjunto de modelos tomando en cuenta un balance entre interpretabilidad, complejidad, desempeño, fairness.</p></li>
+<li><p>Correcta interpretación de los resultados de desempeño de cada modelo.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/06-formulacion.jpg" width="600" style="display: block; margin: auto;" /></p>
+<ol start="7" style="list-style-type: decimal">
+<li><p><strong>Validación</strong></p>
+<ul>
+<li><p>Es muy importante poner a prueba el/los modelo/modelos seleccionados en la fase anterior. Esta prueba es en campo con datos reales, le llamamos prueba piloto.</p></li>
+<li><p>Debemos medir el impacto causal que nuestro modelo tuvo en un ambiente real.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/07-validacion.jpg" width="200pt" height="200pt" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
+<li><p><strong>Acciones a realizar</strong></p>
+<ul>
+<li><p>Finalmente esta etapa corresponde a compartir con los tomadores de decisiones/stakeholders/creadores de política pública los resultados obtenidos y la recomendación de acciones a llevar a cabo -menú de opciones-.</p></li>
+<li><p>Las implicaciones éticas de esta fase consisten en hacer conciente el impacto social de nuestro trabajo.</p></li>
+</ul></li>
+</ol>
+<p><img src="img/01-intro2ds-ciclo/08-action.jpg" width="200pt" height="200pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scoping" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> <em>Scoping</em><a href="introducción-a-ciencia-de-datos.html#scoping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El <strong>scoping</strong> es uno de los pasos más importante en los proyectos de ciencia de datos, es ideal realizarlo con ayuda del cliente, tiene como objetivo <strong>definir el alcance del proyecto</strong>, definir los objetivos, conocer las acciones que se llevaran acabo, conocer si los datos son relevantes y suficientes, proponer soluciones analíticas, entre otros puntos que se tocaran a continuación.</p>
+<p><img src="img/01-intro2ds-ciclo/09-objetivo.jpg" width="300pt" height="300pt" style="display: block; margin: auto;" /></p>
+<div id="data-maturity-framework" class="section level3 hasAnchor" number="1.7.1">
+<h3><span class="header-section-number">1.7.1</span> Data Maturity Framework<a href="introducción-a-ciencia-de-datos.html#data-maturity-framework" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Antes de iniciar con el <em>scoping</em>, queremos conocer si los interesados <strong>están listos para realizar un proyecto de ciencia de datos</strong>. Para ello, una opción es usar el <a href="http://www.datasciencepublicpolicy.org/wp-content/uploads/2018/05/Data_Maturity_Framework_4.28.16.pdf"><em>Data Maturity Framework</em></a> desarrollado en la Universidad de Chicago.</p>
+<p>El <em>Data Maturity Framework</em> nos sirve para ver dónde se encuentra la organización en el marco de madurez de datos y cómo mejorar su organización, tecnología y preparación de datos.</p>
+<p>Tiene tres áreas de contenido:</p>
+<ul>
+<li><p>Definición del problema</p></li>
+<li><p>Disponibilidad de datos y tecnología</p></li>
+<li><p>Preparación organizacional</p></li>
+</ul>
+<p>Esta dividido en tres partes:</p>
+<ul>
+<li>Un cuestionario y una encuesta para evaluar la preparación de la organización.</li>
+</ul>
+<p><img src="img/01-intro2ds-ciclo/10-dmf1.png" width="750pt" height="800pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Matriz de preparación de datos y tecnología</li>
+</ul>
+<p><img src="img/01-intro2ds-ciclo/11-dmf2.png" width="962" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Matriz de preparación organizacional</li>
+</ul>
+<p><img src="img/01-intro2ds-ciclo/12-dmf3.png" width="854" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducción-a-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
