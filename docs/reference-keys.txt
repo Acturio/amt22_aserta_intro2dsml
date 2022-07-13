@@ -27,3 +27,6 @@ data-frames
 listas
 cómo-extraer-elementos-de-una-lista
 ejercicios
+ciclo-de-un-proyecto
+taller-de-scoping
+ejemplos
