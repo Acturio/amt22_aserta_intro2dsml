@@ -97,7 +97,7 @@ Curiosidad 2: [Centro de datos en el océano](https://www.bbc.com/mundo/noticias
 -   No es (solo) visualización
 -   No es (solo) hacer modelos
 
-## Objetivo de la Ciencia de Datos
+## Objetivos
 
 - Los científicos de datos analizan qué preguntas necesitan respuesta y dónde encontrar los datos relacionados. Tienen conocimiento de negocio y habilidades analíticas, así como la capacidad de extraer, limpiar y presentar datos. Las empresas utilizan científicos de datos para obtener, administrar y analizar grandes cantidades de datos no estructurados. Luego, los resultados se sintetizan y comunican a las partes interesadas clave para impulsar la toma de decisiones estratégicas en la organización.
 
@@ -109,7 +109,7 @@ Fuente: [Blog post de Drew Conway](http://drewconway.com/zia/2013/3/26/the-data-
 
 Más sobre Conway: [Forbes 2016](https://www.forbes.com/sites/joshwolfe/2016/03/03/using-data-science-for-the-physical-world/?sh=614ac5b0150e)
 
-## ¿Qué se requiere para hacer Ciencia de Datos?
+## Requisitos
 
 - **Background científico:** Conocimientos generales de probabilidad, estadística, álgebra lineal, cálculo, geometría análitica, programación, conocimientos computacionales... etc
 
@@ -135,11 +135,11 @@ knitr::include_graphics("img/01-intro2ds/10_etiquetas.png")
 knitr::include_graphics("img/01-intro2ds/11_lenguajes.png")
 ```
 
-## Aplicaciones de Ciencia de Datos
+## Aplicaciones 
 
 Dependiendo de la industria en la que se quiera aplicar Machine Learning, podemos pensar en distintos enfoques, en la siguiente imagen se muestran algunos ejemplos:
 
-```{r echo=FALSE, fig.align='center', out.height='350pt', out.width='600pt'}
+```{r echo=FALSE, fig.align='center', out.height='300pt', out.width='600pt'}
 knitr::include_graphics("img/01-intro2ds/12_applications-finances.png")
 ```
 
@@ -177,7 +177,7 @@ Podemos pensar en una infinidad de aplicaciones comerciales basadas en el análi
 -   Detección de servicios fraudulentos
 -   Detección de zonas geográficas con actividades ilícitas
 
-## Tipos de aprendizaje
+## Tipos de algoritmos
 
 Los algoritmos de Machine Learning se dividen en tres categorías, siendo las dos primeras las más comunes:
 
@@ -273,8 +273,7 @@ Algunos ejemplos son:
     - Clasificar secuencias de ADN
 
 
-
-
+Ejemplo: [Mario Bros](https://www.youtube.com/watch?v=qv6UVOQ0F44&t=283s)
 
 
 
@@ -496,7 +495,7 @@ knitr::include_graphics("img/01-intro2ds-ciclo/15-elegir.jpg")
 
 En esta fase tenemos que responder las siguientes preguntas:
 
-- ¿Qué tipo de análisis neceistaremos? Puede ser más de uno.
+- ¿Qué tipo de análisis necesitaremos? Puede ser más de uno.
 
 - ¿Cómo vamos a validar el análisis? ¿Qué validaciones se pueden hacer con los datos existentes? ¿Cómo podemos diseñar una prueba en campo para validar el análisis antes de que pongamos el producto en producción.
 
@@ -515,20 +514,226 @@ Los siguientes ejemplos forman parte del trabajo de [DSSG](http://www.datascienc
 
 1) **Envenenamiento por plomo**: Hace unos años, comenzamos a trabajar con el Departamento de Salud Pública de Chicago para prevenir el envenenamiento por plomo. El objetivo inicial era aumentar la eficacia de sus inspecciones de peligro de plomo. Una forma de lograr ese objetivo sería concentrarse en los hogares que tienen peligros de plomo. Aunque fue útil, este enfoque no lograría su objetivo real, que era evitar que los niños se intoxicaran con plomo. Encontrar un hogar con peligros de plomo y repararlo solo es beneficioso si existe una alta probabilidad de que un niño presente (actualmente o en el futuro) se exponga al plomo. La siguiente iteración del objetivo fue maximizar la cantidad de inspecciones que detectan peligros de plomo en hogares donde hay un niño en riesgo (antes de que el niño se exponga al plomo). Finalmente, llegamos al objetivo final: identificar qué niños corren un alto riesgo de intoxicación por plomo en el futuro y luego dirigir las intervenciones a los hogares de esos niños..
 
+```{r, fig.align='center', out.height='250pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/plomo-en-ninos.jpg")
+```
+
+
 2) **High School Graduation**: Uno de los mayores desafíos que enfrentan las escuelas hoy en día es ayudar a sus estudiantes a graduarse (a tiempo). Las tasas de graduación en los EE. UU. Son ~65%. Todos están interesados en identificar a los estudiantes que corren el riesgo de no graduarse a tiempo. Al hablar inicialmente con la mayoría de los distritos escolares, comienzan con un objetivo muy limitado de predecir qué niños es poco probable que se gradúen a tiempo. El primer paso es volver al objetivo de aumentar las tasas de graduación y preguntar si hay un subconjunto específico de estudiantes en riesgo que quieran identificar. ¿Qué pasaría si pudiéramos identificar a los estudiantes que tienen solo un 5% de probabilidades de estar en riesgo frente a los estudiantes que tienen un 95% de probabilidades de no graduarse a tiempo sin apoyo adicional? Si el objetivo es simplemente aumentar las tasas de graduación, es (probablemente) más fácil intervenir e influir en el primer grupo, mientras que el segundo grupo puede ser más desafiante debido a los recursos que necesita. ¿El objetivo es maximizar la probabilidad promedio/media/mediana de graduarse para una clase/escuela o es el objetivo enfocarse en los niños con mayor riesgo y maximizar la probabilidad de graduación del 10% inferior de los estudiantes? ¿O el objetivo es crear más equidad y disminuir la diferencia en la probabilidad de graduación a tiempo entre el cuartil superior y el cuartil inferior? Todos estos son objetivos razonables, pero las escuelas deben comprender, evaluar y decidir qué objetivos les interesan. Esta conversación a menudo los hace pensar más en definir analíticamente cuáles son sus objetivos organizacionales, así como las compensaciones..
+
+```{r, fig.align='center', out.height='250pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/desercion-escolar.jpg")
+```
+
 
 3) **Inspecciones**: Hemos trabajado en varios proyectos que involucraron inspecciones, como con la EPA (Agencia de Protección Ambiental) y el Departamento de Conservación Ambiental del Estado de Nueva York para ayudarlos a priorizar qué instalaciones inspeccionar para detectar infracciones de eliminación de desechos, con la ciudad de Cincinnati para ayudar a identificar las propiedades en riesgo de violaciones del código para prevenir el deterioro -el proceso a través del cual una ciudad que funcionaba anteriormente, o parte de ella, cae en deterioro y decrepitud-, y con el Grupo del Banco Mundial para ayudarlos a priorizar qué denuncias de fraude y colusión investigar. En la mayoría de los problemas de inspección/investigación, hay muchas más entidades (viviendas, edificios, instalaciones, negocios, contratos) para inspeccionar que los recursos disponibles necesarios para realizar esas inspecciones. El objetivo con el que comienzan la mayoría de estas organizaciones es dirigir sus inspecciones a las entidades que tienen más probabilidades de violar las regulaciones existentes. Ese es un buen comienzo, pero la mayoría de estas organizaciones nunca pueden inspeccionar todas las instalaciones/hogares que pueden no cumplir con las normas, por lo que el objetivo que realmente buscan es la disuasión: reducir la cantidad total de instalaciones que estarán en violación. Un proceso de inspección ideal resultaría entonces en la reducción del número real de violaciones (encontradas o no), lo cual puede no ser lo mismo que un proceso de inspección que tiene como objetivo ser eficiente y aumentar la tasa de aciertos (% de inspección que resulta en violaciones).
 
+```{r, fig.align='center', out.height='350pt', out.width='300pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/sanity-inspector.png")
+```
+
 4) **Programación de la recolección de residuos**: Recientemente comenzamos a trabajar con Sanergy, una empresa social con sede en Kenia. Implementan inodoros portátiles en asentamientos urbanos informales y uno de sus mayores costos es contratar personas para vaciar los inodoros. Hoy en día, todos los inodoros se vacían todos los días, aunque existe una variación en cuánto se usan y cuánto se llenan. Para que puedan crecer y mantener bajos los costos, necesitan un enfoque más adaptable que pueda optimizar el cronograma de vaciado de los inodoros. El objetivo en este caso es asegurarse de no vaciar demasiado el inodoro cuando no está lleno, pero tampoco dejar que permanezca lleno porque entonces no se puede usar. Esto se traduce en una formulación que presiona para vaciar el inodoro lo más cerca posible de estar lleno al 100% sin llegar al 100%.
 
+```{r, fig.align='center', out.height='250pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/garbage-collector.jpg")
+```
+
+## Perfiles de un equipo
+
+La tecnología crece día con día y resulta imposible abarcar todos los conocimientos y especialidades, por lo que resulta indispensable tener un claro entendimiento de los diferentes roles o perfiles de profesionistas que lograrán colaborar en el alcance de objetivos de negocio basados en el análisis y explotación de datos.
+
+```{r, fig.align='center', out.height='200pt', out.width='350pt', echo=F}
+knitr::include_graphics("img/01-intro2ds/22-00teamdata.webp")
+```
+
+A continuación se presenta un esquema global sobre el crecimiento de un equipo con enfoque de ingeniería de inteligencia de decisiones basada en análisis de datos:
+
+### 1) Ingeniero de datos {-}
+
+Es fundamental tener la capacidad de obtener datos antes de que tenga sentido hablar sobre el análisis de datos. Si estás trabajando con conjuntos de datos pequeños, la ingeniería de datos consistirá básicamente en ingresar algunos números en una hoja de cálculo. Cuando se opera a una escala más grande, la ingeniería de datos se convierte en una disciplina sofisticada por derecho propio. Alguien del equipo deberá asumir la responsabilidad de lidiar con los complicados aspectos de ingeniería para poder entregar los datos con los que el resto del equipo pueda trabajar.
+
+```{r, fig.align='center', out.height='200pt', out.width='350pt', echo=F}
+knitr::include_graphics("img/01-intro2ds/22-01dataengineer.jpeg")
+```
+
+
+### 2) Decisor {-}
+
+Antes de contratar a un científico de datos con un master o PhD, hay que asegurarse de que quien toma las decisiones entiende el arte y la ciencia de la toma de decisiones basada en datos.
+
+$$\text{Las capacidades de toma de decisiones deben estar establecidas, antes de que un equipo pueda obtener valor de los datos}$$
+
+Este individuo es **responsable de identificar las decisiones que valen la pena tomar** con los datos, plasmarlas en un modelo (desde el diseño de métricas, hasta las inyecciones sobre supuestos estadísticos) y determinar el nivel requerido de rigor analítico, basado en el impacto potencial en el negocio. Busca un pensador profundo que no diga continuamente: “Oh, vaya, eso ni siquiera se me había ocurrido mientras estaba pensando en esta decisión”. Sino más bien que ya lo haya pensado. Y eso otro. Y esto también. Y aquello...
+
+```{r, fig.align='center', out.height='200pt', out.width='350pt', echo=F}
+knitr::include_graphics("img/01-intro2ds/22-02decisionmaker.jpeg")
+```
+
+### 3) Analista {-}
+
+Luego, la siguiente contratación es... todos los que ya están trabajando contigo. Todos están calificados para mirar los datos y sentirse inspirados, lo único que puede estar faltando es un poco de familiaridad con el software que sea adecuado para hacer el análisis.
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-03-dataanalyst.webp")
+```
+
+
+Aprender a usar herramientas como R y Python es sólo una mejora sobre MS Paint para la visualización de datos; estas son simplemente herramientas más versátiles para visualizar una variedad más amplia de conjuntos de datos que sólo matrices de píxeles rojo-verde-azul. Si toda la fuerza laboral está empoderada para hacerlo, se tendrá un mucho mejor pulso de negocio que si nadie está mirando ningún dato en lo absoluto.
+
+```{r, fig.align='center', out.height='200pt', out.width='300pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/21-monstruo.png")
+```
+
+Lo importante a recordar, es que no se debe llegar a conclusiones más allá de los datos. Eso requiere entrenamiento especializado. Al igual que con la foto de arriba, esto es todo lo que puedes decir al respecto: **“Esto es lo que hay en mi conjunto de datos”**. Por favor, no lo uses para concluir que **el Monstruo de Lago Ness es real.**
 
 
 
+### 4) Analista experto {-}
+
+¡Entra la versión ultrarrápida! Esta persona puede ver más datos más rápido. El juego aquí es velocidad, exploración, descubrimiento... ¡diversión! (Otro término para la analítica es la minería de datos). Este no es el rol relacionado con el rigor y las conclusiones cuidadosas. En su lugar, esta **es la persona que ayuda a tu equipo a ver la mayor cantidad de datos posible para que el responsable de la toma de decisiones pueda tener una idea de lo que vale la pena obtener con más detalle.**
+
+$$\text{El trabajo aquí es la velocidad, encontrando potenciales “insights” lo más rápido posible.}$$
+
+Esto puede ser contrario a la intuición, pero no es conveniente asignar esta función a los mejores ingenieros que escriben un magnífico y sólido código de software. El trabajo aquí es velocidad, encontrando potenciales **“insights”** o revelaciones lo más rápido posible. 
+
+$$\text{Aquellos que se obsesionan con la calidad del código pueden encontrar difícil ser útiles en este rol.}$$
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-04-analista-experto.png")
+```
+
+### 5) Estadístico {-}
+
+Ahora que tenemos a todas estas personas contentas explorando los datos, es mejor tener a alguien cerca para controlar tanta exaltación. Podría ser una buena idea tener a alguien cerca que pueda evitar que el equipo saque conclusiones infundadas.
+
+$$\text{La inspiración es barata, pero el rigor es caro.}$$
+
+Los Estadísticos ayudan a quienes toman las decisiones a llegar a conclusiones seguras más allá de los datos.
+
+Por ejemplo, si el sistema de **Machine Learning** funcionó para un conjunto de datos, todo lo que se puede concluir es que funcionó en ese conjunto de datos. ¿Funcionará cuando se está ejecutando en producción con otros datos? ¿Debería ser lanzarlo? Necesita algunas habilidades adicionales para lidiar con esas preguntas. Habilidades estadísticas.
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-05-statistician.png")
+```
+
+Si queremos tomar decisiones serias cuando no tenemos datos perfectos, vayamos más despacio y tomemos un enfoque cuidadoso. Los estadísticos ayudan a quienes toman las decisiones a llegar a conclusiones más seguras, más allá de los datos analizados.
 
 
 
+### 6) Ingeniero de Machine Learning Aplicado {-}
+
+El mejor atributo de un ingeniero de **Machine Learning / Inteligencia Artificial** aplicada es diseñar, crear, evaluar y producir modelos para resolver problemas de la vida real.. Lo que estás buscando es experiencia en transformar código para hacer que los algoritmos existentes acepten y revuelvan tus conjuntos de datos.
+
+Además de dedos rápidos para codificar, se busca una personalidad que tenga tolerancia frente al fracaso. Ejecuta los datos a través de un grupo de algoritmos lo más rápido posible y ve sí parece estar funcionando. Una gran parte del trabajo es ir tanteando a ciegas, y se necesita un tipo especial de personalidad para disfrutar eso.
+
+$$\text{Los perfeccionistas tienden a tener problemas como ingenieros de ML.}$$
+
+Como el problema de negocio no está en un libro de texto, no puede saberse de antemano qué funcionará, por lo que no puede esperarse obtener un resultado perfecto la primera vez. ¡Eso bien!, solo hay que intentar muchos enfoques lo más rápido posible e intenta encontrar una solución.
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-06-machinelearningengineer.jpeg")
+```
 
 
+Hablando de “ejecutar los datos a través de modelos o algoritmos” ¿qué datos? Los “inputs” o entradas que tus analistas identificaron como potencialmente interesantes, por supuesto. Es por eso, que tiene sentido contratar primero a los analistas.
+
+Es importante que el ingeniero de Machine Learning tenga un profundo respeto por la parte del proceso donde el rigor es vital: la evaluación. ¿Funcionó realmente la solución con nuevos datos? Por suerte, tomaste una buena decisión con tu anterior contratación, por lo que todo lo que tienes que hacer ahora es pasarle la batuta al estadístico.
+
+Los ingenieros de ML aplicada más experimentados tienen una idea muy clara de cuánto tiempo tarda aplicar varios enfoques.
 
 
+### 7) Científico de Datos {-}
+
+Un científico de datos es alguien que es un experto completo en los tres roles anteriores. No todos usan esta definición: verás las solicitudes de empleo por ahí con personas que se autodenominan “científicos de datos” cuando sólo dominan realmente uno de los tres, así que vale la pena comprobarlo.
+
+$$\text{Los científicos de datos son totalmente expertos en las tres funciones anteriores.}$$
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-07-data-scientist.png")
+```
+
+
+Este rol está en la posición # 6 porque contratar a los verdaderos tres-en-uno es una opción costosa. Si puedes contratar uno dentro de tu presupuesto, sería una gran idea, pero si tiene un presupuesto ajustado, considera la posibilidad de entrenar y hacer crecer a tus actuales **especialistas-de-una-sola-función.**
+
+
+### 8) Gerente de Análisis / Líder de Ciencia de Datos {-}
+
+El Gerente de Analítica es la gallina de los huevos de oro: son un híbrido entre el científico de datos y el que toma las decisiones. Su presencia en el equipo actúa como un multiplicador de fuerzas, lo que garantiza que tu equipo de ciencia de datos no quede en fuera de juego en lugar de agregar valor a tu negocio.
+
+Esta persona se queda despierta por la noche pensando preguntas como: “¿Cómo diseñamos las preguntas correctas? ¿Cómo tomamos decisiones? ¿Cómo podemos asignar mejor a nuestros expertos? ¿Qué vale la pena hacer? ¿Las habilidades y los datos coincidirán con los requerimientos? ¿Cómo aseguramos buenos datos de entrada?
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-07-lead-data-scientist.png")
+```
+
+
+### 9) Experto Cualitativo / Científico Social {-}
+
+A veces, quien toma las decisiones es un brillante líder, gerente, motivador, influyente o navegante de la política organizacional, pero no tiene experiencia en el arte y la ciencia de la toma de decisiones. La toma de decisiones es mucho más que un talento. Si su decisor no ha perfeccionado su oficio, podrían hacer más daño que bien.
+
+En lugar de despedir a un tomador de decisiones no calificado, puedes complementarlo con un experto cualitativo.
+
+No despidas a un tomador de decisiones no calificado, compleméntalo. Puedes contratarle un *“upgrade”* en forma de ayudante. El experto cualitativo está para complementar sus habilidades.
+
+Esta persona generalmente tiene formación en ciencias sociales y datos: Los economistas de comportamiento, neuroeconomistas y psicólogos reciben la capacitación más especializada, pero la gente autodidacta también puede ser buena en esto. El trabajo consiste en ayudar al responsable de la toma de decisiones a aclarar ideas, examinar todos los ángulos y convertir las intuiciones ambiguas en instrucciones bien pensadas en un lenguaje que facilite la ejecución al resto del equipo.
+
+No nos damos cuenta de lo valiosos que son los científicos sociales. Por lo general, están mejor equipados que los científicos de datos para traducir en métricas concretas, las intuiciones e intenciones de quienes toman las decisiones.
+
+```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-09-social-experiment-scientist.webp")
+```
+
+**El experto cualitativo no es el que toma las decisiones. En su lugar, se aseguran de que el responsable de la toma de decisiones haya captado completamente la información disponible para poderla tomar.** También son un asesor de confianza, un compañero de intercambio de ideas y una caja de resonancia para quien toma las decisiones. Tenerlos a bordo es una excelente manera de garantizar que el proyecto comience en la dirección correcta.
+
+
+### 10) Investigador {-}
+
+Se trata de profesionistas de larga trayectoria tanto académica como práctica. Son profesionistas con PhD. Su gran experiencia y conocimientos los hacen ser capaces de construir nuevas herramientas hechas a la medida que no existen en el mercado.
+
+Este perfil es de gran beneficio cuando ya se cuenta con las posiciones anteriores. Si el investigador es el primer empleado, es probable que no se tenga el entorno adecuado para hacer un buen uso de él.
+
+$$\text{"Antes de construir ese bolígrafo espacial para viajar a la Luna, }$$
+$$\text{comprueba primero si un lápiz puede hacer el trabajo."}$$
+
+```{r, fig.align='center', out.height='300pt', out.width='300pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-10-wise-man.png")
+```
+
+Es conveniente esperar hasta que el equipo se haya desarrollado lo suficiente como para haber averiguado para qué específicamente necesitan un investigador. 
+
+
+### Extra) Personal Adicional {-}
+
+Además de los roles que vimos, estas son algunas de las personas que podrían para participar en un proyecto de inteligencia de decisiones:
+
+* Experto en áreas específicas de negocio
+* Ética
+* Ingeniero de software
+* Ingeniero de Confiabilidad
+* Diseñador de Experiencia de Usuario
+* Visualizador interactivo / diseñador gráfico.
+* Especialista en recolección de datos
+* Gerente de producto de datos
+* Gerente de proyecto / programas
+
+```{r, fig.align='center', out.height='200pt', out.width='700pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/22-extra-etihic-bot.png")
+```
+
+
+Muchos proyectos no pueden prescindir de ellos. La única razón por la que no figuran en el top 10 es que **la inteligencia de decisiones no es su negocio principal.** En su lugar, son genios en su propia área y han aprendido lo suficiente sobre datos y la toma de decisiones para ser muy útiles en el proyecto. Piensa en ellos como si tuvieran su propia carrera universitaria, pero con suficiente amor por la inteligencia de decisiones que eligieron estudiarla como una especialización.
+
+Fuente: [Medium](https://medium.com/datos-y-ciencia/10-roles-top-en-inteligencia-artificial-y-ciencia-de-datos-9a5e77a81f25)
+
+#### Google Data Career Path {-}
+
+*Google* es una compañía bastante especializada en procesos de desarrollo de tecnología con grandes aplicaciones comerciales. Cada compañía puede armar su propio equipo de acuerdo con la estrategia que más se apegue a sus objetivos, no obstante, siempre vale la pena conocer los perfiles que Google define y sugiere. 
+
+```{r, fig.align='center', out.height='300pt', out.width='700pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/23-Google-Roles.png")
+```
+Fuente: Data Science On Google Cloud Platform
+
+
+Esta definición de roles es particularmente técnica, por lo que es importante añadir los perfiles de expertos de negocio.
 
