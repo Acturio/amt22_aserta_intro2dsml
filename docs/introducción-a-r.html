@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="introducción-a-ciencia-de-datos.html"/>
-
+<link rel="next" href="lectura-de-datos.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -237,6 +237,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html"><i class="fa fa-check"></i><b>3</b> Lectura de datos</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-csv"><i class="fa fa-check"></i><b>3.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.2" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-txt"><i class="fa fa-check"></i><b>3.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.4" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-json"><i class="fa fa-check"></i><b>3.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Bases de Datos</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#microsoft-sql-server"><i class="fa fa-check"></i><b>3.5.1</b> Microsoft SQL Server</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -278,9 +289,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Administración de directorios y proyectos</li>
 <li>Visor de datos</li>
 <li>Depurador interactivo para corregir errores</li>
-<li>Conección con Rmarkwon y Sweave</li>
+<li>Conexión con Rmarkwon y Sweave</li>
 </ul>
-<p>La siguiente imagen muestra la forma en la que está estructurado RStudio. El orden de los páneles puede ser elegido por el usuario, así como las características de tipo de letra, tamaño y color de fondo, entre otras características.</p>
+<p>La siguiente imagen muestra la forma en la que está estructurado RStudio. El orden de las ventanas puede ser elegido por el usuario, así como las características de tipo de letra, tamaño y color de fondo, entre otras características.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
 <img src="img/02-intro2r/rstudio.png" alt="Páneles de trabajo de Rstudio" width="800pt" height="450pt" />
 <p class="caption">
@@ -290,16 +301,10 @@ Figure 2.1: Páneles de trabajo de Rstudio
 </div>
 <div id="r-como-lenguaje-orientado-a-objetos" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> <em>R</em> como lenguaje orientado a objetos<a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><em>R</em> es un lenguaje de programación orientado a objetos (POO). (López 2011, pag. 5) define a los objetos y sus características como “cualquier cosa con significado para el problema que se trata de resolver.” A partir de esa definición, se puede decir que sirve para representar alguna entidad de la vida real, por lo general son componentes del problema que se pretende resolver y con los que podemos interactuar. A través de esta interacción y del estudio que se haga de ellos, es posible clasificarlos en grupos de acuerdo a sus caractrerísticas. A partir de los objetos con los que se trabaje, surgirán las clases adecuadas para encontrar la solución a un problema dado.</p>
-<p>Los objetos tienen características fundamentales que permiten identificarlos, conocerlos y entender su comportamiento. De acuerdo con (Schildt 2009), estas características son:</p>
-<ol style="list-style-type: decimal">
-<li>Identidad</li>
-<li>Comportamiento</li>
-<li>Estructura</li>
-</ol>
+<p><em>R</em> es un lenguaje de programación orientado a objetos (POO). Un objeto es <strong>“cualquier cosa con significado para el problema que se trata de resolver”</strong>. Los objetos tienen características fundamentales que permiten identificarlos, conocerlos y entender su comportamiento. De acuerdo con (Schildt 2009), estas características son:</p>
 <ul>
 <li><p><strong>Identidad:</strong> Esta es la propiedad que da nombre a cada uno de los objetos y que permite declararlos, distinguirlos de manera única, usarlos y llamarlos para la representación de su contenido.</p></li>
-<li><p><strong>Comportamiento:</strong> Esta es la propiedad que determina las operaciones que puede realizar el objeto, es decir, permite conocer las capacidades y alcances de la funcionalidad de cada objeto. El comportamiento permite conocer la interacción que puede existir con otros objetos y los resultrados que generarán.</p></li>
+<li><p><strong>Comportamiento:</strong> Esta es la propiedad que determina las operaciones que puede realizar el objeto, es decir, permite conocer las capacidades y alcances de la funcionalidad de cada objeto. El comportamiento permite conocer la interacción que puede existir con otros objetos y los resultados que generarán.</p></li>
 <li><p><strong>Estructura:</strong> El estado se refiere a un conjunto de características o atributos específicos del objeto dados en un momento determinado, y que pueden cambiar en un instante de tiempo.</p></li>
 </ul>
 <p>En la programación orientada a objetos, un programa recolecta muchos objetos para ser tratado como un conjunto dinámico de objetos interactuando entre sí. Los objetos están definidos por:</p>
@@ -324,9 +329,9 @@ Figure 2.1: Páneles de trabajo de Rstudio
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Almacene los valores 5.3, 4.6 y 25 en los objetos <code>a</code>, <code>b</code> y <code>age</code> respectivamente, use diferentes símbolos de asignación.</p>
 <p>Para hacer lo solicitado se podría usar el siguiente código.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introducción-a-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">5.3</span> <span class="co"># Recomended</span></span>
-<span id="cb4-2"><a href="introducción-a-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fl">4.6</span> <span class="ot">-&gt;</span> b <span class="co"># It is not usual</span></span>
-<span id="cb4-3"><a href="introducción-a-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="dv">25</span> <span class="co"># Not recomended</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introducción-a-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">5.3</span> <span class="co"># Recomendado</span></span>
+<span id="cb4-2"><a href="introducción-a-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fl">4.6</span> <span class="ot">-&gt;</span> b <span class="co"># No es usual</span></span>
+<span id="cb4-3"><a href="introducción-a-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="dv">25</span> <span class="co"># No recomendado</span></span></code></pre></div>
 
 <div class="rmdimportant">
 Aunque una asignación se puede hacer de tres formas diferentes, se recomienda sólo usar el símbolo <code>&lt;-</code>.
@@ -340,7 +345,7 @@ Aunque una asignación se puede hacer de tres formas diferentes, se recomienda s
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introducción-a-r.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb5-2"><a href="introducción-a-r.html#cb5-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span> <span class="sc">*</span> x) <span class="sc">+</span> <span class="dv">3</span></span></code></pre></div>
 <pre><code>## [1] 13</code></pre>
-<p>En el siguiente ejemplo se crea la variable pais y se almacena el nombre Colombia, luego se averigua el número de caracteres de la variable pais.</p>
+<p>En el siguiente ejemplo se crea la variable país y se almacena el nombre Colombia, luego se averigua el número de caracteres de la variable país.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introducción-a-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a>pais <span class="ot">&lt;-</span> <span class="st">&quot;México&quot;</span></span>
 <span id="cb7-2"><a href="introducción-a-r.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(pais)</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
@@ -353,13 +358,13 @@ Aunque una asignación se puede hacer de tres formas diferentes, se recomienda s
 </div>
 <div id="vectores" class="section level3 hasAnchor" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Vectores<a href="introducción-a-r.html#vectores" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Los vectores vectores son arreglos ordenados en los cuales se puede almacenar información de tipo numérico (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (TRUE o FALSE), pero no mezclas de éstos. La función de <em>R</em> para crear un vector es c() y que significa concatenar; dentro de los paréntesis de esta función se ubica la información a almacenar. Una vez construído el vector se acostumbra a etiquetarlo con un nombre corto y representativo de la información que almacena, la asignación se hace por medio del operador &lt;- entre el nombre y el vector.</p>
+<p>Los vectores vectores son arreglos ordenados en los cuales se puede almacenar información de tipo numérico (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (TRUE o FALSE), pero no mezclas de éstos. La función de <em>R</em> para crear un vector es c() y que significa concatenar; dentro de los paréntesis de esta función se ubica la información a almacenar. Una vez construido el vector se acostumbra a etiquetarlo con un nombre corto y representativo de la información que almacena, la asignación se hace por medio del operador &lt;- entre el nombre y el vector.</p>
 <p>A continuación se presenta un ejemplo de cómo crear tres vectores que contienen las respuestas de cinco personas a tres preguntas que se les realizaron.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introducción-a-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a>edad <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">13</span>, <span class="cn">NA</span>, <span class="dv">20</span>)</span>
 <span id="cb13-2"><a href="introducción-a-r.html#cb13-2" aria-hidden="true" tabindex="-1"></a>deporte <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">NA</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb13-3"><a href="introducción-a-r.html#cb13-3" aria-hidden="true" tabindex="-1"></a>sexo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hombre&quot;</span>, <span class="st">&quot;Mujer&quot;</span>, <span class="st">&quot;Hombre&quot;</span>, <span class="st">&quot;Hombre&quot;</span>, <span class="st">&quot;Mujer&quot;</span>)</span></code></pre></div>
 <p>El vector edad es un vector cuantitativo y contiene las edades de las 5 personas. En la cuarta posición del vector se colocó el símbolo NA que significa <strong>Not Available</strong> debido a que no se registró la edad para esa persona. Al hacer una asignación se acostumbra a dejar un espacio antes y después del operador &lt;- de asignación.</p>
-<p>El segundo vector es llamado deporte y es un vector lógico que almacena las respuestas a la pregunta de si la persona practica deporte, nuevamente aquí hay un NA para la tercera persona. El último vector sexo contiene la información del sexo de cada persona, como esta variable es cualitativa es necesario usar las comillas " " para encerrar las respuestas.</p>
+<p>El segundo vector es llamado deporte y es un vector lógico que almacena las respuestas a la pregunta de si la persona practica deporte, nuevamente aquí hay un NA para la tercera persona. El último vector sexo contiene la información del sexo de cada persona, como esta variable es cualitativa es necesario usar las comillas ” ” para encerrar las respuestas.</p>
 <div class="infobox important">
 <p><strong>¡¡ RECORDAR !!</strong></p>
 <ul>
@@ -554,7 +559,7 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <table>
 <tbody>
 <tr class="odd">
-<td>De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es el objeto almacenado, una matriz. Cuando usamos [] el resultado es una lista cuyo contenido es el objeto almacendado.</td>
+<td>De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es el objeto almacenado, una matriz. Cuando usamos [] el resultado es una lista cuyo contenido es el objeto almacenado.</td>
 </tr>
 </tbody>
 </table>
@@ -566,12 +571,12 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <li><p>Use funciones o procedimientos (varias líneas) de <em>R</em> para responder cada una de las siguientes preguntas.</p></li>
 <li><p>Construya un vector con la primeras 20 letras MAYÚSCULAS usando la función LETTERS.</p></li>
 <li><p>Construya una matriz de 10×10 con los primeros 100 números positivos pares.</p></li>
-<li><p>Construya una matriz identidad de dimension 3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.</p></li>
+<li><p>Construya una matriz identidad de dimensión 3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.</p></li>
 <li><p>Construya una lista con los anteriores tres objetos creados.</p></li>
 <li><p>Construya un marco de datos o data frame con las respuestas de 5 personas de su trabajo a las preguntas:</p>
 <ol style="list-style-type: lower-alpha">
 <li>¿Cuál es su nombre?</li>
-<li>¿Cuál es su antiguedad en la empresa?</li>
+<li>¿Cuál es su antigüedad en la empresa?</li>
 <li>¿Cuál es su puesto?</li>
 <li>¿Tiene usted algún producto contratado con la empresa? (Sí / No)</li>
 <li>¿Cuál?</li>
@@ -606,7 +611,7 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 </div>
 <div id="operaciones-básicas" class="section level3 hasAnchor" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Operaciones básicas<a href="introducción-a-r.html#operaciones-básicas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>En R se pueden hacer diversas operaciones usando operadores binarios. Este tipo de operadores se denomina binarios porque actuan entre dos objetos, a continuación el listado.</p>
+<p>En R se pueden hacer diversas operaciones usando operadores binarios. Este tipo de operadores se denomina binarios porque actúan entre dos objetos, a continuación el listado.</p>
 <ul>
 <li><code>+</code> operador binario para sumar.</li>
 <li><code>-</code> operador binario para restar.</li>
@@ -711,7 +716,7 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introducción-a-r.html#cb107-1" aria-hidden="true" tabindex="-1"></a>myvec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="cn">NA</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">6</span>)</span>
 <span id="cb107-2"><a href="introducción-a-r.html#cb107-2" aria-hidden="true" tabindex="-1"></a>myvec</span></code></pre></div>
 <pre><code>##  [1]  5  3  2  1  2  0 NA  0  9  6</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introducción-a-r.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(myvec)  <span class="co"># Opss, no aparece el mínimo que es Cero.</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introducción-a-r.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(myvec)  <span class="co"># Oops, no aparece el mínimo que es Cero.</span></span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="introducción-a-r.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(myvec, <span class="at">na.rm=</span><span class="cn">TRUE</span>)  <span class="co"># Usamos na.rm = TRUE para remover el NA</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
@@ -754,7 +759,7 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <li>1 1 2 3 3 4</li>
 <li>1 1 2 2 3 3 4 4</li>
 </ul>
-<p>La clave para construir una repetición es descrubir la semilla o elemento que se repite. Las instrucciones para obtener las repeticiones anteriores se muestra a continuación.</p>
+<p>La clave para construir una repetición es, descubrir la semilla o elemento que se repite. Las instrucciones para obtener las repeticiones anteriores se muestra a continuación.</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introducción-a-r.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">times=</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 1 2 3 4</code></pre>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introducción-a-r.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">times=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span></code></pre></div>
@@ -787,9 +792,9 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <p>El código necesario para obtener las secuencias se muestra a continuación.</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="introducción-a-r.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span></code></pre></div>
 <pre><code>##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="introducción-a-r.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">9</span>, <span class="at">by=</span><span class="dv">2</span>)  <span class="co"># matches &#39;end&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="introducción-a-r.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">9</span>, <span class="at">by=</span><span class="dv">2</span>)  <span class="co"># concuerda con final</span></span></code></pre></div>
 <pre><code>## [1] 1 3 5 7 9</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="introducción-a-r.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">9</span>, <span class="at">by=</span>pi) <span class="co"># stays below &#39;end&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="introducción-a-r.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">9</span>, <span class="at">by=</span>pi) <span class="co"># se mantiene por debajo del final</span></span></code></pre></div>
 <pre><code>## [1] 1.000000 4.141593 7.283185</code></pre>
 
 <div class="rmdnote">
@@ -800,36 +805,36 @@ En R existe el operador binario <code>:</code> que sirve para construir secuenci
 <pre><code>## [1] 2 3 4 5 6 7 8</code></pre>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="introducción-a-r.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">:-</span><span class="dv">5</span></span></code></pre></div>
 <pre><code>## [1]  3  2  1  0 -1 -2 -3 -4 -5</code></pre>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introducción-a-r.html#cb145-1" aria-hidden="true" tabindex="-1"></a>pi<span class="sc">:</span><span class="dv">6</span>  <span class="co"># real sequence</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introducción-a-r.html#cb145-1" aria-hidden="true" tabindex="-1"></a>pi<span class="sc">:</span><span class="dv">6</span>  <span class="co"># secuencia real</span></span></code></pre></div>
 <pre><code>## [1] 3.141593 4.141593 5.141593</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introducción-a-r.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span><span class="sc">:</span>pi  <span class="co"># integer sequence</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introducción-a-r.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span><span class="sc">:</span>pi  <span class="co"># secuencia entera</span></span></code></pre></div>
 <pre><code>## [1] 6 5 4</code></pre>
 </div>
 </div>
 <div id="ejercicios-1" class="section level3 hasAnchor" number="2.5.8">
 <h3><span class="header-section-number">2.5.8</span> EJERCICIOS<a href="introducción-a-r.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Use funciones o procedimientos (varias líneas) de R para responder cada una de las siguientes preguntas.</p>
+<p>Use funciones o procedimientos (varias líneas) de R para responder (al menos) a de las siguientes preguntas.</p>
 <ol style="list-style-type: decimal">
-<li><p>¿Qué cantidad de dinero sobra al repartir 10000$ entre 3 personas?</p></li>
-<li><p>¿Es el número 4560 divisible por 3?</p></li>
+<li><p>¿Qué cantidad de dinero sobra al repartir $10,000 entre 3 personas?</p></li>
+<li><p>¿Es el número 4,560 divisible por 3?</p></li>
 <li><p>Construya un vector con los números enteros del 2 al 87. ¿Cuáles de esos números son divisibles por 7?</p></li>
 <li><p>Construya dos vectores, el primero con los números enteros desde 7 hasta 3, el segundo vector con los primeros cinco números positivos divisibles por 5. Sea A la condición de ser par en el primer vector. Sea B la condición de ser mayor que 10 en el segundo vector. ¿En cuál de las 5 posiciones se cumple A y B simultáneamente?</p></li>
 <li><p>Construya un vector con los siguientes elementos: 1, -4, 5, 9, -4. Escriba un procedimiento para extraer <strong>las posiciones</strong> donde está el valor mínimo en el vector.</p></li>
 <li><p>Calcular <span class="math inline">\(8!\)</span></p></li>
 <li><p>Evaluar la siguiente suma <span class="math inline">\(\sum_{i=3}^{i=7}e^i\)</span></p></li>
-<li><p>Evaluar la siguiente productoria <span class="math inline">\(\prod_{i=1}^{i=10}\log\sqrt{i}\)</span></p></li>
-<li><p>Construya un vector cualquiera e inviertalo, es decir, que el primer elemento quede de último, el segundo de penúltimo y así sucesivamente. Compare su resultado con el de la función <code>rev</code>.</p></li>
+<li><p>Evaluar el siguiente producto <span class="math inline">\(\prod_{i=1}^{i=10}\log\sqrt{i}\)</span></p></li>
+<li><p>Construya un vector cualquiera e inviértalo, es decir, que el primer elemento quede de último, el segundo de penúltimo y así sucesivamente. Compare su resultado con el de la función <code>rev</code>.</p></li>
 <li><p>Crear el vector: <span class="math inline">\(1, 2, 3, \ldots, 19, 20\)</span>.</p></li>
 <li><p>Crear el vector: <span class="math inline">\(20, 19, \ldots , 2, 1\)</span>.</p></li>
 <li><p>Crear el vector: <span class="math inline">\(1, -2, 3, -4, 5, -6, \ldots, 19, -20\)</span>.</p></li>
 <li><p>Crear el vector: <span class="math inline">\(0.1^3, 0.2^1, 0.1^6, 0.2^4, . . . , 0.1^{36}, 0.2^{34}\)</span>.</p></li>
-<li><p>Calcular lo siguiente: <span class="math inline">\(\sum_{i=10}^{100}(i^3+4i^2)\)</span> and <span class="math inline">\(\sum_{i=1}^{25}\left( \frac{2^i}{i} + \frac{3^i}{i^2} \right)\)</span>.</p></li>
+<li><p>Calcular lo siguiente: <span class="math inline">\(\sum_{i=10}^{100}(i^3+4i^2)\)</span> y <span class="math inline">\(\sum_{i=1}^{25}\left( \frac{2^i}{i} + \frac{3^i}{i^2} \right)\)</span>.</p></li>
 </ol>
-<p>En R hay unas bases de datos incluídas, una de ellas es la base de datos llamada <code>mtcars</code>. Para conocer las variables que están en <code>mtcars</code> usted puede escribir en la consola <code>?mtcars</code> o también <code>help(mtcars)</code>. De la base <code>mtcars</code> obtenga bases de datos que cumplan las siguientes condiciones.</p>
-<ol start="22" style="list-style-type: decimal">
-<li>Autos que tengan un rendimiento menor a 18 millas por galón de combustible.</li>
-<li>Autos que tengan 4 cilindros.</li>
-<li>Autos que pesen más de 2500 libras y tengan transmisión manual.</li>
+<p>En R hay unas bases de datos incluidas, una de ellas es la base de datos llamada <code>mtcars</code>. Para conocer las variables que están en <code>mtcars</code> usted puede escribir en la consola <code>?mtcars</code> o también <code>help(mtcars)</code>. De la base <code>mtcars</code> obtenga bases de datos que cumplan las siguientes condiciones.</p>
+<ol start="15" style="list-style-type: decimal">
+<li><p>Autos que tengan un rendimiento menor a 18 millas por galón de combustible.</p></li>
+<li><p>Autos que tengan 4 cilindros.</p></li>
+<li><p>Autos que pesen más de 2500 libras y tengan transmisión manual.</p></li>
 </ol>
 </div>
 </div>
@@ -847,17 +852,17 @@ En R existe el operador binario <code>:</code> que sirve para construir secuenci
 <span id="cb149-6"><a href="introducción-a-r.html#cb149-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="ejemplo-4" class="section level4 unnumbered hasAnchor">
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Una secretaria recibe la información del salario básico semanal de un empleado y las horas trabajadas durante la semana por ese empleado. El salario básico es la remuneración por 40 horas de labor por semana, las horas extra son pagadas a ciencuenta mil pesos. Escriba el procedimiento en R que debe usar la secretaria para calcular el salario semanal de un empleado que trabajó 45 horas y tiene salario básico de un millon de pesos.</p>
+<p>Una secretaria recibe la información del salario básico semanal de un empleado y las horas trabajadas durante la semana por ese empleado. El salario básico es la remuneración por 40 horas de labor por semana, las horas extra son pagadas a 150 pesos. Escriba el procedimiento en <em>R</em> que debe usar la secretaria para calcular el salario semanal de un empleado que trabajó 45 horas y tiene salario básico de 5 mil pesos.</p>
 <p>El código para calcular el salario final del empleado es el siguiente:</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="introducción-a-r.html#cb150-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Salario básico por semana</span></span>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="introducción-a-r.html#cb150-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">5000</span>  <span class="co"># Salario básico por semana</span></span>
 <span id="cb150-2"><a href="introducción-a-r.html#cb150-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">45</span>   <span class="co"># Horas laboradas por semana</span></span>
 <span id="cb150-3"><a href="introducción-a-r.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(hlab <span class="sc">&gt;</span> <span class="dv">40</span>) {</span>
 <span id="cb150-4"><a href="introducción-a-r.html#cb150-4" aria-hidden="true" tabindex="-1"></a>  hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
-<span id="cb150-5"><a href="introducción-a-r.html#cb150-5" aria-hidden="true" tabindex="-1"></a>  salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="fl">0.05</span></span>
+<span id="cb150-5"><a href="introducción-a-r.html#cb150-5" aria-hidden="true" tabindex="-1"></a>  salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
 <span id="cb150-6"><a href="introducción-a-r.html#cb150-6" aria-hidden="true" tabindex="-1"></a>  sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
 <span id="cb150-7"><a href="introducción-a-r.html#cb150-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb150-8"><a href="introducción-a-r.html#cb150-8" aria-hidden="true" tabindex="-1"></a>sal  <span class="co"># Salario semanal</span></span></code></pre></div>
-<pre><code>## [1] 1.25</code></pre>
+<pre><code>## [1] 5750</code></pre>
 </div>
 </div>
 <div id="instrucción-if-else" class="section level3 hasAnchor" number="2.6.2">
@@ -988,7 +993,7 @@ La instrucción <code>break</code> sirve para salir de un procedimiento iterativ
 <p>Así como en el español existen reglas ortográficas, la escritura de códigos en R también tiene unas reglas que se recomienda seguir para evitar confusiones. Tener una buena guía de estilo es importante para que el código creado por usted sea fácilmente entendido por sus lectores <span class="citation">(<a href="#ref-rpackages" role="doc-biblioref"><strong>rpackages?</strong></a>)</span>. No existe una única y mejor guía de estilo para escritura en R, sin embargo aquí vamos a mostrar unas sugerencias basadas en la guía llamada <a href="https://style.tidyverse.org/">The tidyverse style guidee</a>.</p>
 <div id="nombres-de-los-archivos" class="section level3 hasAnchor" number="2.7.1">
 <h3><span class="header-section-number">2.7.1</span> Nombres de los archivos<a href="introducción-a-r.html#nombres-de-los-archivos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Se sugiere que el nombre usado para nombrar un archivo tenga sentido y que termine con extensión “.R.” A continuación dos ejemplos de como nombrar bien y mal un archivo.</p>
+<p>Se sugiere que el nombre usado para nombrar un archivo tenga sentido y que termine con extensión “.R”. A continuación dos ejemplos de como nombrar bien y mal un archivo.</p>
 <ul>
 <li>Bien: <code>"2020-analisis_exploratorio.R</code></li>
 <li>Mal: <code>ju89HR56_74.R</code></li>
@@ -1034,7 +1039,7 @@ La instrucción <code>break</code> sirve para salir de un procedimiento iterativ
 <p>No coloque espacios alrededor del código que esté dentro de paréntesis <code>( )</code> o corchetes <code>[ ]</code>, la única excepción es luego de una coma, ver el ejemplo siguiente.</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="introducción-a-r.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condicion)    <span class="co"># Correcto </span></span>
 <span id="cb172-2"><a href="introducción-a-r.html#cb172-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>, ]            <span class="co"># Correcto</span></span>
-<span id="cb172-3"><a href="introducción-a-r.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ( condicion )  <span class="co"># Sobran espacios alrededor de condicion</span></span>
+<span id="cb172-3"><a href="introducción-a-r.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ( condicion )  <span class="co"># Sobran espacios alrededor de condición</span></span>
 <span id="cb172-4"><a href="introducción-a-r.html#cb172-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,]             <span class="co"># Se necesita espacio luego de coma</span></span></code></pre></div>
 <p>Los signos de agrupación llaves <code>{ }</code> se utilizan para agrupar bloques de código y se recomienda que nunca una llave abierta <code>{</code> esté sola en una línea; una llave cerrada <code>}</code> si debe ir sola en su propia línea. Se pueden omitir las llaves cuando el bloque de instrucciones esté formado por una sola línea pero esa línea de código NO debe ir en la misma línea de la condición. A continuación dos ejemplos de lo que se recomienda.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="introducción-a-r.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) {                     <span class="co"># Correcto</span></span>
@@ -1084,6 +1089,9 @@ La instrucción <code>break</code> sirve para salir de un procedimiento iterativ
 <span id="cb176-4"><a href="introducción-a-r.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(y)</span></code></pre></div>
 <p>A pesar de la anterior advertencia es posible que en este libro usemos el <code>;</code> en algunas ocasiones, si lo hacemos es para ahorrar espacio en la presentación del código.</p>
 
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
 </div>
 </div>
 </div>
@@ -1114,8 +1122,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="introducción-a-ciencia-de-datos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="introducción-a-ciencia-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lectura-de-datos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

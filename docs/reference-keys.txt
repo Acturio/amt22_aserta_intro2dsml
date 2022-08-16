@@ -54,3 +54,10 @@ longitud-de-una-línea-de-código
 espacios
 asignación
 punto-y-coma
+lectura-de-datos
+archivos-csv
+archivos-txt
+archivos-xls-y-xlsx
+archivos-json
+bases-de-datos
+microsoft-sql-server

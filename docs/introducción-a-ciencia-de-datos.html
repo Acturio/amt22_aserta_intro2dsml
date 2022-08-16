@@ -237,6 +237,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html"><i class="fa fa-check"></i><b>3</b> Lectura de datos</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-csv"><i class="fa fa-check"></i><b>3.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.2" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-txt"><i class="fa fa-check"></i><b>3.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.4" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-json"><i class="fa fa-check"></i><b>3.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Bases de Datos</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#microsoft-sql-server"><i class="fa fa-check"></i><b>3.5.1</b> Microsoft SQL Server</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -391,7 +402,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Conocemos la respuesta correcta de antemano.</p></li>
 <li><p>Esta respuesta correcta fue “etiquetada” por un humano (la mayoría de las veces, en algunas circunstancias puede ser generada por otro algoritmo).</p></li>
-<li><p>Debido a que conocemos la respuesta correcta, existen muchas métricas de desempeño del modelo para verificar que nuestro algoritmo está haciendo las cosas “bien.”</p></li>
+<li><p>Debido a que conocemos la respuesta correcta, existen muchas métricas de desempeño del modelo para verificar que nuestro algoritmo está haciendo las cosas “bien”.</p></li>
 </ul>
 <p>Algunos ejemplos son:</p>
 <pre><code>- Un detector de spam que etiqueta un e-mail como spam o no.
@@ -501,7 +512,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="6" style="list-style-type: decimal">
 <li><p><strong>Modelado</strong></p>
 <ul>
-<li><p>Proceso iterativo para desarrollar diferentes “experimentos.”</p>
+<li><p>Proceso iterativo para desarrollar diferentes “experimentos”.</p>
 <ul>
 <li>Mismo algoritmo/método diferentes hiperparámetros (grid search).</li>
 <li>Diferentes algortimos.</li>
@@ -648,7 +659,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>2) Decisor<a href="introducción-a-ciencia-de-datos.html#decisor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Antes de contratar a un científico de datos con un master o PhD, hay que asegurarse de que quien toma las decisiones entiende el arte y la ciencia de la toma de decisiones basada en datos.</p>
 <p><span class="math display">\[\text{Las capacidades de toma de decisiones deben estar establecidas, antes de que un equipo pueda obtener valor de los datos}\]</span></p>
-<p>Este individuo es <strong>responsable de identificar las decisiones que valen la pena tomar</strong> con los datos, plasmarlas en un modelo (desde el diseño de métricas, hasta las inyecciones sobre supuestos estadísticos) y determinar el nivel requerido de rigor analítico, basado en el impacto potencial en el negocio. Busca un pensador profundo que no diga continuamente: “Oh, vaya, eso ni siquiera se me había ocurrido mientras estaba pensando en esta decisión.” Sino más bien que ya lo haya pensado. Y eso otro. Y esto también. Y aquello…</p>
+<p>Este individuo es <strong>responsable de identificar las decisiones que valen la pena tomar</strong> con los datos, plasmarlas en un modelo (desde el diseño de métricas, hasta las inyecciones sobre supuestos estadísticos) y determinar el nivel requerido de rigor analítico, basado en el impacto potencial en el negocio. Busca un pensador profundo que no diga continuamente: “Oh, vaya, eso ni siquiera se me había ocurrido mientras estaba pensando en esta decisión”. Sino más bien que ya lo haya pensado. Y eso otro. Y esto también. Y aquello…</p>
 <p><img src="img/01-intro2ds/22-02decisionmaker.jpeg" width="350pt" height="200pt" style="display: block; margin: auto;" /></p>
 </div>
 <div id="analista" class="section level3 unnumbered hasAnchor">
@@ -714,8 +725,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>10) Investigador<a href="introducción-a-ciencia-de-datos.html#investigador" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Se trata de profesionistas de larga trayectoria tanto académica como práctica. Son profesionistas con PhD. Su gran experiencia y conocimientos los hacen ser capaces de construir nuevas herramientas hechas a la medida que no existen en el mercado.</p>
 <p>Este perfil es de gran beneficio cuando ya se cuenta con las posiciones anteriores. Si el investigador es el primer empleado, es probable que no se tenga el entorno adecuado para hacer un buen uso y aprovechamiento de sus conocimientos y habilidades.</p>
-<p><span class="math display">\[\text{&quot;Antes de construir ese bolígrafo espacial para viajar a la Luna, }\]</span>
-<span class="math display">\[\text{comprueba primero si un lápiz puede hacer el trabajo.&quot;}\]</span></p>
+<p><span class="math display">\[\text{&quot;Antes de construir ese bolígrafo espacial para viajar a la Luna, }\]</span> <span class="math display">\[\text{comprueba primero si un lápiz puede hacer el trabajo.&quot;}\]</span></p>
 <p><img src="img/01-intro2ds/22-10-wise-man.png" width="300pt" height="300pt" style="display: block; margin: auto;" /></p>
 <p>Es conveniente esperar hasta que el equipo se haya desarrollado lo suficiente como para haber averiguado para qué específicamente necesitan un investigador.</p>
 </div>
@@ -740,8 +750,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="google-data-career-path" class="section level3 unnumbered hasAnchor">
 <h3>Google Data Career Path<a href="introducción-a-ciencia-de-datos.html#google-data-career-path" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Google</em> es una compañía bastante especializada en procesos de desarrollo de tecnología con grandes aplicaciones comerciales. Cada compañía puede armar su propio equipo de acuerdo con la estrategia que más se apegue a sus objetivos, no obstante, siempre vale la pena conocer los perfiles que Google define y sugiere.</p>
-<p><img src="img/01-intro2ds/23-Google-Roles.png" width="800pt" height="350pt" style="display: block; margin: auto;" />
-Fuente: Data Science On Google Cloud Platform</p>
+<p><img src="img/01-intro2ds/23-Google-Roles.png" width="800pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Fuente: Data Science On Google Cloud Platform</p>
 <p>Esta definición de roles es particularmente técnica, por lo que es importante añadir los perfiles de expertos de negocio.</p>
 </div>
 </div>

@@ -23,9 +23,9 @@ Algunas de las principales características de Rstudio que lo hacen una gran her
 -   Administración de directorios y proyectos
 -   Visor de datos
 -   Depurador interactivo para corregir errores
--   Conección con Rmarkwon y Sweave
+-   Conexión con Rmarkwon y Sweave
 
-La siguiente imagen muestra la forma en la que está estructurado RStudio. El orden de los páneles puede ser elegido por el usuario, así como las características de tipo de letra, tamaño y color de fondo, entre otras características.
+La siguiente imagen muestra la forma en la que está estructurado RStudio. El orden de las ventanas puede ser elegido por el usuario, así como las características de tipo de letra, tamaño y color de fondo, entre otras características.
 
 ```{r, echo=F, out.width="800pt", out.height="450pt", fig.align="center", fig.cap="Páneles de trabajo de Rstudio"}
 knitr::include_graphics("img/02-intro2r/rstudio.png")
@@ -33,17 +33,11 @@ knitr::include_graphics("img/02-intro2r/rstudio.png")
 
 ## *R* como lenguaje orientado a objetos
 
-*R* es un lenguaje de programación orientado a objetos (POO). (López 2011, pag. 5) define a los objetos y sus características como "cualquier cosa con significado para el problema que se trata de resolver". A partir de esa definición, se puede decir que sirve para representar alguna entidad de la vida real, por lo general son componentes del problema que se pretende resolver y con los que podemos interactuar. A través de esta interacción y del estudio que se haga de ellos, es posible clasificarlos en grupos de acuerdo a sus caractrerísticas. A partir de los objetos con los que se trabaje, surgirán las clases adecuadas para encontrar la solución a un problema dado.
-
-Los objetos tienen características fundamentales que permiten identificarlos, conocerlos y entender su comportamiento. De acuerdo con (Schildt 2009), estas características son:
-
-1.  Identidad
-2.  Comportamiento
-3.  Estructura
+*R* es un lenguaje de programación orientado a objetos (POO). Un objeto es **"cualquier cosa con significado para el problema que se trata de resolver"**.  Los objetos tienen características fundamentales que permiten identificarlos, conocerlos y entender su comportamiento. De acuerdo con (Schildt 2009), estas características son:
 
 -   **Identidad:** Esta es la propiedad que da nombre a cada uno de los objetos y que permite declararlos, distinguirlos de manera única, usarlos y llamarlos para la representación de su contenido.
 
--   **Comportamiento:** Esta es la propiedad que determina las operaciones que puede realizar el objeto, es decir, permite conocer las capacidades y alcances de la funcionalidad de cada objeto. El comportamiento permite conocer la interacción que puede existir con otros objetos y los resultrados que generarán.
+-   **Comportamiento:** Esta es la propiedad que determina las operaciones que puede realizar el objeto, es decir, permite conocer las capacidades y alcances de la funcionalidad de cada objeto. El comportamiento permite conocer la interacción que puede existir con otros objetos y los resultados que generarán.
 
 -   **Estructura:** El estado se refiere a un conjunto de características o atributos específicos del objeto dados en un momento determinado, y que pueden cambiar en un instante de tiempo.
 
@@ -74,9 +68,9 @@ Almacene los valores 5.3, 4.6 y 25 en los objetos `a`, `b` y `age` respectivamen
 Para hacer lo solicitado se podría usar el siguiente código.
 
 ```{r}
-a <- 5.3 # Recomended
-4.6 -> b # It is not usual
-age = 25 # Not recomended
+a <- 5.3 # Recomendado
+4.6 -> b # No es usual
+age = 25 # No recomendado
 ```
 
 ```{block2, type='rmdimportant'}
@@ -95,7 +89,7 @@ x <- 5
 (2 * x) + 3
 ```
 
-En el siguiente ejemplo se crea la variable pais y se almacena el nombre Colombia, luego se averigua el número de caracteres de la variable pais.
+En el siguiente ejemplo se crea la variable país y se almacena el nombre Colombia, luego se averigua el número de caracteres de la variable país.
 
 ```{r}
 pais <- "México"
@@ -114,7 +108,7 @@ y != 5 + 5
 
 ### Vectores
 
-Los vectores vectores son arreglos ordenados en los cuales se puede almacenar información de tipo numérico (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (TRUE o FALSE), pero no mezclas de éstos. La función de *R* para crear un vector es c() y que significa concatenar; dentro de los paréntesis de esta función se ubica la información a almacenar. Una vez construído el vector se acostumbra a etiquetarlo con un nombre corto y representativo de la información que almacena, la asignación se hace por medio del operador \<- entre el nombre y el vector.
+Los vectores vectores son arreglos ordenados en los cuales se puede almacenar información de tipo numérico (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (TRUE o FALSE), pero no mezclas de éstos. La función de *R* para crear un vector es c() y que significa concatenar; dentro de los paréntesis de esta función se ubica la información a almacenar. Una vez construido el vector se acostumbra a etiquetarlo con un nombre corto y representativo de la información que almacena, la asignación se hace por medio del operador \<- entre el nombre y el vector.
 
 A continuación se presenta un ejemplo de cómo crear tres vectores que contienen las respuestas de cinco personas a tres preguntas que se les realizaron.
 
@@ -371,7 +365,7 @@ class(milista[2])
 ```
 
 ---
-De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es el objeto almacenado, una matriz. Cuando usamos [] el resultado es una lista cuyo contenido es el objeto almacendado.
+De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es el objeto almacenado, una matriz. Cuando usamos [] el resultado es una lista cuyo contenido es el objeto almacenado.
 ---
 
 
@@ -384,14 +378,14 @@ De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es 
 
 3. Construya una matriz de  10×10 con los primeros 100 números positivos pares.
 
-4. Construya una matriz identidad de dimension  3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.
+4. Construya una matriz identidad de dimensión  3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.
 
 5. Construya una lista con los anteriores tres objetos creados.
 
 6. Construya un marco de datos o data frame con las respuestas de 5 personas de su trabajo a las preguntas: 
 
    (a) ¿Cuál es su nombre? 
-   (b) ¿Cuál es su antiguedad en la empresa? 
+   (b) ¿Cuál es su antigüedad en la empresa? 
    (c) ¿Cuál es su puesto? 
    (d) ¿Tiene usted algún producto contratado con la empresa? (Sí / No)
    (e) ¿Cuál?
@@ -443,7 +437,7 @@ mean(notas)
 
 
 ### Operaciones básicas
-En R se pueden hacer diversas operaciones usando operadores binarios. Este tipo de operadores se denomina binarios porque actuan entre dos objetos, a continuación el listado.
+En R se pueden hacer diversas operaciones usando operadores binarios. Este tipo de operadores se denomina binarios porque actúan entre dos objetos, a continuación el listado.
 
 - `+` operador binario para sumar.
 - `-` operador binario para restar.
@@ -550,7 +544,7 @@ Construir en vector llamado `myvec` con los siguientes elementos: 5, 3, 2, 1, 2,
 ```{r}
 myvec <- c(5, 3, 2, 1, 2, 0, NA, 0, 9, 6)
 myvec
-min(myvec)  # Opss, no aparece el mínimo que es Cero.
+min(myvec)  # Oops, no aparece el mínimo que es Cero.
 min(myvec, na.rm=TRUE)  # Usamos na.rm = TRUE para remover el NA
 max(myvec, na.rm=T)  # Para obtener el valor máximo
 range(myvec, na.rm=T)  # Genera min y max simultáneamente
@@ -589,7 +583,7 @@ Construya las siguientes repeticiones usando la función `rep`, no lo haga ingre
 - 1 1 2 3 3 4
 - 1 1 2 2 3 3 4 4
 
-La clave para construir una repetición es descrubir la semilla o elemento que se repite. Las instrucciones para obtener las repeticiones anteriores se muestra a continuación.
+La clave para construir una repetición es, descubrir la semilla o elemento que se repite. Las instrucciones para obtener las repeticiones anteriores se muestra a continuación.
 
 ```{r}
 rep(x=1:4, times=2)
@@ -623,8 +617,8 @@ El código necesario para obtener las secuencias se muestra a continuación.
 
 ```{r}
 seq(from=0, to=1, length.out = 11)
-seq(from=1, to=9, by=2)  # matches 'end'
-seq(from=1, to=9, by=pi) # stays below 'end'
+seq(from=1, to=9, by=2)  # concuerda con final
+seq(from=1, to=9, by=pi) # se mantiene por debajo del final
 ```
 
 ```{block2, type='rmdnote'}
@@ -636,38 +630,50 @@ Revise los siguientes ejemplos para entender el funcionamiento del operador `:`.
 ```{r}
 2:8
 3:-5
-pi:6  # real sequence
-6:pi  # integer sequence
+pi:6  # secuencia real
+6:pi  # secuencia entera
 ```
 
 
 
 ### EJERCICIOS 
-Use funciones o procedimientos (varias líneas) de R para responder cada una de las siguientes preguntas.
+Use funciones o procedimientos (varias líneas) de R para responder (al menos) a de las siguientes preguntas.
 
-1. ¿Qué cantidad de dinero sobra al repartir 10000\$ entre 3 personas?
-2. ¿Es el número 4560 divisible por 3?
+1. ¿Qué cantidad de dinero sobra al repartir \$10,000 entre 3 personas?
+
+2. ¿Es el número 4,560 divisible por 3?
+
 3. Construya un vector con los números enteros del 2 al 87. ¿Cuáles de esos números son divisibles por 7?
+
 4. Construya dos vectores, el primero con los números enteros desde 7 hasta 3, el segundo vector con los primeros cinco números positivos divisibles por 5. Sea A la condición de ser par en el primer vector. Sea B la condición de ser mayor que 10 en el segundo vector. ¿En cuál de las 5 posiciones se cumple A y B simultáneamente?
 
-6. Construya un vector con los siguientes elementos: 1, -4, 5, 9, -4. Escriba un procedimiento para extraer __las posiciones__ donde está el valor mínimo en el vector.
-7. Calcular $8!$
-8. Evaluar la siguiente suma $\sum_{i=3}^{i=7}e^i$
-9. Evaluar la siguiente productoria $\prod_{i=1}^{i=10}\log\sqrt{i}$
-10. Construya un vector cualquiera e inviertalo, es decir, que el primer elemento quede de último, el segundo de penúltimo y así sucesivamente. Compare su resultado con el de la función `rev`.
-11. Crear el vector: $1, 2, 3, \ldots, 19, 20$.
-12. Crear el vector: $20, 19, \ldots , 2, 1$.
-13. Crear el vector: $1, -2, 3, -4, 5, -6, \ldots, 19, -20$.
-14. Crear el vector: $0.1^3, 0.2^1, 0.1^6, 0.2^4, . . . , 0.1^{36}, 0.2^{34}$.
-15. Calcular lo siguiente: $\sum_{i=10}^{100}(i^3+4i^2)$ and $\sum_{i=1}^{25}\left( \frac{2^i}{i} + \frac{3^i}{i^2} \right)$.
+5. Construya un vector con los siguientes elementos: 1, -4, 5, 9, -4. Escriba un procedimiento para extraer __las posiciones__ donde está el valor mínimo en el vector.
 
+6. Calcular $8!$
 
+7. Evaluar la siguiente suma $\sum_{i=3}^{i=7}e^i$
 
-En R hay unas bases de datos incluídas, una de ellas es la base de datos llamada `mtcars`. Para conocer las variables que están en `mtcars` usted puede escribir en la consola `?mtcars` o también `help(mtcars)`. De la base `mtcars` obtenga bases de datos que cumplan las siguientes condiciones.
+8. Evaluar el siguiente producto $\prod_{i=1}^{i=10}\log\sqrt{i}$
 
-22. Autos que tengan un rendimiento menor a 18 millas por galón de combustible.
-23. Autos que tengan 4 cilindros.
-24. Autos que pesen más de 2500 libras y tengan transmisión manual.
+9. Construya un vector cualquiera e inviértalo, es decir, que el primer elemento quede de último, el segundo de penúltimo y así sucesivamente. Compare su resultado con el de la función `rev`.
+
+10. Crear el vector: $1, 2, 3, \ldots, 19, 20$.
+
+11. Crear el vector: $20, 19, \ldots , 2, 1$.
+
+12. Crear el vector: $1, -2, 3, -4, 5, -6, \ldots, 19, -20$.
+
+13. Crear el vector: $0.1^3, 0.2^1, 0.1^6, 0.2^4, . . . , 0.1^{36}, 0.2^{34}$.
+
+14. Calcular lo siguiente: $\sum_{i=10}^{100}(i^3+4i^2)$ y $\sum_{i=1}^{25}\left( \frac{2^i}{i} + \frac{3^i}{i^2} \right)$.
+
+En R hay unas bases de datos incluidas, una de ellas es la base de datos llamada `mtcars`. Para conocer las variables que están en `mtcars` usted puede escribir en la consola `?mtcars` o también `help(mtcars)`. De la base `mtcars` obtenga bases de datos que cumplan las siguientes condiciones.
+
+15. Autos que tengan un rendimiento menor a 18 millas por galón de combustible.
+
+16. Autos que tengan 4 cilindros.
+
+17. Autos que pesen más de 2500 libras y tengan transmisión manual.
 
 
 
@@ -688,15 +694,15 @@ if (condicion) {
 ```
 
 #### Ejemplo {-}
-Una secretaria recibe la información del salario básico semanal de un empleado y las horas trabajadas durante la semana por ese empleado. El salario básico es la remuneración por 40 horas de labor por semana, las horas extra son pagadas a ciencuenta mil pesos. Escriba el procedimiento en R que debe usar la secretaria para calcular el salario semanal de un empleado que trabajó 45 horas y tiene salario básico de un millon de pesos.
+Una secretaria recibe la información del salario básico semanal de un empleado y las horas trabajadas durante la semana por ese empleado. El salario básico es la remuneración por 40 horas de labor por semana, las horas extra son pagadas a 150 pesos. Escriba el procedimiento en *R* que debe usar la secretaria para calcular el salario semanal de un empleado que trabajó 45 horas y tiene salario básico de 5 mil pesos.
 
 El código para calcular el salario final del empleado es el siguiente:
 ```{r}
-sal <- 1  # Salario básico por semana
+sal <- 5000  # Salario básico por semana
 hlab <- 45   # Horas laboradas por semana
 if(hlab > 40) {
   hext <- hlab - 40
-  salext <- hext * 0.05
+  salext <- hext * 150
   sal <- sal + salext
 }
 sal  # Salario semanal
@@ -898,7 +904,7 @@ No coloque espacios alrededor del código que esté dentro de paréntesis `( )` 
 ```{r, eval=F}
 if (condicion)    # Correcto 
 x[1, ]            # Correcto
-if ( condicion )  # Sobran espacios alrededor de condicion
+if ( condicion )  # Sobran espacios alrededor de condición
 x[1,]             # Se necesita espacio luego de coma
 ```
 
