@@ -1,0 +1,281 @@
+<div class="watermark"><img src="img/header.png" width="400"></div>
+
+# Tidyverse
+
+## Consultas de datos
+
+Ahora que ya se ha estudiado la manera de cargar datos, aprenderemos como manipularlos con *dplyr.* El paquete *dplyr* proporciona un conjunto de funciones muy útiles para manipular data-frames y así reducir el número de repeticiones, la probabilidad de cometer errores y el número de caracteres que hay que escribir. Como valor extra, podemos encontrar que la gramática de *dplyr* es más fácil de entender.
+
+Revisaremos algunas de sus funciones **más usadas** (*verbos*), así como el uso de **pipes** (%>%) para combinarlas.
+
+- select()
+
+- filter()
+
+- arrange()
+
+- mutate()
+
+- summarise()
+
+- join()
+
+- group_by()
+
+Primero tenemos que instalar y cargar la paquetería (parte de tidyverse):
+
+```{r, message=FALSE, warning=FALSE}
+# install.packages("dplyr")
+
+library(dplyr)
+library(readr)
+```
+
+Usaremos el dataset *AmesHousing* que se proporcionó en el capítulo anterior (el alumno puede hacer el ejercicio con datos propios)
+
+```{r, warning=FALSE, message=FALSE}
+ames_housing <- read_csv("data/ames.csv")
+
+glimpse(ames_housing)
+```
+
+
+### Seleccionar columnas
+
+Observamos que nuestros datos tienen 2,930 observaciones y 74 variables, con *select()* podemos seleccionar las variables que se indiquen.
+
+```{r}
+ames_housing %>% select(Lot_Area, Neighborhood, Year_Sold, Sale_Price)
+```
+
+::: {.infobox .tip data-latex="{tip}"}
+**¡¡ RECORDAR !!**
+
+El operador pipe (%>%) se usa para conectar un elemento con una función o acción a realizar. En este caso solo se indica que en los datos de ames se seleccionan 4 variables.
+:::
+
+
+Con *select()* y *contains()* podemos seleccionar variables con alguna cadena de texto. 
+
+```{r}
+ames_housing %>% select(contains("Area"))
+```
+
+De igual manera, con *select()*, *ends_with* y *start_with()* podemos seleccionar que inicien o terminen con alguna cadena de texto.
+
+```{r}
+ames_housing %>% select(starts_with("Garage"))
+```
+
+
+Funciones útiles para *select()*:
+
+- *contains()*: Selecciona variables cuyo nombre contiene la cadena de texto.
+
+- *ends_with()*: Selecciona variables cuyo nombre termina con la cadena de caracteres.
+
+- *everything()*: Selecciona todas las columnas.
+
+- *matches()*: Selecciona las variables cuyos nombres coinciden con una expresión regular.
+
+- *num_range()*: Selecciona las variables por posición.
+
+- *start_with()*: Selecciona variables cuyos nombres empiezan con la cadena de caracteres.
+
+- *any_of*: Selecciona cualquiera de estas variables, en caso de existir
+
+**EJERCICIO:**
+
+* Crear con datos propios una consulta de columnas usando como variable auxiliar cada una de las listadas anteriormente. Será suficiente con realizar un ejemplo de cada una.
+
+
+
+
+### Filtrar observaciones
+
+La función *filter()* nos permite filtrar filas según una condición, primero notemos que la variable *Sale_Condition* tiene distintas categorías.
+
+```{r}
+table(ames_housing$Sale_Condition)
+```
+::: {.infobox .important data-latex="{important}"}
+**¡¡ SPOILER !!**
+
+En un modelo predictivo de Machine Learning, **no es correcto** agregar columnas cuyo valor es conocido hasta el momento de la observación. Es decir, no deben agregarse variables que no se conozca su valor al momento de la predicción, como es el caso de *Condición de venta*.
+:::
+
+Ahora usaremos la función *filter* para quedarnos solo con las observaciones con condición de venta "normal".
+
+```{r}
+ames_housing %>% filter(Sale_Condition == "Normal")
+```
+
+
+También se puede usar para filtrar variables numéricas:
+
+```{r}
+ames_housing %>% filter(Lot_Area > 1000 & Sale_Price >= 150000)
+```
+
+Notemos que en el ejemplo anterior se usa *&*, que ayuda a filtrar por dos condiciones.
+
+También puede usarse *|* para filtrar por alguna de las dos condiciones.
+
+```{r}
+ames_housing %>% filter(Lot_Area < 1000 | Sale_Price <= 150000)
+```
+
+
+Las condiciones pueden ser expresiones lógicas construidas mediante los operadores relacionales y lógicos: 
+
+- **<** : Menor que
+
+- **>** : Mayor que
+
+- **==** : Igual que
+
+- **<=** : Menor o igual que
+
+- **>=** : Mayor o igual que
+
+- **!=** : Diferente que
+
+- **%in%** : Pertenece al conjunto
+
+- **is.na** : Es NA
+
+- **!is.na** : No es NA
+
+**EJERCICIO:**
+
+* Practicar la función de filtro de observaciones usando los operadores auxiliares.
+
+* Concatenar el resultado de seleccionar columnas y posteriormente filtrar columnas.
+
+
+
+###  Ordenar registros
+
+La función *arrange()* se utiliza para ordenar las filas de un data frame de acuerdo a una o varias variables. Este ordenamiento puede ser ascendente o descendente. 
+
+Por defecto *arrange()* ordena las filas por orden ascendente: 
+
+```{r}
+ames_housing %>% arrange(Sale_Price)
+```
+
+<br>
+<br>
+
+Si las queremos ordenar de forma ascendente, lo haremos del siguiente modo: 
+
+```{r}
+ames_housing %>% arrange(desc(Sale_Price))
+```
+
+Si se desea usar dos o más columnas para realizar el ordenamiento, deben separarse por comas cada una de las características
+
+```{r}
+ames_housing %>% 
+ arrange(Sale_Condition, desc(Sale_Price), Lot_Area) %>% 
+ select(Sale_Condition, Sale_Price, Lot_Area)
+```
+
+Notemos que en el ejemplo anterior usamos dos *pipes* (%>%), como habíamos mencionado se pueden usar los necesarios para combinar funciones. 
+
+###  Agregar / Modificar 
+
+Con la función *mutate()* podemos computar transformaciones de variables en un data frame. A menudo, tendremos la necesidad de crear nuevas variables que se calculan a partir de variables existentes. La función *mutate()* proporciona una interfaz clara para realizar este tipo de operaciones. 
+
+Por ejemplo, haremos el cálculo de la antigüedad del inmueble a partir de las variables *Year_Sold* y *Year_Remod_Add*:
+
+```{r}
+ejemplo_mutate <- ames_housing %>% 
+ select(Year_Sold, Year_Remod_Add) %>%
+ mutate(Antique = Year_Sold - Year_Remod_Add)
+
+ejemplo_mutate
+```
+
+El ejemplo anterior crea una nueva variable. Ahora se presenta otro ejemplo en donde se modifica una variable ya creada.
+
+```{r}
+ejemplo_mutate %>% 
+ mutate(Antique = Antique * 12)
+```
+
+En este segundo ejemplo, se modifica el número de años de antigüedad y se multiplica por un factor de 12 para modificar el tiempo en una escala de meses.
+
+
+### Resumen estadístico
+
+La función *summarise()* se comporta de forma análoga a la función *mutate()*, excepto que en lugar de añadir nuevas columnas crea un nuevo data frame.
+
+Podemos usar el ejemplo anterior y calcular la media de la variable creada *Antique*:
+
+```{r}
+ames_housing %>% 
+ select(Year_Sold, Year_Remod_Add) %>%
+ mutate(Antique = Year_Sold - Year_Remod_Add) %>%
+ summarise(Mean_Antique = mean(Antique))
+```
+
+Solo fue necesario agregar un *pipe*, especificar el nombre de la variable creada y la operación a realizar.
+
+
+
+A continuación se muestran funciones que trabajando conjuntamente con la función summarise() facilitarán nuestro trabajo diario. Las primeras pertenecen al paquete base y las otras son del paquete dplyr. Todas ellas toman como argumento un vector y devuelven un único resultado:
+
+- *min(), max()* : Valores max y min.
+
+- *mean()* : Media.
+
+- *median()* : Mediana.
+
+- *sum()* : Suma de los valores.
+
+- *var(), sd()* : Varianza y desviación estándar.
+
+- *first()* : Primer valor en un vector.
+
+- *last()* : El último valor en un vector
+
+- *n()* : El número de valores en un vector.
+
+- *n_distinct()* : El número de valores distintos en un vector.
+
+- *nth()* : Extrae el valor que ocupa la posición n en un vector.
+
+
+Mas adelante veremos como combinar esta función con la función *group_by()* para calcular estadísticos agrupados por alguna característica de interés.
+
+
+
+### Agrupamiento
+
+La función *group_by()* agrupa un conjunto de filas de acuerdo con los valores de una o más columnas o expresiones.
+
+Usaremos el ejemplo anterior. Primero creamos nuestra nueva variable *Antique*, después agrupamos por vecindario y al final calculamos la media de la variable *Antique*. Gracias al agrupamiento, nos regresara una media por cada grupo creado, es decir, nos regresara el promedio de la antigüedad por vecindario.
+
+```{r,warning=FALSE,message=FALSE}
+ames_housing %>% 
+ mutate(Antique = Year_Sold - Year_Remod_Add) %>% 
+ group_by(Neighborhood) %>% 
+ summarise(Mean_Antique = round(mean(Antique), 0))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

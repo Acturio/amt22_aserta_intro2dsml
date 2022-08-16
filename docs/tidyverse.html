@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 4 Tidyverse | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lectura-de-datos.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 1: Introducción</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Conceptos de Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#objetivos"><i class="fa fa-check"></i><b>1.2</b> Objetivos</a></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#requisitos-1"><i class="fa fa-check"></i><b>1.3</b> Requisitos</a></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aplicaciones"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones</a></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#tipos-de-algoritmos"><i class="fa fa-check"></i><b>1.5</b> Tipos de algoritmos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ciclo-de-un-proyecto"><i class="fa fa-check"></i><b>1.6</b> Ciclo de un proyecto</a></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#taller-de-scoping"><i class="fa fa-check"></i><b>1.7</b> Taller de Scoping</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.7.1</b> Data Maturity Framework</a></li>
+<li class="chapter" data-level="1.7.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.7.2</b> Scoping</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ejemplos"><i class="fa fa-check"></i>Ejemplos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#perfiles-de-un-equipo"><i class="fa fa-check"></i><b>1.8</b> Perfiles de un equipo</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-datos"><i class="fa fa-check"></i>1) Ingeniero de datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#decisor"><i class="fa fa-check"></i>2) Decisor</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista"><i class="fa fa-check"></i>3) Analista</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista-experto"><i class="fa fa-check"></i>4) Analista experto</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#estadístico"><i class="fa fa-check"></i>5) Estadístico</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-machine-learning"><i class="fa fa-check"></i>6) Ingeniero de Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#científico-de-datos"><i class="fa fa-check"></i>7) Científico de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#gerente-de-análisis-líder-de-ciencia-de-datos"><i class="fa fa-check"></i>8) Gerente de Análisis / Líder de Ciencia de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#experto-cualitativo-científico-social"><i class="fa fa-check"></i>9) Experto Cualitativo / Científico Social</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#investigador"><i class="fa fa-check"></i>10) Investigador</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#extra-personal-adicional"><i class="fa fa-check"></i>Extra) Personal Adicional</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#google-data-career-path"><i class="fa fa-check"></i>Google Data Career Path</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#flujo-de-trabajo-en-ml"><i class="fa fa-check"></i><b>1.9</b> Flujo de trabajo en <em>ML</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.4.1</b> Operadores de asignación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.2</b> Variables</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.3</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.5</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.6</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.7</b> Listas</a></li>
+<li class="chapter" data-level="2.4.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funbas"><i class="fa fa-check"></i><b>2.5</b> Funciones básicas de R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-una-función-de-r"><i class="fa fa-check"></i><b>2.5.1</b> ¿Qué es una función de R?</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.5.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#pruebas-lógicas"><i class="fa fa-check"></i><b>2.5.3</b> Pruebas lógicas</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-lógicos"><i class="fa fa-check"></i><b>2.5.4</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funciones-sobre-vectores"><i class="fa fa-check"></i><b>2.5.5</b> Funciones sobre vectores</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-rep"><i class="fa fa-check"></i><b>2.5.6</b> Función <code>rep</code></a></li>
+<li class="chapter" data-level="2.5.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-seq"><i class="fa fa-check"></i><b>2.5.7</b> Función <code>seq</code></a></li>
+<li class="chapter" data-level="2.5.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.8</b> EJERCICIOS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#bucles"><i class="fa fa-check"></i><b>2.6</b> Estructuras de control</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>repeat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-archivos"><i class="fa fa-check"></i><b>2.7.1</b> Nombres de los archivos</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-objetos"><i class="fa fa-check"></i><b>2.7.2</b> Nombres de los objetos</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#longitud-de-una-línea-de-código"><i class="fa fa-check"></i><b>2.7.3</b> Longitud de una línea de código</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#espacios"><i class="fa fa-check"></i><b>2.7.4</b> Espacios</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#asignación"><i class="fa fa-check"></i><b>2.7.5</b> Asignación</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html"><i class="fa fa-check"></i><b>3</b> Lectura de datos</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-csv"><i class="fa fa-check"></i><b>3.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.2" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-txt"><i class="fa fa-check"></i><b>3.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.4" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-json"><i class="fa fa-check"></i><b>3.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Bases de Datos</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#microsoft-sql-server"><i class="fa fa-check"></i><b>3.5.1</b> Microsoft SQL Server</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>4</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>4.1</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>4.1.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="4.1.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>4.1.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="4.1.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>4.1.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="4.1.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>4.1.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="4.1.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>4.1.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="4.1.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>4.1.6</b> Agrupamiento</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tidyverse" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Tidyverse<a href="tidyverse.html#tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="consultas-de-datos" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Consultas de datos<a href="tidyverse.html#consultas-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ahora que ya se ha estudiado la manera de cargar datos, aprenderemos como manipularlos con <em>dplyr.</em> El paquete <em>dplyr</em> proporciona un conjunto de funciones muy útiles para manipular data-frames y así reducir el número de repeticiones, la probabilidad de cometer errores y el número de caracteres que hay que escribir. Como valor extra, podemos encontrar que la gramática de <em>dplyr</em> es más fácil de entender.</p>
+<p>Revisaremos algunas de sus funciones <strong>más usadas</strong> (<em>verbos</em>), así como el uso de <strong>pipes</strong> (%&gt;%) para combinarlas.</p>
+<ul>
+<li><p>select()</p></li>
+<li><p>filter()</p></li>
+<li><p>arrange()</p></li>
+<li><p>mutate()</p></li>
+<li><p>summarise()</p></li>
+<li><p>join()</p></li>
+<li><p>group_by()</p></li>
+</ul>
+<p>Primero tenemos que instalar y cargar la paquetería (parte de tidyverse):</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="tidyverse.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;dplyr&quot;)</span></span>
+<span id="cb199-2"><a href="tidyverse.html#cb199-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb199-3"><a href="tidyverse.html#cb199-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb199-4"><a href="tidyverse.html#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div>
+<p>Usaremos el dataset <em>AmesHousing</em> que se proporcionó en el capítulo anterior (el alumno puede hacer el ejercicio con datos propios)</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="tidyverse.html#cb200-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/ames.csv&quot;</span>)</span>
+<span id="cb200-2"><a href="tidyverse.html#cb200-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-3"><a href="tidyverse.html#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames_housing)</span></code></pre></div>
+<pre><code>## Rows: 2,930
+## Columns: 74
+## $ MS_SubClass        &lt;chr&gt; &quot;One_Story_1946_and_Newer_All_Styles&quot;, &quot;One_Story_1…
+## $ MS_Zoning          &lt;chr&gt; &quot;Residential_Low_Density&quot;, &quot;Residential_High_Densit…
+## $ Lot_Frontage       &lt;dbl&gt; 141, 80, 81, 93, 74, 78, 41, 43, 39, 60, 75, 0, 63,…
+## $ Lot_Area           &lt;dbl&gt; 31770, 11622, 14267, 11160, 13830, 9978, 4920, 5005…
+## $ Street             &lt;chr&gt; &quot;Pave&quot;, &quot;Pave&quot;, &quot;Pave&quot;, &quot;Pave&quot;, &quot;Pave&quot;, &quot;Pave&quot;, &quot;Pa…
+## $ Alley              &lt;chr&gt; &quot;No_Alley_Access&quot;, &quot;No_Alley_Access&quot;, &quot;No_Alley_Acc…
+## $ Lot_Shape          &lt;chr&gt; &quot;Slightly_Irregular&quot;, &quot;Regular&quot;, &quot;Slightly_Irregula…
+## $ Land_Contour       &lt;chr&gt; &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;Lvl&quot;, &quot;H…
+## $ Utilities          &lt;chr&gt; &quot;AllPub&quot;, &quot;AllPub&quot;, &quot;AllPub&quot;, &quot;AllPub&quot;, &quot;AllPub&quot;, &quot;…
+## $ Lot_Config         &lt;chr&gt; &quot;Corner&quot;, &quot;Inside&quot;, &quot;Corner&quot;, &quot;Corner&quot;, &quot;Inside&quot;, &quot;…
+## $ Land_Slope         &lt;chr&gt; &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;Gtl&quot;, &quot;G…
+## $ Neighborhood       &lt;chr&gt; &quot;North_Ames&quot;, &quot;North_Ames&quot;, &quot;North_Ames&quot;, &quot;North_Am…
+## $ Condition_1        &lt;chr&gt; &quot;Norm&quot;, &quot;Feedr&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;N…
+## $ Condition_2        &lt;chr&gt; &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;Norm&quot;, &quot;No…
+## $ Bldg_Type          &lt;chr&gt; &quot;OneFam&quot;, &quot;OneFam&quot;, &quot;OneFam&quot;, &quot;OneFam&quot;, &quot;OneFam&quot;, &quot;…
+## $ House_Style        &lt;chr&gt; &quot;One_Story&quot;, &quot;One_Story&quot;, &quot;One_Story&quot;, &quot;One_Story&quot;,…
+## $ Overall_Cond       &lt;chr&gt; &quot;Average&quot;, &quot;Above_Average&quot;, &quot;Above_Average&quot;, &quot;Avera…
+## $ Year_Built         &lt;dbl&gt; 1960, 1961, 1958, 1968, 1997, 1998, 2001, 1992, 199…
+## $ Year_Remod_Add     &lt;dbl&gt; 1960, 1961, 1958, 1968, 1998, 1998, 2001, 1992, 199…
+## $ Roof_Style         &lt;chr&gt; &quot;Hip&quot;, &quot;Gable&quot;, &quot;Hip&quot;, &quot;Hip&quot;, &quot;Gable&quot;, &quot;Gable&quot;, &quot;Ga…
+## $ Roof_Matl          &lt;chr&gt; &quot;CompShg&quot;, &quot;CompShg&quot;, &quot;CompShg&quot;, &quot;CompShg&quot;, &quot;CompSh…
+## $ Exterior_1st       &lt;chr&gt; &quot;BrkFace&quot;, &quot;VinylSd&quot;, &quot;Wd Sdng&quot;, &quot;BrkFace&quot;, &quot;VinylS…
+## $ Exterior_2nd       &lt;chr&gt; &quot;Plywood&quot;, &quot;VinylSd&quot;, &quot;Wd Sdng&quot;, &quot;BrkFace&quot;, &quot;VinylS…
+## $ Mas_Vnr_Type       &lt;chr&gt; &quot;Stone&quot;, &quot;None&quot;, &quot;BrkFace&quot;, &quot;None&quot;, &quot;None&quot;, &quot;BrkFac…
+## $ Mas_Vnr_Area       &lt;dbl&gt; 112, 0, 108, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6…
+## $ Exter_Cond         &lt;chr&gt; &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typica…
+## $ Foundation         &lt;chr&gt; &quot;CBlock&quot;, &quot;CBlock&quot;, &quot;CBlock&quot;, &quot;CBlock&quot;, &quot;PConc&quot;, &quot;P…
+## $ Bsmt_Cond          &lt;chr&gt; &quot;Good&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;,…
+## $ Bsmt_Exposure      &lt;chr&gt; &quot;Gd&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Mn&quot;, &quot;No&quot;, &quot;No…
+## $ BsmtFin_Type_1     &lt;chr&gt; &quot;BLQ&quot;, &quot;Rec&quot;, &quot;ALQ&quot;, &quot;ALQ&quot;, &quot;GLQ&quot;, &quot;GLQ&quot;, &quot;GLQ&quot;, &quot;A…
+## $ BsmtFin_SF_1       &lt;dbl&gt; 2, 6, 1, 1, 3, 3, 3, 1, 3, 7, 7, 1, 7, 3, 3, 1, 3, …
+## $ BsmtFin_Type_2     &lt;chr&gt; &quot;Unf&quot;, &quot;LwQ&quot;, &quot;Unf&quot;, &quot;Unf&quot;, &quot;Unf&quot;, &quot;Unf&quot;, &quot;Unf&quot;, &quot;U…
+## $ BsmtFin_SF_2       &lt;dbl&gt; 0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1120, 0…
+## $ Bsmt_Unf_SF        &lt;dbl&gt; 441, 270, 406, 1045, 137, 324, 722, 1017, 415, 994,…
+## $ Total_Bsmt_SF      &lt;dbl&gt; 1080, 882, 1329, 2110, 928, 926, 1338, 1280, 1595, …
+## $ Heating            &lt;chr&gt; &quot;GasA&quot;, &quot;GasA&quot;, &quot;GasA&quot;, &quot;GasA&quot;, &quot;GasA&quot;, &quot;GasA&quot;, &quot;Ga…
+## $ Heating_QC         &lt;chr&gt; &quot;Fair&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Excellent&quot;, &quot;Good&quot;, …
+## $ Central_Air        &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;…
+## $ Electrical         &lt;chr&gt; &quot;SBrkr&quot;, &quot;SBrkr&quot;, &quot;SBrkr&quot;, &quot;SBrkr&quot;, &quot;SBrkr&quot;, &quot;SBrkr…
+## $ First_Flr_SF       &lt;dbl&gt; 1656, 896, 1329, 2110, 928, 926, 1338, 1280, 1616, …
+## $ Second_Flr_SF      &lt;dbl&gt; 0, 0, 0, 0, 701, 678, 0, 0, 0, 776, 892, 0, 676, 0,…
+## $ Gr_Liv_Area        &lt;dbl&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616…
+## $ Bsmt_Full_Bath     &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, …
+## $ Bsmt_Half_Bath     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Full_Bath          &lt;dbl&gt; 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 2, …
+## $ Half_Bath          &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, …
+## $ Bedroom_AbvGr      &lt;dbl&gt; 3, 2, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 2, 1, 4, 4, …
+## $ Kitchen_AbvGr      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ TotRms_AbvGrd      &lt;dbl&gt; 7, 5, 6, 8, 6, 7, 6, 5, 5, 7, 7, 6, 7, 5, 4, 12, 8,…
+## $ Functional         &lt;chr&gt; &quot;Typ&quot;, &quot;Typ&quot;, &quot;Typ&quot;, &quot;Typ&quot;, &quot;Typ&quot;, &quot;Typ&quot;, &quot;Typ&quot;, &quot;T…
+## $ Fireplaces         &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, …
+## $ Garage_Type        &lt;chr&gt; &quot;Attchd&quot;, &quot;Attchd&quot;, &quot;Attchd&quot;, &quot;Attchd&quot;, &quot;Attchd&quot;, &quot;…
+## $ Garage_Finish      &lt;chr&gt; &quot;Fin&quot;, &quot;Unf&quot;, &quot;Unf&quot;, &quot;Fin&quot;, &quot;Fin&quot;, &quot;Fin&quot;, &quot;Fin&quot;, &quot;R…
+## $ Garage_Cars        &lt;dbl&gt; 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, …
+## $ Garage_Area        &lt;dbl&gt; 528, 730, 312, 522, 482, 470, 582, 506, 608, 442, 4…
+## $ Garage_Cond        &lt;chr&gt; &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typical&quot;, &quot;Typica…
+## $ Paved_Drive        &lt;chr&gt; &quot;Partial_Pavement&quot;, &quot;Paved&quot;, &quot;Paved&quot;, &quot;Paved&quot;, &quot;Pav…
+## $ Wood_Deck_SF       &lt;dbl&gt; 210, 140, 393, 0, 212, 360, 0, 0, 237, 140, 157, 48…
+## $ Open_Porch_SF      &lt;dbl&gt; 62, 0, 36, 0, 34, 36, 0, 82, 152, 60, 84, 21, 75, 0…
+## $ Enclosed_Porch     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Three_season_porch &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Screen_Porch       &lt;dbl&gt; 0, 120, 0, 0, 0, 0, 0, 144, 0, 0, 0, 0, 0, 0, 140, …
+## $ Pool_Area          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Pool_QC            &lt;chr&gt; &quot;No_Pool&quot;, &quot;No_Pool&quot;, &quot;No_Pool&quot;, &quot;No_Pool&quot;, &quot;No_Poo…
+## $ Fence              &lt;chr&gt; &quot;No_Fence&quot;, &quot;Minimum_Privacy&quot;, &quot;No_Fence&quot;, &quot;No_Fenc…
+## $ Misc_Feature       &lt;chr&gt; &quot;None&quot;, &quot;None&quot;, &quot;Gar2&quot;, &quot;None&quot;, &quot;None&quot;, &quot;None&quot;, &quot;No…
+## $ Misc_Val           &lt;dbl&gt; 0, 0, 12500, 0, 0, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0, …
+## $ Mo_Sold            &lt;dbl&gt; 5, 6, 6, 4, 3, 6, 4, 1, 3, 6, 4, 3, 5, 2, 6, 6, 6, …
+## $ Year_Sold          &lt;dbl&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 201…
+## $ Sale_Type          &lt;chr&gt; &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD&quot;, &quot;WD…
+## $ Sale_Condition     &lt;chr&gt; &quot;Normal&quot;, &quot;Normal&quot;, &quot;Normal&quot;, &quot;Normal&quot;, &quot;Normal&quot;, &quot;…
+## $ Sale_Price         &lt;dbl&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213…
+## $ Longitude          &lt;dbl&gt; -93.61975, -93.61976, -93.61939, -93.61732, -93.638…
+## $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.06090, 4…</code></pre>
+<div id="seleccionar-columnas" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Seleccionar columnas<a href="tidyverse.html#seleccionar-columnas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Observamos que nuestros datos tienen 2,930 observaciones y 74 variables, con <em>select()</em> podemos seleccionar las variables que se indiquen.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="tidyverse.html#cb202-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">select</span>(Lot_Area, Neighborhood, Year_Sold, Sale_Price)</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 4
+##    Lot_Area Neighborhood Year_Sold Sale_Price
+##       &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;
+##  1    31770 North_Ames        2010     215000
+##  2    11622 North_Ames        2010     105000
+##  3    14267 North_Ames        2010     172000
+##  4    11160 North_Ames        2010     244000
+##  5    13830 Gilbert           2010     189900
+##  6     9978 Gilbert           2010     195500
+##  7     4920 Stone_Brook       2010     213500
+##  8     5005 Stone_Brook       2010     191500
+##  9     5389 Stone_Brook       2010     236500
+## 10     7500 Gilbert           2010     189000
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<div class="infobox tip">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>El operador pipe (%&gt;%) se usa para conectar un elemento con una función o acción a realizar. En este caso solo se indica que en los datos de ames se seleccionan 4 variables.</p>
+</div>
+<p>Con <em>select()</em> y <em>contains()</em> podemos seleccionar variables con alguna cadena de texto.</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="tidyverse.html#cb204-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;Area&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 5
+##    Lot_Area Mas_Vnr_Area Gr_Liv_Area Garage_Area Pool_Area
+##       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+##  1    31770          112        1656         528         0
+##  2    11622            0         896         730         0
+##  3    14267          108        1329         312         0
+##  4    11160            0        2110         522         0
+##  5    13830            0        1629         482         0
+##  6     9978           20        1604         470         0
+##  7     4920            0        1338         582         0
+##  8     5005            0        1280         506         0
+##  9     5389            0        1616         608         0
+## 10     7500            0        1804         442         0
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>De igual manera, con <em>select()</em>, <em>ends_with</em> y <em>start_with()</em> podemos seleccionar que inicien o terminen con alguna cadena de texto.</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="tidyverse.html#cb206-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;Garage&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 5
+##    Garage_Type Garage_Finish Garage_Cars Garage_Area Garage_Cond
+##    &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;      
+##  1 Attchd      Fin                     2         528 Typical    
+##  2 Attchd      Unf                     1         730 Typical    
+##  3 Attchd      Unf                     1         312 Typical    
+##  4 Attchd      Fin                     2         522 Typical    
+##  5 Attchd      Fin                     2         482 Typical    
+##  6 Attchd      Fin                     2         470 Typical    
+##  7 Attchd      Fin                     2         582 Typical    
+##  8 Attchd      RFn                     2         506 Typical    
+##  9 Attchd      RFn                     2         608 Typical    
+## 10 Attchd      Fin                     2         442 Typical    
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>Funciones útiles para <em>select()</em>:</p>
+<ul>
+<li><p><em>contains()</em>: Selecciona variables cuyo nombre contiene la cadena de texto.</p></li>
+<li><p><em>ends_with()</em>: Selecciona variables cuyo nombre termina con la cadena de caracteres.</p></li>
+<li><p><em>everything()</em>: Selecciona todas las columnas.</p></li>
+<li><p><em>matches()</em>: Selecciona las variables cuyos nombres coinciden con una expresión regular.</p></li>
+<li><p><em>num_range()</em>: Selecciona las variables por posición.</p></li>
+<li><p><em>start_with()</em>: Selecciona variables cuyos nombres empiezan con la cadena de caracteres.</p></li>
+<li><p><em>any_of</em>: Selecciona cualquiera de estas variables, en caso de existir</p></li>
+</ul>
+<p><strong>EJERCICIO:</strong></p>
+<ul>
+<li>Crear con datos propios una consulta de columnas usando como variable auxiliar cada una de las listadas anteriormente. Será suficiente con realizar un ejemplo de cada una.</li>
+</ul>
+</div>
+<div id="filtrar-observaciones" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Filtrar observaciones<a href="tidyverse.html#filtrar-observaciones" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La función <em>filter()</em> nos permite filtrar filas según una condición, primero notemos que la variable <em>Sale_Condition</em> tiene distintas categorías.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="tidyverse.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ames_housing<span class="sc">$</span>Sale_Condition)</span></code></pre></div>
+<pre><code>## 
+## Abnorml AdjLand  Alloca  Family  Normal Partial 
+##     190      12      24      46    2413     245</code></pre>
+<div class="infobox important">
+<p><strong>¡¡ SPOILER !!</strong></p>
+<p>En un modelo predictivo de Machine Learning, <strong>no es correcto</strong> agregar columnas cuyo valor es conocido hasta el momento de la observación. Es decir, no deben agregarse variables que no se conozca su valor al momento de la predicción, como es el caso de <em>Condición de venta</em>.</p>
+</div>
+<p>Ahora usaremos la función <em>filter</em> para quedarnos solo con las observaciones con condición de venta “normal”.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="tidyverse.html#cb210-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sale_Condition <span class="sc">==</span> <span class="st">&quot;Normal&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2,413 × 74
+##    MS_Sub…¹ MS_Zo…² Lot_F…³ Lot_A…⁴ Street Alley Lot_S…⁵ Land_…⁶ Utili…⁷ Lot_C…⁸
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+##  1 One_Sto… Reside…     141   31770 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  2 One_Sto… Reside…      80   11622 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  3 One_Sto… Reside…      81   14267 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  4 One_Sto… Reside…      93   11160 Pave   No_A… Regular Lvl     AllPub  Corner 
+##  5 Two_Sto… Reside…      74   13830 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  6 Two_Sto… Reside…      78    9978 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  7 One_Sto… Reside…      41    4920 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  8 One_Sto… Reside…      43    5005 Pave   No_A… Slight… HLS     AllPub  Inside 
+##  9 One_Sto… Reside…      39    5389 Pave   No_A… Slight… Lvl     AllPub  Inside 
+## 10 Two_Sto… Reside…      60    7500 Pave   No_A… Regular Lvl     AllPub  Inside 
+## # … with 2,403 more rows, 64 more variables: Land_Slope &lt;chr&gt;,
+## #   Neighborhood &lt;chr&gt;, Condition_1 &lt;chr&gt;, Condition_2 &lt;chr&gt;, Bldg_Type &lt;chr&gt;,
+## #   House_Style &lt;chr&gt;, Overall_Cond &lt;chr&gt;, Year_Built &lt;dbl&gt;,
+## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
+## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
+## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+<p>También se puede usar para filtrar variables numéricas:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="tidyverse.html#cb212-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Lot_Area <span class="sc">&gt;</span> <span class="dv">1000</span> <span class="sc">&amp;</span> Sale_Price <span class="sc">&gt;=</span> <span class="dv">150000</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1,677 × 74
+##    MS_Sub…¹ MS_Zo…² Lot_F…³ Lot_A…⁴ Street Alley Lot_S…⁵ Land_…⁶ Utili…⁷ Lot_C…⁸
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+##  1 One_Sto… Reside…     141   31770 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  2 One_Sto… Reside…      81   14267 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  3 One_Sto… Reside…      93   11160 Pave   No_A… Regular Lvl     AllPub  Corner 
+##  4 Two_Sto… Reside…      74   13830 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  5 Two_Sto… Reside…      78    9978 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  6 One_Sto… Reside…      41    4920 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  7 One_Sto… Reside…      43    5005 Pave   No_A… Slight… HLS     AllPub  Inside 
+##  8 One_Sto… Reside…      39    5389 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  9 Two_Sto… Reside…      60    7500 Pave   No_A… Regular Lvl     AllPub  Inside 
+## 10 Two_Sto… Reside…      75   10000 Pave   No_A… Slight… Lvl     AllPub  Corner 
+## # … with 1,667 more rows, 64 more variables: Land_Slope &lt;chr&gt;,
+## #   Neighborhood &lt;chr&gt;, Condition_1 &lt;chr&gt;, Condition_2 &lt;chr&gt;, Bldg_Type &lt;chr&gt;,
+## #   House_Style &lt;chr&gt;, Overall_Cond &lt;chr&gt;, Year_Built &lt;dbl&gt;,
+## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
+## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
+## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+<p>Notemos que en el ejemplo anterior se usa <em>&amp;</em>, que ayuda a filtrar por dos condiciones.</p>
+<p>También puede usarse <em>|</em> para filtrar por alguna de las dos condiciones.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="tidyverse.html#cb214-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Lot_Area <span class="sc">&lt;</span> <span class="dv">1000</span> <span class="sc">|</span> Sale_Price <span class="sc">&lt;=</span> <span class="dv">150000</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1,271 × 74
+##    MS_Sub…¹ MS_Zo…² Lot_F…³ Lot_A…⁴ Street Alley Lot_S…⁵ Land_…⁶ Utili…⁷ Lot_C…⁸
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+##  1 One_Sto… Reside…      80   11622 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  2 One_Sto… Reside…     140   19138 Pave   No_A… Regular Lvl     AllPub  Corner 
+##  3 One_Sto… Reside…       0   11241 Pave   No_A… Slight… Lvl     AllPub  CulDSac
+##  4 One_Sto… Reside…       0   12537 Pave   No_A… Slight… Lvl     AllPub  CulDSac
+##  5 One_Sto… Reside…      65    8450 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  6 One_Sto… Reside…      70    8400 Pave   No_A… Regular Lvl     AllPub  Corner 
+##  7 One_Sto… Reside…      70   10500 Pave   No_A… Regular Lvl     AllPub  FR2    
+##  8 Two_Sto… Reside…      21    1680 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  9 Two_Sto… Reside…      21    1680 Pave   No_A… Regular Lvl     AllPub  Inside 
+## 10 Two_Sto… Reside…      21    1680 Pave   No_A… Regular Lvl     AllPub  Inside 
+## # … with 1,261 more rows, 64 more variables: Land_Slope &lt;chr&gt;,
+## #   Neighborhood &lt;chr&gt;, Condition_1 &lt;chr&gt;, Condition_2 &lt;chr&gt;, Bldg_Type &lt;chr&gt;,
+## #   House_Style &lt;chr&gt;, Overall_Cond &lt;chr&gt;, Year_Built &lt;dbl&gt;,
+## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
+## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
+## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+<p>Las condiciones pueden ser expresiones lógicas construidas mediante los operadores relacionales y lógicos:</p>
+<ul>
+<li><p><strong>&lt;</strong> : Menor que</p></li>
+<li><p><strong>&gt;</strong> : Mayor que</p></li>
+<li><p><strong>==</strong> : Igual que</p></li>
+<li><p><strong>&lt;=</strong> : Menor o igual que</p></li>
+<li><p><strong>&gt;=</strong> : Mayor o igual que</p></li>
+<li><p><strong>!=</strong> : Diferente que</p></li>
+<li><p><strong>%in%</strong> : Pertenece al conjunto</p></li>
+<li><p><strong>is.na</strong> : Es NA</p></li>
+<li><p><strong>!is.na</strong> : No es NA</p></li>
+</ul>
+<p><strong>EJERCICIO:</strong></p>
+<ul>
+<li><p>Practicar la función de filtro de observaciones usando los operadores auxiliares.</p></li>
+<li><p>Concatenar el resultado de seleccionar columnas y posteriormente filtrar columnas.</p></li>
+</ul>
+</div>
+<div id="ordenar-registros" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Ordenar registros<a href="tidyverse.html#ordenar-registros" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La función <em>arrange()</em> se utiliza para ordenar las filas de un data frame de acuerdo a una o varias variables. Este ordenamiento puede ser ascendente o descendente.</p>
+<p>Por defecto <em>arrange()</em> ordena las filas por orden ascendente:</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="tidyverse.html#cb216-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(Sale_Price)</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 74
+##    MS_Sub…¹ MS_Zo…² Lot_F…³ Lot_A…⁴ Street Alley Lot_S…⁵ Land_…⁶ Utili…⁷ Lot_C…⁸
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+##  1 One_Sto… Reside…      68    9656 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  2 One_Sto… A_agr        80   14584 Pave   No_A… Regular Low     AllPub  Inside 
+##  3 One_Sto… C_all        60    7879 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  4 One_Sto… Reside…      60    8088 Pave   Grav… Regular Lvl     AllPub  Inside 
+##  5 One_Sto… C_all        50    9000 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  6 One_and… Reside…      50    5925 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  7 One_Sto… Reside…      50    5000 Pave   No_A… Regular Low     AllPub  Inside 
+##  8 Two_Sto… C_all        50    8500 Pave   Paved Regular Lvl     AllPub  Inside 
+##  9 One_Sto… C_all        72    9392 Pave   No_A… Regular Lvl     AllPub  Corner 
+## 10 One_Sto… Reside…      50    5925 Pave   No_A… Regular Lvl     AllPub  Corner 
+## # … with 2,920 more rows, 64 more variables: Land_Slope &lt;chr&gt;,
+## #   Neighborhood &lt;chr&gt;, Condition_1 &lt;chr&gt;, Condition_2 &lt;chr&gt;, Bldg_Type &lt;chr&gt;,
+## #   House_Style &lt;chr&gt;, Overall_Cond &lt;chr&gt;, Year_Built &lt;dbl&gt;,
+## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
+## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
+## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+<p><br>
+<br></p>
+<p>Si las queremos ordenar de forma ascendente, lo haremos del siguiente modo:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="tidyverse.html#cb218-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Sale_Price))</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 74
+##    MS_Sub…¹ MS_Zo…² Lot_F…³ Lot_A…⁴ Street Alley Lot_S…⁵ Land_…⁶ Utili…⁷ Lot_C…⁸
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+##  1 Two_Sto… Reside…     104   21535 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  2 Two_Sto… Reside…     160   15623 Pave   No_A… Slight… Lvl     AllPub  Corner 
+##  3 Two_Sto… Reside…     118   35760 Pave   No_A… Slight… Lvl     AllPub  CulDSac
+##  4 One_Sto… Reside…     106   12720 Pave   No_A… Regular HLS     AllPub  Inside 
+##  5 One_Sto… Reside…     100   12919 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  6 One_Sto… Reside…     105   13693 Pave   No_A… Regular Lvl     AllPub  Inside 
+##  7 One_Sto… Reside…      52   51974 Pave   No_A… Slight… Lvl     AllPub  CulDSac
+##  8 Two_Sto… Reside…     114   17242 Pave   No_A… Slight… Lvl     AllPub  Inside 
+##  9 Two_Sto… Reside…     107   13891 Pave   No_A… Regular Lvl     AllPub  Inside 
+## 10 Two_Sto… Reside…      85   16056 Pave   No_A… Slight… Lvl     AllPub  Inside 
+## # … with 2,920 more rows, 64 more variables: Land_Slope &lt;chr&gt;,
+## #   Neighborhood &lt;chr&gt;, Condition_1 &lt;chr&gt;, Condition_2 &lt;chr&gt;, Bldg_Type &lt;chr&gt;,
+## #   House_Style &lt;chr&gt;, Overall_Cond &lt;chr&gt;, Year_Built &lt;dbl&gt;,
+## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
+## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
+## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+<p>Si se desea usar dos o más columnas para realizar el ordenamiento, deben separarse por comas cada una de las características</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="tidyverse.html#cb220-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="tidyverse.html#cb220-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(Sale_Condition, <span class="fu">desc</span>(Sale_Price), Lot_Area) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-3"><a href="tidyverse.html#cb220-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(Sale_Condition, Sale_Price, Lot_Area)</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 3
+##    Sale_Condition Sale_Price Lot_Area
+##    &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Abnorml            745000    15623
+##  2 Abnorml            552000    14836
+##  3 Abnorml            475000    11778
+##  4 Abnorml            390000    13418
+##  5 Abnorml            328900     5119
+##  6 Abnorml            310000    14541
+##  7 Abnorml            290000     9950
+##  8 Abnorml            287000    15498
+##  9 Abnorml            258000    12090
+## 10 Abnorml            257000    10994
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>Notemos que en el ejemplo anterior usamos dos <em>pipes</em> (%&gt;%), como habíamos mencionado se pueden usar los necesarios para combinar funciones.</p>
+</div>
+<div id="agregar-modificar" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Agregar / Modificar<a href="tidyverse.html#agregar-modificar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Con la función <em>mutate()</em> podemos computar transformaciones de variables en un data frame. A menudo, tendremos la necesidad de crear nuevas variables que se calculan a partir de variables existentes. La función <em>mutate()</em> proporciona una interfaz clara para realizar este tipo de operaciones.</p>
+<p>Por ejemplo, haremos el cálculo de la antigüedad del inmueble a partir de las variables <em>Year_Sold</em> y <em>Year_Remod_Add</em>:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="tidyverse.html#cb222-1" aria-hidden="true" tabindex="-1"></a>ejemplo_mutate <span class="ot">&lt;-</span> ames_housing <span class="sc">%&gt;%</span> </span>
+<span id="cb222-2"><a href="tidyverse.html#cb222-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(Year_Sold, Year_Remod_Add) <span class="sc">%&gt;%</span></span>
+<span id="cb222-3"><a href="tidyverse.html#cb222-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Antique =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add)</span>
+<span id="cb222-4"><a href="tidyverse.html#cb222-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-5"><a href="tidyverse.html#cb222-5" aria-hidden="true" tabindex="-1"></a>ejemplo_mutate</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 3
+##    Year_Sold Year_Remod_Add Antique
+##        &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;
+##  1      2010           1960      50
+##  2      2010           1961      49
+##  3      2010           1958      52
+##  4      2010           1968      42
+##  5      2010           1998      12
+##  6      2010           1998      12
+##  7      2010           2001       9
+##  8      2010           1992      18
+##  9      2010           1996      14
+## 10      2010           1999      11
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>El ejemplo anterior crea una nueva variable. Ahora se presenta otro ejemplo en donde se modifica una variable ya creada.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="tidyverse.html#cb224-1" aria-hidden="true" tabindex="-1"></a>ejemplo_mutate <span class="sc">%&gt;%</span> </span>
+<span id="cb224-2"><a href="tidyverse.html#cb224-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Antique =</span> Antique <span class="sc">*</span> <span class="dv">12</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2,930 × 3
+##    Year_Sold Year_Remod_Add Antique
+##        &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;
+##  1      2010           1960     600
+##  2      2010           1961     588
+##  3      2010           1958     624
+##  4      2010           1968     504
+##  5      2010           1998     144
+##  6      2010           1998     144
+##  7      2010           2001     108
+##  8      2010           1992     216
+##  9      2010           1996     168
+## 10      2010           1999     132
+## # … with 2,920 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>En este segundo ejemplo, se modifica el número de años de antigüedad y se multiplica por un factor de 12 para modificar el tiempo en una escala de meses.</p>
+</div>
+<div id="resumen-estadístico" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Resumen estadístico<a href="tidyverse.html#resumen-estadístico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La función <em>summarise()</em> se comporta de forma análoga a la función <em>mutate()</em>, excepto que en lugar de añadir nuevas columnas crea un nuevo data frame.</p>
+<p>Podemos usar el ejemplo anterior y calcular la media de la variable creada <em>Antique</em>:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="tidyverse.html#cb226-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> </span>
+<span id="cb226-2"><a href="tidyverse.html#cb226-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(Year_Sold, Year_Remod_Add) <span class="sc">%&gt;%</span></span>
+<span id="cb226-3"><a href="tidyverse.html#cb226-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Antique =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add) <span class="sc">%&gt;%</span></span>
+<span id="cb226-4"><a href="tidyverse.html#cb226-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">Mean_Antique =</span> <span class="fu">mean</span>(Antique))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
+##   Mean_Antique
+##          &lt;dbl&gt;
+## 1         23.5</code></pre>
+<p>Solo fue necesario agregar un <em>pipe</em>, especificar el nombre de la variable creada y la operación a realizar.</p>
+<p>A continuación se muestran funciones que trabajando conjuntamente con la función summarise() facilitarán nuestro trabajo diario. Las primeras pertenecen al paquete base y las otras son del paquete dplyr. Todas ellas toman como argumento un vector y devuelven un único resultado:</p>
+<ul>
+<li><p><em>min(), max()</em> : Valores max y min.</p></li>
+<li><p><em>mean()</em> : Media.</p></li>
+<li><p><em>median()</em> : Mediana.</p></li>
+<li><p><em>sum()</em> : Suma de los valores.</p></li>
+<li><p><em>var(), sd()</em> : Varianza y desviación estándar.</p></li>
+<li><p><em>first()</em> : Primer valor en un vector.</p></li>
+<li><p><em>last()</em> : El último valor en un vector</p></li>
+<li><p><em>n()</em> : El número de valores en un vector.</p></li>
+<li><p><em>n_distinct()</em> : El número de valores distintos en un vector.</p></li>
+<li><p><em>nth()</em> : Extrae el valor que ocupa la posición n en un vector.</p></li>
+</ul>
+<p>Mas adelante veremos como combinar esta función con la función <em>group_by()</em> para calcular estadísticos agrupados por alguna característica de interés.</p>
+</div>
+<div id="agrupamiento" class="section level3 hasAnchor" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> Agrupamiento<a href="tidyverse.html#agrupamiento" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La función <em>group_by()</em> agrupa un conjunto de filas de acuerdo con los valores de una o más columnas o expresiones.</p>
+<p>Usaremos el ejemplo anterior. Primero creamos nuestra nueva variable <em>Antique</em>, después agrupamos por vecindario y al final calculamos la media de la variable <em>Antique</em>. Gracias al agrupamiento, nos regresara una media por cada grupo creado, es decir, nos regresara el promedio de la antigüedad por vecindario.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="tidyverse.html#cb228-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> </span>
+<span id="cb228-2"><a href="tidyverse.html#cb228-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Antique =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add) <span class="sc">%&gt;%</span> </span>
+<span id="cb228-3"><a href="tidyverse.html#cb228-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">group_by</span>(Neighborhood) <span class="sc">%&gt;%</span> </span>
+<span id="cb228-4"><a href="tidyverse.html#cb228-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">Mean_Antique =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Antique), <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 28 × 2
+##    Neighborhood        Mean_Antique
+##    &lt;chr&gt;                      &lt;dbl&gt;
+##  1 Bloomington_Heights            2
+##  2 Blueste                       25
+##  3 Briardale                     35
+##  4 Brookside                     39
+##  5 Clear_Creek                   28
+##  6 College_Creek                  8
+##  7 Crawford                      29
+##  8 Edwards                       33
+##  9 Gilbert                        9
+## 10 Green_Hills                   14
+## # … with 18 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lectura-de-datos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

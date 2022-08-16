@@ -2,7 +2,9 @@
 <img src="img/header.png" width="400"/>
 :::
 
-# Introducción a Ciencia de Datos
+# (PART\*) Parte 1: Introducción {-} 
+
+# Conceptos de Ciencia de Datos
 
 ## ¿Qué es Ciencia de Datos?
 
@@ -752,3 +754,7 @@ knitr::include_graphics("img/01-intro2ds/25-workflow.png")
 ```
 
 En *R*, existen librerías que ayudan a llevar a cabo todo el proceso de principio a fin. En las siguientes sesiones se llevará a cabo la explicación de todo el proceso y su implementación.
+
+```{r, fig.align='center', out.height='400pt', out.width='800pt',echo=F}
+knitr::include_graphics("img/01-intro2ds/26-needs.png")
+```

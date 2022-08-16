@@ -1,5 +1,5 @@
-fig:unnamed-chunk-58
-introducción-a-ciencia-de-datos
+fig:unnamed-chunk-59
+conceptos-de-ciencia-de-datos
 qué-es-ciencia-de-datos
 objetivos
 requisitos-1
@@ -61,3 +61,11 @@ archivos-xls-y-xlsx
 archivos-json
 bases-de-datos
 microsoft-sql-server
+tidyverse
+consultas-de-datos
+seleccionar-columnas
+filtrar-observaciones
+ordenar-registros
+agregar-modificar
+resumen-estadístico
+agrupamiento
