@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="conceptos-de-ciencia-de-datos.html"/>
-<link rel="next" href="lectura-de-datos.html"/>
+<link rel="next" href="tidyverse.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,6 +50,9 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -238,27 +241,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html"><i class="fa fa-check"></i><b>3</b> Lectura de datos</a>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-csv"><i class="fa fa-check"></i><b>3.1</b> Archivos <em>csv</em></a></li>
-<li class="chapter" data-level="3.2" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-txt"><i class="fa fa-check"></i><b>3.2</b> Archivos txt</a></li>
-<li class="chapter" data-level="3.3" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
-<li class="chapter" data-level="3.4" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#archivos-json"><i class="fa fa-check"></i><b>3.4</b> Archivos json</a></li>
-<li class="chapter" data-level="3.5" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Bases de Datos</a>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-de-archivos"><i class="fa fa-check"></i><b>3.1</b> Lectura de archivos</a>
 <ul>
-<li class="chapter" data-level="3.5.1" data-path="lectura-de-datos.html"><a href="lectura-de-datos.html#microsoft-sql-server"><i class="fa fa-check"></i><b>3.5.1</b> Microsoft SQL Server</a></li>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#archivos-csv"><i class="fa fa-check"></i><b>3.1.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#archivos-txt"><i class="fa fa-check"></i><b>3.1.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.1.3" data-path="tidyverse.html"><a href="tidyverse.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.1.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.1.4" data-path="tidyverse.html"><a href="tidyverse.html#archivos-json"><i class="fa fa-check"></i><b>3.1.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.1.5" data-path="tidyverse.html"><a href="tidyverse.html#archivos-rds"><i class="fa fa-check"></i><b>3.1.5</b> Archivos rds</a></li>
+<li class="chapter" data-level="3.1.6" data-path="tidyverse.html"><a href="tidyverse.html#bases-de-datos"><i class="fa fa-check"></i><b>3.1.6</b> Bases de Datos</a></li>
+<li class="chapter" data-level="3.1.7" data-path="tidyverse.html"><a href="tidyverse.html#microsoft-sql-server"><i class="fa fa-check"></i><b>3.1.7</b> Microsoft SQL Server</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>3.2</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>3.2.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="3.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>3.2.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="3.2.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>3.2.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="3.2.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>3.2.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>3.2.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="3.2.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>3.2.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.2.7" data-path="tidyverse.html"><a href="tidyverse.html#cruces-de-tablas"><i class="fa fa-check"></i><b>3.2.7</b> Cruces de tablas</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>4</b> Tidyverse</a>
+<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#orden-y-estructura"><i class="fa fa-check"></i><b>3.3</b> Orden y estructura</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>4.1</b> Consultas de datos</a>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#pivote-horizontal"><i class="fa fa-check"></i><b>3.3.1</b> Pivote horizontal</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#pivote-vertical"><i class="fa fa-check"></i><b>3.3.2</b> Pivote vertical</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tidyverse.html"><a href="tidyverse.html#unión-de-columnas"><i class="fa fa-check"></i><b>3.3.3</b> Unión de columnas</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tidyverse.html"><a href="tidyverse.html#separador-de-columnas"><i class="fa fa-check"></i><b>3.3.4</b> Separador de columnas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-texto"><i class="fa fa-check"></i><b>3.4</b> Manipulación de texto</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>4.1.1</b> Seleccionar columnas</a></li>
-<li class="chapter" data-level="4.1.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>4.1.2</b> Filtrar observaciones</a></li>
-<li class="chapter" data-level="4.1.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>4.1.3</b> Ordenar registros</a></li>
-<li class="chapter" data-level="4.1.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>4.1.4</b> Agregar / Modificar</a></li>
-<li class="chapter" data-level="4.1.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>4.1.5</b> Resumen estadístico</a></li>
-<li class="chapter" data-level="4.1.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>4.1.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.4.1" data-path="tidyverse.html"><a href="tidyverse.html#caracteres-especiales"><i class="fa fa-check"></i><b>3.4.1</b> Caracteres especiales</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tidyverse.html"><a href="tidyverse.html#tamaño-de-cadena"><i class="fa fa-check"></i><b>3.4.2</b> Tamaño de cadena</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tidyverse.html"><a href="tidyverse.html#concatenar"><i class="fa fa-check"></i><b>3.4.3</b> Concatenar</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tidyverse.html"><a href="tidyverse.html#extraer-y-reemplazar"><i class="fa fa-check"></i><b>3.4.4</b> Extraer y reemplazar</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tidyverse.html"><a href="tidyverse.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.4.5</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tidyverse.html"><a href="tidyverse.html#detectar-coincidencias"><i class="fa fa-check"></i><b>3.4.6</b> Detectar coincidencias</a></li>
+<li class="chapter" data-level="3.4.7" data-path="tidyverse.html"><a href="tidyverse.html#contabilizar-coincidencias"><i class="fa fa-check"></i><b>3.4.7</b> Contabilizar coincidencias</a></li>
+<li class="chapter" data-level="3.4.8" data-path="tidyverse.html"><a href="tidyverse.html#extraer-coincidencias"><i class="fa fa-check"></i><b>3.4.8</b> Extraer coincidencias</a></li>
+<li class="chapter" data-level="3.4.9" data-path="tidyverse.html"><a href="tidyverse.html#reemplazar-coincidencias"><i class="fa fa-check"></i><b>3.4.9</b> Reemplazar coincidencias</a></li>
+<li class="chapter" data-level="3.4.10" data-path="tidyverse.html"><a href="tidyverse.html#divisiones-mediante-patrones"><i class="fa fa-check"></i><b>3.4.10</b> Divisiones mediante patrones</a></li>
+<li class="chapter" data-level="3.4.11" data-path="tidyverse.html"><a href="tidyverse.html#localización-de-coincidencias"><i class="fa fa-check"></i><b>3.4.11</b> Localización de coincidencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-tiempo"><i class="fa fa-check"></i><b>3.5</b> Manipulación de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-y-creación-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.1</b> Lectura y creación de datos temporales</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -1103,7 +1133,7 @@ La instrucción <code>break</code> sirve para salir de un procedimiento iterativ
 <p>A pesar de la anterior advertencia es posible que en este libro usemos el <code>;</code> en algunas ocasiones, si lo hacemos es para ahorrar espacio en la presentación del código.</p>
 
 <div class="watermark">
-<img src="img/header.png" width="400">
+<p><img src="img/header.png" width="400"/></p>
 </div>
 </div>
 </div>
@@ -1136,7 +1166,7 @@ $('.pipehover_select_one_row tr').hover(function() {
         </div>
       </div>
 <a href="conceptos-de-ciencia-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lectura-de-datos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
