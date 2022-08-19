@@ -230,7 +230,7 @@ En esta clase estaremos usando:
 
 * R [(descargar)](https://cran.r-project.org/)
 * RStudio [(descargar)](https://www.rstudio.com/products/rstudio/download/)
-* Zoom [Clases]()
+* Zoom [Clases](https://us02web.zoom.us/j/5155440751?pwd=YzJCOGF0VnlZdlZlS0Fpc3MvZEhadz09)
 
   - **Pulgar arriba:** Voy bien, estoy entendiendo! 
   - **Pulgar abajo:** Eso no quedó muy claro
@@ -239,7 +239,8 @@ En esta clase estaremos usando:
 * [Google Drive](https://drive.google.com/drive/folders/19M-8eY2wYw53pmj3EywkOfV4li0D2mFY?usp=sharing)
 * [Notas de clase](https://acturio.github.io/amt22_aserta_intro2dsml/) 
 
-* Finalmente, se dejarán ejercicios que serán clave para el éxito del aprendizaje de los capítulos, por lo que se trabajará en equipo para lograr adquirir el mayor aprendizaje.
+
+FINALMENTE... se dejarán ejercicios que serán clave para el éxito del aprendizaje de los capítulos, por lo que se trabajará en equipo para lograr adquirir el mayor aprendizaje.
 
 
 <div class="watermark"><img src="img/header.png" width="400"></div>

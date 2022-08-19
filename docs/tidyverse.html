@@ -290,6 +290,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
 <li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
 </ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#iteraciones"><i class="fa fa-check"></i><b>3.6</b> Iteraciones</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse.html"><a href="tidyverse.html#bucles-1"><i class="fa fa-check"></i><b>3.6.1</b> Bucles</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
@@ -849,7 +854,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     190      12      24      46    2413     245</code></pre>
 <div class="infobox important">
 <p><strong>¡¡ SPOILER !!</strong></p>
-<p>En un modelo predictivo de Machine Learning, <strong>no es correcto</strong> agregar columnas cuyo valor es conocido hasta el momento de la observación. Es decir, no deben agregarse variables que no se conozca su valor al momento de la predicción, como es el caso de <em>Condición de venta</em>.</p>
+<p>En un modelo predictivo de Machine Learning, <strong>no es correcto</strong> agregar columnas cuyo valor es conocido hasta el momento de la observación. Es decir, no deben agregarse variables que no se conozca su valor al momento de la predicción, como es el caso de <em>condición de venta</em>.</p>
 </div>
 <p>Ahora usaremos la función <em>filter</em> para quedarnos solo con las observaciones con condición de venta “normal”.</p>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="tidyverse.html#cb217-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sale_Condition <span class="sc">==</span> <span class="st">&quot;Normal&quot;</span>)</span></code></pre></div>
@@ -1081,6 +1086,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><em>nth()</em> : Extrae el valor que ocupa la posición n en un vector.</p></li>
 </ul>
 <p>Mas adelante veremos como combinar esta función con la función <em>group_by()</em> para calcular estadísticos agrupados por alguna característica de interés.</p>
+<p><strong>EJERCICIO:</strong></p>
+<ul>
+<li>Realizar una consulta usando <em>summarise()</em> y cada una de las funciones estadísticas listadas anteriormente.</li>
+</ul>
 </div>
 <div id="agrupamiento" class="section level3 hasAnchor" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> Agrupamiento<a href="tidyverse.html#agrupamiento" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1656,7 +1665,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.4.5</span> Expresiones regulares<a href="tidyverse.html#expresiones-regulares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En el estudio de las expresiones regulares se puede encontrar de manera sobresaliente la aplicación de los <em>patrones coincidentes</em>, los cuáles sirven para describir y descubrir coincidencias de interés en conjuntos específicos a partir de cadenas de caracteres.</p>
 <p>Con el fin de comprender y visualizar de manera práctica el uso de los patrones coincidentes con las expresiones regulares, se hará uso de la función <em>str_view()</em>, que permite distinguir los elementos coincidentes de un vector con un patrón de caracteres descrito.</p>
-<p><img src="img/04-tidyverse/regexp.jpeg" width="700pt" style="display: block; margin: auto;" /></p>
 <p>La paquetería <em>stringr</em> cuenta con tres conjuntos predefinidos de oraciones y palabras que sirven para ejemplificar el uso de las expresiones regulares. Estos conjuntos llevan el nombre de <strong>sentences, words y fruit</strong>, su contenido es de sentencias, palabras y nombres de frutas. En los tres casos, estos conjuntos han sido escritos en inglés. Los conjuntos sirven bien para ejemplificar el uso de las siguientes funciones y de las expresiones regulares.</p>
 <div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="tidyverse.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sentences, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;The birch canoe slid on the smooth planks.&quot; 
@@ -1707,10 +1715,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="htmlwidget-d64c84362a2199539b68" style="width:960px;height:100%;" class="str_view html-widget"></div>
 <script type="application/json" data-for="htmlwidget-d64c84362a2199539b68">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x<\/span><\/li>\n  <li>se<span class='match'>x<\/span><\/li>\n  <li>si<span class='match'>x<\/span><\/li>\n  <li>ta<span class='match'>x<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>En caso de desear hacer coincidir todo el contenido de la cadena, deben usarse ambos caracteres especiales para definir el inicio y el final del patrón coincidente como se muestra a continuación.</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="tidyverse.html#cb332-1" aria-hidden="true" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;nulo éxito&quot;</span>, <span class="st">&quot;poco éxito&quot;</span>,<span class="st">&quot;éxito moderado&quot;</span>,<span class="st">&quot;éxito&quot;</span>, <span class="st">&quot;éxito total&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="tidyverse.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(vector,<span class="st">&quot;^éxito$&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="tidyverse.html#cb332-1" aria-hidden="true" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;nulo aprendizaje&quot;</span>, <span class="st">&quot;poco aprendizaje&quot;</span>,<span class="st">&quot;aprendizaje moderado&quot;</span>,<span class="st">&quot;aprendizaje&quot;</span>, <span class="st">&quot;aprendizaje total&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="tidyverse.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(vector,<span class="st">&quot;^aprendizaje$&quot;</span>)</span></code></pre></div>
 <div id="htmlwidget-a5ed62e546bfa15d6fc4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a5ed62e546bfa15d6fc4">{"x":{"html":"<ul>\n  <li>nulo éxito<\/li>\n  <li>poco éxito<\/li>\n  <li>éxito moderado<\/li>\n  <li><span class='match'>éxito<\/span><\/li>\n  <li>éxito total<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-a5ed62e546bfa15d6fc4">{"x":{"html":"<ul>\n  <li>nulo aprendizaje<\/li>\n  <li>poco aprendizaje<\/li>\n  <li>aprendizaje moderado<\/li>\n  <li><span class='match'>aprendizaje<\/span><\/li>\n  <li>aprendizaje total<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Wickham menciona que, además del caracter especial punto “.”, existen otros cuatro que resultan muy útiles para mostrar patrones particulares.</p>
 <ul>
 <li>\d Hace coincidir cualquier dígito.</li>
@@ -1719,10 +1727,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>[^abc] Coincide con cualquier cosa excepto a, b ó c.</li>
 </ul>
 <p>Al momento de definir cualquiera de estos 4 patrones coincidentes será necesario usar doble diagonal invertida. Por ejemplo, “\\d” será el patrón para encontrar la coincidencia con cualquier dígito.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="tidyverse.html#cb334-1" aria-hidden="true" tabindex="-1"></a>cadena <span class="ot">&lt;-</span> <span class="st">&quot;El año 2018 fue un año de mucho crecimiento personal.&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="tidyverse.html#cb334-1" aria-hidden="true" tabindex="-1"></a>cadena <span class="ot">&lt;-</span> <span class="st">&quot;El año 2022 será un año de mucho crecimiento.&quot;</span></span></code></pre></div>
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="tidyverse.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(cadena,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>, <span class="at">match =</span> T)</span></code></pre></div>
 <div id="htmlwidget-54bd38e9dafe808fa722" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-54bd38e9dafe808fa722">{"x":{"html":"<ul>\n  <li>El año <span class='match'>2<\/span>018 fue un año de mucho crecimiento personal.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-54bd38e9dafe808fa722">{"x":{"html":"<ul>\n  <li>El año <span class='match'>2<\/span>022 será un año de mucho crecimiento.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Wickham menciona que, “es posible usar alternancias para elegir entre uno o más patrones alternativos. Por ejemplo, abc|d..f coincidirá con”abc” o con “deaf”. Haciendo notar que la prioridad para el operador “|” es baja, por lo que abc|xyz coincide con abc o xyz, no con abcyz o abxyz. Al igual que en las matemáticas, si existe ambigüedad en la prioridad de las operaciones, usar paréntesis lo hará todo más claro.”</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="tidyverse.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">&quot;tamaño&quot;</span>,<span class="st">&quot;tasa&quot;</span>,<span class="st">&quot;tata&quot;</span>,<span class="st">&quot;taza&quot;</span>,<span class="st">&quot;tapa&quot;</span>),<span class="st">&quot;ta(s|z)a&quot;</span>)</span></code></pre></div>
 <div id="htmlwidget-9e4bb4a2048a6b833455" style="width:960px;height:100%;" class="str_view html-widget"></div>
@@ -1897,11 +1905,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] &quot; and &quot;</code></pre>
 <p>Un formato más compacto del resultado anterior se logra al agregar el parámetro “simplfy = TRUE” dentro de la función de extracción. Para visualizar aleatoriamente diez de los resultados generados, se puede hacer uso de la función <em>sample_n()</em> de la librería <em>dplyr</em>.</p>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="tidyverse.html#cb362-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">sample_n</span>(</span>
-<span id="cb362-2"><a href="tidyverse.html#cb362-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbl =</span> <span class="fu">as_tibble</span>(<span class="fu">str_extract_all</span>(coincidencias, patron, <span class="at">simplify =</span> <span class="cn">TRUE</span>), <span class="at">.name_repair =</span> <span class="st">&quot;unique&quot;</span>), </span>
+<span id="cb362-2"><a href="tidyverse.html#cb362-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbl =</span> <span class="fu">as_tibble</span>(<span class="fu">str_extract_all</span>(coincidencias, patron, <span class="at">simplify =</span> <span class="cn">TRUE</span>)), </span>
 <span id="cb362-3"><a href="tidyverse.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">10</span></span>
 <span id="cb362-4"><a href="tidyverse.html#cb362-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 2
-##    ...1    ...2   
+##    V1      V2     
 ##    &lt;chr&gt;   &lt;chr&gt;  
 ##  1 &quot; and &quot; &quot;&quot;     
 ##  2 &quot; and &quot; &quot;&quot;     
@@ -1953,10 +1961,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="tidyverse.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(<span class="at">string =</span> fechas,<span class="at">pattern =</span> <span class="st">&quot;/&quot;</span>,<span class="at">n =</span> <span class="dv">3</span>, <span class="at">simplify =</span> T) <span class="sc">%&gt;%</span> </span>
 <span id="cb374-2"><a href="tidyverse.html#cb374-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb374-3"><a href="tidyverse.html#cb374-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">day =</span> V1, <span class="at">month =</span> V2, <span class="at">year =</span> V3)</span></code></pre></div>
-<pre><code>## Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
-## Using compatibility `.name_repair`.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <pre><code>## # A tibble: 5 × 3
 ##   day   month year 
 ##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1969,8 +1973,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="localización-de-coincidencias" class="section level3 hasAnchor" number="3.4.11">
 <h3><span class="header-section-number">3.4.11</span> Localización de coincidencias<a href="tidyverse.html#localización-de-coincidencias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para poder hacer operaciones con algunas cadenas de caracteres, en ocasiones es necesario proporcionar los índices que denotan el inicio y el término de algún patrón de caracteres. La función <em>str_locate()</em> devuelve dichos índices una vez que se le haya proporcionado como argumento el patrón coincidente y el vector de cadenas de texto.</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="tidyverse.html#cb377-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;090020001-123&quot;</span>,<span class="st">&quot;090001-512&quot;</span>,<span class="st">&quot;09002-1236&quot;</span>,<span class="st">&quot;90020001-1237&quot;</span>,<span class="st">&quot;09001-123811&quot;</span>)</span>
-<span id="cb377-2"><a href="tidyverse.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(x,<span class="st">&quot;-</span><span class="sc">\\</span><span class="st">d{2,}&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="tidyverse.html#cb376-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;090020001-123&quot;</span>,<span class="st">&quot;090001-512&quot;</span>,<span class="st">&quot;09002-1236&quot;</span>,<span class="st">&quot;90020001-1237&quot;</span>,<span class="st">&quot;09001-123811&quot;</span>)</span>
+<span id="cb376-2"><a href="tidyverse.html#cb376-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(x,<span class="st">&quot;-</span><span class="sc">\\</span><span class="st">d{2,}&quot;</span>)</span></code></pre></div>
 <pre><code>##      start end
 ## [1,]    10  13
 ## [2,]     7  10
@@ -1979,24 +1983,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [5,]     6  12</code></pre>
 <p>El ejemplo anterior muestra la manera en la que se localizan los índices iniciales y finales de los caracteres posteriores al símbolo “-”, que cumplan con tener al menos 2 dígitos. Hay que tomar en cuenta que bajo esta forma de extraer los índices, la posición del caracter “-” está incluida y es ahí donde inicia el conteo.</p>
 <p>Habiendo platicado de esto, podemos hablar de uno de los temas importantes en muchas ocasiones complejos de la manipulación de datos… las fechas.</p>
+<p><img src="img/04-tidyverse/regexp.jpeg" width="700pt" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="manipulación-de-tiempo" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Manipulación de tiempo<a href="tidyverse.html#manipulación-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="img/04-tidyverse/build_time.png" width="400pt" style="display: block; margin: auto;" /></p>
 <div id="lectura-y-creación-de-datos-temporales" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Lectura y creación de datos temporales<a href="tidyverse.html#lectura-y-creación-de-datos-temporales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Una de la tareas más comunes en el análisis de datos es la manipulación de fechas y horas. Existe una infinidad de situaciones en donde saber operar con esta clase de datos es vital para el análisis de datos general. El primer paso es lograr identificar una cadena de caracteres como un dato temporal. Veamos un primer ejemplo:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="tidyverse.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb379-2"><a href="tidyverse.html#cb379-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb379-3"><a href="tidyverse.html#cb379-3" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2018/09/11&quot;</span>, <span class="st">&quot;1992/04/23&quot;</span>, <span class="st">&quot;1966/02/04&quot;</span>, <span class="st">&quot;1958/10/01&quot;</span>, <span class="st">&quot;1991/11/15&quot;</span>)</span>
-<span id="cb379-4"><a href="tidyverse.html#cb379-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fechas)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="tidyverse.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb378-2"><a href="tidyverse.html#cb378-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb378-3"><a href="tidyverse.html#cb378-3" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2018/09/11&quot;</span>, <span class="st">&quot;1992/04/23&quot;</span>, <span class="st">&quot;1966/02/04&quot;</span>, <span class="st">&quot;1958/10/01&quot;</span>, <span class="st">&quot;1991/11/15&quot;</span>)</span>
+<span id="cb378-4"><a href="tidyverse.html#cb378-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fechas)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="tidyverse.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">as_date</span>(fechas))</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="tidyverse.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">as_date</span>(fechas))</span></code></pre></div>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
 <p>Como puede apreciarse, los elementos del vector ahora son de la clase “Date”. La función <em>as_date()</em> transforma caracteres a fechas. Otra forma de realizar la implementación de datos temporales es directamente la creación de datos temporales a través de las funciones <em>make_date()</em> y <em>make_datetime()</em>. Esta función recibe los parámetros de cada unidad temporal y crea el dato adecuado para representarlo, ya sea <em>date</em> o <em>datetime</em>.</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="tidyverse.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_date</span>(<span class="at">year =</span> <span class="dv">1999</span>, <span class="at">month =</span> <span class="dv">06</span>, <span class="at">day =</span> <span class="dv">16</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="tidyverse.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_date</span>(<span class="at">year =</span> <span class="dv">1999</span>, <span class="at">month =</span> <span class="dv">06</span>, <span class="at">day =</span> <span class="dv">16</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;1999-06-16&quot;</code></pre>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="tidyverse.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_datetime</span>(<span class="at">year =</span> <span class="dv">1999</span><span class="sc">:</span><span class="dv">2001</span>, <span class="at">month =</span> <span class="dv">06</span>, <span class="at">day =</span> <span class="dv">16</span>, <span class="at">hour =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">min =</span> <span class="dv">37</span>, <span class="at">sec =</span> <span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="tidyverse.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_datetime</span>(<span class="at">year =</span> <span class="dv">1999</span><span class="sc">:</span><span class="dv">2001</span>, <span class="at">month =</span> <span class="dv">06</span>, <span class="at">day =</span> <span class="dv">16</span>, <span class="at">hour =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">min =</span> <span class="dv">37</span>, <span class="at">sec =</span> <span class="dv">15</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;1999-06-16 10:37:15 UTC&quot; &quot;2000-06-16 11:37:15 UTC&quot;
 ## [3] &quot;2001-06-16 12:37:15 UTC&quot;</code></pre>
 <p>El segundo ejemplo muestra la capacidad de estas funciones para crear una secuencia de fechas a partir de vectores de cada posible unidad temporal (día, mes año, hora, etc)</p>
@@ -2009,58 +2015,193 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>hm / hms</p></li>
 </ul>
 <p>Con todas las funciones mencionadas anteriormente se puede leer cualquier cadena de caracteres que contenga el formato especificado. A continuación, un ejemplo:</p>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="tidyverse.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdy</span>(<span class="st">&quot;11/25/1982&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="tidyverse.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdy</span>(<span class="st">&quot;11/25/1982&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;1982-11-25&quot;</code></pre>
 <p>Automáticamente cualquiera de las funciones antes mencionadas transforma el formato específico al formato universal.</p>
 </div>
 <div id="extracción-de-datos-temporales" class="section level3 hasAnchor" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Extracción de datos temporales<a href="tidyverse.html#extracción-de-datos-temporales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Una vez que los datos temporales ya se encuentran creados, es importante saber la manera de extraer información particular de nuestro interés. En esta sección se revisará la manera de extraer cualquier unidad temporal a partir de una cadena completa de caracteres. a través de lubridate, las funciones para extracción de sub-unidades temporales son intuitivas.</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="tidyverse.html#cb389-1" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">make_datetime</span>(<span class="at">year =</span> <span class="dv">2004</span>, <span class="at">month =</span> <span class="dv">9</span>, <span class="at">day =</span> <span class="dv">25</span>, <span class="at">hour =</span> <span class="dv">11</span>, <span class="at">min =</span> <span class="dv">30</span>, <span class="at">sec =</span> <span class="dv">1</span>)</span>
-<span id="cb389-2"><a href="tidyverse.html#cb389-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb389-3"><a href="tidyverse.html#cb389-3" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="tidyverse.html#cb388-1" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">make_datetime</span>(<span class="at">year =</span> <span class="dv">2004</span>, <span class="at">month =</span> <span class="dv">9</span>, <span class="at">day =</span> <span class="dv">25</span>, <span class="at">hour =</span> <span class="dv">11</span>, <span class="at">min =</span> <span class="dv">30</span>, <span class="at">sec =</span> <span class="dv">1</span>)</span>
+<span id="cb388-2"><a href="tidyverse.html#cb388-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb388-3"><a href="tidyverse.html#cb388-3" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 2004</code></pre>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="tidyverse.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="tidyverse.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 9</code></pre>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="tidyverse.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(tiempo, <span class="at">label =</span> T, <span class="at">abbr =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="tidyverse.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(tiempo, <span class="at">label =</span> T, <span class="at">abbr =</span> F)</span></code></pre></div>
 <pre><code>## [1] septiembre
 ## 12 Levels: enero &lt; febrero &lt; marzo &lt; abril &lt; mayo &lt; junio &lt; ... &lt; diciembre</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="tidyverse.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="fu">day</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="tidyverse.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">day</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 25</code></pre>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="tidyverse.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hour</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="tidyverse.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hour</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 11</code></pre>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="tidyverse.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">minute</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="tidyverse.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">minute</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 30</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="tidyverse.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">second</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="tidyverse.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">second</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>Después de las unidades temporales básicas, es posible también extraer día de la semana o día del mes, si es de interés.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="tidyverse.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="tidyverse.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="tidyverse.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(tiempo, <span class="at">label =</span> T, <span class="at">abbr =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="tidyverse.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(tiempo, <span class="at">label =</span> T, <span class="at">abbr =</span> F)</span></code></pre></div>
 <pre><code>## [1] sábado
 ## 7 Levels: domingo &lt; lunes &lt; martes &lt; miércoles &lt; jueves &lt; ... &lt; sábado</code></pre>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="tidyverse.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mday</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="tidyverse.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mday</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 25</code></pre>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="tidyverse.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">yday</span>(tiempo)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="tidyverse.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">yday</span>(tiempo)</span></code></pre></div>
 <pre><code>## [1] 269</code></pre>
 </div>
 <div id="operaciones-temporales" class="section level3 hasAnchor" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Operaciones temporales<a href="tidyverse.html#operaciones-temporales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Las operaciones aritméticas entre datos temporales es cotidiano en todo momento cuando se analizan datos. Operaciones de sumas y restas de fechas y horas que permiten conocer la longitud de tiempo en dos momentos es una tarea que puede resolverse a través de los operadores aritméticos y lógicos.</p>
 <p>Resta entre fechas</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="tidyverse.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>) <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="tidyverse.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>) <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>)</span></code></pre></div>
 <pre><code>## Time difference of -160 days</code></pre>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="tidyverse.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="tidyverse.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
 <pre><code>## Time difference of 160 days</code></pre>
 <p>Suma y resta de días</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="tidyverse.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>) <span class="sc">+</span> <span class="dv">365</span></span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="tidyverse.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>) <span class="sc">+</span> <span class="dv">365</span></span></code></pre></div>
 <pre><code>## [1] &quot;1992-11-14&quot;</code></pre>
 <p>Operadores lógicos</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="tidyverse.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">&gt;</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="tidyverse.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">&gt;</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="tidyverse.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">&lt;</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="tidyverse.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="st">&quot;1992/04/23&quot;</span>) <span class="sc">&lt;</span> <span class="fu">as_date</span>(<span class="st">&quot;1991/11/15&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Cada una de las operaciones vistas en este capítulo son compatibles con dplyr y el resto de las librerías tidyverse.</p>
+</div>
+</div>
+<div id="iteraciones" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Iteraciones<a href="tidyverse.html#iteraciones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los procesos en <em>R</em> muchas veces son iterativos en distintas partes del desarrollo de una solución. Existe una librería que facilita el entendimiento, orden, legibilidad y limpieza a la orden de iterar. La librería lleva por nombre <em>purrr</em>. Purrr presenta funciones de mapeo, así como algunas funciones nuevas para manipular listas.</p>
+<p>Mientras que el caballo de batalla de <em>dplyr</em> es el marco de datos (data.frame / tibble), el caballo de batalla de purrr es la lista.</p>
+<ul>
+<li><p>Recordemos que un vector es una forma de almacenar muchos elementos individuales (un solo número o un solo carácter o cadena) del mismo tipo en un solo objeto.</p></li>
+<li><p>Un marco de datos (data.frame / tibble) es una forma de almacenar muchos vectores de la misma longitud pero posiblemente de diferentes tipos juntos en un solo objeto.</p></li>
+<li><p>Una lista es una forma de almacenar muchos objetos de cualquier tipo (por ejemplo, marcos de datos, diagramas, vectores) juntos en un solo objeto.</p></li>
+</ul>
+<p>Aquí hay un ejemplo de una lista que tiene tres elementos: un solo número, un vector y un marco de datos</p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="tidyverse.html#cb420-1" aria-hidden="true" tabindex="-1"></a>mi_2da_lista <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb420-2"><a href="tidyverse.html#cb420-2" aria-hidden="true" tabindex="-1"></a> <span class="at">my_number =</span> <span class="dv">5</span>,</span>
+<span id="cb420-3"><a href="tidyverse.html#cb420-3" aria-hidden="true" tabindex="-1"></a> <span class="at">my_vector =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
+<span id="cb420-4"><a href="tidyverse.html#cb420-4" aria-hidden="true" tabindex="-1"></a> <span class="at">my_dataframe =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb420-5"><a href="tidyverse.html#cb420-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">&quot;q&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;z&quot;</span>), </span>
+<span id="cb420-6"><a href="tidyverse.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">c</span>(<span class="st">&quot;bananas&quot;</span>, <span class="st">&quot;are&quot;</span>, <span class="st">&quot;so very great&quot;</span>))</span>
+<span id="cb420-7"><a href="tidyverse.html#cb420-7" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb420-8"><a href="tidyverse.html#cb420-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb420-9"><a href="tidyverse.html#cb420-9" aria-hidden="true" tabindex="-1"></a>mi_2da_lista</span></code></pre></div>
+<pre><code>## $my_number
+## [1] 5
+## 
+## $my_vector
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+## 
+## $my_dataframe
+##   a b             c
+## 1 1 q       bananas
+## 2 2 b           are
+## 3 3 z so very great</code></pre>
+<p><em>Un marco de datos es en realidad un caso especial de una lista donde cada elemento de la lista es un vector de la misma longitud.</em></p>
+<p>Una función de mapeo es aquella que <strong>aplica la misma acción/función a cada elemento</strong> de un objeto (por ejemplo, cada entrada de una lista o un vector, o cada una de las columnas de un marco de datos).</p>
+<div class="infobox tip">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>La funciones que serán revisadas son súper útiles para realizar una acción de forma iterativa en las entradas de un vector o lista sin tener que escribir un bucle <em>for</em>.</p>
+</div>
+<p>La convención de nomenclatura de las funciones de mapeo es tal que el tipo de salida se especifica mediante el término que sigue al guión bajo en el nombre de la función.</p>
+<ul>
+<li><p>map(.x, .f) Es la función principal y regresa una lista</p></li>
+<li><p>map_df(.x, .f) regresa un data frame</p></li>
+<li><p>map_dbl(.x, .f) regresa un vector numérico (double)</p></li>
+<li><p>map_chr(.x, .f) regresa un vector de caracter</p></li>
+<li><p>map_lgl(.x, .f) regresa un vector lógico</p></li>
+</ul>
+<p>De acuerdo con la forma del tidyverse, el primer argumento de cada función de mapeo es siempre el objeto de datos sobre el que desea mapear, y <strong>el segundo argumento es siempre la función que desea aplicar iterativamente a cada elemento del objeto de entrada.</strong></p>
+<div id="bucles-1" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Bucles<a href="tidyverse.html#bucles-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Fundamentalmente, los mapeos son para iteraciones. En el ejemplo de abajo, se iterará sobre el vector 1, 4, 7 añadiendo el valor 10 a cada entrada del vector a través de una función llamada <em>addTen()</em>. Esta función será aplicada a cada número único, el cual llamaremos “.x”.</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="tidyverse.html#cb422-1" aria-hidden="true" tabindex="-1"></a>addTen <span class="ot">&lt;-</span> <span class="cf">function</span>(.x) {</span>
+<span id="cb422-2"><a href="tidyverse.html#cb422-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(.x <span class="sc">+</span> <span class="dv">10</span>)</span>
+<span id="cb422-3"><a href="tidyverse.html#cb422-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>La función <em>map()</em> de abajo, itera sobre todos los enteros aplicando la función <em>addTen()</em> a los elementos del vector y regresa la salida como una lista.</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="tidyverse.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb423-2"><a href="tidyverse.html#cb423-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-3"><a href="tidyverse.html#cb423-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(</span>
+<span id="cb423-4"><a href="tidyverse.html#cb423-4" aria-hidden="true" tabindex="-1"></a> <span class="at">.x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>), </span>
+<span id="cb423-5"><a href="tidyverse.html#cb423-5" aria-hidden="true" tabindex="-1"></a> <span class="at">.f =</span> addTen</span>
+<span id="cb423-6"><a href="tidyverse.html#cb423-6" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 11
+## 
+## [[2]]
+## [1] 14
+## 
+## [[3]]
+## [1] 17</code></pre>
+<p>Hay que notar en los siguientes ejemplos que el mecanismo es funcional independientemente de si se trata de una lista o un marco de datos:</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="tidyverse.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>), addTen)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 11
+## 
+## [[2]]
+## [1] 14
+## 
+## [[3]]
+## [1] 17</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="tidyverse.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">4</span>, <span class="at">c =</span> <span class="dv">7</span>), addTen)</span></code></pre></div>
+<pre><code>## $a
+## [1] 11
+## 
+## $b
+## [1] 14
+## 
+## $c
+## [1] 17</code></pre>
+<p>la estructura resultante por default es una lista, no obstante, es posible especificar el tipo de salida deseado. Por ejemplo, para mapear el resultado de una iteración en un vector ‘<em>double</em>’, puede implementarse la función <em>map_dbl()</em>, la cual mapea a un vector double:</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="tidyverse.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>), addTen)</span></code></pre></div>
+<pre><code>## [1] 11 14 17</code></pre>
+<p>Para mapear a un vector de clase ‘caracter’, puede implementarse la función <em>map_chr()</em>:</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="tidyverse.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>), addTen)</span></code></pre></div>
+<pre><code>## [1] &quot;11.000000&quot; &quot;14.000000&quot; &quot;17.000000&quot;</code></pre>
+<p>Incluso puede realizarse este mismo proceso iterativo en búsqueda de obtener como resultado un data frame:</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="tidyverse.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_df</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>), <span class="cf">function</span>(.x) {</span>
+<span id="cb433-2"><a href="tidyverse.html#cb433-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">old_number =</span> .x, </span>
+<span id="cb433-3"><a href="tidyverse.html#cb433-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">new_number =</span> <span class="fu">addTen</span>(.x)))</span>
+<span id="cb433-4"><a href="tidyverse.html#cb433-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<pre><code>##   old_number new_number
+## 1          1         11
+## 2          4         14
+## 3          7         17</code></pre>
+</div>
+<div id="bucles-dobles" class="section level3 hasAnchor" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Bucles dobles<a href="tidyverse.html#bucles-dobles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En caso de haber dominado el uso del bucle mediante la función <em>map()</em>, es posible proceder a intentar iterar sobre dos objetos. El código de abajo una las funciones de mapeo para crear una lista de gráficos para comparar la esperanza de vida y el ingreso per cápita en cada combinación de continente y país.</p>
+<p>La función de mapeo que itera sobre dos objetos en vez de uno, es llamada <em>map2()</em>. Los primeros dos argumentos son los dos objetos sobre los cuales se realiza la iteración y el tercero es la función con 2 argumentos (uno por cada objeto).</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="tidyverse.html#cb435-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">15</span>)</span>
+<span id="cb435-2"><a href="tidyverse.html#cb435-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb435-3"><a href="tidyverse.html#cb435-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-4"><a href="tidyverse.html#cb435-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map2</span>(x, y, <span class="sc">~</span> .x <span class="sc">+</span> .y)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 11
+## 
+## [[2]]
+## [1] 25
+## 
+## [[3]]
+## [1] 45</code></pre>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="tidyverse.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map2_dbl</span>(x, y, <span class="sc">~</span> .x <span class="sc">+</span> .y)</span></code></pre></div>
+<pre><code>## [1] 11 25 45</code></pre>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="tidyverse.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map2_chr</span>(x, y, <span class="sc">~</span> .x <span class="sc">+</span> .y)</span></code></pre></div>
+<pre><code>## [1] &quot;11.000000&quot; &quot;25.000000&quot; &quot;45.000000&quot;</code></pre>
+<p>Otro ejemplo:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="tidyverse.html#cb441-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb441-2"><a href="tidyverse.html#cb441-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>),</span>
+<span id="cb441-3"><a href="tidyverse.html#cb441-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">8</span>)</span>
+<span id="cb441-4"><a href="tidyverse.html#cb441-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb441-5"><a href="tidyverse.html#cb441-5" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##   x y
+## 1 1 5
+## 2 2 4
+## 3 5 8</code></pre>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="tidyverse.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map2_dbl</span>(df<span class="sc">$</span>x, df<span class="sc">$</span>y, min)</span></code></pre></div>
+<pre><code>## [1] 1 2 5</code></pre>
 
 </div>
 </div>
