@@ -172,7 +172,7 @@ knitr::include_graphics("img/00-presentacion/lizzy.png")
 
 
 
-### Módulo 4: Machine Learning: No Supervisado {-}
+### Módulo 4: Machine Learning: No Supervisado (12 hrs) {-}
 
 **Objetivo:** Este módulo permite al participante conocer técnicas de clustering para clasificar clientes de acuerdo con la utilidad y riesgo para la empresa. Adicionalmente, se presentan aplicaciones de clustering enfocadas a la estratificación de acuerdo con el riesgo geográfico. 
 
