@@ -95,3 +95,6 @@ operaciones-temporales
 iteraciones
 bucles-1
 bucles-dobles
+visualización
+eda-análisis-exploratorio-de-datos
+geda-análisis-exploratorio-de-datos-gráficos

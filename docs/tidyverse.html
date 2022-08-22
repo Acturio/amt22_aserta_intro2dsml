@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="introducción-a-r.html"/>
-
+<link rel="next" href="visualización.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -296,6 +296,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -431,8 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;, Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;,
 ## #   Mas_Vnr_Type &lt;chr&gt;, Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;,
 ## #   Bsmt_Cond &lt;chr&gt;, Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;,
-## #   BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_Type_2 &lt;chr&gt;, BsmtFin_SF_2 &lt;dbl&gt;, …
-## # ℹ Use `colnames()` to see all variable names</code></pre>
+## #   BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_Type_2 &lt;chr&gt;, BsmtFin_SF_2 &lt;dbl&gt;, …</code></pre>
 <p>¿Y si el archivo que necesitamos leer esta en excel?</p>
 </div>
 <div id="archivos-txt" class="section level3 hasAnchor" number="3.1.2">
@@ -459,8 +463,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;, Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;,
 ## #   Mas_Vnr_Type &lt;chr&gt;, Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;,
 ## #   Bsmt_Cond &lt;chr&gt;, Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;,
-## #   BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_Type_2 &lt;chr&gt;, BsmtFin_SF_2 &lt;dbl&gt;, …
-## # ℹ Use `colnames()` to see all variable names</code></pre>
+## #   BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_Type_2 &lt;chr&gt;, BsmtFin_SF_2 &lt;dbl&gt;, …</code></pre>
 <p>La función <em>read_delim()</em> funciona para leer archivos con diferentes delimitadores posibles, es decir, es posible especificar si las columnas están separadas por espacios, comas, punto y coma, tabulador o algún otro delimitador (““,”,“,”;“,”, “@”).</p>
 <p>Adicionalmente, se puede especificar si el archivo contiene encabezado, si existen renglones a saltar, codificación, tipo de variable y muchas más opciones. Todos estos detalles pueden consultarse en la documentación de ayuda.</p>
 </div>
@@ -671,8 +674,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 Amy    1975     6    29     6  34   -74.8 tropical sto… 0          40    1002
 ## # … with more rows, 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 ## #   hurricane_force_diameter &lt;int&gt;, and abbreviated variable names ¹​category,
-## #   ²​pressure
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   ²​pressure</code></pre>
 </div>
 </div>
 <div id="consultas-de-datos" class="section level2 hasAnchor" number="3.2">
@@ -790,8 +792,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8     5005 Stone_Brook       2010     191500
 ##  9     5389 Stone_Brook       2010     236500
 ## 10     7500 Gilbert           2010     189000
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <div class="infobox tip">
 <p><strong>¡¡ RECORDAR !!</strong></p>
 <p>El operador pipe (%&gt;%) se usa para conectar un elemento con una función o acción a realizar. En este caso solo se indica que en los datos de ames se seleccionan 4 variables.</p>
@@ -811,8 +812,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8     5005            0        1280         506         0
 ##  9     5389            0        1616         608         0
 ## 10     7500            0        1804         442         0
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <p>De igual manera, con <em>select()</em>, <em>ends_with</em> y <em>start_with()</em> podemos seleccionar que inicien o terminen con alguna cadena de texto.</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="tidyverse.html#cb213-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;Garage&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,930 × 5
@@ -828,8 +828,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Attchd      RFn                     2         506 Typical    
 ##  9 Attchd      RFn                     2         608 Typical    
 ## 10 Attchd      Fin                     2         442 Typical    
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <p>Funciones útiles para <em>select()</em>:</p>
 <ul>
 <li><p><em>contains()</em>: Selecciona variables cuyo nombre contiene la cadena de texto.</p></li>
@@ -877,8 +876,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
 ## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
 ## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
-## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …</code></pre>
 <p>También se puede usar para filtrar variables numéricas:</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="tidyverse.html#cb219-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Lot_Area <span class="sc">&gt;</span> <span class="dv">1000</span> <span class="sc">&amp;</span> Sale_Price <span class="sc">&gt;=</span> <span class="dv">150000</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1,677 × 74
@@ -900,8 +898,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
 ## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
 ## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
-## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …</code></pre>
 <p>Notemos que en el ejemplo anterior se usa <em>&amp;</em>, que ayuda a filtrar por dos condiciones.</p>
 <p>También puede usarse <em>|</em> para filtrar por alguna de las dos condiciones.</p>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="tidyverse.html#cb221-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Lot_Area <span class="sc">&lt;</span> <span class="dv">1000</span> <span class="sc">|</span> Sale_Price <span class="sc">&lt;=</span> <span class="dv">150000</span>)</span></code></pre></div>
@@ -924,8 +921,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
 ## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
 ## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
-## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …</code></pre>
 <p>Las condiciones pueden ser expresiones lógicas construidas mediante los operadores relacionales y lógicos:</p>
 <ul>
 <li><p><strong>&lt;</strong> : Menor que</p></li>
@@ -968,8 +964,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
 ## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
 ## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
-## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …</code></pre>
 <p><br> <br></p>
 <p>Si las queremos ordenar de forma ascendente, lo haremos del siguiente modo:</p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="tidyverse.html#cb225-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Sale_Price))</span></code></pre></div>
@@ -992,8 +987,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Year_Remod_Add &lt;dbl&gt;, Roof_Style &lt;chr&gt;, Roof_Matl &lt;chr&gt;,
 ## #   Exterior_1st &lt;chr&gt;, Exterior_2nd &lt;chr&gt;, Mas_Vnr_Type &lt;chr&gt;,
 ## #   Mas_Vnr_Area &lt;dbl&gt;, Exter_Cond &lt;chr&gt;, Foundation &lt;chr&gt;, Bsmt_Cond &lt;chr&gt;,
-## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   Bsmt_Exposure &lt;chr&gt;, BsmtFin_Type_1 &lt;chr&gt;, BsmtFin_SF_1 &lt;dbl&gt;, …</code></pre>
 <p>Si se desea usar dos o más columnas para realizar el ordenamiento, deben separarse por comas cada una de las características</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="tidyverse.html#cb227-1" aria-hidden="true" tabindex="-1"></a>ames_housing <span class="sc">%&gt;%</span> </span>
 <span id="cb227-2"><a href="tidyverse.html#cb227-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(Sale_Condition, <span class="fu">desc</span>(Sale_Price), Lot_Area) <span class="sc">%&gt;%</span> </span>
@@ -1011,8 +1005,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Abnorml            287000    15498
 ##  9 Abnorml            258000    12090
 ## 10 Abnorml            257000    10994
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <p>Notemos que en el ejemplo anterior usamos dos <em>pipes</em> (%&gt;%), como habíamos mencionado se pueden usar los necesarios para combinar funciones.</p>
 </div>
 <div id="agregar-modificar" class="section level3 hasAnchor" number="3.2.4">
@@ -1037,8 +1030,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8      2010           1992      18
 ##  9      2010           1996      14
 ## 10      2010           1999      11
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <p>El ejemplo anterior crea una nueva variable. Ahora se presenta otro ejemplo en donde se modifica una variable ya creada.</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="tidyverse.html#cb231-1" aria-hidden="true" tabindex="-1"></a>ejemplo_mutate <span class="sc">%&gt;%</span> </span>
 <span id="cb231-2"><a href="tidyverse.html#cb231-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Antique =</span> Antique <span class="sc">*</span> <span class="dv">12</span>)</span></code></pre></div>
@@ -1055,8 +1047,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8      2010           1992     216
 ##  9      2010           1996     168
 ## 10      2010           1999     132
-## # … with 2,920 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 2,920 more rows</code></pre>
 <p>En este segundo ejemplo, se modifica el número de años de antigüedad y se multiplica por un factor de 12 para modificar el tiempo en una escala de meses.</p>
 </div>
 <div id="resumen-estadístico" class="section level3 hasAnchor" number="3.2.5">
@@ -1112,8 +1103,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Edwards                       33
 ##  9 Gilbert                        9
 ## 10 Green_Hills                   14
-## # … with 18 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 18 more rows</code></pre>
 </div>
 <div id="cruces-de-tablas" class="section level3 hasAnchor" number="3.2.7">
 <h3><span class="header-section-number">3.2.7</span> Cruces de tablas<a href="tidyverse.html#cruces-de-tablas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1372,8 +1362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 05    Arkansas   rent          709     5
 ##  9 06    California income      29454   109
 ## 10 06    California rent         1358     3
-## # … with 94 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 94 more rows</code></pre>
 <div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="tidyverse.html#cb261-1" aria-hidden="true" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span></span>
 <span id="cb261-2"><a href="tidyverse.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> variable, <span class="at">values_from =</span> <span class="fu">c</span>(estimate, moe))</span></code></pre></div>
 <pre><code>## # A tibble: 52 × 6
@@ -1389,8 +1378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 10    Delaware                       31560          1076        247       10
 ##  9 11    District of Columbia           43198          1424        681       17
 ## 10 12    Florida                        25952          1077         70        3
-## # … with 42 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 42 more rows</code></pre>
 <p>Adicionalmente, se puede especificar una función de agregación que operara antes de acomodar los datos en las respectivas columnas indicadas. Un ejemplo de funciones agregadas en la re estructuración de tabla se muestra a continuación, donde se muestra la media de los valores en las categorías <em>tension</em> y <em>breaks</em>.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="tidyverse.html#cb263-1" aria-hidden="true" tabindex="-1"></a>warpbreaks <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(warpbreaks[<span class="fu">c</span>(<span class="st">&quot;wool&quot;</span>, <span class="st">&quot;tension&quot;</span>, <span class="st">&quot;breaks&quot;</span>)])</span>
 <span id="cb263-2"><a href="tidyverse.html#cb263-2" aria-hidden="true" tabindex="-1"></a>warpbreaks</span></code></pre></div>
@@ -1407,8 +1395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 A     L           26
 ##  9 A     L           67
 ## 10 A     M           18
-## # … with 44 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 44 more rows</code></pre>
 <div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="tidyverse.html#cb265-1" aria-hidden="true" tabindex="-1"></a>warpbreaks <span class="sc">%&gt;%</span></span>
 <span id="cb265-2"><a href="tidyverse.html#cb265-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb265-3"><a href="tidyverse.html#cb265-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> wool,</span>
@@ -1450,8 +1437,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 18 Unaffiliated      217     299     374     365     341     528     407     321
 ## # … with 2 more variables: `&gt;150k` &lt;dbl&gt;, `Don&#39;t know/refused` &lt;dbl&gt;, and
 ## #   abbreviated variable names ¹​`$10-20k`, ²​`$20-30k`, ³​`$30-40k`, ⁴​`$40-50k`,
-## #   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`
-## # ℹ Use `colnames()` to see all variable names</code></pre>
+## #   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`</code></pre>
 <p>¿Crees que ésta es la mejor estructura para la tabla? ¿Cómo imaginas que podría modificarse?</p>
 <p>Este conjunto de datos contiene tres variables:</p>
 <ol style="list-style-type: decimal">
@@ -1475,8 +1461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Agnostic $100-150k            109
 ##  9 Agnostic &gt;150k                 84
 ## 10 Agnostic Don&#39;t know/refused    96
-## # … with 170 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 170 more rows</code></pre>
 <ul>
 <li><p>El primer argumento es el conjunto de datos para remodelar, relig_income.</p></li>
 <li><p>El segundo argumento describe qué columnas necesitan ser reformadas. En este caso, es cada columna aparte de religion.</p></li>
@@ -1510,8 +1495,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10     1 Aguascalient…     1 Aguasc…   126 Cañada…     509    123   4.75   19.6 
 ## # … with 107,448 more rows, and 11 more variables: SEXC10 &lt;dbl&gt;, SEE10 &lt;dbl&gt;,
 ## #   SAGUAE10 &lt;dbl&gt;, PROM_OCC10 &lt;dbl&gt;, PISOTIE10 &lt;dbl&gt;, SREFRI10 &lt;dbl&gt;,
-## #   IM_2010 &lt;dbl&gt;, GM_2010 &lt;chr&gt;, IMC0A100 &lt;dbl&gt;, LUG_NAL &lt;dbl&gt;, LUG_EDO &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+## #   IM_2010 &lt;dbl&gt;, GM_2010 &lt;chr&gt;, IMC0A100 &lt;dbl&gt;, LUG_NAL &lt;dbl&gt;, LUG_EDO &lt;dbl&gt;</code></pre>
 <p>Como puede apreciarse en la tabla anterior, las claves de los campos <em>Ent</em>, <em>Mun</em> y <em>Loc</em> aparecen como numéricos. La estructura deseada para estos campos es de tipo alfanumérico y de longitud 2, 3 y 4 respectivamente. Para lograr esta estructura de datos, es necesario concatenar tantos ceros como sean necesarios antes del valor actual hasta lograr la longitud deseada.</p>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="tidyverse.html#cb273-1" aria-hidden="true" tabindex="-1"></a>Datos2 <span class="ot">&lt;-</span> Datos <span class="sc">%&gt;%</span> <span class="fu">select</span>(ENT, MUN, LOC)</span>
 <span id="cb273-2"><a href="tidyverse.html#cb273-2" aria-hidden="true" tabindex="-1"></a>Datos2<span class="sc">$</span>ENT <span class="sc">%&lt;&gt;%</span> <span class="fu">str_pad</span>(<span class="at">width =</span> <span class="dv">2</span>, <span class="at">side =</span> <span class="st">&quot;left&quot;</span>, <span class="at">pad =</span> <span class="st">&quot;0&quot;</span>)</span>
@@ -2203,6 +2187,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="tidyverse.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map2_dbl</span>(df<span class="sc">$</span>x, df<span class="sc">$</span>y, min)</span></code></pre></div>
 <pre><code>## [1] 1 2 5</code></pre>
 
+<div class="watermark">
+<p><img src="img/header.png" width="400"/></p>
+</div>
 </div>
 </div>
 </div>
@@ -2233,8 +2220,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="introducción-a-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="introducción-a-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualización.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
