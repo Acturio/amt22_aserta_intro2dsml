@@ -53,6 +53,12 @@
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
 <script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -299,7 +305,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
-<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visualización.html"><a href="visualización.html#gráficos-univariados"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos univariados:</a></li>
+<li class="chapter" data-level="4.2.2" data-path="visualización.html"><a href="visualización.html#gráficos-multivariados"><i class="fa fa-check"></i><b>4.2.2</b> Gráficos multivariados</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualización.html"><a href="visualización.html#creación-de-gráficos"><i class="fa fa-check"></i><b>4.3</b> Creación de gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualización.html"><a href="visualización.html#estéticas"><i class="fa fa-check"></i><b>4.3.1</b> Estéticas</a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualización.html"><a href="visualización.html#objetos-geométricos-o-capas"><i class="fa fa-check"></i><b>4.3.2</b> Objetos geométricos o capas</a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualización.html"><a href="visualización.html#facetas"><i class="fa fa-check"></i><b>4.3.3</b> Facetas</a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualización.html"><a href="visualización.html#más-sobre-estéticas"><i class="fa fa-check"></i><b>4.3.4</b> Más sobre estéticas</a></li>
+<li class="chapter" data-level="4.3.5" data-path="visualización.html"><a href="visualización.html#quick-view"><i class="fa fa-check"></i><b>4.3.5</b> Quick View</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualización.html"><a href="visualización.html#análisis-univariado"><i class="fa fa-check"></i><b>4.4</b> Análisis univariado</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visualización.html"><a href="visualización.html#variables-numéricas"><i class="fa fa-check"></i><b>4.4.1</b> Variables numéricas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
@@ -339,8 +364,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>ACT. ARTURO BRINGAS</strong></p>
 <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/arturo-bringas/">arturo-bringas</a>
 <strong>Email:</strong> <a href="mailto:act.arturo.b@ciencias.unam.mx" class="email">act.arturo.b@ciencias.unam.mx</a></p>
-<p>Actuario egresado de la Facultad de Ciencias y Maestría en Ciencia de Datos por el ITAM.
-Se especializa en modelos predictivos y de clasificación de <em>machine learning</em> aplicado a seguros, marketing, deportes y movilidad internacional. Es jefe de departamento en Investigación Aplicada y Opinión de la UNAM, donde realiza estudios estadísticos de impacto social. Ha sido consultor <em>Senior Data Scientist</em> para empresas y organizaciones como GNP, El Universal, UNAM, Sinnia, la Organización de las Naciones Unidas Contra la Droga y el Delito (UNODC), entre otros. Actualmente es profesor de <em>Ciencia de datos y Machine Learning</em> en AMAT y se desempeña como consultor en el Laboratorio Nacional de Observación de la Tierra (LANOT) y en Grupo ALSEA.</p>
+<p>Actuario egresado de la Facultad de Ciencias con maestría en Ciencia de Datos por el ITAM.
+Se especializa en modelos predictivos y de clasificación de <em>machine learning</em> aplicado a seguros, marketing, deportes, e-commerce y movilidad internacional. Ha sido consultor <em>Senior Data Scientist</em> para empresas y organizaciones como GNP, El Universal, UNAM, la Organización de las Naciones Unidas Contra la Droga y el Delito (UNODC), Sinnia, entre otros. Actualmente es profesor de <em>Ciencia de datos y Machine Learning</em> en AMAT. Es jefe de estadística en el Departamento de Investigación Aplicada y Opinión de la UNAM, donde realiza estudios nacionales de impacto social. Es colaborador del Laboratorio Nacional de Observación de la Tierra (LANOT) y consultor senior de Grupo ALSEA.</p>
 <p><img src="img/00-presentacion/arturo.png" width="236" style="display: block; margin: auto;" /></p>
 <p><strong>ACT. KARINA LIZETTE GAMBOA</strong></p>
 <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kalizzygam/">KaLizzyGam</a>

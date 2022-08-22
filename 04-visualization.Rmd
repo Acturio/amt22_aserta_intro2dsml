@@ -90,3 +90,501 @@ Dependiendo del tipo de variable queremos obtener la siguiente información:
 ## GEDA: Análisis Exploratorio de Datos Gráficos
 
 Como complemento al EDA podemos realizar un GEDA, que es un análisis exploratorio de los datos apoyándonos de visualizaciones, la visualización de datos no trata de hacer gráficas "bonitas" o "divertidas", ni de simplificar lo complejo. Más bien, trata de aprovechar nuestra gran capacidad de procesamiento visual para exhibir de manera clara aspectos importantes de los datos.
+
+
+### Gráficos univariados:
+
+-   *Histograma:* El histograma es la forma más popular de mostrar la forma de un conjunto de datos. Se divide la escala de la variable en intervalos, y se realiza un conteo de los casos que caen en cada uno de los intervalos. Los histogramas pueden mostrar distintos aspectos de los datos dependiendo del tamaño y posición de los intervalos.
+
+<br>
+
+```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/histograma.jpg")
+```
+
+-   *Diagramas de caja y brazos:* Es un método estandarizado para representar gráficamente una serie de datos numéricos a través de sus cuartiles. El diagrama de caja muestra a simple vista la mediana y los cuartiles de los datos, pudiendo también representar los valores atípicos de estos.
+
+```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/boxplot.png")
+```
+
+-   *Gráficas de barras*: Una gráfica de este tipo nos muestra la frecuencia con la que se han observado los datos de una variable discreta, con una barra para cada categoría de esta variable.
+
+<br>
+
+```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/barras.jpg")
+```
+
+-   *Gráficos Circulares (Pie Charts):* Un gráfico circular o gráfica circular, también llamado "gráfico de pastel", es un recurso estadístico que se utiliza para representar porcentajes y proporciones.
+
+<br>
+
+```{r echo=FALSE, out.width = "500pt", out.height="280pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/pie.jpg")
+```
+
+### Gráficos multivariados
+
+-   *Gráfico de dispersión:* Los gráficos de dispersión se usan para trazar puntos de datos en un eje vertical y uno horizontal, mediante lo que se trata de mostrar cuánto afecta una variable a otra. Si no existe una variable dependiente, cualquier variable se puede representar en cada eje y el diagrama de dispersión mostrará el grado de correlación (no causalidad) entre las dos variables.
+
+```{r echo=FALSE, out.width = "500pt", out.height="350pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/dispersion.png")
+```
+
+-   *Gráficas de líneas:* Uno de los tipos de gráfica más utilizados es la de líneas, especialmente cuando se quieren comparar visualmente varias variables a lo largo del tiempo o algún otro parámetro.
+
+```{r echo=FALSE, out.width = "500pt", out.height="300pt",fig.align='center'}
+knitr::include_graphics("img/04-ggplot/lineas.jpg")
+```
+
+## Creación de gráficos
+
+Comparando con los gráficos base de R, ggplot2:
+
+-   Tiene una gramática más compleja para gráficos simples
+-   Tiene una gramática menos compleja para gráficos complejos o muy personalizados.
+-   Los datos siempre deben ser un data.frame.
+-   Usa un sistema diferente para añadir elementos al gráfico.
+
+Histograma con los gráficos base:
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+
+data(iris)
+hist(iris$Sepal.Length)
+```
+
+Histograma con ggplot2:
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(ggplot2)
+
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(color = 'white', bins=8)
+```
+
+Ahora vamos a ver un gráfico con colores y varias series de datos.
+
+Con los gráficos base:
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot(
+ Sepal.Length ~ Sepal.Width,
+ col = factor(Species),
+ data = iris
+ )
+
+```
+
+Con ggplot2:
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+ggplot(iris, 
+ aes(x=Sepal.Width , y= Sepal.Length, color=Species)) +
+ geom_point()
+```
+
+
+
+
+### Estéticas
+
+En ggplot2, *aestetics* significa "algo que puedes ver".
+
+Algunos ejemplos son:
+
+-   **Posición** (por ejemplo, los ejes x e y)
+-   **Color** (color "externo")
+-   **Fill** (color de relleno)
+-   **Shape** (forma de puntos)
+-   **Linetype** (tipo de linea)
+-   **Size** (tamaño)
+-   **Alpha** (para la transparencia: los valores más altos tendrían formas opacas y los más bajos, casi transparentes).
+
+Hay que advertir que no todas las estéticas tienen la misma potencia en un gráfico. El ojo humano percibe fácilmente longitudes distintas. Pero tiene problemas para comparar áreas (que es lo que regula la estética size) o intensidades de color. Se recomienda usar las estéticas más potentes para representar las variables más importantes.
+
+Cada tipo de objeto geométrico (geom) solo acepta un subconjunto de todos los aestéticos. Puedes consultar la pagina de ayuda de geom() para ver que aestéticos acepta. El mapeo aestético se hace con la función aes().
+
+### Objetos geométricos o capas
+
+Los objetos geométricos son las formas que puede tomar un gráfico. Algunos ejemplos son:
+
+-   Barras (geom_bar(), para las variables univariados discretos o nominales)
+-   Histogramas (geom_hist() para aquellas variables univariadas continuas)
+-   Puntos (geom_point() para scatter plots, gráficos de puntos, etc...)
+-   Lineas (geom_line() para series temporales, lineas de tendencia, etc...)
+-   Cajas (geom_boxplot() para gráficos de cajas)
+-   Un gráfico debe tener al menos un geom, pero no hay limite. Puedes añadir más *geom* usando el signo +.
+
+
+Una vez añadida una capa al gráfico a este pueden agregarse nuevas capas
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, colour = Species)) + 
+  geom_point()
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, colour = Species)) + 
+  geom_point()+ 
+  geom_smooth()
+```
+
+
+
+
+### Facetas
+
+Muchos de los gráficos que pueden generarse con los elementos anteriores pueden reproducirse usando los gráficos tradicionales de R, pero no los que usan facetas, que pueden permitirnos explorar las variables de diferente forma, por ejemplo:
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) + 
+  geom_point() + geom_smooth() + 
+  facet_grid(~ Species)
+```
+
+crea tres gráficos dispuestos horizontalmente que comparan la relación entre la anchura y la longitud del pétalo de las tres especies de iris. Una característica de estos gráficos, que es crítica para poder hacer comparaciones adecuadas, es que comparten ejes.
+
+### Más sobre estéticas
+
+Para los ejercicios en clase utilizaremos el set de datos: Diamonds:
+
+```{r, warning=FALSE, message= F}
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+
+data("diamonds")
+```
+
+**Descripción** Un conjunto de datos que contiene los precios y otros atributos de casi 54.000 diamantes. Las variables son las siguientes:
+
+-   **price**: precio en dólares estadounidenses ( \$ 326 -  \$ 18,823)
+-   **carat**: peso del diamante (0.2--5.01)
+-   **cut**: calidad del corte (Regular, Bueno, Muy Bueno, Premium, Ideal)
+-   **color**: color del diamante, de D (mejor) a J (peor)
+-   **clarity**: una medida de la claridad del diamante (I1 (peor), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (mejor))
+-   **x**: longitud en mm (0-10,74)
+-   **y**: ancho en mm (0--58,9) width in mm (0--58.9) -**z**: profundidad en mm (0--31,8)
+-   **depth** porcentaje de profundidad total = z / media (x, y) = 2 \* z / (x + y) (43--79)
+-   **table**: ancho de la parte superior del diamante en relación con el punto más ancho (43--95)
+
+Ejemplo práctico:
+
+```{r, warning=FALSE, message= F, echo = FALSE, eval=T}
+
+# diamonds %>%
+#         ggplot(aes(x = cut_number(carat, 5), y = price, color = cut)) +
+#         geom_boxplot() +
+#         labs(title = "Distribución de precio por categoría de corte") +
+#         labs (caption = "Data source:Diamont set") +
+#         labs(x = "Peso del diamante") +
+#         labs(y = "Precio")+
+#         guides(color=guide_legend(title="Calidad del corte")) +
+#         ylim(0, 20000) +
+#         scale_y_continuous(labels = scales::dollar_format(),
+#                            breaks = seq(0, 20000,2500 ),
+#                            limits = c(0, 20000))
+# 
+
+library(codehover)
+library(htmltools)
+
+result <- ch_int(type = "incremental") %>% 
+  ch_row(text = "diamonds %>% ggplot() + ",
+         img = "./img/04-ggplot/diamonds-0.png") %>% 
+  ch_row(text = " <tab1> aes(x = cut_number(carat, 5), y = price) + </tab1>",
+         img = "./img/04-ggplot/diamonds-1.png") %>% 
+  ch_row(text = " <tab1> geom_boxplot() + </tab1>",
+         img = "./img/04-ggplot/diamonds-2.png") %>%   
+  ch_row(text = " <tab1> aes(color = cut) + </tab1>",
+         img = "./img/04-ggplot/diamonds-3.png") %>% 
+  ch_row(text = " <tab1> labs(title = 'Distribución de precio por categoría de corte') + </tab1>",
+         img = "./img/04-ggplot/diamonds-4.png") %>%   
+  ch_row(text = " <tab1> labs(caption = 'Data source:Diamont set') + </tab1>",
+         img = "./img/04-ggplot/diamonds-5.png") %>% 
+  ch_row(text = " <tab1> labs(x = 'Peso del diamante') + </tab1> ",
+         img = "./img/04-ggplot/diamonds-6.png") %>%
+  ch_row(text = " <tab1> labs(y = 'Precio') + </tab1>",
+         img = "./img/04-ggplot/diamonds-7.png") %>% 
+  ch_row(text = " <tab1> guides(color = guide_legend(title = 'Calidad del corte')) + </tab1>",
+         img = "./img/04-ggplot/diamonds-8.png") %>% 
+  ch_row(text = " <tab1> ylim(0, 20000) + </tab1>",
+         img = "./img/04-ggplot/diamonds-9.png") %>% 
+  ch_row(text = " <tab1> scale_y_continuous( </tab1>
+                 <br> <tab1> labels = scales::dollar_format(), </tab1>
+                 <br> <tab1> breaks = seq(0, 20000,2500 ), </tab1>
+                 <br> <tab1> limits = c(0, 20000) </tab1>
+                 <br> <tab1> ) </tab1> ",
+         img = "./img/04-ggplot/diamonds-10.png") %>% 
+  ch_out(img = "./img/04-ggplot/diamonds-10.png")
+
+htmltools::HTML(result)
+```
+
+### Quick View
+
+```{r, warning=FALSE, message=FALSE}
+library(DataExplorer)
+
+plot_intro(diamonds)
+```
+
+```{r, warning=FALSE, message=FALSE}
+plot_missing(diamonds)
+```
+
+## Análisis univariado
+
+El análisis univariado tiene como objetivo conocer la calidad y distribución de los datos. Se busca conocer medidas de tendencia central, variación promedio, cantidad de valores perdidos, etc. Es vital conocer los datos y su calidad antes de usarlos.
+
+### Variables numéricas
+
+Los **histogramas** son gráficas de barras que se obtienen a partir de tablas de frecuencias, donde cada barra se escala según la frecuencia relativa entre el ancho del intervalo de clase correspondiente.
+
+Un **histograma** muestra la acumulación ó tendencia, la variabilidad o dispersión y la forma de la distribución.
+
+El **Diagrama de Caja** y bigotes un tipo de gráfico que muestra un resumen de una gran cantidad de datos en cinco medidas descriptivas, además de intuir su morfología y simetría.
+
+Este tipo de gráficos nos permite identificar valores atípicos y comparar distribuciones. Además de conocer de una forma cómoda y rápida como el 50% de los valores centrales se distribuyen.
+
+Se puede detectar rápidamente los siguientes valores:
+
+-   Primer cuartil: el 25% de los valores son menores o igual a este valor (punto 2 en el gráfico anterior).
+
+-   Mediana o Segundo Cuartil: Divide en dos partes iguales la distribución. De forma que el 50% de los valores son menores o igual a este valor (punto 3 en el gráfico siguiente).
+
+-   Tercer cuartil: el 75% de los valores son menores o igual a este valor (punto 4 en el gráfico siguiente).
+
+-   Rango Intercuartílico (RIC): Diferencia entre el valor del tercer cuartil y el primer cuartil.
+
+**Tip:** *El segmento que divide la caja en dos partes es la mediana (punto 3 del gráfico), que facilitará la comprensión de si la distribución es simétrica o asimétrica, si la mediana se sitúa en el centro de la caja entonces la distribución es simétrica y tanto la media, mediana y moda coinciden.*
+
+**Precio**
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes( x = price)) + 
+  geom_histogram(
+    aes(y = ..density..),
+    color= "Blue", fill= "White", bins = 30
+    ) +
+  stat_density(geom = "line", colour = "black", size = 1)+
+  scale_x_continuous(labels = scales::dollar_format()) +
+  scale_y_continuous(labels = scales::comma_format()) +
+  stat_density(geom = "line", colour = "black", size = 1) +
+  ggtitle("Distribución de precio")
+  
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes( x = price)) + 
+  geom_boxplot(binwidth = 1000, color= "Blue", fill= "lightblue") +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  scale_y_continuous(labels = scales::comma_format()) +
+  ggtitle("Distribución de precio")
+```
+
+**Peso del diamante**
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes( x = carat)) + 
+  geom_histogram(binwidth = .03, color= "purple", fill= "pink", alpha= 0.3) +
+  scale_y_continuous(labels = scales::comma_format()) +
+  ggtitle("Distribución de peso de los diamantes") +
+  theme_bw()
+  
+```
+
+```{r, warning=FALSE, message=FALSE}
+
+diamonds %>% 
+  ggplot( aes( x = carat)) + 
+  geom_boxplot(binwidth = .3, color= "purple", fill= "pink", alpha= 0.3) +
+  scale_x_continuous(labels = scales::comma_format()) +
+  ggtitle("Distribución de peso de los diamantes") +
+  theme_bw()
+  
+
+```
+
+### Variables nominales/categóricas
+
+**Calidad de corte**
+
+```{r, warning=FALSE, message=FALSE}
+
+diamonds %>% 
+  ggplot( aes( x = cut)) + 
+  geom_bar( color= "darkblue", fill= "cyan", alpha= 0.7) +
+  scale_y_continuous(labels = scales::comma_format()) +
+  ggtitle("Distribución de cálidad de corte") +
+  theme_dark()
+
+```
+
+```{r, warning=FALSE, message=FALSE}
+df_pie <- diamonds %>%
+  group_by(cut) %>% 
+  summarise(freq = n(), .groups='drop')
+
+
+df_pie %>% 
+  ggplot( aes( x = "", y=freq,  fill = factor(cut)))  +
+  geom_bar(width = 1, stat = "identity")  +
+  coord_polar(theta = "y", start=0)
+```
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar( mapping = aes(x = cut, fill = cut), show.legend = F, width = 1)+
+  theme(aspect.ratio = 1)+
+  labs(x= NULL, y = NULL)+
+  coord_polar()
+```
+
+**Claridad**
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes( y = clarity)) + 
+  geom_bar( color= "darkblue", fill= "black", alpha= 0.7) +
+  geom_text(aes(label = ..count..), stat = "count", vjust = 1, hjust = 1.5,colour = "blue")+
+  scale_x_continuous(labels = scales::comma_format()) +
+  ggtitle("Distribución claridad") +
+  theme_get()
+```
+
+## Análisis multivariado
+
+Un buen análisis de datos, requiere del análisis conjunto de variables. Una sola variable es importante de analizar en cuanto a su distribución y calidad, no obstante, no dice mucho al analizarse por sí sola. Es por ello, que es indispensable analizar la covariabilidad y dependencia entre los distintos atributos de la información.
+
+En el análisis multivariado, se busca comparar la información haciendo contrastes de colores, formas, tamaños, páneles, etc.
+
+**Precio vs Calidad del corte**
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot(aes(y= price,x=cut,color=cut))  + 
+  geom_jitter(size=1.2, alpha= 0.5)
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot(aes(y= price,x=cut,color=cut))  + 
+  geom_boxplot(size=1.2, alpha= 0.5)
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot(aes(x= price ,fill=cut))  + 
+  geom_histogram(position = 'identity',
+                 alpha = 0.5)
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot(aes(x= price ,fill=cut))  + 
+  geom_histogram(position = 'identity',
+                 alpha = 0.5) +
+  facet_wrap(~cut, ncol = 1)
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes(x = carat ,y=price)) +
+  geom_point(aes(col = clarity) ) +
+  geom_smooth()
+```
+
+```{r, warning=FALSE, message=FALSE}
+diamonds %>% 
+  ggplot( aes(x = carat ,y=price)) +
+  geom_point(aes(col = clarity) ) +
+  facet_wrap(~clarity)+
+  geom_smooth()
+```
+
+
+## Visualización interactiva
+
+A través de la librería **plotly** es posible crear interactividad entre las gráficas creadas con gglot2.
+Es posible tanto usar las funciones existentes como crear funciones que enriquezcan las estéticas comunes. A continuación se hace uso de una combinación de nuevas estéticas con la interactividad añadida. 
+
+```{r, warning=FALSE, message=FALSE}
+library(stringr)
+
+fun_mean <- function(x){
+  
+  mean <- data.frame(
+    y = mean(x),
+    label = mean(x, na.rm = T)
+    )
+  
+  return(mean)
+  }
+
+means <- diamonds %>% 
+  group_by(clarity) %>% 
+  summarise(price = round(mean(price), 1))
+
+plot <- diamonds %>% 
+  ggplot(aes(x = clarity, y = price)) +
+  geom_boxplot(aes(fill = clarity)) +
+  stat_summary(
+    fun = mean, 
+    geom = "point", 
+    colour = "darkred", 
+    shape = 18,
+    size = 2
+    ) +
+  geom_text(
+    data = means, 
+    aes(label = str_c("$",price), y = price + 600)
+    ) +
+  ggtitle("Precio vs Claridad de diamantes") +
+  xlab("Claridad") +
+  ylab("Precio")
+
+plotly::ggplotly(plot)
+```
+
+Como puede apreciarse, este nuevo gráfico permite hacer uso de zoom, filtros, etiquetas, snapshots, etc.
+El contenido es creado como HTML, por lo que puede integrarse a documentos web como bookdown, shiny, xaringan, markdown, etc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

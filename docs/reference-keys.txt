@@ -98,3 +98,16 @@ bucles-dobles
 visualización
 eda-análisis-exploratorio-de-datos
 geda-análisis-exploratorio-de-datos-gráficos
+gráficos-univariados
+gráficos-multivariados
+creación-de-gráficos
+estéticas
+objetos-geométricos-o-capas
+facetas
+más-sobre-estéticas
+quick-view
+análisis-univariado
+variables-numéricas
+variables-nominalescategóricas
+análisis-multivariado
+visualización-interactiva
