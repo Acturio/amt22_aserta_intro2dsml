@@ -8,12 +8,12 @@ tipos-de-algoritmos
 aprendizaje-supervisado
 aprendizaje-no-supervisado
 aprendizaje-por-refuerzo
+perfiles-de-un-equipo
+flujo-de-trabajo-en-ml
 ciclo-de-un-proyecto
 taller-de-scoping
 data-maturity-framework
 scoping
-perfiles-de-un-equipo
-flujo-de-trabajo-en-ml
 introducción-a-r
 cómo-obtener-r
 qué-es-rstudio
