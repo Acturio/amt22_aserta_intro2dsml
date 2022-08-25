@@ -371,18 +371,17 @@ De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es 
 
 ### Ejercicios
 
+Use funciones o procedimientos (varias líneas) de *R* para responder cada una de las siguientes preguntas.
 
-1. Use funciones o procedimientos (varias líneas) de *R* para responder cada una de las siguientes preguntas.
+1. Construya un vector con la primeras 20 letras MAYÚSCULAS usando la función LETTERS.
 
-2. Construya un vector con la primeras 20 letras MAYÚSCULAS usando la función LETTERS.
+2. Construya una matriz de  10×10 con los primeros 100 números positivos pares.
 
-3. Construya una matriz de  10×10 con los primeros 100 números positivos pares.
+3. Construya una matriz identidad de dimensión  3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.
 
-4. Construya una matriz identidad de dimensión  3×3. Recuerde que una matriz identidad tiene sólo unos en la diagonal principal y los demás elementos son cero.
+4. Construya una lista con los anteriores tres objetos creados.
 
-5. Construya una lista con los anteriores tres objetos creados.
-
-6. Construya un marco de datos o data frame con las respuestas de 5 personas de su trabajo a las preguntas: 
+5. Construya un marco de datos o data frame con las respuestas de 5 personas de su trabajo a las preguntas: 
 
    (a) ¿Cuál es su nombre? 
    (b) ¿Cuál es su antigüedad en la empresa? 
@@ -391,7 +390,7 @@ De lo anterior se observa claramente que cuando usamos $ o [[]] el resultado es 
    (e) ¿Cuál?
    
 
-7. ¿Cuál es el error al ejecutar el siguiente código? ¿A qué se debe? 
+6. ¿Cuál es el error al ejecutar el siguiente código? ¿A qué se debe? 
 
 
 ```{r, eval=FALSE}

@@ -294,7 +294,8 @@ knitr::include_graphics("img/01-intro2ds/22-01dataengineer.jpeg")
 
 Antes de contratar a un científico de datos con un master o PhD, hay que asegurarse de que quien toma las decisiones entiende el arte y la ciencia de la **toma de decisiones basada en datos.**
 
-$$\text{Las capacidades de toma de decisiones deben estar establecidas, antes de que un equipo pueda obtener valor de los datos}$$
+$$\text{Las capacidades de toma de decisiones deben estar establecidas, antes de que un equipo}$$ 
+$$\text{pueda obtener valor de los datos}$$
 
 Este individuo es **responsable de identificar las decisiones que valen la pena tomar** con los datos, plasmarlas en un modelo (desde el diseño de métricas, hasta las inyecciones sobre supuestos estadísticos) y determinar el nivel requerido de rigor analítico, basado en el impacto potencial en el negocio. 
 
@@ -326,7 +327,8 @@ $$\text{El trabajo aquí es la velocidad, encontrando potenciales “insights”
 
 Esto puede ser contrario a la intuición, pero no es conveniente asignar esta función a los mejores ingenieros que escriben un magnífico y sólido código de software. El trabajo aquí es velocidad, encontrando potenciales **"insights"** o revelaciones lo más rápido posible.
 
-$$\text{Aquellos que se obsesionan con la calidad del código pueden encontrar difícil ser útiles en este rol.}$$
+$$\text{Aquellos que se obsesionan con la calidad del código pueden}$$ 
+$$\text{encontrar difícil ser útiles en este rol.}$$
 
 ```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
 knitr::include_graphics("img/01-intro2ds/22-04-analista-experto.png")
@@ -340,7 +342,7 @@ $$\text{La inspiración es barata, pero el rigor es caro.}$$
 
 Los Estadísticos ayudan a quienes toman las decisiones a llegar a conclusiones seguras más allá de los datos.
 
-Por ejemplo, si el sistema de **Machine Learning** funcionó para un conjunto de datos, todo lo que se puede concluir es que funcionó en ese conjunto de datos. ¿Funcionará cuando se está ejecutando en producción con otros datos? ¿Debería ser lanzarlo? Necesita algunas habilidades adicionales para lidiar con esas preguntas. Habilidades estadísticas.
+Por ejemplo, si el sistema de **Machine Learning** funcionó para un conjunto de datos, todo lo que se puede concluir es que funcionó en ese conjunto de datos. ¿Funcionará cuando se está ejecutando en producción con otros datos? ¿Debería ser lanzado a producción? Necesita algunas habilidades adicionales para lidiar con esas preguntas. Habilidades estadísticas.
 
 ```{r, fig.align='center', out.height='300pt', out.width='400pt',echo=F}
 knitr::include_graphics("img/01-intro2ds/22-05-statistician.png")
