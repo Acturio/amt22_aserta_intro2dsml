@@ -112,9 +112,9 @@ knitr::include_graphics("img/00-presentacion/lizzy.png")
   * Objetivo de ciencia de datos
   * Requisitos y aplicaciones
   * Tipos de algoritmos
+  * Perfiles de un equipo de ciencia de datos
   * Ciclo de vida de un proyecto
   * Taller de scoping
-  * Perfiles de un equipo de ciencia de datos
 
   </br>
 
