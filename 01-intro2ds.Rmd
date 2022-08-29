@@ -648,7 +648,7 @@ knitr::include_graphics("img/01-intro2ds-ciclo/12-dmf3.png")
 
 ### Scoping
 
-Para realizar el scoping podemos apoyarnos del siguiente [documento](https://docs.google.com/spreadsheets/d/1hCRt00nYyZvbkfi9yOMRSR0R30lPRtKzaNKKlgAE78M/edit?usp=sharing).
+Para realizar el scoping podemos apoyarnos del siguiente [documento](https://docs.google.com/spreadsheets/d/1LzH3nquBOdyMXuc5xXli_csMFzJUlnuGsf6RUw24D9k/edit#gid=0).
 
 Ya que sabemos que la organización esta preparada para realizar un proyecto de ciencia de datos, podemos iniciar el *scoping*. El proceso a seguir es el siguiente:
 
