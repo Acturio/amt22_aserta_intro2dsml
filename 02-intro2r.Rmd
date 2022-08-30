@@ -416,14 +416,16 @@ knitr::include_graphics("img/02-intro2r/funcion.png")
 ```
 
 
-Las funciones en R se caracterizan por un nombre corto y que dé una idea de lo que hace la función. Los elementos que pueden ingresar (_inputs_) a la función se llaman __parámetros__ o __argumentos__ y se ubican dentro de paréntesis, el cuerpo de la función se ubica dentro de llaves y es ahí donde se procesan los _inputs_ para convertirlos en _outputs_, a continuación se muestra la estructura general de una función.
+Las funciones en R se caracterizan por un nombre corto y que dé una idea de lo que hace la función. Los elementos que pueden ingresar (_inputs_) a la función se llaman __parámetros__ o __argumentos__ y se ubican dentro de paréntesis, el cuerpo de la función se ubica dentro de llaves y es ahí donde se procesan los _inputs_ para convertirlos en _outputs_
+
+A continuación se muestra la estructura general para definir una función.
 
 ```{r, eval=F}
-nombre_de_funcion(parametro1, parametro2, ...) {
+nombre_de_funcion <- function(parametro1, parametro2, ...) {
   tareas internas
   tareas internas
   tareas internas
-  salida
+  return(salida)
 }
 ```
 
@@ -636,7 +638,7 @@ pi:6  # secuencia real
 
 
 ### EJERCICIOS 
-Use funciones o procedimientos (varias líneas) de R para responder (al menos) a de las siguientes preguntas.
+Use funciones o procedimientos (varias líneas) de R para responder (al menos) a 15 de las siguientes preguntas.
 
 1. ¿Qué cantidad de dinero sobra al repartir \$10,000 entre 3 personas?
 

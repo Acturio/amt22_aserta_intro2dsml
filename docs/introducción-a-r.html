@@ -675,12 +675,13 @@ Si queremos la matriz almacenada con el nombre de E2 dentro del objeto <em>milis
 <h3><span class="header-section-number">2.5.1</span> ¿Qué es una función de R?<a href="introducción-a-r.html#qué-es-una-función-de-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En la figura de abajo se muestra una ilustración de lo que es una función o máquina general. Hay unas entradas (<em>inputs</em>) que luego son procesadas dentro de la caja para generar unas salidas (<em>outputs</em>). Un ejemplo de una función o máquina muy común en nuestras casas es la licuadora. Si a una licuadora le ingresamos leche, fresas, azúcar y hielo, el resultado será un delicioso jugo de fresa.</p>
 <p><img src="img/02-intro2r/funcion.png" width="600pt" style="display: block; margin: auto;" /></p>
-<p>Las funciones en R se caracterizan por un nombre corto y que dé una idea de lo que hace la función. Los elementos que pueden ingresar (<em>inputs</em>) a la función se llaman <strong>parámetros</strong> o <strong>argumentos</strong> y se ubican dentro de paréntesis, el cuerpo de la función se ubica dentro de llaves y es ahí donde se procesan los <em>inputs</em> para convertirlos en <em>outputs</em>, a continuación se muestra la estructura general de una función.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introducción-a-r.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nombre_de_funcion</span>(parametro1, parametro2, ...) {</span>
+<p>Las funciones en R se caracterizan por un nombre corto y que dé una idea de lo que hace la función. Los elementos que pueden ingresar (<em>inputs</em>) a la función se llaman <strong>parámetros</strong> o <strong>argumentos</strong> y se ubican dentro de paréntesis, el cuerpo de la función se ubica dentro de llaves y es ahí donde se procesan los <em>inputs</em> para convertirlos en <em>outputs</em></p>
+<p>A continuación se muestra la estructura general para definir una función.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introducción-a-r.html#cb67-1" aria-hidden="true" tabindex="-1"></a>nombre_de_funcion <span class="ot">&lt;-</span> <span class="cf">function</span>(parametro1, parametro2, ...) {</span>
 <span id="cb67-2"><a href="introducción-a-r.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  tareas internas</span>
 <span id="cb67-3"><a href="introducción-a-r.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  tareas internas</span>
 <span id="cb67-4"><a href="introducción-a-r.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  tareas internas</span>
-<span id="cb67-5"><a href="introducción-a-r.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  salida</span>
+<span id="cb67-5"><a href="introducción-a-r.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(salida)</span>
 <span id="cb67-6"><a href="introducción-a-r.html#cb67-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Cuando usamos una función sólo debemos escribir bien el nombre e ingresar correctamente los parámetros de la función, el cuerpo de la función ni lo vemos ni lo debemos modificar. A continuación se presenta un ejemplo de cómo usar la función <code>mean</code> para calcular un promedio.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introducción-a-r.html#cb68-1" aria-hidden="true" tabindex="-1"></a>notas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.0</span>, <span class="fl">1.3</span>, <span class="fl">3.8</span>, <span class="fl">2.0</span>)  <span class="co"># Notas de un estudiante</span></span>
@@ -891,7 +892,7 @@ En R existe el operador binario <code>:</code> que sirve para construir secuenci
 </div>
 <div id="ejercicios-1" class="section level3 hasAnchor" number="2.5.8">
 <h3><span class="header-section-number">2.5.8</span> EJERCICIOS<a href="introducción-a-r.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Use funciones o procedimientos (varias líneas) de R para responder (al menos) a de las siguientes preguntas.</p>
+<p>Use funciones o procedimientos (varias líneas) de R para responder (al menos) a 15 de las siguientes preguntas.</p>
 <ol style="list-style-type: decimal">
 <li><p>¿Qué cantidad de dinero sobra al repartir $10,000 entre 3 personas?</p></li>
 <li><p>¿Es el número 4,560 divisible por 3?</p></li>
