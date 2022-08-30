@@ -62,7 +62,7 @@ archivos-xls-y-xlsx
 archivos-json
 archivos-rds
 bases-de-datos
-microsoft-sql-server
+oracle-database
 consultas-de-datos
 seleccionar-columnas
 filtrar-observaciones

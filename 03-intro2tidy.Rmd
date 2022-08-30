@@ -179,7 +179,7 @@ head(base_json, 2)
 
 Un tipo de archivo que resulta de particular interés, es el *.RDS*. Este archivo comprime cualquier objeto o resultado que sea usado o producido en *R*. Uno puede almacenar el objeto de interés de la siguiente manera:
 
-```{r}
+```{r, eval=FALSE}
 saveRDS(base_json, "data/ames.rds")
 ```
 
@@ -201,37 +201,46 @@ En muchos de los casos la información estará dentro de un Sistema Manejador de
 
 -   ODBC
 -   DBI
+-   JDBC
 
-Un ejemplo con un SMBD como SQL Server:
+Un ejemplo con un SMBD como Oracle:
 
-### Microsoft SQL Server
+### Oracle Database
 
-[Referencias](https://db.rstudio.com/databases/microsoft-sql-server/)
+[Referencias](https://cran.r-project.org/web/packages/ROracle/ROracle.pdf)
 
 **Configuración de conexión:**
 
 Se necesitan seis configuraciones para realizar una conexión:
 
 -   Controlador : consulte la sección Controladores para obtener más información
--   Servidor : una ruta de red al servidor de la base de datos.
+-   Url : una ruta de red al servidor de la base de datos.
 -   Base de datos : el nombre de la base de datos.
--   UID : el ID de red del usuario o la cuenta local del servidor
--   PWD : la contraseña de la cuenta
--   Puerto : debe establecerse en 1433
+-   Usuario : el ID de red del usuario o la cuenta local del servidor
+-   Contraseña : la contraseña de la cuenta
+-   Puerto : debe establecerse en 1526 o 1521
 
 Para establecer la conexión con la base de datos:
 
 ```{r, eval= F}
 library(DBI)
-con <- DBI::dbConnect(
- odbc::odbc(),
- Driver   = "[your driver's name]",
- Server   = "[your server's path]",
- Database = "[your database's name]",
- UID      = rstudioapi::askForPassword("Database user"),
- PWD      = rstudioapi::askForPassword("Database password"),
- Port     = 1433
- )
+library(RJDBC)
+
+jdbcDriver = JDBC(driverClass = "oracle.jdbc.OracleDriver","c:/Drivers/Oracle/ojdbc8.jar")
+
+con <- dbConnect(
+ jdbcDriver, 
+ url      = "jdbc:oracle:thin:@//Hostname:Port/Service_Name"
+ user     = rstudioapi::askForPassword("Database user"),
+ password = rstudioapi::askForPassword("Database password"),
+ dbname   = "Data Base Name"
+)
+
+sql_translation.JDBCConnection <- dbplyr:::sql_translation.Oracle
+sql_select.JDBCConnection      <- dbplyr:::sql_query_select.Oracle
+sql_subquery.JDBCConnection    <- dbplyr:::sql_query_wrap.Oracle
+
+dbExistsTable(jdbcConnection, "nombre_tabla") # Probar si hay conexión con la tabla
 
 ```
 
@@ -283,12 +292,16 @@ library(RSQLite)
 con <- src_memdb()
 
 copy_to(con, storms, overwrite = T)
+copy_to(con, mtcars, overwrite = T)
 
 tbl_storms <- tbl(con, "storms")
-
 tbl_storms
 
+tbl_mtcars <- tbl(con, "mtcars")
+tbl_mtcars
 ```
+
+Existe otra metodología de conexión, la cual puede encontrarse en la siguiente [documentación](https://db.rstudio.com/databases/oracle/)
 
 ## Consultas de datos
 
@@ -730,7 +743,7 @@ us_rent_income %>%
 Adicionalmente, se puede especificar una función de agregación que operara antes de acomodar los datos en las respectivas columnas indicadas. Un ejemplo de funciones agregadas en la re estructuración de tabla se muestra a continuación, donde se muestra la media de los valores en las categorías *tension* y *breaks*.
 
 ```{r}
-warpbreaks <- as_tibble(warpbreaks[c("wool", "tension", "breaks")])
+warpbreaks <- warpbreaks[c("wool", "tension", "breaks")] %>% as_tibble()
 warpbreaks
 
 warpbreaks %>%
