@@ -233,9 +233,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
 <li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
 <li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
-<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción <code>for</code></a></li>
-<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>while</code></a></li>
-<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>repeat</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-else-if"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción else if</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.7</b> Instrucción <code>repeat</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
 <ul>
@@ -959,74 +960,116 @@ En R existe el operador binario <code>:</code> que sirve para construir secuenci
 <span id="cb152-10"><a href="introducción-a-r.html#cb152-10" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb152-11"><a href="introducción-a-r.html#cb152-11" aria-hidden="true" tabindex="-1"></a>  operación final</span>
 <span id="cb152-12"><a href="introducción-a-r.html#cb152-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Ejemplo</strong></p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="introducción-a-r.html#cb153-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">5000</span> <span class="co"># Salario básico por semana</span></span>
+<span id="cb153-2"><a href="introducción-a-r.html#cb153-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Horas laboradas por semana</span></span>
+<span id="cb153-3"><a href="introducción-a-r.html#cb153-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-4"><a href="introducción-a-r.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlab <span class="sc">&gt;</span> <span class="dv">40</span>) {</span>
+<span id="cb153-5"><a href="introducción-a-r.html#cb153-5" aria-hidden="true" tabindex="-1"></a>  hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
+<span id="cb153-6"><a href="introducción-a-r.html#cb153-6" aria-hidden="true" tabindex="-1"></a>  salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
+<span id="cb153-7"><a href="introducción-a-r.html#cb153-7" aria-hidden="true" tabindex="-1"></a>  sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
+<span id="cb153-8"><a href="introducción-a-r.html#cb153-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb153-9"><a href="introducción-a-r.html#cb153-9" aria-hidden="true" tabindex="-1"></a> h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb153-10"><a href="introducción-a-r.html#cb153-10" aria-hidden="true" tabindex="-1"></a> sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb153-11"><a href="introducción-a-r.html#cb153-11" aria-hidden="true" tabindex="-1"></a> sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> sueldo_sobrante</span>
+<span id="cb153-12"><a href="introducción-a-r.html#cb153-12" aria-hidden="true" tabindex="-1"></a>} <span class="co"># Cálculo de salario por horas trabajadas</span></span>
+<span id="cb153-13"><a href="introducción-a-r.html#cb153-13" aria-hidden="true" tabindex="-1"></a>sal</span></code></pre></div>
+<pre><code>## [1] 5000</code></pre>
 </div>
 <div id="instrucción-ifelse" class="section level3 hasAnchor" number="2.6.3">
 <h3><span class="header-section-number">2.6.3</span> Instrucción <code>ifelse</code><a href="introducción-a-r.html#instrucción-ifelse" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Se recomienda usar la instrucción <code>ifelse</code> cuando hay una sola instrucción para el caso <code>if</code> y para el caso <code>else</code>. A continuación se muestra la estructura básica de uso.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="introducción-a-r.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(condición, operación SI cumple, operación NO cumple)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="introducción-a-r.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(condición, operación SI cumple, operación NO cumple)</span></code></pre></div>
 <div id="ejemplo-5" class="section level4 unnumbered hasAnchor">
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Suponga que usted recibe un vector de números enteros, escriba un procedimiento que diga si cada elemento del vector es par o impar.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="introducción-a-r.html#cb154-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="dv">1</span>)</span>
-<span id="cb154-2"><a href="introducción-a-r.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&#39;Es par&#39;</span>, <span class="st">&#39;Es impar&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="introducción-a-r.html#cb156-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="dv">1</span>)</span>
+<span id="cb156-2"><a href="introducción-a-r.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&#39;Es par&#39;</span>, <span class="st">&#39;Es impar&#39;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Es impar&quot; &quot;Es impar&quot; &quot;Es par&quot;   &quot;Es par&quot;   &quot;Es par&quot;   &quot;Es impar&quot;</code></pre>
 </div>
 </div>
-<div id="instrucción-for" class="section level3 hasAnchor" number="2.6.4">
-<h3><span class="header-section-number">2.6.4</span> Instrucción <code>for</code><a href="introducción-a-r.html#instrucción-for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="instrucción-else-if" class="section level3 hasAnchor" number="2.6.4">
+<h3><span class="header-section-number">2.6.4</span> Instrucción else if<a href="introducción-a-r.html#instrucción-else-if" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En caso de querer actuar de forma distinta dependiendo de la condición, puede especificarse más de una condición de la siguiente manera:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="introducción-a-r.html#cb158-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">5000</span> <span class="co"># Salario básico por semana</span></span>
+<span id="cb158-2"><a href="introducción-a-r.html#cb158-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Horas laboradas por semana</span></span>
+<span id="cb158-3"><a href="introducción-a-r.html#cb158-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-4"><a href="introducción-a-r.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlab <span class="sc">&gt;</span> <span class="dv">40</span>) {</span>
+<span id="cb158-5"><a href="introducción-a-r.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb158-6"><a href="introducción-a-r.html#cb158-6" aria-hidden="true" tabindex="-1"></a> hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
+<span id="cb158-7"><a href="introducción-a-r.html#cb158-7" aria-hidden="true" tabindex="-1"></a>  salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
+<span id="cb158-8"><a href="introducción-a-r.html#cb158-8" aria-hidden="true" tabindex="-1"></a>  sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
+<span id="cb158-9"><a href="introducción-a-r.html#cb158-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-10"><a href="introducción-a-r.html#cb158-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (hlab <span class="sc">&lt;</span> <span class="dv">40</span>) {</span>
+<span id="cb158-11"><a href="introducción-a-r.html#cb158-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-12"><a href="introducción-a-r.html#cb158-12" aria-hidden="true" tabindex="-1"></a> h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb158-13"><a href="introducción-a-r.html#cb158-13" aria-hidden="true" tabindex="-1"></a> sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb158-14"><a href="introducción-a-r.html#cb158-14" aria-hidden="true" tabindex="-1"></a> sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> sueldo_sobrante</span>
+<span id="cb158-15"><a href="introducción-a-r.html#cb158-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-16"><a href="introducción-a-r.html#cb158-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb158-17"><a href="introducción-a-r.html#cb158-17" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-18"><a href="introducción-a-r.html#cb158-18" aria-hidden="true" tabindex="-1"></a> sal</span>
+<span id="cb158-19"><a href="introducción-a-r.html#cb158-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-20"><a href="introducción-a-r.html#cb158-20" aria-hidden="true" tabindex="-1"></a> }<span class="co"># Cálculo de salario por horas trabajadas</span></span></code></pre></div>
+<pre><code>## [1] 5000</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introducción-a-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>sal</span></code></pre></div>
+<pre><code>## [1] 5000</code></pre>
+</div>
+<div id="instrucción-for" class="section level3 hasAnchor" number="2.6.5">
+<h3><span class="header-section-number">2.6.5</span> Instrucción <code>for</code><a href="introducción-a-r.html#instrucción-for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La instrucción <code>for</code> es muy útil para repetir un procedimiento cierta cantidad de veces. A continuación se muestra la estructura básica de uso.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="introducción-a-r.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> secuencia) {</span>
-<span id="cb156-2"><a href="introducción-a-r.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
-<span id="cb156-3"><a href="introducción-a-r.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
-<span id="cb156-4"><a href="introducción-a-r.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb156-5"><a href="introducción-a-r.html#cb156-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
-<span id="cb156-6"><a href="introducción-a-r.html#cb156-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="introducción-a-r.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> secuencia) {</span>
+<span id="cb162-2"><a href="introducción-a-r.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb162-3"><a href="introducción-a-r.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb162-4"><a href="introducción-a-r.html#cb162-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb162-5"><a href="introducción-a-r.html#cb162-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb162-6"><a href="introducción-a-r.html#cb162-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="ejemplo-6" class="section level4 unnumbered hasAnchor">
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo-6" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Escriba un procedimiento para crear 10 muestras de tamaño 100 de una distribución uniforme entre uno y tres. Para cada una de las muestra, se debe contar el número de elementos de la muestra que fueron mayores o iguales a 2.5.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="introducción-a-r.html#cb157-1" aria-hidden="true" tabindex="-1"></a>nrep <span class="ot">&lt;-</span> <span class="dv">10</span>  <span class="co"># Número de repeticiones</span></span>
-<span id="cb157-2"><a href="introducción-a-r.html#cb157-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>    <span class="co"># Tamaño de la muestra</span></span>
-<span id="cb157-3"><a href="introducción-a-r.html#cb157-3" aria-hidden="true" tabindex="-1"></a>conteo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nrep)  <span class="co"># Vector para almacenar el conteo</span></span>
-<span id="cb157-4"><a href="introducción-a-r.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nrep) {</span>
-<span id="cb157-5"><a href="introducción-a-r.html#cb157-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>n, <span class="at">min=</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">3</span>)</span>
-<span id="cb157-6"><a href="introducción-a-r.html#cb157-6" aria-hidden="true" tabindex="-1"></a>  conteo[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(x <span class="sc">&gt;=</span> <span class="fl">2.5</span>)</span>
-<span id="cb157-7"><a href="introducción-a-r.html#cb157-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb157-8"><a href="introducción-a-r.html#cb157-8" aria-hidden="true" tabindex="-1"></a>conteo  <span class="co"># Para obtener el conteo</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="introducción-a-r.html#cb163-1" aria-hidden="true" tabindex="-1"></a>nrep <span class="ot">&lt;-</span> <span class="dv">10</span>  <span class="co"># Número de repeticiones</span></span>
+<span id="cb163-2"><a href="introducción-a-r.html#cb163-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>    <span class="co"># Tamaño de la muestra</span></span>
+<span id="cb163-3"><a href="introducción-a-r.html#cb163-3" aria-hidden="true" tabindex="-1"></a>conteo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nrep)  <span class="co"># Vector para almacenar el conteo</span></span>
+<span id="cb163-4"><a href="introducción-a-r.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nrep) {</span>
+<span id="cb163-5"><a href="introducción-a-r.html#cb163-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>n, <span class="at">min=</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">3</span>)</span>
+<span id="cb163-6"><a href="introducción-a-r.html#cb163-6" aria-hidden="true" tabindex="-1"></a>  conteo[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(x <span class="sc">&gt;=</span> <span class="fl">2.5</span>)</span>
+<span id="cb163-7"><a href="introducción-a-r.html#cb163-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb163-8"><a href="introducción-a-r.html#cb163-8" aria-hidden="true" tabindex="-1"></a>conteo  <span class="co"># Para obtener el conteo</span></span></code></pre></div>
 <pre><code>##  [1] 24 37 28 26 30 18 29 23 19 19</code></pre>
 </div>
 </div>
-<div id="instrucción-while" class="section level3 hasAnchor" number="2.6.5">
-<h3><span class="header-section-number">2.6.5</span> Instrucción <code>while</code><a href="introducción-a-r.html#instrucción-while" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="instrucción-while" class="section level3 hasAnchor" number="2.6.6">
+<h3><span class="header-section-number">2.6.6</span> Instrucción <code>while</code><a href="introducción-a-r.html#instrucción-while" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La instrucción <code>while</code> es muy útil para repetir un procedimiento siempre que se cumple una condición. A continuación se muestra la estructura básica de uso.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="introducción-a-r.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (condición) {</span>
-<span id="cb159-2"><a href="introducción-a-r.html#cb159-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
-<span id="cb159-3"><a href="introducción-a-r.html#cb159-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
-<span id="cb159-4"><a href="introducción-a-r.html#cb159-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb159-5"><a href="introducción-a-r.html#cb159-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
-<span id="cb159-6"><a href="introducción-a-r.html#cb159-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="introducción-a-r.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (condición) {</span>
+<span id="cb165-2"><a href="introducción-a-r.html#cb165-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb165-3"><a href="introducción-a-r.html#cb165-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb165-4"><a href="introducción-a-r.html#cb165-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb165-5"><a href="introducción-a-r.html#cb165-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb165-6"><a href="introducción-a-r.html#cb165-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="ejemplo-7" class="section level4 unnumbered hasAnchor">
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Suponga que se lanza una moneda en la cual el resultado es cara o cruz. Escribir un procedimiento que simule lanzamientos hasta que el número de caras obtenidas sea 5. El procedimiento debe entregar el historial de lanzamientos.</p>
 <p>Para simular el lanzamiento de <strong>una</strong> moneda se puede usar la función <code>sample</code> y definiendo el vector <code>resultados</code> con <code>size=1</code> para simular un lanzamiento, a continuación el código y tres pruebas ilustrativas.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introducción-a-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Cara&#39;</span>, <span class="st">&#39;Cruz&#39;</span>)</span>
-<span id="cb160-2"><a href="introducción-a-r.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x=</span>resultados, <span class="at">size=</span><span class="dv">1</span>)  <span class="co"># Prueba 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="introducción-a-r.html#cb166-1" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Cara&#39;</span>, <span class="st">&#39;Cruz&#39;</span>)</span>
+<span id="cb166-2"><a href="introducción-a-r.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x=</span>resultados, <span class="at">size=</span><span class="dv">1</span>)  <span class="co"># Prueba 1</span></span></code></pre></div>
 <pre><code>## [1] &quot;Cruz&quot;</code></pre>
 <p>Una vez seamos capaces de simular un lanzamiento podemos escribir el procedimiento para generar tantos lanzamientos hasta que se cumpla la condición. El código mostrado abajo permite hacer lo solicitado.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="introducción-a-r.html#cb162-1" aria-hidden="true" tabindex="-1"></a>num.lanza <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Contador de lanzamientos</span></span>
-<span id="cb162-2"><a href="introducción-a-r.html#cb162-2" aria-hidden="true" tabindex="-1"></a>num.caras <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Contados de caras obtenidas</span></span>
-<span id="cb162-3"><a href="introducción-a-r.html#cb162-3" aria-hidden="true" tabindex="-1"></a>historial <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># Vector vacío para almacenar</span></span>
-<span id="cb162-4"><a href="introducción-a-r.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (num.caras <span class="sc">&lt;</span> <span class="dv">5</span>) {</span>
-<span id="cb162-5"><a href="introducción-a-r.html#cb162-5" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span>resultados, <span class="at">size=</span><span class="dv">1</span>)</span>
-<span id="cb162-6"><a href="introducción-a-r.html#cb162-6" aria-hidden="true" tabindex="-1"></a>  num.lanza <span class="ot">&lt;-</span> num.lanza <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb162-7"><a href="introducción-a-r.html#cb162-7" aria-hidden="true" tabindex="-1"></a>  historial[num.lanza] <span class="ot">&lt;-</span> res</span>
-<span id="cb162-8"><a href="introducción-a-r.html#cb162-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (res <span class="sc">==</span> <span class="st">&#39;Cara&#39;</span>) {</span>
-<span id="cb162-9"><a href="introducción-a-r.html#cb162-9" aria-hidden="true" tabindex="-1"></a>    num.caras <span class="ot">&lt;-</span> num.caras <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb162-10"><a href="introducción-a-r.html#cb162-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb162-11"><a href="introducción-a-r.html#cb162-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb162-12"><a href="introducción-a-r.html#cb162-12" aria-hidden="true" tabindex="-1"></a>historial</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="introducción-a-r.html#cb168-1" aria-hidden="true" tabindex="-1"></a>num.lanza <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Contador de lanzamientos</span></span>
+<span id="cb168-2"><a href="introducción-a-r.html#cb168-2" aria-hidden="true" tabindex="-1"></a>num.caras <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Contados de caras obtenidas</span></span>
+<span id="cb168-3"><a href="introducción-a-r.html#cb168-3" aria-hidden="true" tabindex="-1"></a>historial <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># Vector vacío para almacenar</span></span>
+<span id="cb168-4"><a href="introducción-a-r.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (num.caras <span class="sc">&lt;</span> <span class="dv">5</span>) {</span>
+<span id="cb168-5"><a href="introducción-a-r.html#cb168-5" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span>resultados, <span class="at">size=</span><span class="dv">1</span>)</span>
+<span id="cb168-6"><a href="introducción-a-r.html#cb168-6" aria-hidden="true" tabindex="-1"></a>  num.lanza <span class="ot">&lt;-</span> num.lanza <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb168-7"><a href="introducción-a-r.html#cb168-7" aria-hidden="true" tabindex="-1"></a>  historial[num.lanza] <span class="ot">&lt;-</span> res</span>
+<span id="cb168-8"><a href="introducción-a-r.html#cb168-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (res <span class="sc">==</span> <span class="st">&#39;Cara&#39;</span>) {</span>
+<span id="cb168-9"><a href="introducción-a-r.html#cb168-9" aria-hidden="true" tabindex="-1"></a>    num.caras <span class="ot">&lt;-</span> num.caras <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb168-10"><a href="introducción-a-r.html#cb168-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb168-11"><a href="introducción-a-r.html#cb168-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb168-12"><a href="introducción-a-r.html#cb168-12" aria-hidden="true" tabindex="-1"></a>historial</span></code></pre></div>
 <pre><code>##  [1] &quot;Cruz&quot; &quot;Cruz&quot; &quot;Cruz&quot; &quot;Cruz&quot; &quot;Cara&quot; &quot;Cara&quot; &quot;Cruz&quot; &quot;Cruz&quot; &quot;Cara&quot; &quot;Cara&quot;
 ## [11] &quot;Cara&quot;</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introducción-a-r.html#cb164-1" aria-hidden="true" tabindex="-1"></a>num.lanza</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="introducción-a-r.html#cb170-1" aria-hidden="true" tabindex="-1"></a>num.lanza</span></code></pre></div>
 <pre><code>## [1] 11</code></pre>
 
 <div class="rmdnote">
@@ -1034,27 +1077,27 @@ La instrucción <code>for</code> se usa cuando sabemos el número de veces que s
 </div>
 </div>
 </div>
-<div id="instrucción-repeat" class="section level3 hasAnchor" number="2.6.6">
-<h3><span class="header-section-number">2.6.6</span> Instrucción <code>repeat</code><a href="introducción-a-r.html#instrucción-repeat" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="instrucción-repeat" class="section level3 hasAnchor" number="2.6.7">
+<h3><span class="header-section-number">2.6.7</span> Instrucción <code>repeat</code><a href="introducción-a-r.html#instrucción-repeat" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La instrucción <code>while</code> es muy útil para repetir un procedimiento siempre que se cumple una condición. A continuación se muestra la estructura básica de uso.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="introducción-a-r.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb166-2"><a href="introducción-a-r.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
-<span id="cb166-3"><a href="introducción-a-r.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
-<span id="cb166-4"><a href="introducción-a-r.html#cb166-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb166-5"><a href="introducción-a-r.html#cb166-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
-<span id="cb166-6"><a href="introducción-a-r.html#cb166-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (condición) <span class="cf">break</span></span>
-<span id="cb166-7"><a href="introducción-a-r.html#cb166-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="introducción-a-r.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb172-2"><a href="introducción-a-r.html#cb172-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb172-3"><a href="introducción-a-r.html#cb172-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb172-4"><a href="introducción-a-r.html#cb172-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb172-5"><a href="introducción-a-r.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb172-6"><a href="introducción-a-r.html#cb172-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (condición) <span class="cf">break</span></span>
+<span id="cb172-7"><a href="introducción-a-r.html#cb172-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="ejemplo-8" class="section level4 unnumbered hasAnchor">
 <h4>Ejemplo<a href="introducción-a-r.html#ejemplo-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Escribir un procedimiento para ir aumentando de uno en uno el valor de <code>x</code> hasta que <code>x</code> sea igual a siete El procedimiento debe imprimir por pantalla la secuencia de valores de <code>x</code>.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="introducción-a-r.html#cb167-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span>  <span class="co"># Valor de inicio</span></span>
-<span id="cb167-2"><a href="introducción-a-r.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb167-3"><a href="introducción-a-r.html#cb167-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(x)</span>
-<span id="cb167-4"><a href="introducción-a-r.html#cb167-4" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span>  x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb167-5"><a href="introducción-a-r.html#cb167-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">8</span>) {</span>
-<span id="cb167-6"><a href="introducción-a-r.html#cb167-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">break</span></span>
-<span id="cb167-7"><a href="introducción-a-r.html#cb167-7" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb167-8"><a href="introducción-a-r.html#cb167-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="introducción-a-r.html#cb173-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span>  <span class="co"># Valor de inicio</span></span>
+<span id="cb173-2"><a href="introducción-a-r.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb173-3"><a href="introducción-a-r.html#cb173-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(x)</span>
+<span id="cb173-4"><a href="introducción-a-r.html#cb173-4" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span>  x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb173-5"><a href="introducción-a-r.html#cb173-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">8</span>) {</span>
+<span id="cb173-6"><a href="introducción-a-r.html#cb173-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">break</span></span>
+<span id="cb173-7"><a href="introducción-a-r.html#cb173-7" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb173-8"><a href="introducción-a-r.html#cb173-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] 3
 ## [1] 4
 ## [1] 5
@@ -1095,78 +1138,78 @@ La instrucción <code>break</code> sirve para salir de un procedimiento iterativ
 <div id="espacios" class="section level3 hasAnchor" number="2.7.4">
 <h3><span class="header-section-number">2.7.4</span> Espacios<a href="introducción-a-r.html#espacios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use espacios alrededor de todos los operadores binarios (=, +, -, &lt;-, etc.). Los espacios alrededor del símbolo <code>=</code> son opcionales cuando se usan para ingresar valores dentro de una función. Así como en español, nunca coloque espacio antes de una coma, pero siempre use espacio luego de una coma. A continuación ejemplos de buenas y malas prácticas.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="introducción-a-r.html#cb169-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])  <span class="co"># Bien</span></span>
-<span id="cb169-2"><a href="introducción-a-r.html#cb169-2" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[, <span class="dv">1</span>])                <span class="co"># Bien</span></span>
-<span id="cb169-3"><a href="introducción-a-r.html#cb169-3" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[<span class="dv">1</span>, ])                <span class="co"># Bien</span></span>
-<span id="cb169-4"><a href="introducción-a-r.html#cb169-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days<span class="sc">&lt;</span><span class="dv">0</span>, <span class="dv">2</span>])    <span class="co"># Faltan espacios alrededor &#39;&lt;&#39; </span></span>
-<span id="cb169-5"><a href="introducción-a-r.html#cb169-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>,<span class="dv">2</span>])   <span class="co"># Falta espacio luego de coma</span></span>
-<span id="cb169-6"><a href="introducción-a-r.html#cb169-6" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span> , <span class="dv">2</span>]) <span class="co"># Sobra espacio antes de coma</span></span>
-<span id="cb169-7"><a href="introducción-a-r.html#cb169-7" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])   <span class="co"># Falta espacio antes de &#39;&lt;-&#39;</span></span>
-<span id="cb169-8"><a href="introducción-a-r.html#cb169-8" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])    <span class="co"># Falta espacio alrededor de &#39;&lt;-&#39;</span></span>
-<span id="cb169-9"><a href="introducción-a-r.html#cb169-9" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[,<span class="dv">1</span>])                 <span class="co"># Falta espacio luego de coma</span></span>
-<span id="cb169-10"><a href="introducción-a-r.html#cb169-10" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[<span class="dv">1</span>,])                 <span class="co"># Falta espacio luego de coma</span></span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="introducción-a-r.html#cb175-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])  <span class="co"># Bien</span></span>
+<span id="cb175-2"><a href="introducción-a-r.html#cb175-2" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[, <span class="dv">1</span>])                <span class="co"># Bien</span></span>
+<span id="cb175-3"><a href="introducción-a-r.html#cb175-3" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[<span class="dv">1</span>, ])                <span class="co"># Bien</span></span>
+<span id="cb175-4"><a href="introducción-a-r.html#cb175-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days<span class="sc">&lt;</span><span class="dv">0</span>, <span class="dv">2</span>])    <span class="co"># Faltan espacios alrededor &#39;&lt;&#39; </span></span>
+<span id="cb175-5"><a href="introducción-a-r.html#cb175-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>,<span class="dv">2</span>])   <span class="co"># Falta espacio luego de coma</span></span>
+<span id="cb175-6"><a href="introducción-a-r.html#cb175-6" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span> , <span class="dv">2</span>]) <span class="co"># Sobra espacio antes de coma</span></span>
+<span id="cb175-7"><a href="introducción-a-r.html#cb175-7" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span> <span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])   <span class="co"># Falta espacio antes de &#39;&lt;-&#39;</span></span>
+<span id="cb175-8"><a href="introducción-a-r.html#cb175-8" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">table</span>(df[df<span class="sc">$</span>days <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">2</span>])    <span class="co"># Falta espacio alrededor de &#39;&lt;-&#39;</span></span>
+<span id="cb175-9"><a href="introducción-a-r.html#cb175-9" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[,<span class="dv">1</span>])                 <span class="co"># Falta espacio luego de coma</span></span>
+<span id="cb175-10"><a href="introducción-a-r.html#cb175-10" aria-hidden="true" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[<span class="dv">1</span>,])                 <span class="co"># Falta espacio luego de coma</span></span></code></pre></div>
 <p>Otra buena práctica es colocar espacio antes de un paréntesis excepto cuando se llama una función.</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="introducción-a-r.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (debug)    <span class="co"># Correcto</span></span>
-<span id="cb170-2"><a href="introducción-a-r.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(debug)     <span class="co"># Funciona pero no se recomienda</span></span>
-<span id="cb170-3"><a href="introducción-a-r.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span> (x)  <span class="co"># Funciona pero no se recomienda</span></span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="introducción-a-r.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (debug)    <span class="co"># Correcto</span></span>
+<span id="cb176-2"><a href="introducción-a-r.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(debug)     <span class="co"># Funciona pero no se recomienda</span></span>
+<span id="cb176-3"><a href="introducción-a-r.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span> (x)  <span class="co"># Funciona pero no se recomienda</span></span></code></pre></div>
 <p>Espacios extras pueden ser usados si con esto se mejora la apariencia del código, ver el ejemplo siguiente.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="introducción-a-r.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x    =</span> x.coord,</span>
-<span id="cb171-2"><a href="introducción-a-r.html#cb171-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">y    =</span> data.mat[, <span class="fu">MakeColName</span>(metric, ptiles[<span class="dv">1</span>], <span class="st">&quot;roiOpt&quot;</span>)],</span>
-<span id="cb171-3"><a href="introducción-a-r.html#cb171-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> ylim,</span>
-<span id="cb171-4"><a href="introducción-a-r.html#cb171-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;dates&quot;</span>,</span>
-<span id="cb171-5"><a href="introducción-a-r.html#cb171-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> metric,</span>
-<span id="cb171-6"><a href="introducción-a-r.html#cb171-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> (<span class="fu">paste</span>(metric, <span class="st">&quot; for 3 samples &quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="introducción-a-r.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x    =</span> x.coord,</span>
+<span id="cb177-2"><a href="introducción-a-r.html#cb177-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">y    =</span> data.mat[, <span class="fu">MakeColName</span>(metric, ptiles[<span class="dv">1</span>], <span class="st">&quot;roiOpt&quot;</span>)],</span>
+<span id="cb177-3"><a href="introducción-a-r.html#cb177-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> ylim,</span>
+<span id="cb177-4"><a href="introducción-a-r.html#cb177-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;dates&quot;</span>,</span>
+<span id="cb177-5"><a href="introducción-a-r.html#cb177-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> metric,</span>
+<span id="cb177-6"><a href="introducción-a-r.html#cb177-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> (<span class="fu">paste</span>(metric, <span class="st">&quot; for 3 samples &quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)))</span></code></pre></div>
 <p>No coloque espacios alrededor del código que esté dentro de paréntesis <code>( )</code> o corchetes <code>[ ]</code>, la única excepción es luego de una coma, ver el ejemplo siguiente.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="introducción-a-r.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condicion)    <span class="co"># Correcto </span></span>
-<span id="cb172-2"><a href="introducción-a-r.html#cb172-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>, ]            <span class="co"># Correcto</span></span>
-<span id="cb172-3"><a href="introducción-a-r.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ( condicion )  <span class="co"># Sobran espacios alrededor de condición</span></span>
-<span id="cb172-4"><a href="introducción-a-r.html#cb172-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,]             <span class="co"># Se necesita espacio luego de coma</span></span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="introducción-a-r.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condicion)    <span class="co"># Correcto </span></span>
+<span id="cb178-2"><a href="introducción-a-r.html#cb178-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>, ]            <span class="co"># Correcto</span></span>
+<span id="cb178-3"><a href="introducción-a-r.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ( condicion )  <span class="co"># Sobran espacios alrededor de condición</span></span>
+<span id="cb178-4"><a href="introducción-a-r.html#cb178-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,]             <span class="co"># Se necesita espacio luego de coma</span></span></code></pre></div>
 <p>Los signos de agrupación llaves <code>{ }</code> se utilizan para agrupar bloques de código y se recomienda que nunca una llave abierta <code>{</code> esté sola en una línea; una llave cerrada <code>}</code> si debe ir sola en su propia línea. Se pueden omitir las llaves cuando el bloque de instrucciones esté formado por una sola línea pero esa línea de código NO debe ir en la misma línea de la condición. A continuación dos ejemplos de lo que se recomienda.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="introducción-a-r.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) {                     <span class="co"># Correcto</span></span>
-<span id="cb173-2"><a href="introducción-a-r.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
-<span id="cb173-3"><a href="introducción-a-r.html#cb173-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb173-4"><a href="introducción-a-r.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim))                       <span class="co"># Correcto</span></span>
-<span id="cb173-5"><a href="introducción-a-r.html#cb173-5" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
-<span id="cb173-6"><a href="introducción-a-r.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)    <span class="co"># Aceptable</span></span>
-<span id="cb173-7"><a href="introducción-a-r.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim))                       <span class="co"># No se recomienda</span></span>
-<span id="cb173-8"><a href="introducción-a-r.html#cb173-8" aria-hidden="true" tabindex="-1"></a>{        </span>
-<span id="cb173-9"><a href="introducción-a-r.html#cb173-9" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
-<span id="cb173-10"><a href="introducción-a-r.html#cb173-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb173-11"><a href="introducción-a-r.html#cb173-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb173-12"><a href="introducción-a-r.html#cb173-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) {ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)}</span>
-<span id="cb173-13"><a href="introducción-a-r.html#cb173-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Frente a la llave { no debe ir nada</span></span>
-<span id="cb173-14"><a href="introducción-a-r.html#cb173-14" aria-hidden="true" tabindex="-1"></a><span class="co"># la llave de cierre } debe ir sola</span></span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="introducción-a-r.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) {                     <span class="co"># Correcto</span></span>
+<span id="cb179-2"><a href="introducción-a-r.html#cb179-2" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
+<span id="cb179-3"><a href="introducción-a-r.html#cb179-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb179-4"><a href="introducción-a-r.html#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim))                       <span class="co"># Correcto</span></span>
+<span id="cb179-5"><a href="introducción-a-r.html#cb179-5" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
+<span id="cb179-6"><a href="introducción-a-r.html#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)    <span class="co"># Aceptable</span></span>
+<span id="cb179-7"><a href="introducción-a-r.html#cb179-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim))                       <span class="co"># No se recomienda</span></span>
+<span id="cb179-8"><a href="introducción-a-r.html#cb179-8" aria-hidden="true" tabindex="-1"></a>{        </span>
+<span id="cb179-9"><a href="introducción-a-r.html#cb179-9" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)</span>
+<span id="cb179-10"><a href="introducción-a-r.html#cb179-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb179-11"><a href="introducción-a-r.html#cb179-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb179-12"><a href="introducción-a-r.html#cb179-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(ylim)) {ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.06</span>)}</span>
+<span id="cb179-13"><a href="introducción-a-r.html#cb179-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Frente a la llave { no debe ir nada</span></span>
+<span id="cb179-14"><a href="introducción-a-r.html#cb179-14" aria-hidden="true" tabindex="-1"></a><span class="co"># la llave de cierre } debe ir sola</span></span></code></pre></div>
 <p>La sentencia else debe ir siempre entre llaves <code>} {</code>, ver el siguiente ejemplo.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="introducción-a-r.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition) {         </span>
-<span id="cb174-2"><a href="introducción-a-r.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
-<span id="cb174-3"><a href="introducción-a-r.html#cb174-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {                 <span class="co"># Correcto</span></span>
-<span id="cb174-4"><a href="introducción-a-r.html#cb174-4" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
-<span id="cb174-5"><a href="introducción-a-r.html#cb174-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb174-6"><a href="introducción-a-r.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition) {         </span>
-<span id="cb174-7"><a href="introducción-a-r.html#cb174-7" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
-<span id="cb174-8"><a href="introducción-a-r.html#cb174-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb174-9"><a href="introducción-a-r.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {                   <span class="co"># Incorrecto</span></span>
-<span id="cb174-10"><a href="introducción-a-r.html#cb174-10" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
-<span id="cb174-11"><a href="introducción-a-r.html#cb174-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb174-12"><a href="introducción-a-r.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition)           </span>
-<span id="cb174-13"><a href="introducción-a-r.html#cb174-13" aria-hidden="true" tabindex="-1"></a>  one line</span>
-<span id="cb174-14"><a href="introducción-a-r.html#cb174-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>                     <span class="co"># Incorrecto</span></span>
-<span id="cb174-15"><a href="introducción-a-r.html#cb174-15" aria-hidden="true" tabindex="-1"></a>  one line</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="introducción-a-r.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition) {         </span>
+<span id="cb180-2"><a href="introducción-a-r.html#cb180-2" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
+<span id="cb180-3"><a href="introducción-a-r.html#cb180-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {                 <span class="co"># Correcto</span></span>
+<span id="cb180-4"><a href="introducción-a-r.html#cb180-4" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
+<span id="cb180-5"><a href="introducción-a-r.html#cb180-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb180-6"><a href="introducción-a-r.html#cb180-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition) {         </span>
+<span id="cb180-7"><a href="introducción-a-r.html#cb180-7" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
+<span id="cb180-8"><a href="introducción-a-r.html#cb180-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb180-9"><a href="introducción-a-r.html#cb180-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {                   <span class="co"># Incorrecto</span></span>
+<span id="cb180-10"><a href="introducción-a-r.html#cb180-10" aria-hidden="true" tabindex="-1"></a>  one or more lines</span>
+<span id="cb180-11"><a href="introducción-a-r.html#cb180-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb180-12"><a href="introducción-a-r.html#cb180-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition)           </span>
+<span id="cb180-13"><a href="introducción-a-r.html#cb180-13" aria-hidden="true" tabindex="-1"></a>  one line</span>
+<span id="cb180-14"><a href="introducción-a-r.html#cb180-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>                     <span class="co"># Incorrecto</span></span>
+<span id="cb180-15"><a href="introducción-a-r.html#cb180-15" aria-hidden="true" tabindex="-1"></a>  one line</span></code></pre></div>
 </div>
 <div id="asignación" class="section level3 hasAnchor" number="2.7.5">
 <h3><span class="header-section-number">2.7.5</span> Asignación<a href="introducción-a-r.html#asignación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para realizar asignaciones se recomienda usar el símbolo <code>&lt;-</code>, el símbolo de igualdad <code>=</code> no se recomienda usarlo para asignaciones.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="introducción-a-r.html#cb175-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># Correcto</span></span>
-<span id="cb175-2"><a href="introducción-a-r.html#cb175-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">5</span>   <span class="co"># No recomendado</span></span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="introducción-a-r.html#cb181-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># Correcto</span></span>
+<span id="cb181-2"><a href="introducción-a-r.html#cb181-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">5</span>   <span class="co"># No recomendado</span></span></code></pre></div>
 <p>Para una explicación más detallada sobre el símbolo de asignación se recomienda visitar este <a href="http://www.win-vector.com/blog/2016/12/the-case-for-using-in-r/">enlace</a>.</p>
 </div>
 <div id="punto-y-coma" class="section level3 hasAnchor" number="2.7.6">
 <h3><span class="header-section-number">2.7.6</span> Punto y coma<a href="introducción-a-r.html#punto-y-coma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>No se recomienda colocar varias instrucciones separadas por <code>;</code> en la misma línea, aunque funciona dificulta la revisión del código.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="introducción-a-r.html#cb176-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>; y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">5</span>); <span class="fu">hist</span>(y)  <span class="co"># No se recomienda</span></span>
-<span id="cb176-2"><a href="introducción-a-r.html#cb176-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>                                  <span class="co"># Correcto</span></span>
-<span id="cb176-3"><a href="introducción-a-r.html#cb176-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">5</span>)</span>
-<span id="cb176-4"><a href="introducción-a-r.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="introducción-a-r.html#cb182-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>; y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">5</span>); <span class="fu">hist</span>(y)  <span class="co"># No se recomienda</span></span>
+<span id="cb182-2"><a href="introducción-a-r.html#cb182-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>                                  <span class="co"># Correcto</span></span>
+<span id="cb182-3"><a href="introducción-a-r.html#cb182-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">5</span>)</span>
+<span id="cb182-4"><a href="introducción-a-r.html#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(y)</span></code></pre></div>
 <p>A pesar de la anterior advertencia es posible que en este libro usemos el <code>;</code> en algunas ocasiones, si lo hacemos es para ahorrar espacio en la presentación del código.</p>
 
 <div class="watermark">

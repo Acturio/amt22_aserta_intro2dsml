@@ -727,6 +727,25 @@ else {
 }
 ```
 
+**Ejemplo**
+
+```{r}
+sal <- 5000 # Salario básico por semana
+hlab <- 40 # Horas laboradas por semana
+
+if (hlab > 40) {
+  hext <- hlab - 40
+  salext <- hext * 150
+  sal <- sal + salext
+} else {
+ h_faltantes <- 40 - hlab
+ sueldo_sobrante <- h_faltantes * sal/40
+ sal <- sal - sueldo_sobrante
+} # Cálculo de salario por horas trabajadas
+sal
+```
+
+
 ### Instrucción `ifelse` 
 Se recomienda usar la instrucción `ifelse` cuando hay una sola instrucción para el caso `if` y para el caso `else`. A continuación se muestra la estructura básica de uso.
 
@@ -741,6 +760,39 @@ Suponga que usted recibe un vector de números enteros, escriba un procedimiento
 x <- c(5, 3, 2, 8, -4, 1)
 ifelse(x %% 2 == 0, 'Es par', 'Es impar')
 ```
+
+
+### Instrucción else if
+
+En caso de querer actuar de forma distinta dependiendo de la condición, puede especificarse más de una condición de la siguiente manera:
+
+```{r}
+sal <- 5000 # Salario básico por semana
+hlab <- 40 # Horas laboradas por semana
+
+if (hlab > 40) {
+  
+ hext <- hlab - 40
+  salext <- hext * 150
+  sal <- sal + salext
+
+  } else if (hlab < 40) {
+ 
+ h_faltantes <- 40 - hlab
+ sueldo_sobrante <- h_faltantes * sal/40
+ sal <- sal - sueldo_sobrante
+ 
+} else {
+ 
+ sal
+
+ }# Cálculo de salario por horas trabajadas
+
+sal
+```
+
+
+
 
 ### Instrucción `for` 
 La instrucción `for` es muy útil para repetir un procedimiento cierta cantidad de veces. A continuación se muestra la estructura básica de uso.

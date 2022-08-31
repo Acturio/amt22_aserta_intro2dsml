@@ -44,6 +44,7 @@ bucles
 instrucción-if
 instrucción-if-else
 instrucción-ifelse
+instrucción-else-if
 instrucción-for
 instrucción-while
 instrucción-repeat
