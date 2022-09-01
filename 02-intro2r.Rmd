@@ -768,29 +768,63 @@ En caso de querer actuar de forma distinta dependiendo de la condición, puede e
 
 ```{r}
 sal <- 5000 # Salario básico por semana
-hlab <- 40 # Horas laboradas por semana
+hlab <- 20 # Horas laboradas por semana
 
 if (hlab > 40) {
-  
- hext <- hlab - 40
-  salext <- hext * 150
-  sal <- sal + salext
-
-  } else if (hlab < 40) {
  
- h_faltantes <- 40 - hlab
- sueldo_sobrante <- h_faltantes * sal/40
- sal <- sal - sueldo_sobrante
+   hext <- hlab - 40
+   salext <- hext * 150
+   sal <- sal + salext
+   print(paste0("Pago semanal: $", sal))
+
+  } else if (hlab < 16) {
+ 
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - 1.05 * sueldo_sobrante
+   print("despedido")
+   print(paste0("liquidación: $", sal))
  
 } else {
  
- sal
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - sueldo_sobrante
+   print(paste0("Pago con descuento: $", sal))
 
  }# Cálculo de salario por horas trabajadas
-
-sal
 ```
 
+Otro caso:
+
+```{r}
+sal <- 5000 # Salario básico por semana
+hlab <- 10 # Horas laboradas por semana
+
+if (hlab > 40) {
+ 
+   hext <- hlab - 40
+   salext <- hext * 150
+   sal <- sal + salext
+   print(paste0("Pago semanal: $", sal))
+
+  } else if (hlab < 16) {
+ 
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - 1.05 * sueldo_sobrante
+   print("¡Empleado despedido!  :O")
+   print(paste0("liquidación: $", sal))
+ 
+} else {
+ 
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - sueldo_sobrante
+   print(paste0("Pago con descuento: $", sal))
+
+ }# Cálculo de salario por horas trabajadas
+```
 
 
 

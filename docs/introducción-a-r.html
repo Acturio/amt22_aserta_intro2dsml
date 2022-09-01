@@ -992,28 +992,61 @@ En R existe el operador binario <code>:</code> que sirve para construir secuenci
 <h3><span class="header-section-number">2.6.4</span> Instrucción else if<a href="introducción-a-r.html#instrucción-else-if" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En caso de querer actuar de forma distinta dependiendo de la condición, puede especificarse más de una condición de la siguiente manera:</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="introducción-a-r.html#cb158-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">5000</span> <span class="co"># Salario básico por semana</span></span>
-<span id="cb158-2"><a href="introducción-a-r.html#cb158-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Horas laboradas por semana</span></span>
+<span id="cb158-2"><a href="introducción-a-r.html#cb158-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Horas laboradas por semana</span></span>
 <span id="cb158-3"><a href="introducción-a-r.html#cb158-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb158-4"><a href="introducción-a-r.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlab <span class="sc">&gt;</span> <span class="dv">40</span>) {</span>
-<span id="cb158-5"><a href="introducción-a-r.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb158-6"><a href="introducción-a-r.html#cb158-6" aria-hidden="true" tabindex="-1"></a> hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
-<span id="cb158-7"><a href="introducción-a-r.html#cb158-7" aria-hidden="true" tabindex="-1"></a>  salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
-<span id="cb158-8"><a href="introducción-a-r.html#cb158-8" aria-hidden="true" tabindex="-1"></a>  sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
-<span id="cb158-9"><a href="introducción-a-r.html#cb158-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-10"><a href="introducción-a-r.html#cb158-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (hlab <span class="sc">&lt;</span> <span class="dv">40</span>) {</span>
-<span id="cb158-11"><a href="introducción-a-r.html#cb158-11" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb158-12"><a href="introducción-a-r.html#cb158-12" aria-hidden="true" tabindex="-1"></a> h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
-<span id="cb158-13"><a href="introducción-a-r.html#cb158-13" aria-hidden="true" tabindex="-1"></a> sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
-<span id="cb158-14"><a href="introducción-a-r.html#cb158-14" aria-hidden="true" tabindex="-1"></a> sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> sueldo_sobrante</span>
-<span id="cb158-15"><a href="introducción-a-r.html#cb158-15" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb158-16"><a href="introducción-a-r.html#cb158-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb158-17"><a href="introducción-a-r.html#cb158-17" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb158-18"><a href="introducción-a-r.html#cb158-18" aria-hidden="true" tabindex="-1"></a> sal</span>
-<span id="cb158-19"><a href="introducción-a-r.html#cb158-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-20"><a href="introducción-a-r.html#cb158-20" aria-hidden="true" tabindex="-1"></a> }<span class="co"># Cálculo de salario por horas trabajadas</span></span></code></pre></div>
-<pre><code>## [1] 5000</code></pre>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introducción-a-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>sal</span></code></pre></div>
-<pre><code>## [1] 5000</code></pre>
+<span id="cb158-5"><a href="introducción-a-r.html#cb158-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-6"><a href="introducción-a-r.html#cb158-6" aria-hidden="true" tabindex="-1"></a>   hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
+<span id="cb158-7"><a href="introducción-a-r.html#cb158-7" aria-hidden="true" tabindex="-1"></a>   salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
+<span id="cb158-8"><a href="introducción-a-r.html#cb158-8" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
+<span id="cb158-9"><a href="introducción-a-r.html#cb158-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Pago semanal: $&quot;</span>, sal))</span>
+<span id="cb158-10"><a href="introducción-a-r.html#cb158-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-11"><a href="introducción-a-r.html#cb158-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (hlab <span class="sc">&lt;</span> <span class="dv">16</span>) {</span>
+<span id="cb158-12"><a href="introducción-a-r.html#cb158-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-13"><a href="introducción-a-r.html#cb158-13" aria-hidden="true" tabindex="-1"></a>   h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb158-14"><a href="introducción-a-r.html#cb158-14" aria-hidden="true" tabindex="-1"></a>   sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb158-15"><a href="introducción-a-r.html#cb158-15" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> <span class="fl">1.05</span> <span class="sc">*</span> sueldo_sobrante</span>
+<span id="cb158-16"><a href="introducción-a-r.html#cb158-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="st">&quot;despedido&quot;</span>)</span>
+<span id="cb158-17"><a href="introducción-a-r.html#cb158-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;liquidación: $&quot;</span>, sal))</span>
+<span id="cb158-18"><a href="introducción-a-r.html#cb158-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-19"><a href="introducción-a-r.html#cb158-19" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb158-20"><a href="introducción-a-r.html#cb158-20" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb158-21"><a href="introducción-a-r.html#cb158-21" aria-hidden="true" tabindex="-1"></a>   h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb158-22"><a href="introducción-a-r.html#cb158-22" aria-hidden="true" tabindex="-1"></a>   sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb158-23"><a href="introducción-a-r.html#cb158-23" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> sueldo_sobrante</span>
+<span id="cb158-24"><a href="introducción-a-r.html#cb158-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Pago con descuento: $&quot;</span>, sal))</span>
+<span id="cb158-25"><a href="introducción-a-r.html#cb158-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-26"><a href="introducción-a-r.html#cb158-26" aria-hidden="true" tabindex="-1"></a> }<span class="co"># Cálculo de salario por horas trabajadas</span></span></code></pre></div>
+<pre><code>## [1] &quot;Pago con descuento: $2500&quot;</code></pre>
+<p>Otro caso:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introducción-a-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="dv">5000</span> <span class="co"># Salario básico por semana</span></span>
+<span id="cb160-2"><a href="introducción-a-r.html#cb160-2" aria-hidden="true" tabindex="-1"></a>hlab <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Horas laboradas por semana</span></span>
+<span id="cb160-3"><a href="introducción-a-r.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="introducción-a-r.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlab <span class="sc">&gt;</span> <span class="dv">40</span>) {</span>
+<span id="cb160-5"><a href="introducción-a-r.html#cb160-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb160-6"><a href="introducción-a-r.html#cb160-6" aria-hidden="true" tabindex="-1"></a>   hext <span class="ot">&lt;-</span> hlab <span class="sc">-</span> <span class="dv">40</span></span>
+<span id="cb160-7"><a href="introducción-a-r.html#cb160-7" aria-hidden="true" tabindex="-1"></a>   salext <span class="ot">&lt;-</span> hext <span class="sc">*</span> <span class="dv">150</span></span>
+<span id="cb160-8"><a href="introducción-a-r.html#cb160-8" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">+</span> salext</span>
+<span id="cb160-9"><a href="introducción-a-r.html#cb160-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Pago semanal: $&quot;</span>, sal))</span>
+<span id="cb160-10"><a href="introducción-a-r.html#cb160-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-11"><a href="introducción-a-r.html#cb160-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (hlab <span class="sc">&lt;</span> <span class="dv">16</span>) {</span>
+<span id="cb160-12"><a href="introducción-a-r.html#cb160-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb160-13"><a href="introducción-a-r.html#cb160-13" aria-hidden="true" tabindex="-1"></a>   h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb160-14"><a href="introducción-a-r.html#cb160-14" aria-hidden="true" tabindex="-1"></a>   sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb160-15"><a href="introducción-a-r.html#cb160-15" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> <span class="fl">1.05</span> <span class="sc">*</span> sueldo_sobrante</span>
+<span id="cb160-16"><a href="introducción-a-r.html#cb160-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="st">&quot;¡Empleado despedido!  :O&quot;</span>)</span>
+<span id="cb160-17"><a href="introducción-a-r.html#cb160-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;liquidación: $&quot;</span>, sal))</span>
+<span id="cb160-18"><a href="introducción-a-r.html#cb160-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb160-19"><a href="introducción-a-r.html#cb160-19" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb160-20"><a href="introducción-a-r.html#cb160-20" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb160-21"><a href="introducción-a-r.html#cb160-21" aria-hidden="true" tabindex="-1"></a>   h_faltantes <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="sc">-</span> hlab</span>
+<span id="cb160-22"><a href="introducción-a-r.html#cb160-22" aria-hidden="true" tabindex="-1"></a>   sueldo_sobrante <span class="ot">&lt;-</span> h_faltantes <span class="sc">*</span> sal<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb160-23"><a href="introducción-a-r.html#cb160-23" aria-hidden="true" tabindex="-1"></a>   sal <span class="ot">&lt;-</span> sal <span class="sc">-</span> sueldo_sobrante</span>
+<span id="cb160-24"><a href="introducción-a-r.html#cb160-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Pago con descuento: $&quot;</span>, sal))</span>
+<span id="cb160-25"><a href="introducción-a-r.html#cb160-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-26"><a href="introducción-a-r.html#cb160-26" aria-hidden="true" tabindex="-1"></a> }<span class="co"># Cálculo de salario por horas trabajadas</span></span></code></pre></div>
+<pre><code>## [1] &quot;¡Empleado despedido!  :O&quot;
+## [1] &quot;liquidación: $1062.5&quot;</code></pre>
 </div>
 <div id="instrucción-for" class="section level3 hasAnchor" number="2.6.5">
 <h3><span class="header-section-number">2.6.5</span> Instrucción <code>for</code><a href="introducción-a-r.html#instrucción-for" class="anchor-section" aria-label="Anchor link to header"></a></h3>

@@ -13,6 +13,8 @@ if (hlab > 40) {
 }
 sal
 
+
+# if else
 if (hlab > 40) {
   hext <- hlab - 40
   salext <- hext * 150
@@ -23,6 +25,35 @@ if (hlab > 40) {
  sal <- sal - sueldo_sobrante
 } # Cálculo de salario por horas trabajadas
 sal
+
+
+# else if
+sal <- 5000 # Salario básico por semana
+hlab <- 20 # Horas laboradas por semana
+
+if (hlab > 40) {
+ 
+   hext <- hlab - 40
+   salext <- hext * 150
+   sal <- sal + salext
+   print(paste0("Pago semanal: $", sal))
+
+  } else if (hlab < 16) {
+ 
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - 1.05 * sueldo_sobrante
+   print("despedido")
+   print(paste0("liquidación: $", sal))
+ 
+} else {
+ 
+   h_faltantes <- 40 - hlab
+   sueldo_sobrante <- h_faltantes * sal/40
+   sal <- sal - sueldo_sobrante
+   print(paste0("Pago con descuento: $", sal))
+
+ }# Cálculo de salario por horas trabajadas
 
 
 
