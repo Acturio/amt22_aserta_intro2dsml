@@ -30,7 +30,7 @@ colaborador <- c(
   "Carlos", "Ana", "Erik", "Iván", "Victor", "Julio"
 )
 sueldo <- c(
-  60000, 21500, 70000, 18000, 30000, 15000, 45000, 28000, 48000, 31500,
+  6000000, 21500, 70000, 18000, 30000, 15000, 45000, 28000, 48000, 31500,
   19000, 24000
 )
 nivel <- c("N3", "N2", "N3", "N1", "N2", "N1", "N2", "N1", "N3", "N2", "N1", "N2")
@@ -70,7 +70,7 @@ nomina[,3]
 
 
 
-# Paso 6: Calcular columna con pago final a realizar
+# Paso 6: Calcular columna con pago final a realizar 
 
 
 

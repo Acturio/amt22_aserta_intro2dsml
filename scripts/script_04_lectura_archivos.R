@@ -18,15 +18,15 @@ pacman::p_load(
 
 
 # Lectura desde .csv
-base <- read.csv("data/ames.csv") 
-head(base, 2)
+base <- read.csv("data/ames.csv")
+head(base, 10)
 
 # Lectura desde .csv (PRO)
 tidy <- read_csv("data/ames.csv")
 head(tidy, 2)
 
 # Lectura desde .txt
-ames_txt <- read_delim("data/ames.txt", delim = ";", col_names = TRUE)
+ames_txt <- read_delim("data/ames.txt", delim = ";", col_names = T)
 head(ames_txt, 2)
 
 # Lectura desde .xlsx

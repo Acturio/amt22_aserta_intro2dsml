@@ -238,7 +238,7 @@ En esta clase estaremos usando:
   - **Pulgar abajo:** Eso no quedó muy claro
   - **Mano arriba:** Quiero participar/preguntar o Ya estoy listo para iniciar 
 
-* [Google Drive](https://drive.google.com/drive/folders/19M-8eY2wYw53pmj3EywkOfV4li0D2mFY?usp=sharing)
+* [Google Drive](https://drive.google.com/drive/folders/1q1zTiK-NifASjf8MxUqlbvf-y9FXj4XZ?usp=sharing)
 * [Notas de clase](https://acturio.github.io/amt22_aserta_intro2dsml/) 
 
 
