@@ -77,8 +77,10 @@ knitr::include_graphics("img/00-presentacion/lizzy.png")
 
 * Funciones y estructuras de control
   * Librerías y funciones
+  * Operaciones vectoriales
   * Condicionamiento
   * Ciclos
+  * Guía de estilo
 
   </br>
 
@@ -159,7 +161,7 @@ knitr::include_graphics("img/00-presentacion/lizzy.png")
 
 * Toma de decisiones enfocadas a negocio
   * Comparación de modelos
-  * Balance entre sesgo y cobertura
+  * Balance entre precisión y cobertura
   * Cuantificación de sesgo e inequidad
   * Cuantificación de ganancia comercial
   * Diseño experimental
