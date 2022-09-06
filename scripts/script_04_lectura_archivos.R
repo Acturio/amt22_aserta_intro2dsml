@@ -6,6 +6,7 @@ library(jsonlite)
 library(DBI)
 library(RJDBC)
 library(RSQLite)
+library(dbplyr)
 
 # Alternativamente: instala librerías si no existen y las carga a la sesión
 
@@ -32,14 +33,25 @@ head(ames_txt, 2)
 # Lectura desde .xlsx
 ### Ejercicio: Escribir el código para leer datos a partir de un archivo de excel (xlsx)
 
+ames_xlsx <- read_xlsx(
+ "data/ames.xlsx", 
+ sheet = 1, 
+ na = c("", "NA", "*", "N/A", "vacío", "#", "desconocido")
+ #col_types = "ccccdcccDccci"
+ )
 
 
 # Lectura desde .json
 base_json <- jsonlite::fromJSON("data/ames.json")
 head(base_json, 2)
 
+lista <- list(a = 1:5, x = 5, texto = "Hola Mundo!")
+saveRDS(lista, "data/lista.rds")
+
 # Lectura desde .rds
+lista <- readRDS("data/lista.rds")
 base_rds <- readRDS("data/ames.rds")
+
 
 
 # Lectura desde base de datos
@@ -54,4 +66,18 @@ tbl_storms
 
 tbl_mtcars <- tbl(con, "mtcars")
 tbl_mtcars
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

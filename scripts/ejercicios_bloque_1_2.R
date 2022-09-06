@@ -39,6 +39,7 @@ horas_extra <- c(200, 100, 80, -24, 60, -8, 150, 160, 0, -16, 0, -4)
 
 nomina <- data.frame(colaborador, nivel, sueldo, horas_sem, horas_extra)
 nomina
+write_csv(nomina, "data/nomina.csv")
 
 # Paso 1: Calcular las horas de trabajo de 1 mes. Hint: Horas_sem/5 * 23
 #         Supuesto: Pago calculado por 23 días laborales al mes

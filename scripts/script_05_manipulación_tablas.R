@@ -12,7 +12,10 @@ glimpse(ames_housing)
 
 #### Selección de columnas ####
 
-ames_housing %>% 
+
+select(ames_housing, Lot_Area, Neighborhood, Year_Sold, Sale_Price)
+
+datos_filtrados <- ames_housing %>% 
  select(Lot_Area, Neighborhood, Year_Sold, Sale_Price)
 
 ames_housing %>% 
@@ -23,7 +26,14 @@ ames_housing %>%
 
 # Ejercicio: Selección de columnas de acuerdo a distintos tipos de filtros
 
+ames_housing %>% 
+ select(72, 73, 50:55, 1,2,3)
 
+ames_housing %>% 
+ select(ends_with("Cond"), contains("Garage"), starts_with("MS"))
+
+tidyr::billboard %>% 
+ select(num_range("wk", 10:15))
 
 
 #### Selección de renglones ####
