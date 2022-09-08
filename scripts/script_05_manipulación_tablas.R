@@ -35,6 +35,8 @@ ames_housing %>%
 tidyr::billboard %>% 
  select(num_range("wk", 10:15))
 
+tidyr::billboard %>% 
+ select(contains("wk1"))
 
 #### Selección de renglones ####
 
@@ -47,10 +49,35 @@ ames_housing %>%
  filter(Lot_Area > 1000 & Sale_Price >= 150000)
 
 ames_housing %>% 
- filter(Lot_Area > 1000, Sale_Price >= 150000)
+ filter(Lot_Area > 1000, Sale_Price >= 150000, Year_Built > 1980)
 
 ames_housing %>% 
- filter(Lot_Area < 1000 | Sale_Price <= 150000)
+ filter(!(Lot_Area < 1000 | Sale_Price <= 150000))
+
+ames_housing %>% 
+ filter(Lot_Area >= 1000, Sale_Price > 150000)
+
+ames_housing %>% 
+ filter(Sale_Condition %in% c("Normal", "Partial")) %>% 
+ group_by(Sale_Condition) %>% 
+ tally()
+
+datos <- tibble(x1 = c(1,2,3,4,5,NA,NA,9,1),
+                x2 = letters[1:9])
+
+!TRUE
+
+datos %>% filter(is.na(x1))
+datos %>% filter(!is.na(x1))
+
+ames_housing %>% 
+ filter(Sale_Price >= 150000)
+
+ames_housing %>% 
+ filter(Sale_Price < 150000)
+
+ames_housing %>% 
+ filter(Sale_Price = 150000)
 
 # Ejercicio:
 #
@@ -90,9 +117,16 @@ ejemplo_mutate %>%
 #### Resumen estadístico ####
 
 ames_housing %>% 
- select(Year_Sold, Year_Remod_Add) %>%
- mutate(Antique = Year_Sold - Year_Remod_Add) %>%
- summarise(Mean_Antique = mean(Antique))
+ select(Year_Sold, Year_Remod_Add,Sale_Price) %>%
+ mutate(
+  Antique = Year_Sold - Year_Remod_Add,
+  Sale_Price_Pesos = Sale_Price * 20) %>%
+ summarise(
+  Mean_Antique = mean(Antique, na.rm = T),
+  Mean_Sale_Price_Pesos = mean(Sale_Price_Pesos, na.rm = T),
+  median = quantile(Sale_Price_Pesos, probs = 0.5),
+  median2 = median(Sale_Price_Pesos)
+  )
 
 
 # Ejercicio:
@@ -104,11 +138,20 @@ ames_housing %>%
 
 #### Agrupamiento ####
 
-ames_housing %>% 
+reporte <- ames_housing %>% 
  mutate(Antique = Year_Sold - Year_Remod_Add) %>% 
+ select(Antique, Neighborhood, Sale_Price) %>% 
  group_by(Neighborhood) %>% 
- summarise(Mean_Antique = round(mean(Antique), 0))
+ summarise(
+  Mean_Antique = round(mean(Antique), 0),
+  Mean_Sale_Price = mean(Sale_Price, na.rm = T),
+  median = quantile(Sale_Price, probs = 0.5)
+  ) 
 
+reporte %>% 
+ write_csv("data/precio_x_vecindario.csv")
+
+reporte %>% arrange(median)
 
 # Ejercicio:
 # 

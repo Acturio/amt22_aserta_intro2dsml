@@ -1292,6 +1292,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/04-tidyverse/duplicado1.png" width="700pt" style="display: block; margin: auto;" /></p>
 <p>En el segundo caso, por cada elemento duplicado en el primer conjunto habrá como resultado un elemento por cada duplicado en el segundo conjunto. A continuación se ejemplifica este escenario.</p>
 <p><img src="img/04-tidyverse/duplicado2.png" width="700pt" style="display: block; margin: auto;" /></p>
+<div class="infobox tip">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>En este <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">link</a> se encuentra un buen resumen de las funciones básicas de <em>dplyr</em></p>
+</div>
 </div>
 </div>
 <div id="orden-y-estructura" class="section level2 hasAnchor" number="3.3">
@@ -1394,6 +1398,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 17 4863        1     1      0     0       0     0     0     0     0     0     0
 ## 18 4864        1     1      0     0       0     0     0     0     0     0     0
 ## 19 4865        1     1      1     0       0     0     0     0     0     0     0</code></pre>
+<p><strong>Ejercicio:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Realiza un pivote horizontal a través del ámbito y el total de localidades.</p></li>
+<li><p>Rellena los datos faltantes con ceros.</p></li>
+</ol>
 <p>En caso de que existan múltiples columnas que se desean dispersar mediante el pivote de una columna con múltiples categorías, es posible especificar tal re estructuración a través del siguiente código.</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="tidyverse.html#cb267-1" aria-hidden="true" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(NAME)</span></code></pre></div>
 <pre><code>## # A tibble: 104 × 5
@@ -1426,6 +1435,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9 11    District of Columbia           43198          1424        681       17
 ## 10 12    Florida                        25952          1077         70        3
 ## # … with 42 more rows</code></pre>
+<p><strong>Ejercicio:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Agrupa los datos de localidades por ámbito</p></li>
+<li><p>Agrega una columna con el porcentaje de localidades por alcaldía</p></li>
+<li><p>Realiza un pivote horizontal sobre el ámbito y las variables numéricas de total de localidades y su respectivo porcentaje creado en el paso anterior</p></li>
+<li><p>Ordena los registros de forma descendente de acuerdo con el total de localidades rural y urbano.</p></li>
+</ol>
 <p>Adicionalmente, se puede especificar una función de agregación que operara antes de acomodar los datos en las respectivas columnas indicadas. Un ejemplo de funciones agregadas en la re estructuración de tabla se muestra a continuación, donde se muestra la media de los valores en las categorías <em>tension</em> y <em>breaks</em>.</p>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="tidyverse.html#cb271-1" aria-hidden="true" tabindex="-1"></a>warpbreaks <span class="ot">&lt;-</span> warpbreaks[<span class="fu">c</span>(<span class="st">&quot;wool&quot;</span>, <span class="st">&quot;tension&quot;</span>, <span class="st">&quot;breaks&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
 <span id="cb271-2"><a href="tidyverse.html#cb271-2" aria-hidden="true" tabindex="-1"></a>warpbreaks</span></code></pre></div>
@@ -1447,7 +1463,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb273-2"><a href="tidyverse.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb273-3"><a href="tidyverse.html#cb273-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> wool,</span>
 <span id="cb273-4"><a href="tidyverse.html#cb273-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> breaks,</span>
-<span id="cb273-5"><a href="tidyverse.html#cb273-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fn =</span> mean</span>
+<span id="cb273-5"><a href="tidyverse.html#cb273-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fn =</span> <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> T)</span>
 <span id="cb273-6"><a href="tidyverse.html#cb273-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   tension     A     B
@@ -1455,6 +1471,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1 L        44.6  28.2
 ## 2 M        24    28.8
 ## 3 H        24.6  18.8</code></pre>
+<p><strong>Ejercicio:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Sobre el conjunto de localidades crea una variable con 5 categorías numéricas creadas aleatoriamente.</p></li>
+<li><p>Elimina la columna con el nombre del municipio.</p></li>
+<li><p>Crea un pivote horizontal con el ámbito, sumando el total de localidades y rellenando con ceros los datos faltantes.</p></li>
+<li><p>Ordena las categorías numéricas de forma ascendente.</p></li>
+</ol>
 </div>
 <div id="pivote-vertical" class="section level3 hasAnchor" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> Pivote vertical<a href="tidyverse.html#pivote-vertical" class="anchor-section" aria-label="Anchor link to header"></a></h3>

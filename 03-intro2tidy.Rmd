@@ -662,6 +662,13 @@ En el segundo caso, por cada elemento duplicado en el primer conjunto habrá com
 knitr::include_graphics("img/04-tidyverse/duplicado2.png")
 ```
 
+
+::: {.infobox .tip data-latex="{tip}"}
+**¡¡ RECORDAR !!**
+
+En este [link](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) se encuentra un buen resumen de las funciones básicas de *dplyr*
+:::
+
 ## Orden y estructura
 
 ```{=tex}
@@ -732,6 +739,13 @@ fish_encounters %>%
   pivot_wider(names_from = station, values_from = seen, values_fill = 0)
 ```
 
+**Ejercicio:**
+
+1) Realiza un pivote horizontal a través del ámbito y el total de localidades. 
+
+2) Rellena los datos faltantes con ceros.
+
+
 En caso de que existan múltiples columnas que se desean dispersar mediante el pivote de una columna con múltiples categorías, es posible especificar tal re estructuración a través del siguiente código.
 
 ```{r}
@@ -739,6 +753,16 @@ us_rent_income %>% arrange(NAME)
 us_rent_income %>%
   pivot_wider(names_from = variable, values_from = c(estimate, moe))
 ```
+
+**Ejercicio:**
+
+1) Agrupa los datos de localidades por ámbito
+
+2) Agrega una columna con el porcentaje de localidades por alcaldía
+
+3) Realiza un pivote horizontal sobre el ámbito y las variables numéricas de total de localidades y su respectivo porcentaje creado en el paso anterior
+
+4) Ordena los registros de forma descendente de acuerdo con el total de localidades rural y urbano.
 
 Adicionalmente, se puede especificar una función de agregación que operara antes de acomodar los datos en las respectivas columnas indicadas. Un ejemplo de funciones agregadas en la re estructuración de tabla se muestra a continuación, donde se muestra la media de los valores en las categorías *tension* y *breaks*.
 
@@ -750,9 +774,21 @@ warpbreaks %>%
   pivot_wider(
     names_from = wool,
     values_from = breaks,
-    values_fn = mean
+    values_fn = ~mean(.x, na.rm = T)
   )
 ```
+
+**Ejercicio:**
+
+1) Sobre el conjunto de localidades crea una variable con 5 categorías numéricas creadas aleatoriamente.
+
+2) Elimina la columna con el nombre del municipio.
+
+3) Crea un pivote horizontal con el ámbito, sumando el total de localidades y rellenando con ceros los datos faltantes.
+
+4) Ordena las categorías numéricas de forma ascendente.
+
+
 
 ### Pivote vertical
 

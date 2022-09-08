@@ -4,7 +4,8 @@ pacman::p_load(
  tidyr,
  magrittr,
  readxl,
- stringr
+ stringr,
+ dplyr
  )
 
 Resumen <- readRDS("data/loc_mun_cdmx.rds")
@@ -34,6 +35,12 @@ fish_encounters %>%
    values_fill = 0
    )
 
+Resumen %>% pivot_wider(
+  names_from = Ambito, 
+  values_from =  Total_localidades,
+  values_fill = 0
+  )
+
 # Otro ejemplo
 us_rent_income %>% arrange(NAME)
 
@@ -42,6 +49,18 @@ us_rent_income %>%
    names_from = variable, 
    values_from = c(estimate, moe)
    )
+
+Resumen %>% 
+ group_by(Ambito) %>% 
+ mutate(porc = Total_localidades/sum(Total_localidades)*100) %>% 
+ arrange(Ambito) %>% 
+ print(n = 23) %>% 
+ pivot_wider(
+  names_from = Ambito,
+  values_from = c(Total_localidades, porc),
+  values_fill = 0
+ )
+
 
 # Un ejemplo más
 
@@ -52,9 +71,21 @@ warpbreaks %>%
   pivot_wider(
     names_from = wool,
     values_from = breaks,
-    values_fn = mean
+    values_fn = ~mean(.x, na.rm = T)
   )
 
+set.seed(13528)
+Resumen %>% 
+ mutate(Categoria = factor(sample(1:4, 23, T))) %>% 
+ #relocate(Categoria, .after = Ambito) %>% 
+ select(-NOM_MUN) %>% 
+ pivot_wider(
+  names_from = Ambito,
+  values_from = Total_localidades,
+  values_fn = ~sum(.x, na.rm = T),
+  values_fill = 0
+ ) %>% 
+ arrange(Categoria) 
 
 #### Pivote vertical ####
 
