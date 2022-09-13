@@ -148,6 +148,28 @@ reporte <- ames_housing %>%
   median = quantile(Sale_Price, probs = 0.5)
   ) 
 
+
+ames_housing %>% 
+ mutate(Antique = Year_Sold - Year_Remod_Add) %>% 
+ select(Antique, Neighborhood, Sale_Price) %>% 
+ group_by(Neighborhood) %>% 
+ mutate(
+  n = n(),
+  precio_medio = mean(Sale_Price),
+  desv = sd(Sale_Price),
+  LI = precio_medio - qnorm(0.975)*desv,
+  LS = precio_medio + qnorm(0.975)*desv) %>% 
+ ungroup() %>% 
+ mutate(
+  dentro_intervalo = case_when(
+   Sale_Price < LI ~ "Abajo",
+   Sale_Price > LS ~ "Arriba",
+   TRUE ~ "Dentro"
+  )
+  )
+ 
+
+
 reporte %>% 
  write_csv("data/precio_x_vecindario.csv")
 
@@ -166,16 +188,25 @@ reporte %>% arrange(median)
 conjuntoX <- tibble("Llave" = LETTERS[1:8], "C1" = 1:8)
 
 conjuntoY <- tibble(
- "Llave" = sample(LETTERS[11:3], size = 9, replace = T), 
+ "OtraLlave" = sample(LETTERS[11:3], size = 9, replace = T), 
  "Ex1" = letters[2:10], 
  "Ex2" = 1002:1010,"Ex3" = paste0(letters[12:20], 2:10)
  )
 
 conjuntoX
 conjuntoY
+conjuntoZ
+
+conjuntoX %>% 
+ full_join(conjuntoY, by = "Llave") %>% 
+ full_join(conjuntoZ, by = "Llave2") %>% 
+ left_join(conjuntoW) %>% 
+ inner_join()
+
+
 
 # Left join
-left_join(x = conjuntoX, y = conjuntoY, by = "Llave")
+left_join(x = conjuntoX, y = conjuntoY, by = c("Llave"="OtraLlave"))
 
 
 # Right join

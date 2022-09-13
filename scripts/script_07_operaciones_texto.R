@@ -17,6 +17,9 @@ print(Cadena3)
 Cadena4 <- 'Esta es otra forma de incluir \"comillas\" dentro de un texto'
 print(Cadena4)
 
+Cadena5 <- 'Esta es otra forma de incluir \"comillas\" dentro \n de un texto'
+print(Cadena5)
+cat(Cadena5)
 
 cat(Cadena3)
 
@@ -28,6 +31,9 @@ str_length("Esta es una cadena de 35 caracteres")
 
 str_length(c("Un","vector","con","diferente","cantidad","de","carecteres","por","cadena"))
 
+str_length("Oscar Arturo Bringas López")
+
+str_length(c("Oscar", "Arturo", "Bringas", "López"))
 
 # Concatenar cadenas
 
@@ -36,6 +42,26 @@ str_c("Concatenado", "de","varias", "cadenas", "sin","espacios")
 str_c("Concatenado","con","espacios", sep=" ")
 
 str_c("separando","mediante","otro","caracter","definido", sep="-")
+
+str_c("1991", "11", "15", sep = "-")
+
+str_c(str_c("1991", "11", "15", sep = "-"), str_c("19", "20", "15", sep = ":"), sep = " ")
+
+str_c("1991", "11", "15", sep = "-") %>% 
+str_c(" 19") %>% 
+str_c("20", "15", sep = ":")
+
+"11" %>% str_c("1991", .,"15", sep = "-")
+
+# data %>%
+#  proceso1() %>%
+#  proceso2() %>%
+#  left_join(data2, .) %>%
+#  mutate()
+
+
+
+
 
 str_c("Valores",str_c("09","006"),"anidados también se pueden concatenar",sep=" ")
 
@@ -47,9 +73,17 @@ str_c(c("Colapsamiento", "de","un","vector","de", "cadenas",
         "separado","por","signos"), collapse = "+")
 
 
+names(Datos) %>% str_c(collapse = " + ") %>% str_c("Response", ., sep = " ~ ")
+
+
+
 # Extraer y reemplazar
 
 str_sub("subcadenas", start = 4, end = 9)
+
+str_sub(c("Oscar", "Arturo", "Bringas", "López"), start = -3, end = -2)
+str_sub("15/11/1991", start = 4, end = 5)
+
 
 x <- "00000090060002"
 str_sub(x, start = str_length(x) - 8, str_length(x))

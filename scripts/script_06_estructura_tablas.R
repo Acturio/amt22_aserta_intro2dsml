@@ -75,8 +75,8 @@ warpbreaks %>%
   )
 
 set.seed(13528)
-Resumen %>% 
- mutate(Categoria = factor(sample(1:4, 23, T))) %>% 
+Resumen %>% as_tibble() %>% 
+ mutate(Categoria = factor(sample(1:5, 23, TRUE))) %>% 
  #relocate(Categoria, .after = Ambito) %>% 
  select(-NOM_MUN) %>% 
  pivot_wider(
@@ -98,14 +98,48 @@ relig_income %>%
    values_to = "count"
    )
 
+new_data <- Resumen %>% pivot_wider(
+  names_from = Ambito, 
+  values_from =  Total_localidades,
+  values_fill = 0
+  )
+
+new_data %>% 
+ pivot_longer(
+  cols = -NOM_MUN,
+  names_to = "tipo",
+  values_to = "conteo"
+ ) %>% 
+ relocate(tipo, .before = NOM_MUN) %>% 
+ arrange(tipo)
+
+
 
 #### Unión de tablas ####
 
+df <- expand_grid(x = c("a", NA), y = c("b", NA))
+df
+
+df %>% unite("z", x:y, remove = FALSE)
+
+df %>% 
+ unite("z", x:y, remove = FALSE, na.rm = T) %>% 
+ separate(z, c("x", "y"), sep = "_")
+
+df %>%
+  unite("xy", x:y, remove = FALSE) %>%
+  separate(xy, c("x", "y"), sep = "_")
+
+###
+
 Datos <- read_excel("data/Margin CONAPO.xlsx", sheet = "Margin CONAPO")
-Datos
+Datos %>% glimpse()
 
 Datos2 <- Datos %>% select(ENT, MUN, LOC)
 Datos2$ENT %<>% str_pad(width = 2, side = "left", pad = "0") # Formato geoespacial
+Datos2$ENT <- Datos2$ENT %>% 
+ str_pad(width = 2, side = "left", pad = "0") # Formato geoespacial
+
 Datos2$MUN %<>% str_pad(width = 3, side = "left", pad = "0") # Formato geoespacial
 Datos2$LOC %<>% str_pad(width = 4, side = "left", pad = "0") # Formato geoespacial
 
@@ -123,12 +157,19 @@ Datos2 %>%
 #### Separación de columnas ####
 
 Datos_unite1 <- Datos2 %>% 
- unite("CVE_GEO", c("ENT","MUN","LOC"), sep = "", remove = T) 
+ unite(col = "CVE_GEO", c("ENT","MUN","LOC"), sep = "", remove = T) 
 
 Datos_unite1 %>% head(5)
 
+Datos %>% 
+ unite(col = "new_col", everything(), sep = "|")
+
+Datos %>% 
+ unite(col = new_column, 1:ncol(Datos), sep = "|", remove = T)
+
+
 
 Datos_unite1 %>% 
-  separate("CVE_GEO", c("EDO","MUNI","LOC"), sep = c(2, 5), remove = F) %>% 
+  separate(col = "CVE_GEO", into = c("EDO","MUNI","LOC"), sep = c(2, 5), remove = F) %>% 
   head(5)
 
