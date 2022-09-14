@@ -91,6 +91,87 @@ Dependiendo del tipo de variable queremos obtener la siguiente información:
 
 Como complemento al EDA podemos realizar un GEDA, que es un análisis exploratorio de los datos apoyándonos de visualizaciones, la visualización de datos no trata de hacer gráficas "bonitas" o "divertidas", ni de simplificar lo complejo. Más bien, trata de aprovechar nuestra gran capacidad de procesamiento visual para exhibir de manera clara aspectos importantes de los datos.
 
+### Lo que no se debe hacer...
+
+```{r echo=FALSE,fig.align='center', out.width = "500pt"}
+  knitr::include_graphics("img/04-ggplot/meme-tecnicamente.png")
+```
+
+Fuentes: [WTF Visualizations](https://viz.wtf/) [Flowingdata](https://flowingdata.com/2010/05/14/wait-something-isnt-right-here/)
+
+```{r echo=FALSE,fig.align='center', out.width = "600pt"}
+  knitr::include_graphics("img/04-ggplot/bad_viz1.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/04-ggplot/bad_viz2.png")
+```
+
+{r echo=FALSE,fig.align='center', out.width = "700pt"} knitr::include_graphics("img/04-ggplot/bad_viz3.png")
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/04-ggplot/bad_viz4.jpg")
+```
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/04-ggplot/bad_viz5.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/04-ggplot/bad_viz6.jpg")
+```
+
+### Principios de visualización
+
+-   El objetivo de una visualización es sintentizar información relevante al análisis presentada de manera sencilla y sin ambigüedad. **Lo usamos de apoyo para explicar a una audiencia más amplia que puede no ser tan técnica.**
+
+-   Una gráfica debe reportar el resultado de un análisis detallado, nunca lo reemplaza.
+
+-   No hacer gráficas porque se vean "cool"
+
+-   Antes de hacer una gráfica, debe pensarse en lo que se quiere expresar o representar
+
+-   Existen "reglas" o mejores gráficas para representar cierto tipo de información de acuerdo a los tipos de datos que se tienen o al objetivo se quiere lograr con la visualización. [From Data to Viz](https://www.data-to-viz.com/caveats.html)
+
+-   No utilizar pie charts
+
+### Principios generales del diseño analítico:
+
+-   Muestra comparaciones, contrastes, diferencias.
+
+-   Muestra causalidad, mecanismo, explicación.
+
+-   Muestra datos multivariados, es decir, más de una o dos variables.
+
+-   Integra palabras, números, imágenes y diagramas.
+
+-   Las presentaciones analíticas, a fin de cuentas, se sostienen o caen dependiendo de la calidad, relevancia e integridad de su contenido.
+
+Esta categoría incluye técnicas específicas que dependen de la forma de nuestros datos y el tipo de pregunta que queremos investigar:
+
+### Técnicas de visualización:
+
+-   *Tipos de gráficas*: cuantiles, histogramas, caja y brazos, gráficas de dispersión, puntos/barras/ líneas, series de tiempo.
+
+-   *Técnicas para mejorar gráficas*: Transformación de datos, transparencia, vibración, suavizamiento y bandas de confianza.
+
+### Indicadores de calidad gráfica:
+
+Aplicables a cualquier gráfica en particular, son guías concretas y relativamente objetivas para evaluar la calidad de una gráfica.
+
+-   *Integridad Gráfica*: El factor de engaño, es decir, la distorsión gráfica de las cantidades representadas, debe ser mínimo.
+
+-   *Chartjunk*: Minimizar el uso de decoración gráfica que interfiera con la interpretación de los datos: 3D, rejillas, rellenos con patrones.
+
+-   *Tinta de datos*: Maximizar la proporción de tinta de datos vs. tinta total de la gráfica. La regla es: si hay tinta que no representa variación en los datos, o la eliminación de esa tinta no representa pérdidas de significado, esa tinta debe ser eliminada. El ejemplo más claro es el de las rejillas en gráficas y tablas:
+
+```{r echo=FALSE,fig.align='center' ,out.width='700pt', out.height='300pt'}
+knitr::include_graphics("img/04-ggplot/tinta.png")
+```
+
+-   *Densidad de datos:* Las mejores gráficas tienen mayor densidad de datos, que es la razón entre el tamaño del conjunto de datos y el área de la gráfica.
+
+
 
 ### Gráficos univariados:
 
@@ -266,7 +347,8 @@ data("diamonds")
 -   **color**: color del diamante, de D (mejor) a J (peor)
 -   **clarity**: una medida de la claridad del diamante (I1 (peor), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (mejor))
 -   **x**: longitud en mm (0-10,74)
--   **y**: ancho en mm (0--58,9) width in mm (0--58.9) -**z**: profundidad en mm (0--31,8)
+-   **y**: ancho en mm (0--58,9) width in mm (0--58.9) 
+-   **z**: profundidad en mm (0--31,8)
 -   **depth** porcentaje de profundidad total = z / media (x, y) = 2 \* z / (x + y) (43--79)
 -   **table**: ancho de la parte superior del diamante en relación con el punto más ancho (43--95)
 
@@ -452,7 +534,7 @@ ggplot(data = diamonds)+
 diamonds %>% 
   ggplot( aes( y = clarity)) + 
   geom_bar( color= "darkblue", fill= "black", alpha= 0.7) +
-  geom_text(aes(label = ..count..), stat = "count", vjust = 1, hjust = 1.5,colour = "blue")+
+  geom_text(aes(label = ..count..), stat = "count", vjust = 1, hjust = 1.1,colour = "white")+
   scale_x_continuous(labels = scales::comma_format()) +
   ggtitle("Distribución claridad") +
   theme_get()
