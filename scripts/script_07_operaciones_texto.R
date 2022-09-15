@@ -1,4 +1,5 @@
 library(stringr)
+library(dplyr)
 
 # Definición de cadenas de texto
 
@@ -126,6 +127,13 @@ str_view(vector,"^aprendizaje$")
 cadena <- "El año 2022 será un año de mucho crecimiento."
 
 str_view(cadena,"\\d", match = T)
+str_view_all(cadena,"\\d", match = T)
+str_view_all(cadena,"\\s", match = T)
+str_view(sentences,"[Tt]he", match = T)
+str_view_all(sentences,"[^Tt]", match = T)
+
+
+
 
 str_view(c("tamaño","tasa","tata","taza","tapa"),"ta(s|z)a")
 
@@ -134,18 +142,22 @@ str_view(c("tamaño","tasa","tata","taza","tapa"),"ta(s|z)a")
 x <- "1888 es el año más largo en números romanos: MDCCCLXXXVIII"
 
 str_view(x,"XX?")
+str_view_all(x,"XX?")
+str_view(sentences,"the?")
 
 
 str_view(x,"XX+")
 
 
 str_view(x,"C[LX]+")
+str_view(c("Alan", "Alberto", "Alejandra", "Alondra", "Alejandro"),"[ae].*o$")
 
 
 str_view(x,"X{3}")
 
 
 str_view(x,"X{1,2}")
+str_view_all(x,"X{1,2}")
 
 
 str_view(x,"M*")
@@ -155,7 +167,15 @@ str_view_all(x,"M*")
 
 
 str_detect(fruit, "[au]")
+fruit[!str_detect(fruit, "[au]")]
 
+tibble(sentences) %>% 
+ mutate(id = row_number()) %>% 
+ filter(str_detect(sentences, "^The\\s"))
+
+tibble(sentences) %>% 
+ mutate(id = row_number()) %>% 
+ filter(sentences %in% str_subset(sentences, "chicken"))
 
 fruit[str_detect(fruit, "[lo]")]
 
@@ -166,6 +186,8 @@ str_count(fruit, "[aeiou]")
 
 
 mean(str_count(fruit, "[aeiou]"))
+var(str_count(fruit, "[aeiou]"))
+sd(str_count(fruit, "[aeiou]"))
 
 
 tabla <- tibble(

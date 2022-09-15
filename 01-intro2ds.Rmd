@@ -752,7 +752,7 @@ knitr::include_graphics("img/01-intro2ds/sanity-inspector.png")
 4)  **Programación de la recolección de residuos**: Recientemente comenzamos a trabajar con Sanergy, una empresa social con sede en Kenia. Implementan inodoros portátiles en asentamientos urbanos informales y uno de sus mayores costos es contratar personas para vaciar los inodoros. Hoy en día, todos los inodoros se vacían todos los días, aunque existe una variación en cuánto se usan y cuánto se llenan. Para que puedan crecer y mantener bajos los costos, necesitan un enfoque más adaptable que pueda optimizar el cronograma de vaciado de los inodoros. El objetivo en este caso es asegurarse de no vaciar demasiado el inodoro cuando no está lleno, pero tampoco dejar que permanezca lleno porque entonces no se puede usar. Esto se traduce en una formulación que presiona para vaciar el inodoro lo más cerca posible de estar lleno al 100% sin llegar al 100%.
 
 ```{r, fig.align='center', out.height='250pt', out.width='400pt',echo=F}
-knitr::include_graphics("img/01-intro2ds/garbage-collector.jpg")
+knitr::include_graphics("img/01-intro2ds/inodoro-obstruido.webp")
 ```
 
 
