@@ -672,3 +672,40 @@ Como puede apreciarse, este nuevo gráfico permite hacer uso de zoom, filtros, e
 El contenido es creado como HTML, por lo que puede integrarse a documentos web como bookdown, shiny, xaringan, markdown, etc.
 
 
+
+## Reporte interactivos
+
+Es posible automatizar reportes de análisis de datos. Los reportes pueden realizarse tanto en formato estático (.docx y .pdf) como en formato interactivo (.html).
+
+Existen diversos manuales sumamente amplios que permiten conocer las múltiples funcionalidades de las librerías que hacen posible la creación de documentos.
+
+Para el caso de documentos, existe la librería *Rmarkdown*, la cual crea un documento estático o interactivo, mientras que para reportes en presentaciones existe la librería *Xaringan*, la cual sustituye a las presentaciones de *power point*.
+
+Es importante tomar en cuenta el balance entre complejidad y funcionalidad. Si bien es cierto que a través de esta herramienta pueden automatizarse reportes que consideren los resultados salientes de *R*, es importante considerar que las personas que puedan editar tal presentación serán limitadas.
+
+A continuación se enlistan los links de tutoriales para crear los documentos mencionados:
+
+* [Rmarkdown](https://bookdown.org/yihui/rmarkdown/)
+
+* [Xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+
+* [Otros lenguajes](https://bookdown.org/yihui/rmarkdown/language-engines.html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

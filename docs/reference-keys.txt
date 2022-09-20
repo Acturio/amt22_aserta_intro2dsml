@@ -117,3 +117,4 @@ variables-numéricas
 variables-nominalescategóricas
 análisis-multivariado
 visualización-interactiva
+reporte-interactivos
