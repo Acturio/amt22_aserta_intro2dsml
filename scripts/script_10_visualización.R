@@ -5,7 +5,8 @@ pacman::p_load(
  reshape2,
  DataExplorer,
  stringr,
- plotly
+ plotly,
+ scales
 )
 
 
@@ -23,10 +24,14 @@ plot_missing(diamonds)
 
 diamonds %>% 
   ggplot( aes( x = price)) + 
-  geom_histogram(color= "purple", fill= "pink", bins = 30) +
-  scale_x_continuous(labels = scales::dollar_format()) +
-  scale_y_continuous(labels = scales::comma_format()) +
+  geom_histogram(color= "purple", fill= "blue", bins = 60) +
+  scale_x_continuous(labels = dollar_format()) +
+  scale_y_continuous(labels = comma_format()) +
   ggtitle("Distribución de precio")
+
+
+### Ejercicio: Realizar otro histograma con alguna otra variable numérica. 
+### Cambiar tantos parámetros como se desee.
 
 diamonds %>% 
   ggplot( aes( x = price)) + 
@@ -36,27 +41,37 @@ diamonds %>%
   stat_density(geom = "line", colour = "black", size = 1) +
   scale_x_continuous(labels = scales::label_dollar()) +
   scale_y_continuous(labels = scales::comma_format()) +
-  ggtitle("Distribución de precio")
+  ggtitle("Distribución de precio") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 
 
-diamonds %>% 
-  ggplot( aes( x = price)) + 
+ggplot(data = diamonds, aes( x = price)) + 
   geom_boxplot(color= "Blue", fill= "lightblue") +
   scale_x_continuous(labels = scales::dollar_format()) +
   scale_y_continuous(labels = scales::comma_format()) +
-  ggtitle("Distribución de precio")
+  labs(
+   title = "Distribución de precio",
+   subtitle = "Boxplot",
+   x = "Precio",
+   caption = "Fuente: Diamonts"
+   ) +
+ coord_flip()
+
+### Ejercicio: Realizar otro boxplot con alguna otra variable numérica. 
+### Cambiar tantos parámetros como se desee.
 
 diamonds %>% 
   ggplot( aes( x = carat)) + 
-  geom_boxplot(binwidth = .3, color= "purple", fill= "pink", alpha= 0.3) +
+  geom_boxplot(color= "purple", fill= "pink", alpha= 0.3) +
   scale_x_continuous(labels = scales::comma_format()) +
   ggtitle("Distribución de peso de los diamantes") +
-  theme_bw() +
+  theme_classic() +
   coord_flip()
+
 
 diamonds %>% 
   ggplot( aes( x = carat)) + 
-  geom_histogram(binwidth = .03, color= "purple", fill= "pink", alpha= 0.3) +
+  geom_histogram(binwidth = 0.025, color= "purple", fill= "pink", alpha= 0.3) +
   scale_y_continuous(labels = scales::comma_format()) +
   ggtitle("Distribución de peso de los diamantes") +
   theme_bw()

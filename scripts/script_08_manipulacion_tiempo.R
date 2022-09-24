@@ -39,6 +39,7 @@ second(tiempo)
 
 wday(tiempo)
 
+wday(tiempo, label = T, abbr = F)
 wday(tiempo, label = T, abbr = F, locale = "en_US.UTF-8")
 wday(tiempo, label = T,abbr=F, locale = "de_DE.UTF-8") 
 wday(tiempo, label = T,abbr=F, locale = "fr_fr.UTF-8") 
@@ -64,12 +65,12 @@ as_date("1992/04/23") < as_date("1991/11/15")
 
 as.duration(interval(as_date("1991/11/15"), as_date("1995/04/23"))) / as.duration(years(1))
 interval(as_date("1991/11/15"), as_date("1995/04/23")) %>% as.numeric('years')
-interval(as_date("1991/11/15"), as_date("1995/04/23")) / years(1)
+interval(as_date("1991/11/15"), as_date("1995/04/23")) / years(1) # Aproximación.
 
 #### Transformación de formato ####
 
 dates1 <- c("06sep2001","21jun2004","04jul2006","6ago2005") 
-as_date(dates1, format ="%d%B%Y")
+as_date(dates1, format ="%d%b%Y")
 
 dates2 <- c("20ene07","06sep01","6agosto05","6ago2005","20junio1999") 
 as_date(dates2, format = "%d%b%y")

@@ -7,7 +7,7 @@
 "El análisis exploratorio de datos se refiere al **proceso de realizar investigaciones iniciales sobre los datos** para descubrir patrones, detectar anomalías, probar hipótesis y verificar suposiciones con la ayuda de estadísticas resumidas y representaciones gráficas." [Towards](https://towardsdatascience.com/exploratory-data-analysis-8fc1cb20fd15)
 
 ```{r echo=FALSE,fig.align='center'}
-  knitr::include_graphics("img/04-ggplot/investigadora.png")
+  knitr::include_graphics("img/05-ggplot/investigadora.png")
 ```
 
 ## EDA: Análisis Exploratorio de Datos
@@ -27,7 +27,7 @@ Los científicos de datos pueden utilizar el análisis exploratorio para garanti
 EDA se utiliza principalmente para ver qué datos pueden revelar más allá del modelado formal o la tarea de prueba de hipótesis y proporciona una mejor comprensión de las variables del conjunto de datos y las relaciones entre ellas. También puede ayudar a determinar si las técnicas estadísticas que está considerando para el análisis de datos son apropiadas.
 
 ```{r echo=FALSE,fig.align='center', out.width = "500pt"}
-  knitr::include_graphics("img/04-ggplot/meme-iniciar.jpg")
+  knitr::include_graphics("img/05-ggplot/meme-iniciar.jpg")
 ```
 
 Dependiendo del tipo de variable queremos obtener la siguiente información:
@@ -94,31 +94,33 @@ Como complemento al EDA podemos realizar un GEDA, que es un análisis explorator
 ### Lo que no se debe hacer...
 
 ```{r echo=FALSE,fig.align='center', out.width = "500pt"}
-  knitr::include_graphics("img/04-ggplot/meme-tecnicamente.png")
+  knitr::include_graphics("img/05-ggplot/meme-tecnicamente.png")
 ```
 
 Fuentes: [WTF Visualizations](https://viz.wtf/) [Flowingdata](https://flowingdata.com/2010/05/14/wait-something-isnt-right-here/)
 
 ```{r echo=FALSE,fig.align='center', out.width = "600pt"}
-  knitr::include_graphics("img/04-ggplot/bad_viz1.png")
+  knitr::include_graphics("img/05-ggplot/bad_viz1.png")
 ```
 
 ```{r echo=FALSE,fig.align='center', out.width = "700pt"}
-  knitr::include_graphics("img/04-ggplot/bad_viz2.png")
+  knitr::include_graphics("img/05-ggplot/bad_viz2.png")
 ```
 
-{r echo=FALSE,fig.align='center', out.width = "700pt"} knitr::include_graphics("img/04-ggplot/bad_viz3.png")
-
-```{r echo=FALSE,fig.align='center', out.width = "700pt"}
-  knitr::include_graphics("img/04-ggplot/bad_viz4.jpg")
-```
-
-```{r echo=FALSE,fig.align='center', out.width = "700pt"}
-  knitr::include_graphics("img/04-ggplot/bad_viz5.png")
+```{r echo=FALSE,fig.align='center', out.width = "700pt"} 
+knitr::include_graphics("img/05-ggplot/bad_viz3.png")
 ```
 
 ```{r echo=FALSE,fig.align='center', out.width = "700pt"}
-  knitr::include_graphics("img/04-ggplot/bad_viz6.jpg")
+  knitr::include_graphics("img/05-ggplot/bad_viz4.jpg")
+```
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/05-ggplot/bad_viz5.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
+  knitr::include_graphics("img/05-ggplot/bad_viz6.jpg")
 ```
 
 ### Principios de visualización
@@ -166,7 +168,7 @@ Aplicables a cualquier gráfica en particular, son guías concretas y relativame
 -   *Tinta de datos*: Maximizar la proporción de tinta de datos vs. tinta total de la gráfica. La regla es: si hay tinta que no representa variación en los datos, o la eliminación de esa tinta no representa pérdidas de significado, esa tinta debe ser eliminada. El ejemplo más claro es el de las rejillas en gráficas y tablas:
 
 ```{r echo=FALSE,fig.align='center' ,out.width='700pt', out.height='300pt'}
-knitr::include_graphics("img/04-ggplot/tinta.png")
+knitr::include_graphics("img/05-ggplot/tinta.png")
 ```
 
 -   *Densidad de datos:* Las mejores gráficas tienen mayor densidad de datos, que es la razón entre el tamaño del conjunto de datos y el área de la gráfica.
@@ -180,13 +182,13 @@ knitr::include_graphics("img/04-ggplot/tinta.png")
 <br>
 
 ```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/histograma.jpg")
+knitr::include_graphics("img/05-ggplot/histograma.jpg")
 ```
 
 -   *Diagramas de caja y brazos:* Es un método estandarizado para representar gráficamente una serie de datos numéricos a través de sus cuartiles. El diagrama de caja muestra a simple vista la mediana y los cuartiles de los datos, pudiendo también representar los valores atípicos de estos.
 
 ```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/boxplot.png")
+knitr::include_graphics("img/05-ggplot/boxplot.png")
 ```
 
 -   *Gráficas de barras*: Una gráfica de este tipo nos muestra la frecuencia con la que se han observado los datos de una variable discreta, con una barra para cada categoría de esta variable.
@@ -194,7 +196,7 @@ knitr::include_graphics("img/04-ggplot/boxplot.png")
 <br>
 
 ```{r echo=FALSE, out.width = "500pt", out.height="250pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/barras.jpg")
+knitr::include_graphics("img/05-ggplot/barras.jpg")
 ```
 
 -   *Gráficos Circulares (Pie Charts):* Un gráfico circular o gráfica circular, también llamado "gráfico de pastel", es un recurso estadístico que se utiliza para representar porcentajes y proporciones.
@@ -202,7 +204,7 @@ knitr::include_graphics("img/04-ggplot/barras.jpg")
 <br>
 
 ```{r echo=FALSE, out.width = "500pt", out.height="280pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/pie.jpg")
+knitr::include_graphics("img/05-ggplot/pie.jpg")
 ```
 
 ### Gráficos multivariados
@@ -210,13 +212,13 @@ knitr::include_graphics("img/04-ggplot/pie.jpg")
 -   *Gráfico de dispersión:* Los gráficos de dispersión se usan para trazar puntos de datos en un eje vertical y uno horizontal, mediante lo que se trata de mostrar cuánto afecta una variable a otra. Si no existe una variable dependiente, cualquier variable se puede representar en cada eje y el diagrama de dispersión mostrará el grado de correlación (no causalidad) entre las dos variables.
 
 ```{r echo=FALSE, out.width = "500pt", out.height="350pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/dispersion.png")
+knitr::include_graphics("img/05-ggplot/dispersion.png")
 ```
 
 -   *Gráficas de líneas:* Uno de los tipos de gráfica más utilizados es la de líneas, especialmente cuando se quieren comparar visualmente varias variables a lo largo del tiempo o algún otro parámetro.
 
 ```{r echo=FALSE, out.width = "500pt", out.height="300pt",fig.align='center'}
-knitr::include_graphics("img/04-ggplot/lineas.jpg")
+knitr::include_graphics("img/05-ggplot/lineas.jpg")
 ```
 
 ## Creación de gráficos
@@ -375,32 +377,32 @@ library(htmltools)
 
 result <- ch_int(type = "incremental") %>% 
   ch_row(text = "diamonds %>% ggplot() + ",
-         img = "./img/04-ggplot/diamonds-0.png") %>% 
+         img = "./img/05-ggplot/diamonds-0.png") %>% 
   ch_row(text = " <tab1> aes(x = cut_number(carat, 5), y = price) + </tab1>",
-         img = "./img/04-ggplot/diamonds-1.png") %>% 
+         img = "./img/05-ggplot/diamonds-1.png") %>% 
   ch_row(text = " <tab1> geom_boxplot() + </tab1>",
-         img = "./img/04-ggplot/diamonds-2.png") %>%   
+         img = "./img/05-ggplot/diamonds-2.png") %>%   
   ch_row(text = " <tab1> aes(color = cut) + </tab1>",
-         img = "./img/04-ggplot/diamonds-3.png") %>% 
+         img = "./img/05-ggplot/diamonds-3.png") %>% 
   ch_row(text = " <tab1> labs(title = 'Distribución de precio por categoría de corte') + </tab1>",
-         img = "./img/04-ggplot/diamonds-4.png") %>%   
+         img = "./img/05-ggplot/diamonds-4.png") %>%   
   ch_row(text = " <tab1> labs(caption = 'Data source:Diamont set') + </tab1>",
-         img = "./img/04-ggplot/diamonds-5.png") %>% 
+         img = "./img/05-ggplot/diamonds-5.png") %>% 
   ch_row(text = " <tab1> labs(x = 'Peso del diamante') + </tab1> ",
-         img = "./img/04-ggplot/diamonds-6.png") %>%
+         img = "./img/05-ggplot/diamonds-6.png") %>%
   ch_row(text = " <tab1> labs(y = 'Precio') + </tab1>",
-         img = "./img/04-ggplot/diamonds-7.png") %>% 
+         img = "./img/05-ggplot/diamonds-7.png") %>% 
   ch_row(text = " <tab1> guides(color = guide_legend(title = 'Calidad del corte')) + </tab1>",
-         img = "./img/04-ggplot/diamonds-8.png") %>% 
+         img = "./img/05-ggplot/diamonds-8.png") %>% 
   ch_row(text = " <tab1> ylim(0, 20000) + </tab1>",
-         img = "./img/04-ggplot/diamonds-9.png") %>% 
+         img = "./img/05-ggplot/diamonds-9.png") %>% 
   ch_row(text = " <tab1> scale_y_continuous( </tab1>
                  <br> <tab1> labels = scales::dollar_format(), </tab1>
                  <br> <tab1> breaks = seq(0, 20000,2500 ), </tab1>
                  <br> <tab1> limits = c(0, 20000) </tab1>
                  <br> <tab1> ) </tab1> ",
-         img = "./img/04-ggplot/diamonds-10.png") %>% 
-  ch_out(img = "./img/04-ggplot/diamonds-10.png")
+         img = "./img/05-ggplot/diamonds-10.png") %>% 
+  ch_out(img = "./img/05-ggplot/diamonds-10.png")
 
 htmltools::HTML(result)
 ```
@@ -482,7 +484,7 @@ diamonds %>%
 ```{r}
 diamonds %>% 
   ggplot( aes( x = carat)) + 
-  geom_boxplot(binwidth = .3, color= "purple", fill= "pink", alpha= 0.3) +
+  geom_boxplot(color= "purple", fill= "pink", alpha= 0.3) +
   scale_x_continuous(labels = scales::comma_format()) +
   ggtitle("Distribución de peso de los diamantes") +
   theme_bw() +
@@ -506,7 +508,7 @@ diamonds %>%
 
 diamonds %>% 
   ggplot( aes( x = carat)) + 
-  geom_boxplot(binwidth = .3, color= "purple", fill= "pink", alpha= 0.3) +
+  geom_boxplot(color= "purple", fill= "pink", alpha= 0.3) +
   scale_x_continuous(labels = scales::comma_format()) +
   ggtitle("Distribución de peso de los diamantes") +
   theme_bw()
@@ -691,8 +693,17 @@ A continuación se enlistan los links de tutoriales para crear los documentos me
 
 * [Otros lenguajes](https://bookdown.org/yihui/rmarkdown/language-engines.html)
 
+* [tablas estáticas](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
 
+* [tablas interactivas](https://rstudio.github.io/DT/)
 
+## ¡ Warning ! 
+
+Nunca se debe olvidar que debemos de analizar los datos de manera objetiva, nuestro criterio sobre un problema o negocio no debe de tener sesgos sobre lo que "nos gustaria encontrar en los datos" o lo "que creemos que debe pasar".... 
+
+```{r echo=FALSE,fig.align='center', out.width = "500pt"}
+  knitr::include_graphics("img/05-ggplot/datosgato.jpeg")
+```
 
 
 
