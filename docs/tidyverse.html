@@ -332,9 +332,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
-<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a>
+<ul>
+<li class="chapter" data-level="" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i>¡ Warning !</a></li>
+</ul></li>
 <li class="chapter" data-level="4.7" data-path="visualización.html"><a href="visualización.html#reporte-interactivos"><i class="fa fa-check"></i><b>4.7</b> Reporte interactivos</a></li>
-<li class="chapter" data-level="4.8" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i><b>4.8</b> ¡ Warning !</a></li>
 </ul></li>
 <li class="part"><span><b>Parte 2: Machine Learning</b></span></li>
 <li class="chapter" data-level="5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html"><i class="fa fa-check"></i><b>5</b> Introducción a Machine Learning</a>
@@ -402,12 +404,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La compañía Rstudio ha desarrollado un conjunto de librerías que revolucionó la programación en <em>R</em>. Este conjunto de librerías permite al usuario mayor orden, legibilidad e intuición a la hora de escribir y leer código. El conjunto de librerías lleva por nombre: <strong>TIDYVERSE</strong>.</p>
 <p>En este capítulo se estudiarán las distintas librerías que componen este conjunto. Cada una de las librerías puede usarse de modo independiente. En caso de que el usuario lo prefiera, puede disponer de todas las librerías al mandar ejecutar la función:</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="tidyverse.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ────────
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
 ## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ─────────────────
+## ── Conflicts ────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="lectura-de-archivos" class="section level2 hasAnchor" number="3.1">
@@ -493,7 +495,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 -93.61976 42.05301</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="tidyverse.html#cb189-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/ames.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 2930 Columns: 74
-## ── Column specification ──────
+## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (40): MS_SubClass, MS_Zoning, Street, Alley, Lot_Shape, Land_Contour, Ut...
 ## dbl (34): Lot_Frontage, Lot_Area, Year_Built, Year_Remod_Add, Mas_Vnr_Area, ...
@@ -520,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Uno de los archivos más comunes es el <em>.txt</em>. La librería <em>readr</em> también cuenta con funciones que permiten leer fácilmente los datos contenidos en formato tabular.</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="tidyverse.html#cb193-1" aria-hidden="true" tabindex="-1"></a>ames_txt <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;data/ames.txt&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Rows: 2930 Columns: 74
-## ── Column specification ──────
+## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;;&quot;
 ## chr (40): MS_SubClass, MS_Zoning, Street, Alley, Lot_Shape, Land_Contour, Ut...
 ## dbl (34): Lot_Frontage, Lot_Area, Year_Built, Year_Remod_Add, Mas_Vnr_Area, ...

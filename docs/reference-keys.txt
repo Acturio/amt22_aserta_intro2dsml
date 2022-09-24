@@ -118,7 +118,6 @@ variables-nominalescategóricas
 análisis-multivariado
 visualización-interactiva
 reporte-interactivos
-warning
 introducción-a-machine-learning
 análisis-supervisado-vs-no-supervisado
 regresión-vs-clasificación

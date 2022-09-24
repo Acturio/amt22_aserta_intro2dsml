@@ -107,7 +107,7 @@ Fuentes: [WTF Visualizations](https://viz.wtf/) [Flowingdata](https://flowingdat
   knitr::include_graphics("img/05-ggplot/bad_viz2.png")
 ```
 
-```{r echo=FALSE,fig.align='center', out.width = "700pt"} 
+```{r echo=FALSE,fig.align='center', out.width = "700pt"}
 knitr::include_graphics("img/05-ggplot/bad_viz3.png")
 ```
 
@@ -125,7 +125,7 @@ knitr::include_graphics("img/05-ggplot/bad_viz3.png")
 
 ### Principios de visualización
 
--   El objetivo de una visualización es sintentizar información relevante al análisis presentada de manera sencilla y sin ambigüedad. **Lo usamos de apoyo para explicar a una audiencia más amplia que puede no ser tan técnica.**
+-   El objetivo de una visualización es sintetizar información relevante al análisis presentada de manera sencilla y sin ambigüedad. **Lo usamos de apoyo para explicar a una audiencia más amplia que puede no ser tan técnica.**
 
 -   Una gráfica debe reportar el resultado de un análisis detallado, nunca lo reemplaza.
 
@@ -172,8 +172,6 @@ knitr::include_graphics("img/05-ggplot/tinta.png")
 ```
 
 -   *Densidad de datos:* Las mejores gráficas tienen mayor densidad de datos, que es la razón entre el tamaño del conjunto de datos y el área de la gráfica.
-
-
 
 ### Gráficos univariados:
 
@@ -268,9 +266,6 @@ ggplot(iris,
  geom_point()
 ```
 
-
-
-
 ### Estéticas
 
 En ggplot2, *aestetics* significa "algo que puedes ver".
@@ -300,7 +295,6 @@ Los objetos geométricos son las formas que puede tomar un gráfico. Algunos eje
 -   Cajas (geom_boxplot() para gráficos de cajas)
 -   Un gráfico debe tener al menos un geom, pero no hay limite. Puedes añadir más *geom* usando el signo +.
 
-
 Una vez añadida una capa al gráfico a este pueden agregarse nuevas capas
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
@@ -313,9 +307,6 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width, colour = Species)) +
   geom_point()+ 
   geom_smooth()
 ```
-
-
-
 
 ### Facetas
 
@@ -349,7 +340,7 @@ data("diamonds")
 -   **color**: color del diamante, de D (mejor) a J (peor)
 -   **clarity**: una medida de la claridad del diamante (I1 (peor), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (mejor))
 -   **x**: longitud en mm (0-10,74)
--   **y**: ancho en mm (0--58,9) width in mm (0--58.9) 
+-   **y**: ancho en mm (0--58,9) width in mm (0--58.9)
 -   **z**: profundidad en mm (0--31,8)
 -   **depth** porcentaje de profundidad total = z / media (x, y) = 2 \* z / (x + y) (43--79)
 -   **table**: ancho de la parte superior del diamante en relación con el punto más ancho (43--95)
@@ -456,7 +447,6 @@ diamonds %>%
   ggtitle("Distribución de precio")
 ```
 
-
 ```{r, warning=FALSE, message=FALSE}
 diamonds %>% 
   ggplot( aes( x = price)) + 
@@ -490,7 +480,6 @@ diamonds %>%
   theme_bw() +
   coord_flip()
 ```
-
 
 **Peso del diamante**
 
@@ -575,12 +564,11 @@ diamonds %>%
   coord_flip()
 ```
 
-
 ## Análisis multivariado
 
 Un buen análisis de datos, requiere del análisis conjunto de variables. Una sola variable es importante de analizar en cuanto a su distribución y calidad, no obstante, no dice mucho al analizarse por sí sola. Es por ello, que es indispensable analizar la covariabilidad y dependencia entre los distintos atributos de la información.
 
-En el análisis multivariado, se busca comparar la información haciendo contrastes de colores, formas, tamaños, páneles, etc.
+En el análisis multivariado, se busca comparar la información haciendo contrastes de colores, formas, tamaños, paneles, etc.
 
 **Precio vs Calidad del corte**
 
@@ -626,11 +614,9 @@ diamonds %>%
   geom_smooth()
 ```
 
-
 ## Visualización interactiva
 
-A través de la librería **plotly** es posible crear interactividad entre las gráficas creadas con gglot2.
-Es posible tanto usar las funciones existentes como crear funciones que enriquezcan las estéticas comunes. A continuación se hace uso de una combinación de nuevas estéticas con la interactividad añadida. 
+A través de la librería **plotly** es posible crear interactividad entre las gráficas creadas con gglot2. Es posible tanto usar las funciones existentes como crear funciones que enriquezcan las estéticas comunes. A continuación se hace uso de una combinación de nuevas estéticas con la interactividad añadida.
 
 ```{r, warning=FALSE, message=FALSE}
 library(stringr)
@@ -670,10 +656,15 @@ plot <- diamonds %>%
 plotly::ggplotly(plot)
 ```
 
-Como puede apreciarse, este nuevo gráfico permite hacer uso de zoom, filtros, etiquetas, snapshots, etc.
-El contenido es creado como HTML, por lo que puede integrarse a documentos web como bookdown, shiny, xaringan, markdown, etc.
+Como puede apreciarse, este nuevo gráfico permite hacer uso de zoom, filtros, etiquetas, snapshots, etc. El contenido es creado como HTML, por lo que puede integrarse a documentos web como bookdown, shiny, xaringan, markdown, etc.
 
+### ¡ Warning ! {.unnumbered}
 
+Nunca se debe olvidar que debemos de analizar los datos de manera objetiva, nuestro criterio sobre un problema o negocio no debe de tener sesgos sobre lo que "nos gustaría encontrar en los datos" o lo "que creemos que debe pasar"....
+
+```{r echo=FALSE,fig.align='center', out.width = "500pt"}
+  knitr::include_graphics("img/05-ggplot/datosgato.jpeg")
+```
 
 ## Reporte interactivos
 
@@ -687,36 +678,13 @@ Es importante tomar en cuenta el balance entre complejidad y funcionalidad. Si b
 
 A continuación se enlistan los links de tutoriales para crear los documentos mencionados:
 
-* [Rmarkdown](https://bookdown.org/yihui/rmarkdown/)
+-   [Rmarkdown](https://bookdown.org/yihui/rmarkdown/)
 
-* [Xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+-   [Xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html)
 
-* [Otros lenguajes](https://bookdown.org/yihui/rmarkdown/language-engines.html)
+-   [Otros lenguajes](https://bookdown.org/yihui/rmarkdown/language-engines.html)
 
-* [tablas estáticas](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+-   [Tablas estáticas](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
 
-* [tablas interactivas](https://rstudio.github.io/DT/)
-
-## ¡ Warning ! 
-
-Nunca se debe olvidar que debemos de analizar los datos de manera objetiva, nuestro criterio sobre un problema o negocio no debe de tener sesgos sobre lo que "nos gustaria encontrar en los datos" o lo "que creemos que debe pasar".... 
-
-```{r echo=FALSE,fig.align='center', out.width = "500pt"}
-  knitr::include_graphics("img/05-ggplot/datosgato.jpeg")
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-   [Tablas interactivas](https://rstudio.github.io/DT/)
 
