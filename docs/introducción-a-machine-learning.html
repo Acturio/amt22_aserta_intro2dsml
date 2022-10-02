@@ -415,13 +415,6 @@ las recetas de cocina, sino los lenguajes de programación: En ellos, el
 algoritmo se descompone en pasos formales (comandos) que el ordenador puede
 entender.</p>
 <p><img src="img/06-ml/WebQuest.gif" width="400pt" style="display: block; margin: auto;" /></p>
-<p>Algunos problemas pueden formularse fácilmente como un algoritmo, por ejemplo,
-contando del 1 al 100 o comprobando si un número es un número primo. Para otros
-problemas, esto es muy difícil, por ejemplo, reconocer la escritura o el texto
-de las teclas. Aquí los procedimientos de aprendizaje de la máquina ayudan.
-Durante mucho tiempo se han desarrollado algoritmos que permiten analizar los
-datos existentes y aplicar los conocimientos derivados de ello a los nuevos
-datos.</p>
 <p>La cuestión no es solo saber para qué sirve el Machine Learning, sino que saber
 cómo funciona y cómo poder implementarlo en la industria para aprovecharse de
 sus beneficios. Hay ciertos pasos que usualmente se siguen para crear un modelo
@@ -449,7 +442,6 @@ utilizar, siendo este un conjunto de pasos de procesamiento estadístico. El tip
 de algoritmo depende del tipo (supervisado o no supervisado), la cantidad de
 datos del conjunto de datos de entrenamiento y del tipo de problema que se debe
 resolver.</p>
-<p><img src="img/06-ml/modelos.jpg" width="600pt" style="display: block; margin: auto;" /></p>
 <p><img src="img/06-ml/armas-modelos.jpg" width="600pt" style="display: block; margin: auto;" /></p>
 <ul>
 <li><strong>Entrenamiento del algoritmo para crear el modelo</strong></li>
@@ -462,7 +454,7 @@ el algoritmo devuelva el resultado correcto la mayoría de las veces. El
 algoritmo resultante, entrenado y preciso, es el modelo de Machine Learning.</p>
 <p><img src="img/06-ml/entrenamiento.jpg" width="600pt" style="display: block; margin: auto;" /></p>
 <ul>
-<li>Usar y mejorar el modelo</li>
+<li><strong>Usar y mejorar el modelo</strong></li>
 </ul>
 <p>El paso final es utilizar el modelo con nuevos datos y, en el mejor de los
 casos, para que mejore en precisión y eficacia con el tiempo. De dónde procedan
@@ -790,14 +782,14 @@ aleatorio simple. El paquete <em>rsample</em> tiene herramientas para realizar
 divisiones de datos como esta; la función <code>initial_split()</code> fue creada para este
 propósito.</p>
 <div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="introducción-a-machine-learning.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────── tidymodels 1.0.0 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────── tidymodels 1.0.0 ──</code></pre>
 <pre><code>## ✔ broom        1.0.1     ✔ rsample      1.1.0
 ## ✔ dials        1.0.0     ✔ tune         1.0.0
 ## ✔ infer        1.0.3     ✔ workflows    1.0.0
 ## ✔ modeldata    1.0.1     ✔ workflowsets 1.0.0
 ## ✔ parsnip      1.0.1     ✔ yardstick    1.1.0
 ## ✔ recipes      1.0.1</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────── tidymodels_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────────────────── tidymodels_conflicts() ──
 ## ✖ scales::discard()     masks purrr::discard()
 ## ✖ magrittr::extract()   masks tidyr::extract()
 ## ✖ dplyr::filter()       masks stats::filter()
@@ -809,7 +801,7 @@ propósito.</p>
 ## ✖ yardstick::spec()     masks readr::spec()
 ## ✖ dbplyr::sql()         masks dplyr::sql()
 ## ✖ recipes::step()       masks stats::step()
-## • Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+## • Use tidymodels_prefer() to resolve common conflicts.</code></pre>
 <div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="introducción-a-machine-learning.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span>
 <span id="cb485-2"><a href="introducción-a-machine-learning.html#cb485-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb485-3"><a href="introducción-a-machine-learning.html#cb485-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fijar un número aleatorio con para que los resultados puedan ser reproducibles </span></span>

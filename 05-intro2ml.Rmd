@@ -32,14 +32,6 @@ entender.
 knitr::include_graphics("img/06-ml/WebQuest.gif")
 ```
 
-Algunos problemas pueden formularse fácilmente como un algoritmo, por ejemplo,
-contando del 1 al 100 o comprobando si un número es un número primo. Para otros
-problemas, esto es muy difícil, por ejemplo, reconocer la escritura o el texto
-de las teclas. Aquí los procedimientos de aprendizaje de la máquina ayudan.
-Durante mucho tiempo se han desarrollado algoritmos que permiten analizar los
-datos existentes y aplicar los conocimientos derivados de ello a los nuevos
-datos.
-
 La cuestión no es solo saber para qué sirve el Machine Learning, sino que saber
 cómo funciona y cómo poder implementarlo en la industria para aprovecharse de
 sus beneficios. Hay ciertos pasos que usualmente se siguen para crear un modelo
@@ -73,7 +65,7 @@ datos del conjunto de datos de entrenamiento y del tipo de problema que se debe
 resolver.
 
 ```{r, echo=FALSE, out.width = "600pt", fig.align='center'}
-knitr::include_graphics("img/06-ml/modelos.jpg")
+#knitr::include_graphics("img/06-ml/modelos.jpg")
 ```
 
 ```{r, eval = TRUE, echo=FALSE, out.width = "600pt", fig.align='center'}
@@ -93,7 +85,7 @@ algoritmo resultante, entrenado y preciso, es el modelo de Machine Learning.
 knitr::include_graphics("img/06-ml/entrenamiento.jpg")
 ```
 
--   Usar y mejorar el modelo
+-   **Usar y mejorar el modelo**
 
 El paso final es utilizar el modelo con nuevos datos y, en el mejor de los
 casos, para que mejore en precisión y eficacia con el tiempo. De dónde procedan
