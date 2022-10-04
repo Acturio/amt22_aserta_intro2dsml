@@ -346,8 +346,6 @@ ames_split <- initial_split(ames, prop = 0.75)
 ames_train <- training(ames_split)
 ames_test  <- testing(ames_split)
 
-set.seed(2453)
-ames_folds<- vfold_cv(ames_train, v = 10)
 ```
 
 ```{r, warning=FALSE,message=FALSE}
