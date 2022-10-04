@@ -1420,3 +1420,165 @@ usar para realizar una variedad de operaciones básicas a los datos.
 
 La guía completa de las familia de funciones **step** puede consultarse en la
 [documentación oficial](https://recipes.tidymodels.org/reference/index.html)
+
+## Datos y tipos de modelos
+
+En este curso se realizarán ejemplos tanto de regresión como de clasificación. Cada uno de los modelos a estudiar se implementarán tanto para respuestas continuas como variables categóricas
+
+#### Regresión: Preparación de datos {-}
+
+En esta sección, prepararemos datos para ajustar modelos de regresión y de clasificación, usando la paquetería *recipes*. Primero ajustaremos la receta, después obtendremos la receta actualizada con las estimaciones y al final el conjunto de datos listo para el modelo.
+
+**Datos de regresión: Ames Housing Data**
+
+Los datos que usaremos son los de *Ames Housing Data*, el conjunto de datos contiene información de la *Ames Assessor’s Office* utilizada para calcular valuaciones para propiedades residenciales individuales vendidas en Ames, IA, de 2006 a 2010. Podemos encontrar más información en el siguiente link [*Ames Housing Data*](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt).
+
+```{r, warning=FALSE, message=FALSE}
+library(tidymodels)
+library(stringr)
+library(tidyverse)
+
+data(ames)
+glimpse(ames)
+
+```
+
+
+### Separación de los datos
+
+El primer paso para crear un modelo de regresión es dividir nuestros datos originales en un conjunto de entrenamiento y prueba.
+
+No hay que olvidar usar siempre una semilla con la función *set.seed()* para que sus resultados sean reproducibles.
+
+Primero usaremos la función **initial_split()** de *rsample* para dividir los datos *ames* en conjuntos de entrenamiento y prueba. Usamos el parámetro *prop* para indicar la proporción de los conjuntos *train* y *test*.
+
+```{r}
+set.seed(4595)
+ames_split <- initial_split(ames, prop = 0.75)
+```
+
+El objeto *ames_split* es un objeto *rsplit* y solo contiene la información de partición, para obtener los conjuntos de datos resultantes, aplicamos dos funciones adicionales, **training** y **testing**.
+
+```{r}
+ames_train <- training(ames_split)
+ames_test  <- testing(ames_split)
+```
+
+Estos objetos son *data frames* con las mismas columnas que los datos originales, pero solo las filas apropiadas para cada conjunto.
+
+También existe la función **vfold_cv** que se usa para crear _**v**_ particiones del conjunto de entrenamiento.
+
+```{r}
+set.seed(2453)
+ames_folds<- vfold_cv(ames_train, v = 10)
+```
+
+Ya con los conjuntos de entrenamiento y prueba definidos, iniciaremos con *feature engineering* sobre el conjunto de entrenamiento.
+
+### Definición de la receta
+
+Ahora usaremos la función vista en la sección anterior, *recipe()*, para definir los pasos de preprocesamiento antes de usar los datos para modelado.
+
+```{r}
+receta_casas <- recipe(Sale_Price ~ . , data = ames_train) %>%
+  step_unknown(Alley) %>%
+  step_rename(Year_Remod = Year_Remod_Add) %>% 
+  step_rename(ThirdSsn_Porch = Three_season_porch) %>% 
+  step_ratio(Bedroom_AbvGr, denom = denom_vars(Gr_Liv_Area)) %>% 
+  step_mutate(
+    Age_House = Year_Sold - Year_Remod,
+    TotalSF   = Gr_Liv_Area + Total_Bsmt_SF,
+    AvgRoomSF   = Gr_Liv_Area / TotRms_AbvGrd,
+    Pool = if_else(Pool_Area > 0, 1, 0),
+    Exter_Cond = forcats::fct_collapse(Exter_Cond, Good = c("Typical", "Good", "Excellent"))) %>% 
+  step_relevel(Exter_Cond, ref_level = "Good") %>% 
+  step_normalize(all_predictors(), -all_nominal()) %>%
+  step_dummy(all_nominal()) %>% 
+  step_interact(~ Second_Flr_SF:First_Flr_SF) %>% 
+  step_interact(~ matches("Bsmt_Cond"):TotRms_AbvGrd) %>% 
+  step_rm(
+    First_Flr_SF, Second_Flr_SF, Year_Remod,
+    Bsmt_Full_Bath, Bsmt_Half_Bath, 
+    Kitchen_AbvGr, BsmtFin_Type_1_Unf, 
+    Total_Bsmt_SF, Kitchen_AbvGr, Pool_Area, 
+    Gr_Liv_Area, Sale_Type_Oth, Sale_Type_VWD
+  ) %>% 
+  prep()
+```
+
+- Usamos la función _**step_mutate()**_ para generar nuevas variables dentro de la receta.
+
+- La función _**step_interact()**_ nos ayuda a crear nuevas variables que son interacciones entre las variables especificadas.
+
+- Con la función _**step_ratio()**_ creamos proporciones con las variables especificadas.
+
+- _**forcats::fct_collapse()**_ se usa para recategorizar variables, colapsando categorías de la variable.
+
+- _**step_relevel**_ nos ayuda a asignar la categoria deseada de una variable como referencia.
+
+- _**step_normalize()**_ es de gran utilidad ya que sirve para normalizar las variables que se le indiquen.
+
+- _**step_dummy()**_ Nos ayuda a crear variables *One Hot Encoding*.
+
+- Por último usamos la función _**step_rm()**_ para eliminar variables que no son de utilidad para el modelo.
+
+Ahora crearemos algunas variables auxiliares que podrían ser de utilidad para el ajuste de un modelo de regresión. Recordemos que la función **recipe()** solo son los pasos a seguir, necesitamos usar la función **prep()** que nos devuelve una receta actualizada con las estimaciones y la función **juice()** que nos devuelve la matriz de diseño.
+
+```{r}
+casa_juiced <- juice(receta_casas)
+casa_juiced
+
+casa_test_bake <- bake(receta_casas, new_data = ames_test)
+glimpse(casa_test_bake)
+```  
+
+
+#### Clasificación: Preparación de Datos {-}
+
+Ahora prepararemos los datos para un ejemplo de *churn*, es decir, la **tasa de cancelación de clientes**. Usaremos datos de [Telco](https://www.kaggle.com/blastchar/telco-customer-churn).
+
+En este conjunto de datos, la variable a predecir será la cancelación por parte del cliente de los servicios de telecomunicaciones contratados.
+
+```{r,warning=FALSE,message=FALSE}
+telco <- read_csv("data/Churn.csv")
+glimpse(telco)
+```
+
+### Separación de los datos
+
+Como en el ejemplo de regresión, primero crearemos los conjuntos de entrenamiento y de prueba.
+
+```{r}
+set.seed(1234)
+telco_split <- initial_split(telco, prop = .7)
+
+telco_train <- training(telco_split)
+telco_test  <- testing(telco_split)
+```
+
+### Definición de la receta
+
+A continuación, se presenta el desarrollo de una receta para el conjunto de datos de *Telco*:
+
+```{r}
+telco_rec <- recipe(Churn ~ ., data = telco_train) %>% 
+  update_role(customerID, new_role = "id variable") %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_impute_median(all_numeric_predictors()) %>% 
+  step_rm(customerID, skip=T) %>% 
+  prep()
+```
+
+Ahora recuperamos la matriz de diseño con las funciones *prep()* y *juice()*.
+
+```{r}
+telco_juiced <- juice(telco_rec)
+glimpse(telco_juiced)
+
+telco_test_bake <-  bake(telco_rec, new_data = telco_test)
+glimpse(telco_test_bake)
+```
+
+Estos fueron dos ejemplos aplicados de la paquetería *recipies*, existen distintas funciones *step* que pueden implementarse en recetas para usarse con *tidymodels*, en las secciones siguientes les daremos su uso para ajustar un modelo completo.
+
