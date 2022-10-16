@@ -419,6 +419,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
 <li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -444,12 +459,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La compañía Rstudio ha desarrollado un conjunto de librerías que revolucionó la programación en <em>R</em>. Este conjunto de librerías permite al usuario mayor orden, legibilidad e intuición a la hora de escribir y leer código. El conjunto de librerías lleva por nombre: <strong>TIDYVERSE</strong>.</p>
 <p>En este capítulo se estudiarán las distintas librerías que componen este conjunto. Cada una de las librerías puede usarse de modo independiente. En caso de que el usuario lo prefiera, puede disponer de todas las librerías al mandar ejecutar la función:</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="tidyverse.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ────────
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
 ## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ─────────────────
+## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="lectura-de-archivos" class="section level2 hasAnchor" number="3.1">
@@ -473,7 +488,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb186-10"><a href="tidyverse.html#cb186-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
 <span id="cb186-11"><a href="tidyverse.html#cb186-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>La paquetería <em>readr</em> fue desarrollada recientemente para lidiar con la lectura de archivos grandes rápidamente. El paquete proporciona reemplazos para funciones como <em>read.table()</em>, <em>read.csv()</em> entre otras. Esta paquetería proporciona funciones que suelen ser mucho más rápidas que las funciones base que proporciona <em>R</em>.</p>
-<p><img src="img/03-read-data/logo-readr.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/03-read-data/logo-readr.png" width="120" style="display: block; margin: auto;" /></p>
 <p><strong>Ventajas de readr:</strong></p>
 <ul>
 <li><p>Por lo general, son mucho más rápidos (~ 10x) que sus funciones equivalentes.</p></li>
@@ -535,7 +550,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 -93.61976 42.05301</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="tidyverse.html#cb189-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/ames.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 2930 Columns: 74
-## ── Column specification ──────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (40): MS_SubClass, MS_Zoning, Street, Alley, Lot_Shape, Land_Contour, Ut...
 ## dbl (34): Lot_Frontage, Lot_Area, Year_Built, Year_Remod_Add, Mas_Vnr_Area, ...
@@ -562,7 +577,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Uno de los archivos más comunes es el <em>.txt</em>. La librería <em>readr</em> también cuenta con funciones que permiten leer fácilmente los datos contenidos en formato tabular.</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="tidyverse.html#cb193-1" aria-hidden="true" tabindex="-1"></a>ames_txt <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;data/ames.txt&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Rows: 2930 Columns: 74
-## ── Column specification ──────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;;&quot;
 ## chr (40): MS_SubClass, MS_Zoning, Street, Alley, Lot_Shape, Land_Contour, Ut...
 ## dbl (34): Lot_Frontage, Lot_Area, Year_Built, Year_Remod_Add, Mas_Vnr_Area, ...

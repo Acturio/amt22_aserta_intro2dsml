@@ -176,3 +176,12 @@ clasificación-2
 métricas-de-desempeño-2
 implementación-en-r-1
 matriz-de-confusión
+k-nearest-neighbor
+clasificación-3
+regresión-2
+ajuste-del-modelo-1
+selección-de-hiper-parámetro-k
+métodos-de-cálculo-de-la-distancia-entre-observaciones
+implementación-en-r-2
+regresión-3
+clasificación-4

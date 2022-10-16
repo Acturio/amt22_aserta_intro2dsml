@@ -419,6 +419,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
 <li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -466,14 +481,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Coherentes</li>
 <li>Relevantes</li>
 </ul>
-<p><img src="img/01-intro2ds/04_bi.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/04_bi.png" width="440" style="display: block; margin: auto;" /></p>
 <p><strong>Machine Learning</strong>: Machine learning –aprendizaje de máquina– es una <strong>rama de la inteligencia artificial</strong> que permite que las máquinas aprendan de los patrones existentes en los datos. Se usan métodos computacionales para aprender de datos con el fin de producir reglas para mejorar el desempeño en alguna tarea o toma de decisión. (Está enfocado en la programación de máquinas para aprender de los patrones existentes en datos principalmente estructurados y anticiparse al futuro)</p>
 <p><img src="img/01-intro2ds/02_ml.png" width="600pt" style="display: block; margin: auto;" /></p>
-<p><img src="img/01-intro2ds/03_supervisado_robo.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/03_supervisado_robo.png" width="413" style="display: block; margin: auto;" /></p>
 <p><strong>Deep Learning</strong>: El aprendizaje profundo es un subcampo del aprendizaje automático que se ocupa de los algoritmos <strong>inspirados en la estructura y función del cerebro llamados redes neuronales artificiales.</strong></p>
 <p>En <em>Deep Learning</em>, un modelo de computadora aprende a realizar tareas de clasificación directamente a partir de imágenes, texto o sonido. Los modelos de aprendizaje profundo pueden lograr una precisión de vanguardia, a veces superando el rendimiento a nivel humano. Los modelos se entrenan mediante el uso de un gran conjunto de datos etiquetados y arquitecturas de redes neuronales que contienen muchas capas. (Está enfocado en la programación de máquinas para el reconocimiento de imágenes y audio (datos no estructurados))</p>
-<p><img src="img/01-intro2ds/05_reconocimiento.png" style="display: block; margin: auto;" /></p>
-<p><img src="img/01-intro2ds/06_ml1.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/05_reconocimiento.png" width="325" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/06_ml1.png" width="408" style="display: block; margin: auto;" /></p>
 <p><strong>Big data</strong> se refiere a los grandes y diversos conjuntos de información que crecen a un ritmo cada vez mayor. Abarca el volumen de información, la velocidad a la que se crea y recopila, y la variedad o alcance de los puntos de datos que se cubren. Los macrodatos a menudo provienen de la minería de datos y llegan en múltiples formatos.</p>
 <p><img src="img/01-intro2ds/07_big-data-8vs.jpg" width="600pt" style="display: block; margin: auto;" /></p>
 <p>Es común que se confunda los conceptos de <em>Big Data</em> y <em>Big Compute</em>, como se mencionó, <em>Big Data</em> se refiere al procesamiento de conjuntos de datos que son más voluminosos y complejos que los tradicionales y <em>Big Compute</em> a herramientas y enfoques que utilizan una gran cantidad de recursos de CPU y memoria de forma coordinada para resolver problemas que usan algoritmos muy complejos.</p>
@@ -514,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>Relevancia:</strong> De igual manera los datos tienen que tener relevancia para la tarea que queremos resolver, por ejemplo, es probable que información sobre gusto en alimentos sea irrelevante para predecir número de hijos.</p></li>
 </ul></li>
 </ul>
-<p><img src="img/01-intro2ds/09_relevancia_suficiencia.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/09_relevancia_suficiencia.png" width="880" style="display: block; margin: auto;" /></p>
 <ul>
 <li><strong>Etiquetas:</strong> Se necesita la intervención humana para etiquetar, clasificar e introducir los datos en el algoritmo.</li>
 </ul>
@@ -608,7 +623,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Estadísticamente podemos verificar que el algoritmo está bien</p></li>
 <li><p>Siempre tenemos que verificar con el cliente si los resultados que estamos obteniendo tienen sentido de negocio. Por ejemplo, número de grupos y características</p></li>
 </ul>
-<p><img src="img/01-intro2ds/14_nosupervisado_robo.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds/14_nosupervisado_robo.png" width="473" style="display: block; margin: auto;" /></p>
 <p>Algunos ejemplos son:</p>
 <pre><code>- Encontrar segmentos de clientes.
 
@@ -884,11 +899,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Matriz de preparación de datos y tecnología</li>
 </ul>
-<p><img src="img/01-intro2ds-ciclo/11-dmf2.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds-ciclo/11-dmf2.png" width="962" style="display: block; margin: auto;" /></p>
 <ul>
 <li>Matriz de preparación organizacional</li>
 </ul>
-<p><img src="img/01-intro2ds-ciclo/12-dmf3.png" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-intro2ds-ciclo/12-dmf3.png" width="854" style="display: block; margin: auto;" /></p>
 </div>
 <div id="scoping" class="section level3 hasAnchor" number="1.9.2">
 <h3><span class="header-section-number">1.9.2</span> Scoping<a href="conceptos-de-ciencia-de-datos.html#scoping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
