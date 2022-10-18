@@ -18,7 +18,7 @@ El algoritmo de K vecinos más cercanos realiza comparaciones entre un nuevo ele
 
 ## Clasificación
 
-La idea detrás del algoritmo es sencilla, eletiqueta una nueva observación en la categoria que tenga mas elementos de las *k* observaciones más cercanas, es decir:
+La idea detrás del algoritmo es sencilla, etiqueta una nueva observación en la categoría que tenga mas elementos de las *k* observaciones más cercanas, es decir:
 
 1. Seleccionamos el hiper-parámetro *K* como el número elegido de vecinos.
 
@@ -53,7 +53,7 @@ knitr::include_graphics("img/08-ml-knn/3-10-1-knn-clasificacion2.png")
 
 ## Regresión
 
-En el caso de regresión, la eletiqueta de una nueva observación se realiza a través del promedio del valor en las *k* observaciones más cercanas, es decir:
+En el caso de regresión, la etiqueta de una nueva observación se realiza a través del promedio del valor en las *k* observaciones más cercanas, es decir:
 
 1. Seleccionamos el hiper-parámetro *K* como el número elegido de vecinos.
 
@@ -282,7 +282,7 @@ knn_tune_result %>% autoplot()
 
 En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.
 
-En los argumentos de la funcion, se puede seleccionar el kernel, esto es las opciones posibles para ponderar el promedio respecto a la distancia seleccinada.  "Rectangular" (que es knn estándar no ponderado), "triangular", "cos", "inv", "gaussiano", "rango" y "óptimo".
+En los argumentos de la función, se puede seleccionar el kernel, esto es las opciones posibles para ponderar el promedio respecto a la distancia seleccionada.  "Rectangular" (que es knn estándar no ponderado), "triangular", "cos", "inv", "gaussiano", "rango" y "óptimo".
 
 
 Para conocer más a cerca de las distintas métricas de distancia pueden consultar: 
@@ -607,6 +607,11 @@ results_cla <- predict(final_knn_model_cla, telco_test, type = 'prob') %>%
   mutate(Churn = factor(Churn, levels = c('Yes', 'No'), labels = c('Yes', 'No')))
 
 results_cla
+
+bind_rows(
+  roc_auc(results_cla, truth = Churn, estimate = .pred_Yes),
+  pr_auc(results_cla, truth = Churn, estimate = .pred_Yes)
+)
 ```
 
 
@@ -614,16 +619,14 @@ results_cla
 pr_curve_data <- pr_curve(
   results_cla, 
   truth = Churn, 
-  estimate = .pred_Yes#, 
-  #event_level = 'second'
+  estimate = .pred_Yes
   )
 pr_curve_data
 
 roc_curve_data <- roc_curve(
   results_cla, 
   truth = Churn, 
-  estimate = .pred_Yes#, 
-  #event_level = 'second'
+  estimate = .pred_Yes
   )
 roc_curve_data
 ```
@@ -649,5 +652,5 @@ roc_curve_plot <- roc_curve_data %>%
 roc_curve_plot
 ```
 
-Pueden usar la app de [shiny](https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742) que nos permite jugar con el treshold de clasificación para tomar la mejor decisión.
+Pueden usar la app de [shiny](https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742) que nos permite jugar con el threshold de clasificación para tomar la mejor decisión.
 

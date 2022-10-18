@@ -185,3 +185,11 @@ métodos-de-cálculo-de-la-distancia-entre-observaciones
 implementación-en-r-2
 regresión-3
 clasificación-4
+árboles-de-decisión
+ajuste-del-modelo-2
+attribute-selective-measure-asm
+regularización-de-árboles
+nivel-de-profundidad-de-árbol
+poda-de-árbol
+implementación-en-r-3
+regresión-4

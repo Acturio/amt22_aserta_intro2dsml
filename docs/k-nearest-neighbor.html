@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="regresión-logística.html"/>
-
+<link rel="next" href="árboles-de-decisión.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -434,6 +434,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html"><i class="fa fa-check"></i><b>9</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ajuste-del-modelo-2"><i class="fa fa-check"></i><b>9.1</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#attribute-selective-measure-asm"><i class="fa fa-check"></i><b>9.1.1</b> Attribute Selective Measure (ASM)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regularización-de-árboles"><i class="fa fa-check"></i><b>9.2</b> Regularización de árboles</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
+<li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-en-r-3"><i class="fa fa-check"></i><b>9.3</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.3.1</b> Regresión</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -460,7 +476,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>El algoritmo de K vecinos más cercanos realiza comparaciones entre un nuevo elemento y las observaciones anteriores que ya cuentan con etiqueta. La esencia de este algoritmo está en <strong>etiquetar a un nuevo elemento de manera similar a como están etiquetados aquellos <em>K</em> elementos que más se le parecen</strong>. Veremos este proceso para cada uno de los posibles casos:</p>
 <div id="clasificación-3" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Clasificación<a href="k-nearest-neighbor.html#clasificación-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>La idea detrás del algoritmo es sencilla, eletiqueta una nueva observación en la categoria que tenga mas elementos de las <em>k</em> observaciones más cercanas, es decir:</p>
+<p>La idea detrás del algoritmo es sencilla, etiqueta una nueva observación en la categoría que tenga mas elementos de las <em>k</em> observaciones más cercanas, es decir:</p>
 <ol style="list-style-type: decimal">
 <li><p>Seleccionamos el hiper-parámetro <em>K</em> como el número elegido de vecinos.</p></li>
 <li><p>Se calculará la similitud (distancia) de esta nueva observación a cada observación existente.</p></li>
@@ -479,7 +495,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="regresión-2" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Regresión<a href="k-nearest-neighbor.html#regresión-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En el caso de regresión, la eletiqueta de una nueva observación se realiza a través del promedio del valor en las <em>k</em> observaciones más cercanas, es decir:</p>
+<p>En el caso de regresión, la etiqueta de una nueva observación se realiza a través del promedio del valor en las <em>k</em> observaciones más cercanas, es decir:</p>
 <ol style="list-style-type: decimal">
 <li><p>Seleccionamos el hiper-parámetro <em>K</em> como el número elegido de vecinos.</p></li>
 <li><p>Se calculará la similitud (distancia) de esta nueva observación a cada observación existente</p></li>
@@ -666,7 +682,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="k-nearest-neighbor.html#cb592-1" aria-hidden="true" tabindex="-1"></a>knn_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-415-1.png" width="672" /></p>
 <p>En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.</p>
-<p>En los argumentos de la funcion, se puede seleccionar el kernel, esto es las opciones posibles para ponderar el promedio respecto a la distancia seleccinada. “Rectangular” (que es knn estándar no ponderado), “triangular”, “cos”, “inv”, “gaussiano”, “rango” y “óptimo”.</p>
+<p>En los argumentos de la función, se puede seleccionar el kernel, esto es las opciones posibles para ponderar el promedio respecto a la distancia seleccionada. “Rectangular” (que es knn estándar no ponderado), “triangular”, “cos”, “inv”, “gaussiano”, “rango” y “óptimo”.</p>
 <p>Para conocer más a cerca de las distintas métricas de distancia pueden consultar:
 <a href="https://towardsdatascience.com/9-distance-measures-in-data-science-918109d069fa">Measures</a> y <a href="https://rdrr.io/cran/kknn/man/kknn.html">KNN function</a></p>
 <div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="k-nearest-neighbor.html#cb593-1" aria-hidden="true" tabindex="-1"></a>knn_tune_result <span class="sc">%&gt;%</span> </span>
@@ -931,11 +947,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb621-3"><a href="k-nearest-neighbor.html#cb621-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn_model)</span>
 <span id="cb621-4"><a href="k-nearest-neighbor.html#cb621-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb621-5"><a href="k-nearest-neighbor.html#cb621-5" aria-hidden="true" tabindex="-1"></a>knn_workflow</span></code></pre></div>
-<pre><code>## ══ Workflow ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+<pre><code>## ══ Workflow ══════════════════
 ## Preprocessor: Recipe
 ## Model: nearest_neighbor()
 ## 
-## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ──────────────
 ## 4 Recipe Steps
 ## 
 ## • step_mutate()
@@ -943,7 +959,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • step_normalize()
 ## • step_dummy()
 ## 
-## ── Model ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ─────────────────────
 ## K-Nearest Neighbor Model Specification (classification)
 ## 
 ## Main Arguments:
@@ -1092,13 +1108,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9 Yes      0.642   0.358  
 ## 10 No       0.987   0.0126 
 ## # … with 2,103 more rows</code></pre>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="k-nearest-neighbor.html#cb643-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="ot">&lt;-</span> <span class="fu">pr_curve</span>(</span>
-<span id="cb643-2"><a href="k-nearest-neighbor.html#cb643-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
-<span id="cb643-3"><a href="k-nearest-neighbor.html#cb643-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
-<span id="cb643-4"><a href="k-nearest-neighbor.html#cb643-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes<span class="co">#, </span></span>
-<span id="cb643-5"><a href="k-nearest-neighbor.html#cb643-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#event_level = &#39;second&#39;</span></span>
-<span id="cb643-6"><a href="k-nearest-neighbor.html#cb643-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb643-7"><a href="k-nearest-neighbor.html#cb643-7" aria-hidden="true" tabindex="-1"></a>pr_curve_data</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="k-nearest-neighbor.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb643-2"><a href="k-nearest-neighbor.html#cb643-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(results_cla, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes),</span>
+<span id="cb643-3"><a href="k-nearest-neighbor.html#cb643-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pr_auc</span>(results_cla, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes)</span>
+<span id="cb643-4"><a href="k-nearest-neighbor.html#cb643-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 roc_auc binary         0.834
+## 2 pr_auc  binary         0.629</code></pre>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="k-nearest-neighbor.html#cb645-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="ot">&lt;-</span> <span class="fu">pr_curve</span>(</span>
+<span id="cb645-2"><a href="k-nearest-neighbor.html#cb645-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
+<span id="cb645-3"><a href="k-nearest-neighbor.html#cb645-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb645-4"><a href="k-nearest-neighbor.html#cb645-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb645-5"><a href="k-nearest-neighbor.html#cb645-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb645-6"><a href="k-nearest-neighbor.html#cb645-6" aria-hidden="true" tabindex="-1"></a>pr_curve_data</span></code></pre></div>
 <pre><code>## # A tibble: 1,890 × 3
 ##    .threshold  recall precision
 ##         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
@@ -1113,13 +1137,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9      0.835 0.0177      0.909
 ## 10      0.835 0.0194      0.917
 ## # … with 1,880 more rows</code></pre>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="k-nearest-neighbor.html#cb645-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="ot">&lt;-</span> <span class="fu">roc_curve</span>(</span>
-<span id="cb645-2"><a href="k-nearest-neighbor.html#cb645-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
-<span id="cb645-3"><a href="k-nearest-neighbor.html#cb645-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
-<span id="cb645-4"><a href="k-nearest-neighbor.html#cb645-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes<span class="co">#, </span></span>
-<span id="cb645-5"><a href="k-nearest-neighbor.html#cb645-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#event_level = &#39;second&#39;</span></span>
-<span id="cb645-6"><a href="k-nearest-neighbor.html#cb645-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb645-7"><a href="k-nearest-neighbor.html#cb645-7" aria-hidden="true" tabindex="-1"></a>roc_curve_data</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="k-nearest-neighbor.html#cb647-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="ot">&lt;-</span> <span class="fu">roc_curve</span>(</span>
+<span id="cb647-2"><a href="k-nearest-neighbor.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
+<span id="cb647-3"><a href="k-nearest-neighbor.html#cb647-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb647-4"><a href="k-nearest-neighbor.html#cb647-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb647-5"><a href="k-nearest-neighbor.html#cb647-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb647-6"><a href="k-nearest-neighbor.html#cb647-6" aria-hidden="true" tabindex="-1"></a>roc_curve_data</span></code></pre></div>
 <pre><code>## # A tibble: 1,891 × 3
 ##      .threshold specificity sensitivity
 ##           &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
@@ -1134,27 +1157,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9    0.00118         0.127       0.993
 ## 10    0.00126         0.128       0.993
 ## # … with 1,881 more rows</code></pre>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="k-nearest-neighbor.html#cb647-1" aria-hidden="true" tabindex="-1"></a>pr_curve_plot <span class="ot">&lt;-</span> pr_curve_data <span class="sc">%&gt;%</span> </span>
-<span id="cb647-2"><a href="k-nearest-neighbor.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> recall, <span class="at">y =</span> precision)) <span class="sc">+</span></span>
-<span id="cb647-3"><a href="k-nearest-neighbor.html#cb647-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
-<span id="cb647-4"><a href="k-nearest-neighbor.html#cb647-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb647-5"><a href="k-nearest-neighbor.html#cb647-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Precision vs Recall&quot;</span>)<span class="sc">+</span></span>
-<span id="cb647-6"><a href="k-nearest-neighbor.html#cb647-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb647-7"><a href="k-nearest-neighbor.html#cb647-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb647-8"><a href="k-nearest-neighbor.html#cb647-8" aria-hidden="true" tabindex="-1"></a>pr_curve_plot</span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="k-nearest-neighbor.html#cb649-1" aria-hidden="true" tabindex="-1"></a>pr_curve_plot <span class="ot">&lt;-</span> pr_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb649-2"><a href="k-nearest-neighbor.html#cb649-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> recall, <span class="at">y =</span> precision)) <span class="sc">+</span></span>
+<span id="cb649-3"><a href="k-nearest-neighbor.html#cb649-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb649-4"><a href="k-nearest-neighbor.html#cb649-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb649-5"><a href="k-nearest-neighbor.html#cb649-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Precision vs Recall&quot;</span>)<span class="sc">+</span></span>
+<span id="cb649-6"><a href="k-nearest-neighbor.html#cb649-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb649-7"><a href="k-nearest-neighbor.html#cb649-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb649-8"><a href="k-nearest-neighbor.html#cb649-8" aria-hidden="true" tabindex="-1"></a>pr_curve_plot</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-446-1.png" width="672" /></p>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="k-nearest-neighbor.html#cb648-1" aria-hidden="true" tabindex="-1"></a>roc_curve_plot <span class="ot">&lt;-</span> roc_curve_data <span class="sc">%&gt;%</span> </span>
-<span id="cb648-2"><a href="k-nearest-neighbor.html#cb648-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
-<span id="cb648-3"><a href="k-nearest-neighbor.html#cb648-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
-<span id="cb648-4"><a href="k-nearest-neighbor.html#cb648-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
-<span id="cb648-5"><a href="k-nearest-neighbor.html#cb648-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb648-6"><a href="k-nearest-neighbor.html#cb648-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ROC Curve&quot;</span>)<span class="sc">+</span></span>
-<span id="cb648-7"><a href="k-nearest-neighbor.html#cb648-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb648-8"><a href="k-nearest-neighbor.html#cb648-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb648-9"><a href="k-nearest-neighbor.html#cb648-9" aria-hidden="true" tabindex="-1"></a>roc_curve_plot</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="k-nearest-neighbor.html#cb650-1" aria-hidden="true" tabindex="-1"></a>roc_curve_plot <span class="ot">&lt;-</span> roc_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb650-2"><a href="k-nearest-neighbor.html#cb650-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
+<span id="cb650-3"><a href="k-nearest-neighbor.html#cb650-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb650-4"><a href="k-nearest-neighbor.html#cb650-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
+<span id="cb650-5"><a href="k-nearest-neighbor.html#cb650-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb650-6"><a href="k-nearest-neighbor.html#cb650-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ROC Curve&quot;</span>)<span class="sc">+</span></span>
+<span id="cb650-7"><a href="k-nearest-neighbor.html#cb650-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb650-8"><a href="k-nearest-neighbor.html#cb650-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-9"><a href="k-nearest-neighbor.html#cb650-9" aria-hidden="true" tabindex="-1"></a>roc_curve_plot</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-446-2.png" width="672" /></p>
-<p>Pueden usar la app de <a href="https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742">shiny</a> que nos permite jugar con el treshold de clasificación para tomar la mejor decisión.</p>
+<p>Pueden usar la app de <a href="https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742">shiny</a> que nos permite jugar con el threshold de clasificación para tomar la mejor decisión.</p>
 
+<div class="watermark">
+<p><img src="img/header.png" width="400"/></p>
+</div>
 </div>
 </div>
 </div>
@@ -1185,8 +1211,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="regresión-logística.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="regresión-logística.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="árboles-de-decisión.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

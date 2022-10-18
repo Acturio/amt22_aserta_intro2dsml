@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning</title>
-  <meta name="description" content="Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning" />
+  <title>Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning" />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning" />
+  <meta property="og:title" content="Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning" />
+  <meta property="og:description" content="Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning" />
+  <meta name="twitter:title" content="Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning" />
   
-  <meta name="twitter:description" content="Capítulo 7 Regresión Logística | Ciencia de Datos y Machine Learning" />
+  <meta name="twitter:description" content="Capítulo 9 Árboles de decisión | Ciencia de Datos y Machine Learning" />
   
 
 
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="regresión-lineal.html"/>
-<link rel="next" href="k-nearest-neighbor.html"/>
+<link rel="prev" href="k-nearest-neighbor.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -470,300 +470,306 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regresión-logística" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Capítulo 7</span> Regresión Logística<a href="regresión-logística.html#regresión-logística" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<blockquote>
-<p>El nombre de este modelo es: <strong>Regresión Bernoulli con liga logit</strong>, pero todo mundo la conoce solo por regresión logística. Es importante saber que la liga puede ser elegida dentro de un conjunto de ligas comunes, por lo que puede dejar de ser logit y seguir siendo regresión Bernoulli, pero ya no podría ser llamada “logística”.</p>
-</blockquote>
-<p>Al igual que en regresión lineal, existe la regresión simple y regresión múltiple. La regresión logística simple se utiliza una variable independiente, mientras que cuando se utiliza más de una variable independiente, el proceso se denomina regresión logística múltiple.</p>
-<p><strong>Objetivo:</strong> Estimar la <strong>probabilidad de pertenecer a la categoría <em>positiva</em> de una variable de respuesta categórica</strong>. Posteriormente, se determina el umbral de probabilidad a partir del cual se clasifica a una observación como positiva o negativa.</p>
-<div id="función-sigmoide" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Función sigmoide<a href="regresión-logística.html#función-sigmoide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Si una variable cualitativa con dos categorías se codifica como 1 y 0, matemáticamente es posible ajustar un modelo de regresión lineal por mínimos cuadrados. El problema de esta aproximación es que, al tratarse de una recta, para valores extremos del predictor, se obtienen valores de <span class="math inline">\(Y\)</span> menores que 0 o mayores que 1, lo que entra en contradicción con el hecho de que las probabilidades siempre están dentro del rango [0,1].</p>
-<p>Para evitar estos problemas, la regresión logística transforma el valor devuelto por la regresión lineal empleando una función cuyo resultado está siempre comprendido entre 0 y 1. Existen varias funciones que cumplen esta descripción, una de las más utilizadas es la función logística (también conocida como función <strong>sigmoide</strong>):</p>
-<p><span class="math display">\[\sigma(Z)=\frac{e^{Z}}{1+e^{Z}}\]</span>
-Función sigmoide:</p>
-<iframe src="rlogit.html" width="800px" height="400px" scrolling="no" seamless="seamless" frameBorder="0"></iframe>
-<p>Para valores de <span class="math inline">\(Z\)</span> muy grandes, el valor de <span class="math inline">\(e^{Z}\)</span> tiende a <em>infinito</em> por lo que el valor de la función sigmoide es 1. Para valores de <span class="math inline">\(Z\)</span> muy negativos, el valor <span class="math inline">\(e^{Z}\)</span> tiende a <em>cero</em>, por lo que el valor de la función sigmoide es 0.</p>
-<p>Sustituyendo la <span class="math inline">\(Z\)</span> de la función sigmoide por la función lineal <span class="math inline">\(\beta_0+\beta_1X\)</span> se obtiene que:</p>
-<p><span class="math display">\[\pi=P(Y=k|X=x)=\frac{e^{\beta_0+\beta_1X}}{1+e^{\beta_0+\beta_1X}}\]</span></p>
-<p>donde <span class="math inline">\(P(Y=k|X=x)\)</span> puede interpretarse como: la probabilidad de que la variable cualitativa <span class="math inline">\(Y\)</span> adquiera el valor <span class="math inline">\(k\)</span>, dado que el predictor <span class="math inline">\(X\)</span> tiene el valor <span class="math inline">\(x\)</span>.</p>
+<div id="árboles-de-decisión" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Capítulo 9</span> Árboles de decisión<a href="árboles-de-decisión.html#árboles-de-decisión" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="img/09-ml-tree/0-arboles.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>Un árbol de decisiones es un algoritmo del aprendizaje supervisado que se puede utilizar tanto para problemas de <strong>clasificación</strong> como de <strong>regresión</strong>. Es un clasificador estructurado en árbol, donde los nodos internos representan las características de un conjunto de datos, las ramas representan las reglas de decisión y cada nodo hoja representa el resultado. La idea básica de los árboles es buscar puntos de cortes en las variables de entrada para hacer predicciones, ir dividiendo la muestra, y encontrar cortes sucesivos para refinar las predicciones.</p>
+<p>En un árbol de decisión, hay dos tipos nodos, el nodo de decisión o nodos internos (<em>Decision Node</em>) y el nodo hoja o nodo terminal (Leaf node). Los nodos de decisión se utilizan para tomar cualquier decisión y tienen múltiples ramas, mientras que los nodos hoja son el resultado de esas decisiones y no contienen más ramas.</p>
+<p><img src="img/09-ml-tree/1-arboles.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Regresión:</strong> En el caso de la regresión de árboles de decisión, en los nodos finales se calcula el promedio de la variable de respuesta. El promedio será la estimación del modelo.</li>
+</ul>
+<p><img src="img/09-ml-tree/2-arbol-reg-graph.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/09-ml-tree/3-arbol-reg-diagram.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Clasificación:</strong> Por otro lado, en los árboles de clasificación se calcula la proporción de elementos de cada categoría en los nodos finales. De esta manera se calcula la probabilidad de pertenencia a la categoría.</li>
+</ul>
+<p><img src="img/09-ml-tree/4-arbol-cla-graph.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/09-ml-tree/5-arbol-cla-diagram.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<div id="ajuste-del-modelo-2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Ajuste del modelo<a href="árboles-de-decisión.html#ajuste-del-modelo-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En un árbol de decisión, para predecir la clase del conjunto de datos, el algoritmo comienza desde el nodo raíz del árbol. Este algoritmo compara los valores de la variable raíz con la variable de registro y, según la comparación, sigue una rama y salta al siguiente nodo.</p>
+<p>Para el siguiente nodo, el algoritmo vuelve a comparar el valor de la siguiente variable con los otros sub-nodos y avanza. Continúa el proceso hasta que se llega a un nodo hoja. El proceso completo se puede comprender mejor con los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Comenzamos el árbol con el nodo raíz (llamado S), que contiene el conjunto de entrenamiento completo.</p></li>
+<li><p>Encuentre la mejor variable en el conjunto de datos usando <em>Attribute Selective Measure</em> (ASM).</p></li>
+<li><p>Divida la S en subconjuntos que contengan valores posibles para la mejor variable.</p></li>
+<li><p>Genere el nodo del árbol de decisión, que contiene la mejor variable.</p></li>
+<li><p>Cree de forma recursiva nuevos árboles de decisión utilizando los subconjuntos del conjunto de datos creado en el paso 3. Continúe este proceso hasta que se alcance una etapa en la que no pueda particionar más los nodos y este nodo final sera un nodo hoja.</p></li>
+<li><p>Para clasificación nos quedaremos la moda de la variable respuesta del nodo hoja y para regresión usaremos la media de la variable respuesta.</p></li>
+</ol>
+<div id="attribute-selective-measure-asm" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Attribute Selective Measure (ASM)<a href="árboles-de-decisión.html#attribute-selective-measure-asm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Al implementar un árbol de decisión, surge el problema principal de cómo seleccionar la mejor variable para el nodo raíz y para los sub-nodos. Para resolver este problemas existe una técnica que se llama medida de selección de atributos o <em>ASM</em>. Mediante esta medición, podemos seleccionar fácilmente la mejor variable para los nodos del árbol. Hay dos técnicas populares para <em>ASM</em>, que son:</p>
+<ul>
+<li>Índice de Gini</li>
+</ul>
+<p>La medida del grado de probabilidad de que una variable en particular se clasifique incorrectamente cuando se elige al azar se llama índice de Gini o impureza de Gini. Los datos se distribuyen por igual según el índice de Gini.</p>
+<p><span class="math display">\[Gini = \sum_{i=1}^{n}\hat{p_i}(1-\hat{p}_i)\]</span></p>
+<p>Con <span class="math inline">\(p_i\)</span> como la probabilidad de que un objeto se clasifique en una clase particular.</p>
+<p>Esta métrica puede analizarse como una métrica de impureza. Cuando todos o la mayoría de elementos dentro de un nodo pertenecen a una misma clase, el índice de Gini toma valores cercanos a cero.</p>
+<p>Cuando se utiliza el índice de Gini como criterio seleccionar la variable para el nodo raíz, seleccionaremos la variable con el índice de Gini menor.</p>
 </div>
-<div id="ajuste-del-modelo" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Ajuste del modelo<a href="regresión-logística.html#ajuste-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Esta función, puede ajustarse de forma sencilla con métodos de regresión lineal si se emplea su versión logarítmica:</p>
-<p><span class="math display">\[logit(\pi)= ln(\frac{\pi}{1-\pi}) = ln(\frac{p(Y=k|X=x)}{1−p(Y=k|X=x)})=\beta_0+\beta_1X\]</span></p>
-<p><span class="math display">\[P(Y=k|X=x)=\frac{e^{\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_ix_i}}{1+e^{\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_ix_i}}\]</span></p>
-<p>La combinación óptima de coeficientes <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> será aquella que tenga la máxima verosimilitud (maximum likelihood), es decir el valor de los parámetros <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> con los que se maximiza la probabilidad de obtener los datos observados.</p>
-<p>El método de maximum likelihood está ampliamente extendido en la estadística aunque su implementación no siempre es trivial.</p>
-<p>Otra forma para ajustar un modelo de regresión logística es empleando descenso de gradiente. Si bien este no es el método de optimización más adecuado para resolver la regresión logística, está muy extendido en el ámbito de machine learning para ajustar otros modelos.</p>
 </div>
-<div id="clasificación-2" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Clasificación<a href="regresión-logística.html#clasificación-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Una de las principales aplicaciones de un modelo de regresión logística es clasificar la variable cualitativa en función de valor que tome el predictor. Para conseguir esta clasificación, es necesario establecer un <strong>threshold</strong> de probabilidad a partir de la cual se considera que la variable pertenece a uno de los niveles. Por ejemplo, se puede asignar una observación al grupo 1 si <span class="math inline">\(p̂ (Y=1|X)&gt;0.3\)</span> y al grupo 0 si ocurre lo contrario.</p>
-<p>Es importante mencionar que el punto de corte <strong>no necesariamente tiene que ser 0.5</strong>, este puede ser seleccionado a conveniencia de la métrica a optimizar.</p>
+<div id="regularización-de-árboles" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Regularización de árboles<a href="árboles-de-decisión.html#regularización-de-árboles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para asegurarse de que no exista sobre-ajuste en el modelo, es importante considerar algunas regularizaciones a los hiper-parámetros implementados. Posteriormente, se determinará cuál de las posibles combinaciones produce mejores resultados.</p>
+<div id="nivel-de-profundidad-de-árbol" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Nivel de profundidad de árbol<a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Podríamos preguntarnos cuándo dejar de crecer un árbol. Pueden existir problemas que tengan un gran conjunto de variables y esto da como resultado una gran cantidad de divisiones, lo que a su vez genera un árbol de decisión muy grande. Estos árboles son complejos y pueden provocar un sobre-ajuste. Entonces, necesitamos saber cuándo parar.</p>
+<ol style="list-style-type: decimal">
+<li><p>Una forma de hacer esto es establecer un número mínimo de entradas de entrenamiento para dividir un nodo.</p></li>
+<li><p>Otra forma es establecer la profundidad máxima de su modelo. La profundidad máxima se refiere a la longitud del camino más largo desde el nodo raíz hasta un nodo hoja.</p></li>
+</ol>
 </div>
-<div id="métricas-de-desempeño-2" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Métricas de desempeño<a href="regresión-logística.html#métricas-de-desempeño-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Existen distintas métricas de desempeño para problemas de clasificación, debido a que contamos con la respuesta correcta podemos contar cuántos aciertos tuvimos y cuántos fallos tuvimos.</p>
-<p>Primero, por simplicidad ocuparemos un ejemplo de clasificación binaria, Cancelación (1) o No Cancelación (0).</p>
-<p>En este tipo de algoritmos definimos cuál de las categorías será nuestra etiqueta positiva y cuál será la negativa. La positiva será la categoría que queremos predecir -en nuestro ejemplo, Cancelación- y la negativa lo opuesto -en el caso binario- en nuestro ejemplo, no cancelación.</p>
-<p>Dadas estas definiciones tenemos 4 posibilidades:</p>
-<ul>
-<li><p><strong>True positives</strong>: Nuestra predicción dijo que la transacción es fraude y la etiqueta real dice que es fraude.</p></li>
-<li><p><strong>False positives</strong>: Nuestra predicción dijo que la transacción es fraude y la etiqueta real dice que no es fraude.</p></li>
-<li><p><strong>True negatives</strong>: Nuestra predicción dijo que la transacción es no fraude y la etiqueta real dice que no es fraude.</p></li>
-<li><p><strong>False negatives</strong>: Nuestra predicción dijo que la transacción es no fraude y la etiqueta real dice que es fraude.</p></li>
-<li><p><strong>Matriz de confusión</strong></p></li>
-</ul>
-<p><img src="img/07-ml-logit/5-3-4-1_confusion_matrix.png" width="700pt" height="350pt" style="display: block; margin: auto;" /></p>
-<p>Esta métrica corresponde a una matriz en donde se plasma el conteo de los aciertos y los errores que haya hecho el modelo, esto es: los verdaderos positivos (TP), los verdaderos negativos (TN), los falsos positivos (FP) y los falsos negativos (FN).</p>
-<p>Normalmente los renglones representan las etiquetas predichas, ya sean positivas o negativas, y las columnas a las etiquetas reales, aunque esto puede cambiar en cualquier software.</p>
-<hr />
-<ul>
-<li><strong>Accuracy</strong></li>
-</ul>
-<p>Número de aciertos totales entre todas las predicciones.</p>
-<p><span class="math display">\[accuracy = \frac{TP + TN}{ TP+FP+TN+FN}\]</span></p>
-<p>La métrica más utilizada, en conjuntos de datos no balanceados esta métrica no nos sirve, al contrario, nos engaña. Adicionalmente, cuando la identificación de una categoría es más importante que otra es mejor recurrir a otras métricas.</p>
-<hr />
-<ul>
-<li><strong>Precision</strong>: Eficiencia</li>
-</ul>
-<p>De los que identificamos como clase positiva, cuántos identificamos correctamente. ¿Qué tan eficientes somos en la predicción?</p>
-<p><span class="math display">\[precision = \frac{TP}{TP + FP}\]</span></p>
-<p>¿Cuándo utilizar precisión?</p>
-<p>Esta es la métrica que ocuparás más, pues en un contexto de negocio, donde los recursos son finitos y tiene un costo asociado, ya sea monetario o de tiempo o de recursos, necesitarás que las predicciones de tu etiqueta positiva sean muy eficientes.</p>
-<p>Al utilizar esta métrica estaremos optimizando el modelo para minimizar el número de falsos positivos.</p>
-<hr />
-<ul>
-<li><strong>Recall o Sensibilidad</strong>: Cobertura</li>
-</ul>
-<p>Del universo posible de nuestra clase positiva, cuántos identificamos correctamente.</p>
-<p><span class="math display">\[recall = \frac{TP}{TP + FN }\]</span></p>
-<p>Esta métrica la ocuparás cuando en el contexto de negocio de tu problema sea más conveniente aumentar la cantidad de positivos o disminuir los falsos negativos. Esto se realiza debido al impacto que estos pueden tener en las personas en quienes se implementará la predicción.</p>
-<hr />
-<ul>
-<li><strong>Especificidad</strong></li>
-</ul>
-<p>Es el número de observaciones correctamente identificados como negativos fuera del total de negativos.</p>
-<p><span class="math display">\[Specificity = \frac{TN}{TN+FP}\]</span></p>
-<hr />
-<ul>
-<li><strong>F1-score</strong></li>
-</ul>
-<p>Combina <strong>precision</strong> y <strong>recall</strong> para optimizar ambos.</p>
-<p><span class="math display">\[F = 2 *\frac{precision * recall}{precision + recall} \]</span></p>
-<p>Se recomienda utilizar esta métrica de desempeño cuando quieres balancear tanto los falsos positivos como los falsos negativos. Aunque es una buena solución para tomar en cuenta ambos errores, pocas veces hay problemas reales que permiten ocuparla, esto es porque en más del 90% de los casos tenemos una restricción en recursos.</p>
-<p>Ahora con esto en mente podemos definir las siguientes métricas:</p>
-<hr />
-<ul>
-<li><strong>AUC y ROC</strong>: <em>Area Under the Curve y Receiver operator characteristic</em></li>
-</ul>
-<p><img src="img/07-ml-logit/5-3-4-2_roc.png" width="700pt" height="400pt" style="display: block; margin: auto;" /></p>
-<p>Una curva <strong>ROC</strong> es un gráfico que muestra el desempeño de un modelo de clasificación en todos los puntos de corte.</p>
-<p><strong>AUC</strong> significa “Área bajo la curva ROC”. Es decir, <strong>AUC</strong> mide el área debajo de la curva ROC.</p>
+<div id="poda-de-árbol" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Poda de árbol<a href="árboles-de-decisión.html#poda-de-árbol" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El rendimiento de un árbol se puede aumentar aún más mediante la poda del árbol. Esto se refiere a eliminar las ramas que hacen uso de variables de poca importancia. De esta manera, reducimos la complejidad del árbol y, por lo tanto, <strong>aumentamos su poder predictivo al reducir el sobre-ajuste.</strong></p>
+<p><img src="img/09-ml-tree/6-podar.jpg" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>La poda puede comenzar en la raíz o en las hojas. El método más simple de poda comienza en las hojas y elimina cada nodo con la clase más popular en esa hoja, este cambio se mantiene si no deteriora la precisión. Se pueden usar métodos de poda más sofisticados, como la poda de complejidad de costos, donde se usa un parámetro de aprendizaje (alfa) para observar si los nodos se pueden eliminar en función del tamaño del sub-árbol.</p>
 </div>
-<div id="implementación-en-r-1" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Implementación en R<a href="regresión-logística.html#implementación-en-r-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Ajustaremos un modelo de regresión logística usando la receta antes vista.</p>
-<p><strong>Lectura de datos</strong></p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="regresión-logística.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb564-2"><a href="regresión-logística.html#cb564-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb564-3"><a href="regresión-logística.html#cb564-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb564-4"><a href="regresión-logística.html#cb564-4" aria-hidden="true" tabindex="-1"></a>telco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Churn.csv&quot;</span>)</span></code></pre></div>
-<p><strong>Segmentación de datos</strong></p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="regresión-logística.html#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb565-2"><a href="regresión-logística.html#cb565-2" aria-hidden="true" tabindex="-1"></a>telco_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telco, <span class="at">prop =</span> .<span class="dv">7</span>)</span>
-<span id="cb565-3"><a href="regresión-logística.html#cb565-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb565-4"><a href="regresión-logística.html#cb565-4" aria-hidden="true" tabindex="-1"></a>telco_train <span class="ot">&lt;-</span> <span class="fu">training</span>(telco_split)</span>
-<span id="cb565-5"><a href="regresión-logística.html#cb565-5" aria-hidden="true" tabindex="-1"></a>telco_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(telco_split)</span></code></pre></div>
-<p><strong>Pre-procesamiento de datos</strong></p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="regresión-logística.html#cb566-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Churn <span class="sc">~</span> ., <span class="at">data =</span> telco_train) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-2"><a href="regresión-logística.html#cb566-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(customerID, <span class="at">new_role =</span> <span class="st">&quot;id variable&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-3"><a href="regresión-logística.html#cb566-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-4"><a href="regresión-logística.html#cb566-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-5"><a href="regresión-logística.html#cb566-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-6"><a href="regresión-logística.html#cb566-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(customerID, <span class="at">skip=</span>T) <span class="sc">%&gt;%</span> </span>
-<span id="cb566-7"><a href="regresión-logística.html#cb566-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
-<span id="cb566-8"><a href="regresión-logística.html#cb566-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb566-9"><a href="regresión-logística.html#cb566-9" aria-hidden="true" tabindex="-1"></a>telco_juiced <span class="ot">&lt;-</span> <span class="fu">juice</span>(telco_rec)</span>
-<span id="cb566-10"><a href="regresión-logística.html#cb566-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_juiced)</span></code></pre></div>
-<pre><code>## Rows: 4,930
-## Columns: 31
-## $ SeniorCitizen                         &lt;dbl&gt; -0.4417148, -0.4417148, -0.44171…
-## $ tenure                                &lt;dbl&gt; 0.1915835, 0.3140505, -0.4207516…
-## $ MonthlyCharges                        &lt;dbl&gt; -1.50429475, 0.66367718, -0.5084…
-## $ TotalCharges                          &lt;dbl&gt; -0.66321610, 0.47214217, -0.5462…
-## $ Churn                                 &lt;fct&gt; No, No, No, Yes, Yes, No, No, No…
-## $ gender_Male                           &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0,…
-## $ Partner_Yes                           &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1,…
-## $ Dependents_Yes                        &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1,…
-## $ PhoneService_Yes                      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1,…
-## $ MultipleLines_No.phone.service        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,…
-## $ MultipleLines_Yes                     &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,…
-## $ InternetService_Fiber.optic           &lt;dbl&gt; 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,…
-## $ InternetService_No                    &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ OnlineSecurity_No.internet.service    &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ OnlineSecurity_Yes                    &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0,…
-## $ OnlineBackup_No.internet.service      &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ OnlineBackup_Yes                      &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,…
-## $ DeviceProtection_No.internet.service  &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ DeviceProtection_Yes                  &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0,…
-## $ TechSupport_No.internet.service       &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ TechSupport_Yes                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,…
-## $ StreamingTV_No.internet.service       &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ StreamingTV_Yes                       &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0,…
-## $ StreamingMovies_No.internet.service   &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ StreamingMovies_Yes                   &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,…
-## $ Contract_One.year                     &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,…
-## $ Contract_Two.year                     &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,…
-## $ PaperlessBilling_Yes                  &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,…
-## $ PaymentMethod_Credit.card..automatic. &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,…
-## $ PaymentMethod_Electronic.check        &lt;dbl&gt; 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0,…
-## $ PaymentMethod_Mailed.check            &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</code></pre>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="regresión-logística.html#cb568-1" aria-hidden="true" tabindex="-1"></a>telco_test_bake <span class="ot">&lt;-</span>  <span class="fu">bake</span>(telco_rec, <span class="at">new_data =</span> telco_test)</span>
-<span id="cb568-2"><a href="regresión-logística.html#cb568-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_test_bake)</span></code></pre></div>
-<pre><code>## Rows: 2,113
-## Columns: 32
-## $ customerID                            &lt;chr&gt; &quot;5575-GNVDE&quot;, &quot;9305-CDSKC&quot;, &quot;671…
-## $ SeniorCitizen                         &lt;dbl&gt; -0.4417148, -0.4417148, -0.44171…
-## $ tenure                                &lt;dbl&gt; 0.06911644, -0.99226439, -0.9106…
-## $ MonthlyCharges                        &lt;dbl&gt; -0.27067882, 1.14914329, -1.1751…
-## $ TotalCharges                          &lt;dbl&gt; -0.1752116, -0.6472105, -0.87618…
-## $ Churn                                 &lt;fct&gt; No, Yes, No, No, No, No, No, No,…
-## $ gender_Male                           &lt;dbl&gt; 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0,…
-## $ Partner_Yes                           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,…
-## $ Dependents_Yes                        &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0,…
-## $ PhoneService_Yes                      &lt;dbl&gt; 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1,…
-## $ MultipleLines_No.phone.service        &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,…
-## $ MultipleLines_Yes                     &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1,…
-## $ InternetService_Fiber.optic           &lt;dbl&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1,…
-## $ InternetService_No                    &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ OnlineSecurity_No.internet.service    &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ OnlineSecurity_Yes                    &lt;dbl&gt; 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1,…
-## $ OnlineBackup_No.internet.service      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ OnlineBackup_Yes                      &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1,…
-## $ DeviceProtection_No.internet.service  &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ DeviceProtection_Yes                  &lt;dbl&gt; 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1,…
-## $ TechSupport_No.internet.service       &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ TechSupport_Yes                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1,…
-## $ StreamingTV_No.internet.service       &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ StreamingTV_Yes                       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0,…
-## $ StreamingMovies_No.internet.service   &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,…
-## $ StreamingMovies_Yes                   &lt;dbl&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0,…
-## $ Contract_One.year                     &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,…
-## $ Contract_Two.year                     &lt;dbl&gt; 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1,…
-## $ PaperlessBilling_Yes                  &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1,…
-## $ PaymentMethod_Credit.card..automatic. &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1,…
-## $ PaymentMethod_Electronic.check        &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0,…
-## $ PaymentMethod_Mailed.check            &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,…</code></pre>
-<p><strong>Creación y ajuste de modelo</strong></p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="regresión-logística.html#cb570-1" aria-hidden="true" tabindex="-1"></a>logistic_model <span class="ot">&lt;-</span>  <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb570-2"><a href="regresión-logística.html#cb570-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
-<span id="cb570-3"><a href="regresión-logística.html#cb570-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb570-4"><a href="regresión-logística.html#cb570-4" aria-hidden="true" tabindex="-1"></a>logistic_fit1 <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">fit</span>(logistic_model, Churn <span class="sc">~</span> ., telco_juiced)</span></code></pre></div>
-<p><strong>Predicción de respuesta con nuevos datos</strong></p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="regresión-logística.html#cb571-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake) <span class="sc">%&gt;%</span></span>
-<span id="cb571-2"><a href="regresión-logística.html#cb571-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-3"><a href="regresión-logística.html#cb571-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_class, Churn)</span>
-<span id="cb571-4"><a href="regresión-logística.html#cb571-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb571-5"><a href="regresión-logística.html#cb571-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test</span></code></pre></div>
-<pre><code>## # A tibble: 2,113 × 2
-##    .pred_class Churn
-##    &lt;fct&gt;       &lt;fct&gt;
-##  1 No          No   
-##  2 Yes         Yes  
-##  3 No          No   
-##  4 No          No   
-##  5 No          No   
-##  6 Yes         No   
-##  7 No          No   
-##  8 No          No   
-##  9 Yes         Yes  
-## 10 No          No   
-## # … with 2,103 more rows</code></pre>
 </div>
-<div id="matriz-de-confusión" class="section level2 hasAnchor" number="7.6">
-<h2><span class="header-section-number">7.6</span> Matriz de Confusión<a href="regresión-logística.html#matriz-de-confusión" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="regresión-logística.html#cb573-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="sc">%&gt;%</span> </span>
-<span id="cb573-2"><a href="regresión-logística.html#cb573-2" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(<span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_class) <span class="sc">%&gt;%</span> </span>
-<span id="cb573-3"><a href="regresión-logística.html#cb573-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
-<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-394-1.png" width="672" /></p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="regresión-logística.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb574-2"><a href="regresión-logística.html#cb574-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb574-3"><a href="regresión-logística.html#cb574-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb574-4"><a href="regresión-logística.html#cb574-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb574-5"><a href="regresión-logística.html#cb574-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb574-6"><a href="regresión-logística.html#cb574-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
-<span id="cb574-7"><a href="regresión-logística.html#cb574-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 3
-##   .metric     .estimator .estimate
-##   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
-## 1 accuracy    binary         0.808
-## 2 precision   binary         0.678
-## 3 recall      binary         0.542
-## 4 specificity binary         0.906
-## 5 f_meas      binary         0.603</code></pre>
-<p><strong>¿Y si se quiere un corte diferente? ¿el negocio qué necesita?</strong></p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="regresión-logística.html#cb576-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb576-2"><a href="regresión-logística.html#cb576-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
-<span id="cb576-3"><a href="regresión-logística.html#cb576-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_Yes, .pred_No, Churn)</span>
-<span id="cb576-4"><a href="regresión-logística.html#cb576-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb576-5"><a href="regresión-logística.html#cb576-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
-<pre><code>## # A tibble: 2,113 × 3
-##    .pred_Yes .pred_No Churn
-##        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;
-##  1    0.0382    0.962 No   
-##  2    0.769     0.231 Yes  
-##  3    0.309     0.691 No   
-##  4    0.0227    0.977 No   
-##  5    0.0372    0.963 No   
-##  6    0.551     0.449 No   
-##  7    0.0635    0.937 No   
-##  8    0.0270    0.973 No   
-##  9    0.520     0.480 Yes  
-## 10    0.0136    0.986 No   
-## # … with 2,103 more rows</code></pre>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="regresión-logística.html#cb578-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> logistic_p_test_prob <span class="sc">%&gt;%</span> </span>
-<span id="cb578-2"><a href="regresión-logística.html#cb578-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred_class  =</span> <span class="fu">as.factor</span>(<span class="fu">if_else</span> ( .pred_Yes <span class="sc">&gt;=</span> <span class="fl">0.30</span>, <span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb578-3"><a href="regresión-logística.html#cb578-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(.pred_class , <span class="at">.after =</span> .pred_No)</span>
-<span id="cb578-4"><a href="regresión-logística.html#cb578-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb578-5"><a href="regresión-logística.html#cb578-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
-<pre><code>## # A tibble: 2,113 × 4
-##    .pred_Yes .pred_No .pred_class Churn
-##        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;fct&gt;
-##  1    0.0382    0.962 No          No   
-##  2    0.769     0.231 Yes         Yes  
-##  3    0.309     0.691 Yes         No   
-##  4    0.0227    0.977 No          No   
-##  5    0.0372    0.963 No          No   
-##  6    0.551     0.449 Yes         No   
-##  7    0.0635    0.937 No          No   
-##  8    0.0270    0.973 No          No   
-##  9    0.520     0.480 Yes         Yes  
-## 10    0.0136    0.986 No          No   
-## # … with 2,103 more rows</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="regresión-logística.html#cb580-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb580-2"><a href="regresión-logística.html#cb580-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb580-3"><a href="regresión-logística.html#cb580-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb580-4"><a href="regresión-logística.html#cb580-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb580-5"><a href="regresión-logística.html#cb580-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb580-6"><a href="regresión-logística.html#cb580-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
-<span id="cb580-7"><a href="regresión-logística.html#cb580-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 3
-##   .metric     .estimator .estimate
-##   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
-## 1 accuracy    binary         0.769
-## 2 precision   binary         0.548
-## 3 recall      binary         0.777
-## 4 specificity binary         0.765
-## 5 f_meas      binary         0.643</code></pre>
-<p>Para poder determinar cual es el mejor punto de corte, es indispensable conocer el comportamiento y efecto de los diferentes puntos de corte.</p>
-<p>Veamos un ejemplo visual en nuestra aplicación de Shiny: <a href="https://acturio.shinyapps.io/confusion_matrix/">ConfusionMatrixShiny</a></p>
+<div id="implementación-en-r-3" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Implementación en R<a href="árboles-de-decisión.html#implementación-en-r-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Usaremos las recetas antes implementadas para ajustar tanto el modelo de regresión como el de clasificación. Exploraremos un conjunto de hiperparámetros para elegir el mejor modelo. En esta ocasión usamos la función <em>grid_random()</em> donde el parámetro <em>size</em> indica el número total de combinaciones a implementar. En caso de que haya duplicados, un número menor de combinaciones a las establecidas será devuelto como resultado.</p>
+<div id="regresión-4" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Regresión<a href="árboles-de-decisión.html#regresión-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Paso 1: Separación inicial de datos ( test, train, KFCV)</strong></p>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="árboles-de-decisión.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb651-2"><a href="árboles-de-decisión.html#cb651-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb651-3"><a href="árboles-de-decisión.html#cb651-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb651-4"><a href="árboles-de-decisión.html#cb651-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb651-5"><a href="árboles-de-decisión.html#cb651-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4595</span>)</span>
+<span id="cb651-6"><a href="árboles-de-decisión.html#cb651-6" aria-hidden="true" tabindex="-1"></a>ames_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb651-7"><a href="árboles-de-decisión.html#cb651-7" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(ames_split)</span>
+<span id="cb651-8"><a href="árboles-de-decisión.html#cb651-8" aria-hidden="true" tabindex="-1"></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(ames_split)</span>
+<span id="cb651-9"><a href="árboles-de-decisión.html#cb651-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb651-10"><a href="árboles-de-decisión.html#cb651-10" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train)</span></code></pre></div>
+<p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="árboles-de-decisión.html#cb652-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb652-2"><a href="árboles-de-decisión.html#cb652-2" aria-hidden="true" tabindex="-1"></a> Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> TotRms_AbvGrd <span class="sc">+</span> Exter_Cond <span class="sc">+</span> Bsmt_Cond <span class="sc">+</span></span>
+<span id="cb652-3"><a href="árboles-de-decisión.html#cb652-3" aria-hidden="true" tabindex="-1"></a>  Year_Sold <span class="sc">+</span> Year_Remod_Add, </span>
+<span id="cb652-4"><a href="árboles-de-decisión.html#cb652-4" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb652-5"><a href="árboles-de-decisión.html#cb652-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb652-6"><a href="árboles-de-decisión.html#cb652-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add,</span>
+<span id="cb652-7"><a href="árboles-de-decisión.html#cb652-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb652-8"><a href="árboles-de-decisión.html#cb652-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb652-9"><a href="árboles-de-decisión.html#cb652-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb652-10"><a href="árboles-de-decisión.html#cb652-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb652-11"><a href="árboles-de-decisión.html#cb652-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb652-12"><a href="árboles-de-decisión.html#cb652-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb652-13"><a href="árboles-de-decisión.html#cb652-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb652-14"><a href="árboles-de-decisión.html#cb652-14" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<pre><code>## Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor          6
+## 
+## Training data contained 2197 data points and no missing data.
+## 
+## Operations:
+## 
+## Variable mutation for ~Year_Sold - Year_Remod_Add, ~forcats::fct... [trained]
+## Re-order factor level to ref_level for Exter_Cond [trained]
+## Centering and scaling for Gr_Liv_Area, TotRms_AbvGrd, Year_Sold, Year_Rem... [trained]
+## Dummy variables from Exter_Cond, Bsmt_Cond [trained]
+## Interactions with (Bsmt_Cond_Fair + Bsmt_Cond_Good + Bsmt_Cond_No_Ba... [trained]</code></pre>
+<p>Recordemos que la función <strong>recipe()</strong> solo son los pasos a seguir, necesitamos usar la función <strong>prep()</strong> que nos devuelve una receta actualizada con las estimaciones y la función <strong>juice()</strong> que nos devuelve la matriz de diseño.</p>
+<p>Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.</p>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="árboles-de-decisión.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;rpart&quot;)</span></span>
+<span id="cb654-2"><a href="árboles-de-decisión.html#cb654-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-3"><a href="árboles-de-decisión.html#cb654-3" aria-hidden="true" tabindex="-1"></a>tree_model <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(</span>
+<span id="cb654-4"><a href="árboles-de-decisión.html#cb654-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb654-5"><a href="árboles-de-decisión.html#cb654-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb654-6"><a href="árboles-de-decisión.html#cb654-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb654-7"><a href="árboles-de-decisión.html#cb654-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb654-8"><a href="árboles-de-decisión.html#cb654-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;rpart&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="árboles-de-decisión.html#cb655-1" aria-hidden="true" tabindex="-1"></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb655-2"><a href="árboles-de-decisión.html#cb655-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(receta_casas) <span class="sc">%&gt;%</span> </span>
+<span id="cb655-3"><a href="árboles-de-decisión.html#cb655-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_model)</span></code></pre></div>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="árboles-de-decisión.html#cb656-1" aria-hidden="true" tabindex="-1"></a>tree_parameters_set <span class="ot">&lt;-</span> <span class="fu">extract_parameter_set_dials</span>(tree_workflow) <span class="sc">%&gt;%</span> </span>
+<span id="cb656-2"><a href="árboles-de-decisión.html#cb656-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">update</span>(</span>
+<span id="cb656-3"><a href="árboles-de-decisión.html#cb656-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(2L, 40L)),</span>
+<span id="cb656-4"><a href="árboles-de-decisión.html#cb656-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(1L, 15L)),</span>
+<span id="cb656-5"><a href="árboles-de-decisión.html#cb656-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cost_complexity =</span> <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>())</span>
+<span id="cb656-6"><a href="árboles-de-decisión.html#cb656-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb656-7"><a href="árboles-de-decisión.html#cb656-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb656-8"><a href="árboles-de-decisión.html#cb656-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb656-9"><a href="árboles-de-decisión.html#cb656-9" aria-hidden="true" tabindex="-1"></a>tree_grid <span class="ot">&lt;-</span> tree_parameters_set <span class="sc">%&gt;%</span> </span>
+<span id="cb656-10"><a href="árboles-de-decisión.html#cb656-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">grid_random</span>(<span class="at">size =</span> <span class="dv">100</span>)</span>
+<span id="cb656-11"><a href="árboles-de-decisión.html#cb656-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb656-12"><a href="árboles-de-decisión.html#cb656-12" aria-hidden="true" tabindex="-1"></a>ctrl_grid <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> T, <span class="at">verbose =</span> T)</span></code></pre></div>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="árboles-de-decisión.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb657-2"><a href="árboles-de-decisión.html#cb657-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-3"><a href="árboles-de-decisión.html#cb657-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb657-4"><a href="árboles-de-decisión.html#cb657-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb657-5"><a href="árboles-de-decisión.html#cb657-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb657-6"><a href="árboles-de-decisión.html#cb657-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-7"><a href="árboles-de-decisión.html#cb657-7" aria-hidden="true" tabindex="-1"></a>tree1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb657-8"><a href="árboles-de-decisión.html#cb657-8" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb657-9"><a href="árboles-de-decisión.html#cb657-9" aria-hidden="true" tabindex="-1"></a>  tree_workflow,</span>
+<span id="cb657-10"><a href="árboles-de-decisión.html#cb657-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb657-11"><a href="árboles-de-decisión.html#cb657-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> tree_grid,</span>
+<span id="cb657-12"><a href="árboles-de-decisión.html#cb657-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb657-13"><a href="árboles-de-decisión.html#cb657-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> ctrl_grid</span>
+<span id="cb657-14"><a href="árboles-de-decisión.html#cb657-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb657-15"><a href="árboles-de-decisión.html#cb657-15" aria-hidden="true" tabindex="-1"></a>tree2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); tree2 <span class="sc">-</span> tree1</span>
+<span id="cb657-16"><a href="árboles-de-decisión.html#cb657-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-17"><a href="árboles-de-decisión.html#cb657-17" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb657-18"><a href="árboles-de-decisión.html#cb657-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-19"><a href="árboles-de-decisión.html#cb657-19" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/tree_model_reg.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="árboles-de-decisión.html#cb658-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/tree_model_reg.rds&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<p>Podemos obtener las métricas de cada <em>fold</em> con el siguiente código:</p>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="árboles-de-decisión.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(tree_tune_result)</span></code></pre></div>
+<pre><code>## # A tibble: 400 × 9
+##    cost_complexity tree_de…¹ min_n .metric .esti…²    mean     n std_err .config
+##              &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1    0.0000000387         9     4 mae     standa… 3.20e+4    10 8.77e+2 Prepro…
+##  2    0.0000000387         9     4 mape    standa… 1.88e+1    10 5.06e-1 Prepro…
+##  3    0.0000000387         9     4 rmse    standa… 4.90e+4    10 2.10e+3 Prepro…
+##  4    0.0000000387         9     4 rsq     standa… 6.40e-1    10 2.45e-2 Prepro…
+##  5    0.00124              4    30 mae     standa… 3.27e+4    10 5.58e+2 Prepro…
+##  6    0.00124              4    30 mape    standa… 1.98e+1    10 5.22e-1 Prepro…
+##  7    0.00124              4    30 rmse    standa… 4.92e+4    10 1.44e+3 Prepro…
+##  8    0.00124              4    30 rsq     standa… 6.24e-1    10 1.18e-2 Prepro…
+##  9    0.000000480          6    37 mae     standa… 3.13e+4    10 5.15e+2 Prepro…
+## 10    0.000000480          6    37 mape    standa… 1.87e+1    10 3.97e-1 Prepro…
+## # … with 390 more rows, and abbreviated variable names ¹​tree_depth, ²​.estimator</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="árboles-de-decisión.html#cb661-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-464-1.png" width="672" /></p>
+<p>En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.</p>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="árboles-de-decisión.html#cb662-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
+<p>En la siguiente gráfica observamos el error absoluto promedio de las distintas métricas con distintos números de vecinos.</p>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="árboles-de-decisión.html#cb663-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;mae&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-466-1.png" width="672" /></p>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<p>Con el siguiente código obtenemos los mejores 10 modelos respecto al <em>rmse</em>.</p>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="árboles-de-decisión.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(tree_tune_result, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 9
+##    cost_complexity tree_depth min_n .metric .esti…¹   mean     n std_err .config
+##              &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1        2.38e- 4          5    11 rmse    standa… 46878.    10   1215. Prepro…
+##  2        2.36e- 9          8    38 rmse    standa… 46935.    10   1303. Prepro…
+##  3        1.03e- 4          7     8 rmse    standa… 47008.    10   1772. Prepro…
+##  4        1.41e- 9          7     8 rmse    standa… 47022.    10   1771. Prepro…
+##  5        7.88e- 6          8    25 rmse    standa… 47040.    10    729. Prepro…
+##  6        7.97e- 5          5     8 rmse    standa… 47066.    10   1296. Prepro…
+##  7        5.66e- 6          7     9 rmse    standa… 47083.    10   1690. Prepro…
+##  8        6.96e-10          6    38 rmse    standa… 47096.    10   1262. Prepro…
+##  9        1.93e- 9         14    33 rmse    standa… 47111.    10    980. Prepro…
+## 10        2.39e-10         13    34 rmse    standa… 47122.    10    966. Prepro…
+## # … with abbreviated variable name ¹​.estimator</code></pre>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="árboles-de-decisión.html#cb666-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;mape&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 9
+##    cost_complexity tree_depth min_n .metric .estim…¹  mean     n std_err .config
+##              &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1        1.93e- 9         14    33 mape    standard  18.5    10   0.380 Prepro…
+##  2        1.00e- 9         10    32 mape    standard  18.5    10   0.376 Prepro…
+##  3        2.39e-10         13    34 mape    standard  18.5    10   0.377 Prepro…
+##  4        2.36e- 9          8    38 mape    standard  18.5    10   0.399 Prepro…
+##  5        2.86e- 7         11    30 mape    standard  18.5    10   0.346 Prepro…
+##  6        1.42e- 5         14    37 mape    standard  18.5    10   0.402 Prepro…
+##  7        9.68e- 5         15    31 mape    standard  18.5    10   0.384 Prepro…
+##  8        2.57e-10          9    12 mape    standard  18.5    10   0.489 Prepro…
+##  9        1.25e- 4          9    33 mape    standard  18.5    10   0.409 Prepro…
+## 10        5.66e- 6          7     9 mape    standard  18.5    10   0.443 Prepro…
+## # … with abbreviated variable name ¹​.estimator</code></pre>
+<p>Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el <em>rmse</em> y haremos las predicciones del conjunto de prueba con este modelo.</p>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="árboles-de-decisión.html#cb668-1" aria-hidden="true" tabindex="-1"></a>best_tree_model_reg <span class="ot">&lt;-</span> tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span>
+<span id="cb668-2"><a href="árboles-de-decisión.html#cb668-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb668-3"><a href="árboles-de-decisión.html#cb668-3" aria-hidden="true" tabindex="-1"></a>best_tree_model_reg</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 4
+##   cost_complexity tree_depth min_n .config               
+##             &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;                 
+## 1        0.000238          5    11 Preprocessor1_Model026</code></pre>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="árboles-de-decisión.html#cb670-1" aria-hidden="true" tabindex="-1"></a>tree_regression_best_1se_model <span class="ot">&lt;-</span> tree_tune_result <span class="sc">%&gt;%</span> </span>
+<span id="cb670-2"><a href="árboles-de-decisión.html#cb670-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>, <span class="st">&quot;rmse&quot;</span>)</span>
+<span id="cb670-3"><a href="árboles-de-decisión.html#cb670-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb670-4"><a href="árboles-de-decisión.html#cb670-4" aria-hidden="true" tabindex="-1"></a>tree_regression_best_1se_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 11
+##   cost_compl…¹ tree_…² min_n .metric .esti…³   mean     n std_err .config  .best
+##          &lt;dbl&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1  0.000000480       6    37 rmse    standa… 47453.    10   1073. Prepro… 46878.
+## # … with 1 more variable: .bound &lt;dbl&gt;, and abbreviated variable names
+## #   ¹​cost_complexity, ²​tree_depth, ³​.estimator</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="árboles-de-decisión.html#cb672-1" aria-hidden="true" tabindex="-1"></a>final_tree_model_reg <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb672-2"><a href="árboles-de-decisión.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_tree_model_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb672-3"><a href="árboles-de-decisión.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
+<p>Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>El árbol final se ve de la siguiente manera:</p>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="árboles-de-decisión.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb673-2"><a href="árboles-de-decisión.html#cb673-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb673-3"><a href="árboles-de-decisión.html#cb673-3" aria-hidden="true" tabindex="-1"></a>final_tree_model_reg <span class="sc">%&gt;%</span></span>
+<span id="cb673-4"><a href="árboles-de-decisión.html#cb673-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb673-5"><a href="árboles-de-decisión.html#cb673-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-472-1.png" width="672" /></p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo.</p>
+<p>Podemos obtener la importancia de las variables de manera gráfica:</p>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="árboles-de-decisión.html#cb674-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb674-2"><a href="árboles-de-decisión.html#cb674-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb674-3"><a href="árboles-de-decisión.html#cb674-3" aria-hidden="true" tabindex="-1"></a>final_tree_model_reg <span class="sc">%&gt;%</span> </span>
+<span id="cb674-4"><a href="árboles-de-decisión.html#cb674-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb674-5"><a href="árboles-de-decisión.html#cb674-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">&quot;col&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb674-6"><a href="árboles-de-decisión.html#cb674-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-473-1.png" width="672" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="árboles-de-decisión.html#cb675-1" aria-hidden="true" tabindex="-1"></a>results_reg <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_tree_model_reg, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb675-2"><a href="árboles-de-decisión.html#cb675-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">Sale_Price =</span> ames_test<span class="sc">$</span>Sale_Price, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb675-3"><a href="árboles-de-decisión.html#cb675-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pred_tree_reg =</span> .pred)</span>
+<span id="cb675-4"><a href="árboles-de-decisión.html#cb675-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb675-5"><a href="árboles-de-decisión.html#cb675-5" aria-hidden="true" tabindex="-1"></a>results_reg</span></code></pre></div>
+<pre><code>## # A tibble: 733 × 2
+##    Sale_Price pred_tree_reg
+##         &lt;int&gt;         &lt;dbl&gt;
+##  1     105000       121439.
+##  2     185000       138200.
+##  3     180400       178947.
+##  4     141000       108578.
+##  5     210000       242482.
+##  6     216000       202009.
+##  7     149900       138200.
+##  8     105500       138200.
+##  9      88000       138200.
+## 10     146000       151483.
+## # … with 723 more rows</code></pre>
+<p><strong>Métricas de desempeño</strong></p>
+<p>Ahora para calcular las métricas de desempeño usaremos la paquetería <em>MLmetrics</em>. Es posible definir nuestro propio conjunto de métricas que deseamos reportar creando el objeto <em>metric_set</em>:</p>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="árboles-de-decisión.html#cb677-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MLmetrics)</span>
+<span id="cb677-2"><a href="árboles-de-decisión.html#cb677-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb677-3"><a href="árboles-de-decisión.html#cb677-3" aria-hidden="true" tabindex="-1"></a>multi_metric <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(mae, mape, rmse, rsq, ccc)</span>
+<span id="cb677-4"><a href="árboles-de-decisión.html#cb677-4" aria-hidden="true" tabindex="-1"></a><span class="fu">multi_metric</span>(results_reg, <span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_tree_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb677-5"><a href="árboles-de-decisión.html#cb677-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.estimate =</span> <span class="fu">round</span>(.estimate, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb677-6"><a href="árboles-de-decisión.html#cb677-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.estimator)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 2
+##   .metric .estimate
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 mae      33380.  
+## 2 mape        19.5 
+## 3 rmse     50102.  
+## 4 rsq          0.61
+## 5 ccc          0.77</code></pre>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="árboles-de-decisión.html#cb679-1" aria-hidden="true" tabindex="-1"></a>results_reg <span class="sc">%&gt;%</span> </span>
+<span id="cb679-2"><a href="árboles-de-decisión.html#cb679-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pred_tree_reg, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb679-3"><a href="árboles-de-decisión.html#cb679-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb679-4"><a href="árboles-de-decisión.html#cb679-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb679-5"><a href="árboles-de-decisión.html#cb679-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Prediction&quot;</span>) <span class="sc">+</span></span>
+<span id="cb679-6"><a href="árboles-de-decisión.html#cb679-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb679-7"><a href="árboles-de-decisión.html#cb679-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-476-1.png" width="672" /></p>
 
-<div class="watermark">
-<p><img src="img/header.png" width="400"/></p>
 </div>
 </div>
 </div>
@@ -794,8 +800,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="regresión-lineal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="k-nearest-neighbor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="k-nearest-neighbor.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
