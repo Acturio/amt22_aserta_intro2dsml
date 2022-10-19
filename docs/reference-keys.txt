@@ -198,3 +198,6 @@ qué-es
 características-de-los-bosques-aleatorios
 aplicar-árboles-de-decisión-en-un-bosque-aleatorio
 ventajas-y-desventjas-de-bosques-aleatorios
+implementación-en-r-4
+regresión-5
+clasificación-6

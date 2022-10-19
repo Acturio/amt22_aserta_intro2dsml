@@ -697,36 +697,231 @@ knitr::include_graphics("img/09-ml-tree/3-13-1-randomforest.png")
 * No producen buenos resultados cuando los datos son muy escasos. En este caso, el subconjunto de características y la muestra de arranque producirán un espacio invariante. Esto conducirá a divisiones improductivas, que afectarán el resultado.
 
 
+## Implementación en R
+
+### Regresión
+
+**Paso 1: Separación inicial de datos ( test, train <KFCV> )**
+```{r, warning=FALSE, message=FALSE}
+library(tidymodels)
+
+data(ames)
+
+set.seed(4595)
+ames_split <- initial_split(ames, prop = 0.75)
+ames_train <- training(ames_split)
+ames_test  <- testing(ames_split)
+ames_folds <- vfold_cv(ames_train)
+```
+
+Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.
+
+**Paso 2: Pre-procesamiento e ingeniería de variables**
+
+```{r, warning=FALSE,message=FALSE}
+
+receta_casas <- recipe(
+ Sale_Price ~ Gr_Liv_Area + TotRms_AbvGrd + Exter_Cond + Bsmt_Cond +
+  Year_Sold + Year_Remod_Add, 
+ data = ames_train) %>%
+  step_mutate(
+    Age_House = Year_Sold - Year_Remod_Add,
+    Exter_Cond = forcats::fct_collapse(Exter_Cond, Good = c("Typical", "Good", "Excellent"))) %>% 
+  step_relevel(Exter_Cond, ref_level = "Good") %>% 
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_interact(~ matches("Bsmt_Cond"):TotRms_AbvGrd) %>% 
+  prep()
+
+receta_casas
+```
+
+Recordemos que la función **recipe()** solo son los pasos a seguir, necesitamos usar la función **prep()** que nos devuelve una receta actualizada con las estimaciones y la función **juice()** que nos devuelve la matriz de diseño.
+
+Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.
+
+**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
+
+```{r, warning=FALSE,message=FALSE, eval=TRUE}
+# install.packages("ranger")
+
+library(ranger)
+
+rforest_model <- rand_forest(
+  mode = "regression",
+  trees = 1000,
+  mtry = tune(),
+  min_n = tune()) %>%
+  set_engine("ranger", importance = "impurity")
+```
+
+**Paso 4: Inicialización de workflow o pipeline**
+
+```{r, warning=FALSE,message=FALSE, eval=TRUE}
+rforest_workflow <- workflow() %>%
+  add_model(rforest_model) %>%
+  add_recipe(receta_casas)
+```
+
+**Paso 5: Creación de grid search**
+
+```{r, warning=FALSE,message=FALSE, eval=TRUE}
+
+set.seed(195628)
+rforest_param_grid <- grid_random(
+  mtry(range = c(2,15)),
+  min_n(range = c(2,16)),
+  size = 50
+)
+
+ctrl_grid <- control_grid(save_pred = T, verbose = T)
+```
+
+**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
+
+```{r, warning=FALSE,message=FALSE, eval=FALSE}
+library(doParallel)
+
+UseCores <- detectCores() - 1
+cluster <- makeCluster(UseCores)
+registerDoParallel(cluster)
+
+# Ajuste de parámetros
+rft1 <- Sys.time()
+
+rforest_tune_result <- tune_grid(
+  rforest_workflow,
+  resamples = ames_folds,
+  grid = rforest_param_grid,
+  metrics = metric_set(rmse, rsq, mae),
+  control = ctrl_grid
+)
+rft2 <- Sys.time(); rft2 - rft1
+
+stopCluster(cluster)
+
+rforest_tune_result %>% saveRDS("models/random_forest_model_reg.rds")
+```
+
+```{r}
+rforest_tune_result <- readRDS("models/random_forest_model_reg.rds")
+```
+
+**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
+
+Podemos obtener las métricas de cada *fold* con el siguiente código:
+
+```{r}
+collect_metrics(rforest_tune_result)
+```
+
+En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:
+
+```{r}
+rforest_tune_result %>% autoplot()
+```
+
+En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.
+
+```{r}
+rforest_tune_result %>% autoplot(metric = "rsq")
+```
+
+```{r}
+multiparams_plot <- rforest_tune_result %>% 
+ collect_metrics() %>% 
+ filter(.metric == "rmse") %>% 
+ rename(rmse = mean) %>% 
+ ggplot(aes(x = mtry, y = min_n, colour = rmse)) +
+ geom_point() +
+ scale_color_gradientn(colours = rainbow(7)) +
+ labs(
+  title = "Análisis de R^2 mediante ajuste de hiperparámetros",
+  x = "Número de ramas",
+  y = "Mínimo de elementos por nodo"
+  )
+
+plotly::ggplotly(multiparams_plot)
+```
+
+En la gráfica anterior, se aprecia la distribución conjunta de hiperparámetros y su resultados en la $R^2$. De esta forma, se puede tomar una mejor decisión sobre el subconjunto óptimo de hiperparámetros a seleccionar. 
 
 
+**Paso 8: Selección de modelo a usar**
+
+Con el siguiente código obtenemos los mejores 10 modelos respecto al *rmse*.
+
+```{r}
+show_best(rforest_tune_result, n = 10, metric = "rmse")
+```
+
+Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el *rmse* y haremos las predicciones del conjunto de prueba con este modelo.
+
+```{r}
+best_rforest_model <- select_best(rforest_tune_result, metric = "rmse")
+best_rforest_model
+```
+
+**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
+
+```{r}
+final_rforest_model <- rforest_workflow %>%
+  finalize_workflow(best_rforest_model) %>%
+  fit(data = ames_train)
+```
+
+Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones. 
+
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos [data leakage](https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba). Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo.
+
+```{r, eval=FALSE}
+
+library(vip)
+
+final_rforest_model %>% 
+ extract_fit_parsnip() %>% 
+ vip(geom = "col") + 
+ ggtitle("Importancia de las variables")
+
+```
 
 
+**Paso 10: Validar poder predictivo con datos de prueba**
 
+Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
 
+```{r}
+results <- predict(final_rforest_model, ames_test) %>%
+  dplyr::bind_cols(Sale_Price = ames_test$Sale_Price) %>%
+  dplyr::rename(pred_rforest_reg = .pred)
 
+results
+```
 
+**Métricas de desempeño**
 
+Ahora para calcular las métricas de desempeño usaremos la paquetería *MLmetrics*. Es posible definir nuestro propio conjunto de métricas que deseamos reportar creando el objeto *metric_set*:
 
+```{r}
+library(MLmetrics)
 
+multi_metric <- metric_set(mae, mape, rmse, rsq, ccc)
+multi_metric(results, truth = Sale_Price, estimate = pred_rforest_reg) %>% 
+  mutate(.estimate = round(.estimate, 2)) %>% 
+  select(-.estimator)
+```
 
+```{r}
+results %>% 
+  ggplot(aes(x = pred_rforest_reg, y = Sale_Price)) +
+  geom_point() +
+  geom_abline(color = "red") +
+  xlab("Prediction") +
+  ylab("Observation") +
+  ggtitle("Comparisson")
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Clasificación
 
 
 

@@ -10,6 +10,14 @@ description: "Ciencia de Datos y Machine Learning"
 always_allow_html: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+ echo = TRUE,
+ warning = FALSE, 
+ message = FALSE
+ )
+```
+
 # BIENVENIDA {-}
 
 ## Objetivo {-}
