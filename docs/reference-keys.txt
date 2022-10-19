@@ -192,4 +192,9 @@ regularización-de-árboles
 nivel-de-profundidad-de-árbol
 poda-de-árbol
 implementación-en-r-3
-regresión-4
+bagging
+random-forest
+qué-es
+características-de-los-bosques-aleatorios
+aplicar-árboles-de-decisión-en-un-bosque-aleatorio
+ventajas-y-desventjas-de-bosques-aleatorios

@@ -444,10 +444,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
 <li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+<li class="chapter" data-level="9.2.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-en-r-3"><i class="fa fa-check"></i><b>9.2.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-en-r-3"><i class="fa fa-check"></i><b>9.3</b> Implementación en R</a>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#random-forest"><i class="fa fa-check"></i><b>9.4</b> Random Forest</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.3.1</b> Regresión</a></li>
+<li class="chapter" data-level="9.4.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#qué-es"><i class="fa fa-check"></i><b>9.4.1</b> ¿Qué es?</a></li>
+<li class="chapter" data-level="9.4.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios"><i class="fa fa-check"></i><b>9.4.2</b> Características de los bosques aleatorios</a></li>
+<li class="chapter" data-level="9.4.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio"><i class="fa fa-check"></i><b>9.4.3</b> Aplicar árboles de decisión en un bosque aleatorio</a></li>
+<li class="chapter" data-level="9.4.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios"><i class="fa fa-check"></i><b>9.4.4</b> Ventajas y desventjas de bosques aleatorios</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -528,12 +533,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/09-ml-tree/6-podar.jpg" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
 <p>La poda puede comenzar en la raíz o en las hojas. El método más simple de poda comienza en las hojas y elimina cada nodo con la clase más popular en esa hoja, este cambio se mantiene si no deteriora la precisión. Se pueden usar métodos de poda más sofisticados, como la poda de complejidad de costos, donde se usa un parámetro de aprendizaje (alfa) para observar si los nodos se pueden eliminar en función del tamaño del sub-árbol.</p>
 </div>
-</div>
-<div id="implementación-en-r-3" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Implementación en R<a href="árboles-de-decisión.html#implementación-en-r-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="implementación-en-r-3" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Implementación en R<a href="árboles-de-decisión.html#implementación-en-r-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Usaremos las recetas antes implementadas para ajustar tanto el modelo de regresión como el de clasificación. Exploraremos un conjunto de hiperparámetros para elegir el mejor modelo. En esta ocasión usamos la función <em>grid_random()</em> donde el parámetro <em>size</em> indica el número total de combinaciones a implementar. En caso de que haya duplicados, un número menor de combinaciones a las establecidas será devuelto como resultado.</p>
-<div id="regresión-4" class="section level3 hasAnchor" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> Regresión<a href="árboles-de-decisión.html#regresión-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="regresión-4" class="section level4 unnumbered hasAnchor">
+<h4>Regresión<a href="árboles-de-decisión.html#regresión-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><strong>Paso 1: Separación inicial de datos ( test, train, KFCV)</strong></p>
 <div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="árboles-de-decisión.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb651-2"><a href="árboles-de-decisión.html#cb651-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -769,6 +773,398 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb679-6"><a href="árboles-de-decisión.html#cb679-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
 <span id="cb679-7"><a href="árboles-de-decisión.html#cb679-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-476-1.png" width="672" /></p>
+</div>
+<div id="clasificación-5" class="section level4 unnumbered hasAnchor">
+<h4>Clasificación<a href="árboles-de-decisión.html#clasificación-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Es turno de revisar la implementación del árbol de decisión con nuestro bien conocido problema de predicción de cancelación de servicios de telecomunicaciones. Los datos se encuentran disponibles en el siguiente <a href="https://drive.google.com/drive/folders/1mlDGHvUy-81qfvQi_iB7tqMb9yhy3vyh?usp=sharing">enlace</a>:</p>
+<p>Los pasos para implementar en <em>R</em> este modelo predictivo son los mismos, cambiando únicamente las especificaciones del tipo de modelo, pre-procesamiento e hiper-parámetros.</p>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="árboles-de-decisión.html#cb680-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb680-2"><a href="árboles-de-decisión.html#cb680-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb680-3"><a href="árboles-de-decisión.html#cb680-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb680-4"><a href="árboles-de-decisión.html#cb680-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-5"><a href="árboles-de-decisión.html#cb680-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span>
+<span id="cb680-6"><a href="árboles-de-decisión.html#cb680-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-7"><a href="árboles-de-decisión.html#cb680-7" aria-hidden="true" tabindex="-1"></a>telco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb680-8"><a href="árboles-de-decisión.html#cb680-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco)</span></code></pre></div>
+<pre><code>## Rows: 7,043
+## Columns: 21
+## $ customerID       &lt;chr&gt; &quot;7590-VHVEG&quot;, &quot;5575-GNVDE&quot;, &quot;3668-QPYBK&quot;, &quot;7795-CFOCW…
+## $ gender           &lt;chr&gt; &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;,…
+## $ SeniorCitizen    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Partner          &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes…
+## $ Dependents       &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;…
+## $ tenure           &lt;dbl&gt; 1, 34, 2, 45, 2, 8, 22, 10, 28, 62, 13, 16, 58, 49, 2…
+## $ PhoneService     &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, …
+## $ MultipleLines    &lt;chr&gt; &quot;No phone service&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No phone service&quot;, &quot;…
+## $ InternetService  &lt;chr&gt; &quot;DSL&quot;, &quot;DSL&quot;, &quot;DSL&quot;, &quot;DSL&quot;, &quot;Fiber optic&quot;, &quot;Fiber opt…
+## $ OnlineSecurity   &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;…
+## $ OnlineBackup     &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;N…
+## $ DeviceProtection &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Y…
+## $ TechSupport      &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes…
+## $ StreamingTV      &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Ye…
+## $ StreamingMovies  &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes…
+## $ Contract         &lt;chr&gt; &quot;Month-to-month&quot;, &quot;One year&quot;, &quot;Month-to-month&quot;, &quot;One …
+## $ PaperlessBilling &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, …
+## $ PaymentMethod    &lt;chr&gt; &quot;Electronic check&quot;, &quot;Mailed check&quot;, &quot;Mailed check&quot;, &quot;…
+## $ MonthlyCharges   &lt;dbl&gt; 29.85, 56.95, 53.85, 42.30, 70.70, 99.65, 89.10, 29.7…
+## $ TotalCharges     &lt;dbl&gt; 29.85, 1889.50, 108.15, 1840.75, 151.65, 820.50, 1949…
+## $ Churn            &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Y…</code></pre>
+<p><strong>Paso 1: Separación inicial de datos ( test, train <KFCV> )</strong></p>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="árboles-de-decisión.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb682-2"><a href="árboles-de-decisión.html#cb682-2" aria-hidden="true" tabindex="-1"></a>telco_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telco, <span class="at">prop =</span> .<span class="dv">70</span>)</span>
+<span id="cb682-3"><a href="árboles-de-decisión.html#cb682-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-4"><a href="árboles-de-decisión.html#cb682-4" aria-hidden="true" tabindex="-1"></a>telco_train <span class="ot">&lt;-</span> <span class="fu">training</span>(telco_split)</span>
+<span id="cb682-5"><a href="árboles-de-decisión.html#cb682-5" aria-hidden="true" tabindex="-1"></a>telco_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(telco_split)</span>
+<span id="cb682-6"><a href="árboles-de-decisión.html#cb682-6" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(telco_train)</span>
+<span id="cb682-7"><a href="árboles-de-decisión.html#cb682-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-8"><a href="árboles-de-decisión.html#cb682-8" aria-hidden="true" tabindex="-1"></a>telco_folds</span></code></pre></div>
+<pre><code>## #  10-fold cross-validation 
+## # A tibble: 10 × 2
+##    splits             id    
+##    &lt;list&gt;             &lt;chr&gt; 
+##  1 &lt;split [4437/493]&gt; Fold01
+##  2 &lt;split [4437/493]&gt; Fold02
+##  3 &lt;split [4437/493]&gt; Fold03
+##  4 &lt;split [4437/493]&gt; Fold04
+##  5 &lt;split [4437/493]&gt; Fold05
+##  6 &lt;split [4437/493]&gt; Fold06
+##  7 &lt;split [4437/493]&gt; Fold07
+##  8 &lt;split [4437/493]&gt; Fold08
+##  9 &lt;split [4437/493]&gt; Fold09
+## 10 &lt;split [4437/493]&gt; Fold10</code></pre>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="árboles-de-decisión.html#cb684-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb684-2"><a href="árboles-de-decisión.html#cb684-2" aria-hidden="true" tabindex="-1"></a>  Churn <span class="sc">~</span> customerID <span class="sc">+</span> TotalCharges <span class="sc">+</span> MonthlyCharges <span class="sc">+</span> SeniorCitizen <span class="sc">+</span> Contract, </span>
+<span id="cb684-3"><a href="árboles-de-decisión.html#cb684-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> telco_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-4"><a href="árboles-de-decisión.html#cb684-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(customerID, <span class="at">new_role =</span> <span class="st">&quot;id variable&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-5"><a href="árboles-de-decisión.html#cb684-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(<span class="at">Contract =</span> <span class="fu">as.factor</span>(Contract)) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-6"><a href="árboles-de-decisión.html#cb684-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-7"><a href="árboles-de-decisión.html#cb684-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-8"><a href="árboles-de-decisión.html#cb684-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb684-9"><a href="árboles-de-decisión.html#cb684-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb684-10"><a href="árboles-de-decisión.html#cb684-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb684-11"><a href="árboles-de-decisión.html#cb684-11" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
+<pre><code>## Recipe
+## 
+## Inputs:
+## 
+##         role #variables
+##  id variable          1
+##      outcome          1
+##    predictor          4
+## 
+## Training data contained 4930 data points and 10 incomplete rows. 
+## 
+## Operations:
+## 
+## Variable mutation for ~as.factor(Contract) [trained]
+## Median imputation for TotalCharges, MonthlyCharges, SeniorCitizen [trained]
+## Centering and scaling for TotalCharges, MonthlyCharges, SeniorCitizen [trained]
+## Dummy variables from Contract [trained]</code></pre>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="árboles-de-decisión.html#cb686-1" aria-hidden="true" tabindex="-1"></a>tree_model <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(</span>
+<span id="cb686-2"><a href="árboles-de-decisión.html#cb686-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>,</span>
+<span id="cb686-3"><a href="árboles-de-decisión.html#cb686-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb686-4"><a href="árboles-de-decisión.html#cb686-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb686-5"><a href="árboles-de-decisión.html#cb686-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb686-6"><a href="árboles-de-decisión.html#cb686-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;rpart&quot;</span>)</span>
+<span id="cb686-7"><a href="árboles-de-decisión.html#cb686-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb686-8"><a href="árboles-de-decisión.html#cb686-8" aria-hidden="true" tabindex="-1"></a>tree_model</span></code></pre></div>
+<pre><code>## Decision Tree Model Specification (classification)
+## 
+## Main Arguments:
+##   cost_complexity = tune()
+##   tree_depth = tune()
+##   min_n = tune()
+## 
+## Computational engine: rpart</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="árboles-de-decisión.html#cb688-1" aria-hidden="true" tabindex="-1"></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb688-2"><a href="árboles-de-decisión.html#cb688-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(telco_rec) <span class="sc">%&gt;%</span> </span>
+<span id="cb688-3"><a href="árboles-de-decisión.html#cb688-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_model)</span>
+<span id="cb688-4"><a href="árboles-de-decisión.html#cb688-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb688-5"><a href="árboles-de-decisión.html#cb688-5" aria-hidden="true" tabindex="-1"></a>tree_workflow</span></code></pre></div>
+<pre><code>## ══ Workflow ══════════════════
+## Preprocessor: Recipe
+## Model: decision_tree()
+## 
+## ── Preprocessor ──────────────
+## 4 Recipe Steps
+## 
+## • step_mutate()
+## • step_impute_median()
+## • step_normalize()
+## • step_dummy()
+## 
+## ── Model ─────────────────────
+## Decision Tree Model Specification (classification)
+## 
+## Main Arguments:
+##   cost_complexity = tune()
+##   tree_depth = tune()
+##   min_n = tune()
+## 
+## Computational engine: rpart</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="árboles-de-decisión.html#cb690-1" aria-hidden="true" tabindex="-1"></a>tree_parameters_set <span class="ot">&lt;-</span> <span class="fu">extract_parameter_set_dials</span>(tree_workflow) <span class="sc">%&gt;%</span> </span>
+<span id="cb690-2"><a href="árboles-de-decisión.html#cb690-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb690-3"><a href="árboles-de-decisión.html#cb690-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">50</span>)),</span>
+<span id="cb690-4"><a href="árboles-de-decisión.html#cb690-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">tree_depth =</span> <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(1L, 15L)),</span>
+<span id="cb690-5"><a href="árboles-de-decisión.html#cb690-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">cost_complexity =</span> <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>())</span>
+<span id="cb690-6"><a href="árboles-de-decisión.html#cb690-6" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb690-7"><a href="árboles-de-decisión.html#cb690-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-8"><a href="árboles-de-decisión.html#cb690-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb690-9"><a href="árboles-de-decisión.html#cb690-9" aria-hidden="true" tabindex="-1"></a>tree_grid <span class="ot">&lt;-</span> tree_parameters_set <span class="sc">%&gt;%</span> </span>
+<span id="cb690-10"><a href="árboles-de-decisión.html#cb690-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">grid_random</span>(<span class="at">size =</span> <span class="dv">30</span>)</span>
+<span id="cb690-11"><a href="árboles-de-decisión.html#cb690-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-12"><a href="árboles-de-decisión.html#cb690-12" aria-hidden="true" tabindex="-1"></a>ctrl_grid <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> T, <span class="at">verbose =</span> T)</span></code></pre></div>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="árboles-de-decisión.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb691-2"><a href="árboles-de-decisión.html#cb691-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb691-3"><a href="árboles-de-decisión.html#cb691-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb691-4"><a href="árboles-de-decisión.html#cb691-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb691-5"><a href="árboles-de-decisión.html#cb691-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb691-6"><a href="árboles-de-decisión.html#cb691-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb691-7"><a href="árboles-de-decisión.html#cb691-7" aria-hidden="true" tabindex="-1"></a>tree1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb691-8"><a href="árboles-de-decisión.html#cb691-8" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb691-9"><a href="árboles-de-decisión.html#cb691-9" aria-hidden="true" tabindex="-1"></a>  tree_workflow,</span>
+<span id="cb691-10"><a href="árboles-de-decisión.html#cb691-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> telco_folds,</span>
+<span id="cb691-11"><a href="árboles-de-decisión.html#cb691-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> tree_grid,</span>
+<span id="cb691-12"><a href="árboles-de-decisión.html#cb691-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(roc_auc, pr_auc),</span>
+<span id="cb691-13"><a href="árboles-de-decisión.html#cb691-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> ctrl_grid</span>
+<span id="cb691-14"><a href="árboles-de-decisión.html#cb691-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb691-15"><a href="árboles-de-decisión.html#cb691-15" aria-hidden="true" tabindex="-1"></a>tree2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); tree2 <span class="sc">-</span> tree1</span>
+<span id="cb691-16"><a href="árboles-de-decisión.html#cb691-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb691-17"><a href="árboles-de-decisión.html#cb691-17" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb691-18"><a href="árboles-de-decisión.html#cb691-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb691-19"><a href="árboles-de-decisión.html#cb691-19" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/tree_model_cla.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="árboles-de-decisión.html#cb692-1" aria-hidden="true" tabindex="-1"></a>tree_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/tree_model_cla.rds&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="árboles-de-decisión.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(tree_tune_result)</span></code></pre></div>
+<pre><code>## # A tibble: 60 × 9
+##    cost_complexity tree_depth min_n .metric .estim…¹  mean     n std_err .config
+##              &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1    0.0000000387          9    33 pr_auc  binary   0.927    10 0.00325 Prepro…
+##  2    0.0000000387          9    33 roc_auc binary   0.820    10 0.00459 Prepro…
+##  3    0.00124              19     9 pr_auc  binary   0.824    10 0.0132  Prepro…
+##  4    0.00124              19     9 roc_auc binary   0.782    10 0.00859 Prepro…
+##  5    0.000000480           4    46 pr_auc  binary   0.921    10 0.00400 Prepro…
+##  6    0.000000480           4    46 roc_auc binary   0.798    10 0.00772 Prepro…
+##  7    0.00885              14    11 pr_auc  binary   0.921    10 0.00427 Prepro…
+##  8    0.00885              14    11 roc_auc binary   0.803    10 0.00841 Prepro…
+##  9    0.0291               17    25 pr_auc  binary   0.921    10 0.00400 Prepro…
+## 10    0.0291               17    25 roc_auc binary   0.798    10 0.00772 Prepro…
+## # … with 50 more rows, and abbreviated variable name ¹​.estimator</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos.</p>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="árboles-de-decisión.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tree_tune_result, <span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-486-1.png" width="672" /></p>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="árboles-de-decisión.html#cb696-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tree_tune_result, <span class="at">metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-487-1.png" width="672" /></p>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="árboles-de-decisión.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(tree_tune_result, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 9
+##    cost_complexity tree_depth min_n .metric .estim…¹  mean     n std_err .config
+##              &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1   0.0000000387           9    33 pr_auc  binary   0.927    10 0.00325 Prepro…
+##  2   0.00000788             9    33 pr_auc  binary   0.927    10 0.00325 Prepro…
+##  3   0.00000129            10    37 pr_auc  binary   0.926    10 0.00307 Prepro…
+##  4   0.0000000164           6    35 pr_auc  binary   0.926    10 0.00430 Prepro…
+##  5   0.0000797              6    34 pr_auc  binary   0.926    10 0.00430 Prepro…
+##  6   0.00000566             7    42 pr_auc  binary   0.925    10 0.00416 Prepro…
+##  7   0.0000222             15    38 pr_auc  binary   0.925    10 0.00345 Prepro…
+##  8   0.000172              13    43 pr_auc  binary   0.925    10 0.00303 Prepro…
+##  9   0.000238              15    49 pr_auc  binary   0.925    10 0.00311 Prepro…
+## 10   0.00000000211         20    32 pr_auc  binary   0.925    10 0.00339 Prepro…
+## # … with abbreviated variable name ¹​.estimator</code></pre>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="árboles-de-decisión.html#cb699-1" aria-hidden="true" tabindex="-1"></a>best_tree_model_cla <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tree_tune_result, <span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>)</span>
+<span id="cb699-2"><a href="árboles-de-decisión.html#cb699-2" aria-hidden="true" tabindex="-1"></a>best_tree_model_cla</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 4
+##   cost_complexity tree_depth min_n .config              
+##             &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;                
+## 1    0.0000000387          9    33 Preprocessor1_Model01</code></pre>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="árboles-de-decisión.html#cb701-1" aria-hidden="true" tabindex="-1"></a>tree_classification_best_1se_model <span class="ot">&lt;-</span> tree_tune_result <span class="sc">%&gt;%</span> </span>
+<span id="cb701-2"><a href="árboles-de-decisión.html#cb701-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">&quot;roc_auc&quot;</span>, <span class="st">&quot;roc_auc&quot;</span>)</span>
+<span id="cb701-3"><a href="árboles-de-decisión.html#cb701-3" aria-hidden="true" tabindex="-1"></a>tree_classification_best_1se_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 11
+##   cost_…¹ tree_…² min_n .metric .esti…³  mean     n std_err .config .best .bound
+##     &lt;dbl&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 3.87e-8       9    33 roc_auc binary  0.820    10 0.00459 Prepro… 0.820  0.815
+## # … with abbreviated variable names ¹​cost_complexity, ²​tree_depth, ³​.estimator</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="árboles-de-decisión.html#cb703-1" aria-hidden="true" tabindex="-1"></a>final_tree_model_cla <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb703-2"><a href="árboles-de-decisión.html#cb703-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_tree_model_cla) <span class="sc">%&gt;%</span> </span>
+<span id="cb703-3"><a href="árboles-de-decisión.html#cb703-3" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> telco_train)</span></code></pre></div>
+<p>Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>El árbol ajustado con todos los datos de entrenamiento se ve de la siguiente manera:</p>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="árboles-de-decisión.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb704-2"><a href="árboles-de-decisión.html#cb704-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb704-3"><a href="árboles-de-decisión.html#cb704-3" aria-hidden="true" tabindex="-1"></a>final_tree_model_cla <span class="sc">%&gt;%</span></span>
+<span id="cb704-4"><a href="árboles-de-decisión.html#cb704-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb704-5"><a href="árboles-de-decisión.html#cb704-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-491-1.png" width="672" /></p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.</p>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="árboles-de-decisión.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb705-2"><a href="árboles-de-decisión.html#cb705-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb705-3"><a href="árboles-de-decisión.html#cb705-3" aria-hidden="true" tabindex="-1"></a>final_tree_model_cla <span class="sc">%&gt;%</span> </span>
+<span id="cb705-4"><a href="árboles-de-decisión.html#cb705-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb705-5"><a href="árboles-de-decisión.html#cb705-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="árboles-de-decisión.html#cb706-1" aria-hidden="true" tabindex="-1"></a>results_cla <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_tree_model_cla, telco_test, <span class="at">type =</span> <span class="st">&#39;prob&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb706-2"><a href="árboles-de-decisión.html#cb706-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">Churn =</span> telco_test<span class="sc">$</span>Churn, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb706-3"><a href="árboles-de-decisión.html#cb706-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Churn =</span> <span class="fu">factor</span>(Churn, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>)))</span>
+<span id="cb706-4"><a href="árboles-de-decisión.html#cb706-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb706-5"><a href="árboles-de-decisión.html#cb706-5" aria-hidden="true" tabindex="-1"></a>results_cla</span></code></pre></div>
+<pre><code>## # A tibble: 2,113 × 3
+##    Churn .pred_No .pred_Yes
+##    &lt;fct&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 No       0.922    0.0785
+##  2 Yes      0.211    0.789 
+##  3 No       0.154    0.846 
+##  4 No       0.973    0.0265
+##  5 No       0.973    0.0265
+##  6 No       0.604    0.396 
+##  7 No       0.992    0.008 
+##  8 No       0.797    0.203 
+##  9 Yes      0.703    0.297 
+## 10 No       0.973    0.0265
+## # … with 2,103 more rows</code></pre>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="árboles-de-decisión.html#cb708-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb708-2"><a href="árboles-de-decisión.html#cb708-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(results_cla, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes),</span>
+<span id="cb708-3"><a href="árboles-de-decisión.html#cb708-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pr_auc</span>(results_cla, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes)</span>
+<span id="cb708-4"><a href="árboles-de-decisión.html#cb708-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 roc_auc binary         0.826
+## 2 pr_auc  binary         0.639</code></pre>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="árboles-de-decisión.html#cb710-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="ot">&lt;-</span> <span class="fu">pr_curve</span>(</span>
+<span id="cb710-2"><a href="árboles-de-decisión.html#cb710-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
+<span id="cb710-3"><a href="árboles-de-decisión.html#cb710-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb710-4"><a href="árboles-de-decisión.html#cb710-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb710-5"><a href="árboles-de-decisión.html#cb710-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb710-6"><a href="árboles-de-decisión.html#cb710-6" aria-hidden="true" tabindex="-1"></a>pr_curve_data</span></code></pre></div>
+<pre><code>## # A tibble: 41 × 3
+##    .threshold recall precision
+##         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+##  1    Inf      0         1    
+##  2      0.863  0.106     0.845
+##  3      0.846  0.110     0.816
+##  4      0.789  0.163     0.814
+##  5      0.786  0.175     0.805
+##  6      0.759  0.200     0.801
+##  7      0.727  0.210     0.783
+##  8      0.658  0.231     0.766
+##  9      0.643  0.231     0.749
+## 10      0.621  0.396     0.681
+## # … with 31 more rows</code></pre>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="árboles-de-decisión.html#cb712-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="ot">&lt;-</span> <span class="fu">roc_curve</span>(</span>
+<span id="cb712-2"><a href="árboles-de-decisión.html#cb712-2" aria-hidden="true" tabindex="-1"></a>  results_cla, </span>
+<span id="cb712-3"><a href="árboles-de-decisión.html#cb712-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb712-4"><a href="árboles-de-decisión.html#cb712-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb712-5"><a href="árboles-de-decisión.html#cb712-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb712-6"><a href="árboles-de-decisión.html#cb712-6" aria-hidden="true" tabindex="-1"></a>roc_curve_data</span></code></pre></div>
+<pre><code>## # A tibble: 42 × 3
+##    .threshold specificity sensitivity
+##         &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1  -Inf           0            1    
+##  2     0.008       0            1    
+##  3     0.0265      0.0776       0.986
+##  4     0.0785      0.407        0.956
+##  5     0.0934      0.480        0.935
+##  6     0.1         0.522        0.915
+##  7     0.132       0.564        0.906
+##  8     0.136       0.586        0.901
+##  9     0.143       0.590        0.894
+## 10     0.174       0.597        0.890
+## # … with 32 more rows</code></pre>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="árboles-de-decisión.html#cb714-1" aria-hidden="true" tabindex="-1"></a>pr_curve_plot <span class="ot">&lt;-</span> pr_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb714-2"><a href="árboles-de-decisión.html#cb714-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> recall, <span class="at">y =</span> precision)) <span class="sc">+</span></span>
+<span id="cb714-3"><a href="árboles-de-decisión.html#cb714-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb714-4"><a href="árboles-de-decisión.html#cb714-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb714-5"><a href="árboles-de-decisión.html#cb714-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb714-6"><a href="árboles-de-decisión.html#cb714-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb714-7"><a href="árboles-de-decisión.html#cb714-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Precision vs Recall&quot;</span>)<span class="sc">+</span></span>
+<span id="cb714-8"><a href="árboles-de-decisión.html#cb714-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb714-9"><a href="árboles-de-decisión.html#cb714-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-10"><a href="árboles-de-decisión.html#cb714-10" aria-hidden="true" tabindex="-1"></a>pr_curve_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-495-1.png" width="672" /></p>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="árboles-de-decisión.html#cb715-1" aria-hidden="true" tabindex="-1"></a>roc_curve_plot <span class="ot">&lt;-</span> roc_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb715-2"><a href="árboles-de-decisión.html#cb715-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
+<span id="cb715-3"><a href="árboles-de-decisión.html#cb715-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb715-4"><a href="árboles-de-decisión.html#cb715-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
+<span id="cb715-5"><a href="árboles-de-decisión.html#cb715-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb715-6"><a href="árboles-de-decisión.html#cb715-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb715-7"><a href="árboles-de-decisión.html#cb715-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ROC Curve&quot;</span>)<span class="sc">+</span></span>
+<span id="cb715-8"><a href="árboles-de-decisión.html#cb715-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb715-9"><a href="árboles-de-decisión.html#cb715-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb715-10"><a href="árboles-de-decisión.html#cb715-10" aria-hidden="true" tabindex="-1"></a>roc_curve_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-495-2.png" width="672" /></p>
+<p>Pueden usar la app de <a href="https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742">shiny</a> que nos permite jugar con el threshold de clasificación para tomar la mejor decisión.</p>
+</div>
+</div>
+</div>
+<div id="bagging" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Bagging<a href="árboles-de-decisión.html#bagging" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Primero tenemos que definir qué es la <strong>Agregación de Bootstrap o Bagging</strong>. Este es un algoritmo de aprendizaje automático diseñado para mejorar la estabilidad y precisión de algoritmos de ML usados en clasificación estadística y regresión. Además reduce la varianza y ayuda a evitar el sobre-ajuste. Aunque es usualmente aplicado a métodos de árboles de decisión, puede ser usado con cualquier tipo de método. Bagging es un caso especial del promediado de modelos.</p>
+<p><img src="img/09-ml-tree/bootstrap.svg" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>Los métodos de <em>bagging</em> son métodos donde los algoritmos simples son usados en paralelo. El principal objetivo de los métodos en paralelo es el de aprovecharse de la independencia que hay entre los algoritmos simples, ya que el error se puede reducir bastante al promediar las salidas de los modelos simples. Es como si, queriendo resolver un problema entre varias personas independientes unas de otras, damos por bueno lo que eligiese la mayoría de las personas.</p>
+<p>Para obtener la agregación de las salidas de cada modelo simple e independiente, bagging puede usar la votación para los métodos de clasificación y el promedio para los métodos de regresión.</p>
+<p><img src="img/09-ml-tree/7-bag.png" width="500pt" height="300pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random-forest" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Random Forest<a href="árboles-de-decisión.html#random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Un bosque aleatorio es un algoritmo de aprendizaje automático supervisado que se construye a partir de algoritmos de árbol de decisión. Este algoritmo se aplica en diversas industrias, como la banca y el comercio electrónico, para predecir el comportamiento y los resultados.</p>
+<p>En esta clase se dará una descripción general del algoritmo de bosque aleatorio, cómo funciona y las características del algoritmo.</p>
+<p>También se señalan las ventajas y desventajas de este algoritmo.</p>
+<div id="qué-es" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> ¿Qué es?<a href="árboles-de-decisión.html#qué-es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Un bosque aleatorio es una técnica de aprendizaje automático que se utiliza para resolver problemas de regresión y clasificación. Utiliza el aprendizaje por conjuntos, que es una técnica que combina muchos clasificadores para proporcionar soluciones a problemas complejos.</p>
+<p>Este algoritmo consta de muchos árboles de decisión. El “bosque” generado se entrena
+mediante <strong>agregación de bootstrap (bagging)</strong>, el cual es es un meta-algoritmo
+de conjunto que mejora la precisión de los algoritmos de aprendizaje automático.</p>
+<p>El algoritmo establece el resultado en función de las predicciones de los árboles de decisión. Predice tomando el promedio o la media de la salida de varios árboles. El aumento del número de árboles aumenta la precisión del resultado.</p>
+<p>Un bosque aleatorio erradica las limitaciones de un algoritmo de árbol de decisión. Reduce el sobre-ajuste de conjuntos de datos y aumenta la precisión. Genera predicciones sin requerir muchas configuraciones.</p>
+<p><img src="img/09-ml-tree/3-10-1-bosques-aleatorios.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="características-de-los-bosques-aleatorios" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Características de los bosques aleatorios<a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Es más preciso que el algoritmo árbol de decisiones.</p></li>
+<li><p>Proporciona una forma eficaz de gestionar los datos faltantes.</p></li>
+<li><p>Puede producir una predicción razonable sin ajuste de hiperparámetros.</p></li>
+<li><p>Resuelve el problema del sobre-ajuste en los árboles de decisión.</p></li>
+<li><p>En cada árbol forestal aleatorio, se selecciona aleatoriamente un subconjunto
+de características en el punto de división del nodo.</p></li>
+</ul>
+</div>
+<div id="aplicar-árboles-de-decisión-en-un-bosque-aleatorio" class="section level3 hasAnchor" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> Aplicar árboles de decisión en un bosque aleatorio<a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La principal diferencia entre el algoritmo de árbol de decisión y el algoritmo de bosque aleatorio es que el establecimiento de nodos raíz y la desagregación de nodos se realiza de forma aleatoria en este último. <strong>El bosque aleatorio emplea el método de bagging para generar la predicción requerida.</strong></p>
+<p><strong>El método bagging implica el uso de diferentes muestras de datos (datos de entrenamiento) en lugar de una sola muestra.</strong> Los árboles de decisión producen diferentes resultados, dependiendo de los datos de entrenamiento alimentados al algoritmo de bosque aleatorio.</p>
+<p>Nuestro primer ejemplo todavía se puede utilizar para explicar cómo funcionan los bosques aleatorios. Supongamos que solo tenemos cuatro árboles de decisión. En este caso, los datos de entrenamiento que comprenden las observaciones y características de estudio se dividirán en cuatro nodos raíz. Supongamos que queremos modelar si un cliente compra o no compra un teléfono.</p>
+<p>Los nodos raíz podrían representar cuatro características que podrían influir en la elección de un cliente (precio, almacenamiento interno, cámara y RAM). <strong>El bosque aleatorio dividirá los nodos seleccionando características al azar. La predicción final se seleccionará en función del resultado de los cuatro árboles.</strong></p>
+<p><strong>El resultado elegido por la mayoría de los árboles de decisión será la elección final.</strong></p>
+<p>Si tres árboles predicen la compra y un árbol predice que no comprará, entonces la predicción final será la compra. En este caso, se prevé que el cliente comprará.</p>
+<p>El siguiente diagrama muestra un clasificador de bosque aleatorio simple.</p>
+<p><img src="img/09-ml-tree/3-10-3-bosques-aleatorios-clasificador.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/09-ml-tree/3-13-1-randomforest.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ventajas-y-desventjas-de-bosques-aleatorios" class="section level3 hasAnchor" number="9.4.4">
+<h3><span class="header-section-number">9.4.4</span> Ventajas y desventjas de bosques aleatorios<a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ventajas</strong></p>
+<ul>
+<li><p>Puede realizar tareas de regresión y clasificación.</p></li>
+<li><p>Un bosque aleatorio produce buenas predicciones que se pueden entender fácilmente.</p></li>
+<li><p>Puede manejar grandes conjuntos de datos de manera eficiente.</p></li>
+<li><p>Proporciona un mayor nivel de precisión en la predicción de resultados sobre el algoritmo del árbol de decisión.</p></li>
+</ul>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li><p>Cuando se usa un bosque aleatorio, se requieren bastantes recursos para el cálculo.</p></li>
+<li><p>Consume más tiempo en comparación con un algoritmo de árbol de decisiones.</p></li>
+<li><p>No producen buenos resultados cuando los datos son muy escasos. En este caso, el subconjunto de características y la muestra de arranque producirán un espacio invariante. Esto conducirá a divisiones improductivas, que afectarán el resultado.</p></li>
+</ul>
 
 </div>
 </div>
