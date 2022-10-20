@@ -634,7 +634,9 @@ roc_curve_data
 ```{r, message=FALSE}
 pr_curve_plot <- pr_curve_data %>% 
   ggplot(aes(x = recall, y = precision)) +
+  geom_abline(slope = -1, intercept = 1) +
   geom_path(size = 1, colour = 'lightblue') +
+  ylim(0, 1) +
   coord_equal() +
   ggtitle("Precision vs Recall")+
   theme_minimal()
