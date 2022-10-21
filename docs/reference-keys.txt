@@ -209,3 +209,10 @@ modelos-boosting
 implementación-de-xgb-en-r
 xgboost-para-regresión
 xgboost-para-clasificación
+regularización-elasticnet
+regularización-ridge
+regularización-lasso
+comparación-entre-ridge-y-lasso
+elasticnet
+implementación-en-r-4
+regresión-5

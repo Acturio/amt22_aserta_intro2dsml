@@ -474,6 +474,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.8.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>9.8.2</b> XGBoost para clasificación</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>10</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>10.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="10.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>10.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="10.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>10.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="10.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>10.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-4"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -592,27 +603,27 @@ Función sigmoide:</p>
 <h2><span class="header-section-number">7.5</span> Implementación en R<a href="regresión-logística.html#implementación-en-r-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Ajustaremos un modelo de regresión logística usando la receta antes vista.</p>
 <p><strong>Lectura de datos</strong></p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="regresión-logística.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb551-2"><a href="regresión-logística.html#cb551-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb551-3"><a href="regresión-logística.html#cb551-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb551-4"><a href="regresión-logística.html#cb551-4" aria-hidden="true" tabindex="-1"></a>telco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Churn.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="regresión-logística.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb553-2"><a href="regresión-logística.html#cb553-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb553-3"><a href="regresión-logística.html#cb553-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb553-4"><a href="regresión-logística.html#cb553-4" aria-hidden="true" tabindex="-1"></a>telco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Churn.csv&quot;</span>)</span></code></pre></div>
 <p><strong>Segmentación de datos</strong></p>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="regresión-logística.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb552-2"><a href="regresión-logística.html#cb552-2" aria-hidden="true" tabindex="-1"></a>telco_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telco, <span class="at">prop =</span> .<span class="dv">7</span>)</span>
-<span id="cb552-3"><a href="regresión-logística.html#cb552-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb552-4"><a href="regresión-logística.html#cb552-4" aria-hidden="true" tabindex="-1"></a>telco_train <span class="ot">&lt;-</span> <span class="fu">training</span>(telco_split)</span>
-<span id="cb552-5"><a href="regresión-logística.html#cb552-5" aria-hidden="true" tabindex="-1"></a>telco_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(telco_split)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="regresión-logística.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb554-2"><a href="regresión-logística.html#cb554-2" aria-hidden="true" tabindex="-1"></a>telco_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telco, <span class="at">prop =</span> .<span class="dv">7</span>)</span>
+<span id="cb554-3"><a href="regresión-logística.html#cb554-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb554-4"><a href="regresión-logística.html#cb554-4" aria-hidden="true" tabindex="-1"></a>telco_train <span class="ot">&lt;-</span> <span class="fu">training</span>(telco_split)</span>
+<span id="cb554-5"><a href="regresión-logística.html#cb554-5" aria-hidden="true" tabindex="-1"></a>telco_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(telco_split)</span></code></pre></div>
 <p><strong>Pre-procesamiento de datos</strong></p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="regresión-logística.html#cb553-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Churn <span class="sc">~</span> ., <span class="at">data =</span> telco_train) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-2"><a href="regresión-logística.html#cb553-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(customerID, <span class="at">new_role =</span> <span class="st">&quot;id variable&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-3"><a href="regresión-logística.html#cb553-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-4"><a href="regresión-logística.html#cb553-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-5"><a href="regresión-logística.html#cb553-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-6"><a href="regresión-logística.html#cb553-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(customerID, <span class="at">skip=</span>T) <span class="sc">%&gt;%</span> </span>
-<span id="cb553-7"><a href="regresión-logística.html#cb553-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
-<span id="cb553-8"><a href="regresión-logística.html#cb553-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb553-9"><a href="regresión-logística.html#cb553-9" aria-hidden="true" tabindex="-1"></a>telco_juiced <span class="ot">&lt;-</span> <span class="fu">juice</span>(telco_rec)</span>
-<span id="cb553-10"><a href="regresión-logística.html#cb553-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_juiced)</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="regresión-logística.html#cb555-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Churn <span class="sc">~</span> ., <span class="at">data =</span> telco_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-2"><a href="regresión-logística.html#cb555-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(customerID, <span class="at">new_role =</span> <span class="st">&quot;id variable&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-3"><a href="regresión-logística.html#cb555-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-4"><a href="regresión-logística.html#cb555-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-5"><a href="regresión-logística.html#cb555-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-6"><a href="regresión-logística.html#cb555-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(customerID, <span class="at">skip=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb555-7"><a href="regresión-logística.html#cb555-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb555-8"><a href="regresión-logística.html#cb555-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-9"><a href="regresión-logística.html#cb555-9" aria-hidden="true" tabindex="-1"></a>telco_juiced <span class="ot">&lt;-</span> <span class="fu">juice</span>(telco_rec)</span>
+<span id="cb555-10"><a href="regresión-logística.html#cb555-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_juiced)</span></code></pre></div>
 <pre><code>## Rows: 4,930
 ## Columns: 31
 ## $ SeniorCitizen                         &lt;dbl&gt; -0.4417148, -0.4417148, -0.44171…
@@ -646,8 +657,8 @@ Función sigmoide:</p>
 ## $ PaymentMethod_Credit.card..automatic. &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,…
 ## $ PaymentMethod_Electronic.check        &lt;dbl&gt; 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0,…
 ## $ PaymentMethod_Mailed.check            &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</code></pre>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="regresión-logística.html#cb555-1" aria-hidden="true" tabindex="-1"></a>telco_test_bake <span class="ot">&lt;-</span>  <span class="fu">bake</span>(telco_rec, <span class="at">new_data =</span> telco_test)</span>
-<span id="cb555-2"><a href="regresión-logística.html#cb555-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_test_bake)</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="regresión-logística.html#cb557-1" aria-hidden="true" tabindex="-1"></a>telco_test_bake <span class="ot">&lt;-</span>  <span class="fu">bake</span>(telco_rec, <span class="at">new_data =</span> telco_test)</span>
+<span id="cb557-2"><a href="regresión-logística.html#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(telco_test_bake)</span></code></pre></div>
 <pre><code>## Rows: 2,113
 ## Columns: 32
 ## $ customerID                            &lt;chr&gt; &quot;5575-GNVDE&quot;, &quot;9305-CDSKC&quot;, &quot;671…
@@ -683,16 +694,16 @@ Función sigmoide:</p>
 ## $ PaymentMethod_Electronic.check        &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0,…
 ## $ PaymentMethod_Mailed.check            &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,…</code></pre>
 <p><strong>Creación y ajuste de modelo</strong></p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="regresión-logística.html#cb557-1" aria-hidden="true" tabindex="-1"></a>logistic_model <span class="ot">&lt;-</span>  <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb557-2"><a href="regresión-logística.html#cb557-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
-<span id="cb557-3"><a href="regresión-logística.html#cb557-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb557-4"><a href="regresión-logística.html#cb557-4" aria-hidden="true" tabindex="-1"></a>logistic_fit1 <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">fit</span>(logistic_model, Churn <span class="sc">~</span> ., telco_juiced)</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="regresión-logística.html#cb559-1" aria-hidden="true" tabindex="-1"></a>logistic_model <span class="ot">&lt;-</span>  <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb559-2"><a href="regresión-logística.html#cb559-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
+<span id="cb559-3"><a href="regresión-logística.html#cb559-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb559-4"><a href="regresión-logística.html#cb559-4" aria-hidden="true" tabindex="-1"></a>logistic_fit1 <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">fit</span>(logistic_model, Churn <span class="sc">~</span> ., telco_juiced)</span></code></pre></div>
 <p><strong>Predicción de respuesta con nuevos datos</strong></p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="regresión-logística.html#cb558-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake) <span class="sc">%&gt;%</span></span>
-<span id="cb558-2"><a href="regresión-logística.html#cb558-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
-<span id="cb558-3"><a href="regresión-logística.html#cb558-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_class, Churn)</span>
-<span id="cb558-4"><a href="regresión-logística.html#cb558-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-5"><a href="regresión-logística.html#cb558-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="regresión-logística.html#cb560-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake) <span class="sc">%&gt;%</span></span>
+<span id="cb560-2"><a href="regresión-logística.html#cb560-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
+<span id="cb560-3"><a href="regresión-logística.html#cb560-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_class, Churn)</span>
+<span id="cb560-4"><a href="regresión-logística.html#cb560-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb560-5"><a href="regresión-logística.html#cb560-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test</span></code></pre></div>
 <pre><code>## # A tibble: 2,113 × 2
 ##    .pred_class Churn
 ##    &lt;fct&gt;       &lt;fct&gt;
@@ -710,17 +721,17 @@ Función sigmoide:</p>
 </div>
 <div id="matriz-de-confusión" class="section level2 hasAnchor" number="7.6">
 <h2><span class="header-section-number">7.6</span> Matriz de Confusión<a href="regresión-logística.html#matriz-de-confusión" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="regresión-logística.html#cb560-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="sc">%&gt;%</span> </span>
-<span id="cb560-2"><a href="regresión-logística.html#cb560-2" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(<span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_class) <span class="sc">%&gt;%</span> </span>
-<span id="cb560-3"><a href="regresión-logística.html#cb560-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="regresión-logística.html#cb562-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test <span class="sc">%&gt;%</span> </span>
+<span id="cb562-2"><a href="regresión-logística.html#cb562-2" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(<span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_class) <span class="sc">%&gt;%</span> </span>
+<span id="cb562-3"><a href="regresión-logística.html#cb562-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-394-1.png" width="672" /></p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="regresión-logística.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb561-2"><a href="regresión-logística.html#cb561-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb561-3"><a href="regresión-logística.html#cb561-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb561-4"><a href="regresión-logística.html#cb561-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb561-5"><a href="regresión-logística.html#cb561-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb561-6"><a href="regresión-logística.html#cb561-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
-<span id="cb561-7"><a href="regresión-logística.html#cb561-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="regresión-logística.html#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb563-2"><a href="regresión-logística.html#cb563-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb563-3"><a href="regresión-logística.html#cb563-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb563-4"><a href="regresión-logística.html#cb563-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb563-5"><a href="regresión-logística.html#cb563-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb563-6"><a href="regresión-logística.html#cb563-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
+<span id="cb563-7"><a href="regresión-logística.html#cb563-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   .metric     .estimator .estimate
 ##   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
@@ -730,11 +741,11 @@ Función sigmoide:</p>
 ## 4 specificity binary         0.906
 ## 5 f_meas      binary         0.603</code></pre>
 <p><strong>¿Y si se quiere un corte diferente? ¿el negocio qué necesita?</strong></p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="regresión-logística.html#cb563-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb563-2"><a href="regresión-logística.html#cb563-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
-<span id="cb563-3"><a href="regresión-logística.html#cb563-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_Yes, .pred_No, Churn)</span>
-<span id="cb563-4"><a href="regresión-logística.html#cb563-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb563-5"><a href="regresión-logística.html#cb563-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="regresión-logística.html#cb565-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit1, telco_test_bake, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb565-2"><a href="regresión-logística.html#cb565-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(telco_test_bake) <span class="sc">%&gt;%</span> </span>
+<span id="cb565-3"><a href="regresión-logística.html#cb565-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.pred_Yes, .pred_No, Churn)</span>
+<span id="cb565-4"><a href="regresión-logística.html#cb565-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb565-5"><a href="regresión-logística.html#cb565-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
 <pre><code>## # A tibble: 2,113 × 3
 ##    .pred_Yes .pred_No Churn
 ##        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;
@@ -749,11 +760,11 @@ Función sigmoide:</p>
 ##  9    0.520     0.480 Yes  
 ## 10    0.0136    0.986 No   
 ## # … with 2,103 more rows</code></pre>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="regresión-logística.html#cb565-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> logistic_p_test_prob <span class="sc">%&gt;%</span> </span>
-<span id="cb565-2"><a href="regresión-logística.html#cb565-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred_class  =</span> <span class="fu">as.factor</span>(<span class="fu">if_else</span> ( .pred_Yes <span class="sc">&gt;=</span> <span class="fl">0.30</span>, <span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb565-3"><a href="regresión-logística.html#cb565-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(.pred_class , <span class="at">.after =</span> .pred_No)</span>
-<span id="cb565-4"><a href="regresión-logística.html#cb565-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb565-5"><a href="regresión-logística.html#cb565-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="regresión-logística.html#cb567-1" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob <span class="ot">&lt;-</span> logistic_p_test_prob <span class="sc">%&gt;%</span> </span>
+<span id="cb567-2"><a href="regresión-logística.html#cb567-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred_class  =</span> <span class="fu">as.factor</span>(<span class="fu">if_else</span> ( .pred_Yes <span class="sc">&gt;=</span> <span class="fl">0.30</span>, <span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb567-3"><a href="regresión-logística.html#cb567-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(.pred_class , <span class="at">.after =</span> .pred_No)</span>
+<span id="cb567-4"><a href="regresión-logística.html#cb567-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb567-5"><a href="regresión-logística.html#cb567-5" aria-hidden="true" tabindex="-1"></a>logistic_p_test_prob</span></code></pre></div>
 <pre><code>## # A tibble: 2,113 × 4
 ##    .pred_Yes .pred_No .pred_class Churn
 ##        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;fct&gt;
@@ -768,13 +779,13 @@ Función sigmoide:</p>
 ##  9    0.520     0.480 Yes         Yes  
 ## 10    0.0136    0.986 No          No   
 ## # … with 2,103 more rows</code></pre>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="regresión-logística.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb567-2"><a href="regresión-logística.html#cb567-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb567-3"><a href="regresión-logística.html#cb567-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb567-4"><a href="regresión-logística.html#cb567-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb567-5"><a href="regresión-logística.html#cb567-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
-<span id="cb567-6"><a href="regresión-logística.html#cb567-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
-<span id="cb567-7"><a href="regresión-logística.html#cb567-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="regresión-logística.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb569-2"><a href="regresión-logística.html#cb569-2" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">accuracy</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb569-3"><a href="regresión-logística.html#cb569-3" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">precision</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb569-4"><a href="regresión-logística.html#cb569-4" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">recall</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb569-5"><a href="regresión-logística.html#cb569-5" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">specificity</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb569-6"><a href="regresión-logística.html#cb569-6" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">f_meas</span>(logistic_p_test_prob, Churn, .pred_class, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
+<span id="cb569-7"><a href="regresión-logística.html#cb569-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   .metric     .estimator .estimate
 ##   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;

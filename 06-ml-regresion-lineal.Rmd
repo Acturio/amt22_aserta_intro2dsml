@@ -349,33 +349,20 @@ ames_test  <- testing(ames_split)
 ```
 
 ```{r, warning=FALSE,message=FALSE}
-receta_casas <- recipe(Sale_Price ~ . , data = ames_train) %>%
-  step_unknown(Alley) %>%
-  step_rename(Year_Remod = Year_Remod_Add) %>% 
-  step_rename(ThirdSsn_Porch = Three_season_porch) %>% 
-  step_ratio(Bedroom_AbvGr, denom = denom_vars(Gr_Liv_Area)) %>% 
+receta_casas <- recipe(
+ Sale_Price ~ Gr_Liv_Area + TotRms_AbvGrd + Exter_Cond + Bsmt_Cond +
+  Year_Sold + Year_Remod_Add, 
+ data = ames_train) %>%
   step_mutate(
-    Age_House = Year_Sold - Year_Remod,
-    TotalSF   = Gr_Liv_Area + Total_Bsmt_SF,
-    AvgRoomSF   = Gr_Liv_Area / TotRms_AbvGrd,
-    Pool = if_else(Pool_Area > 0, 1, 0),
-    Exter_Cond = forcats::fct_collapse(
-     Exter_Cond, Good = c("Typical", "Good", "Excellent")
-     )
-    ) %>% 
+    Age_House = Year_Sold - Year_Remod_Add,
+    Exter_Cond = forcats::fct_collapse(Exter_Cond, Good = c("Typical", "Good", "Excellent"))) %>% 
   step_relevel(Exter_Cond, ref_level = "Good") %>% 
-  step_normalize(all_predictors(), -all_nominal()) %>%
-  step_dummy(all_nominal()) %>% 
-  step_interact(~ Second_Flr_SF:First_Flr_SF) %>% 
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
   step_interact(~ matches("Bsmt_Cond"):TotRms_AbvGrd) %>% 
-  step_rm(
-    First_Flr_SF, Second_Flr_SF, Year_Remod,
-    Bsmt_Full_Bath, Bsmt_Half_Bath, 
-    Kitchen_AbvGr, BsmtFin_Type_1_Unf, 
-    Total_Bsmt_SF, Kitchen_AbvGr, Pool_Area, 
-    Gr_Liv_Area, Sale_Type_Oth, Sale_Type_VWD
-  ) %>% 
   prep()
+
+receta_casas
 
 casa_juiced <- juice(receta_casas)
 casa_test_bake <- bake(receta_casas, new_data = ames_test)

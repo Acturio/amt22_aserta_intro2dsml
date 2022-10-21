@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Ciencia de Datos y Machine Learning</title>
-  <meta name="description" content="Page not found | Ciencia de Datos y Machine Learning" />
+  <title>Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning" />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Ciencia de Datos y Machine Learning" />
+  <meta property="og:title" content="Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Page not found | Ciencia de Datos y Machine Learning" />
+  <meta property="og:description" content="Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Ciencia de Datos y Machine Learning" />
+  <meta name="twitter:title" content="Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning" />
   
-  <meta name="twitter:description" content="Page not found | Ciencia de Datos y Machine Learning" />
+  <meta name="twitter:description" content="Capítulo 10 Regularización Elasticnet | Ciencia de Datos y Machine Learning" />
   
 
 
@@ -28,7 +28,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="árboles-de-decisión.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -505,11 +505,287 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="regularización-elasticnet" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Capítulo 10</span> Regularización Elasticnet<a href="regularización-elasticnet.html#regularización-elasticnet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En muchas técnicas de aprendizaje automático, <strong>el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo</strong>. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.</p>
+<p>La regularización consiste en <strong>añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobreajuste</strong>.</p>
+<p>El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o <em>RSS</em>. Los coeficientes <span class="math inline">\(\beta\)</span> se eligen de manera que minimicen esta función de pérdida.</p>
+<p><span class="math display">\[RSS = \sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2\]</span></p>
+<p>Esto ajustará los coeficientes en función de sus datos de entrenamiento. Si hay ruido en los datos de entrenamiento, los coeficientes estimados no se generalizarán bien a los datos futuros. Aquí es donde entra la regularización y reduce o regulariza estas estimaciones aprendidas hacia cero.</p>
+<p>En esta sección se verán las regularizaciones más usadas en machine learning:</p>
+<ul>
+<li>Ridge (conocida también como L2)</li>
+<li>Lasso (también conocida como L1)</li>
+<li>ElasticNet que combina tanto Lasso como Ridge.</li>
+</ul>
+<p>Para cada una de estas regularizaciones ajustaremos un modelo de regresión lineal al conjunto de datos de viviendas de <em>Ames</em> con ayuda del paquete de <em>tidymodels</em> llamado <em>parsnip</em>.</p>
+<p><img src="img/10-ml-elasticnet/overfitting.png" width="500pt" height="250pt" style="display: block; margin: auto;" /></p>
+<div id="regularización-ridge" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Regularización Ridge<a href="regularización-elasticnet.html#regularización-ridge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En este tipo de regularización <em>RSS</em> se modifica agregando una cantidad de <strong>contracción a los coeficientes</strong>, los cuales se estiman minimizando esta función. <span class="math inline">\(\lambda\)</span> es el parámetro de ajuste que decide cuánto queremos penalizar la flexibilidad de el modelo.</p>
+<p><span class="math display">\[\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2\]</span></p>
+<p>El aumento de la flexibilidad de un modelo está representado por el aumento de sus coeficientes, si se desea minimizar la función anterior, los coeficientes deben ser pequeños.</p>
+<p>Así es como la técnica de regresión de <em>Ridge</em> evita que los coeficientes aumenten demasiado. Además, reduce la asociación estimada de cada variable con la respuesta excepto la intersección <span class="math inline">\(\beta_0\)</span>. Esta intersección es una medida del valor medio de la respuesta cuando <span class="math inline">\(x_{i1} = x_{i2} =\dots= x_{ip} = 0\)</span>.</p>
+<blockquote>
+<p>Cuando <span class="math inline">\(\lambda = 0\)</span>, el término de penalización no tiene efecto y las estimaciones serán iguales a mínimos cuadrados.</p>
+</blockquote>
+<blockquote>
+<p>A medida que <span class="math inline">\(\lambda \rightarrow \infty\)</span>, el impacto de la penalización por contracción aumenta, y las estimaciones se acercarán a cero.</p>
+</blockquote>
+<p>La selección de un buen valor de <span class="math inline">\(\lambda\)</span> es fundamental. Las estimaciones de coeficientes producidas por este método también se conocen como la <strong>norma L2</strong>.</p>
+<p><strong>Nota:</strong> Es necesario estandarizar los predictores o llevarlos a la misma escala antes de aplicar esta regularización.</p>
+</div>
+<div id="regularización-lasso" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Regularización Lasso<a href="regularización-elasticnet.html#regularización-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lasso es otra variación, en la que se minimiza la función <em>RSS</em>. Utiliza <span class="math inline">\(|\beta_j|\)</span> en lugar de los cuadrados de <span class="math inline">\(\beta\)</span> como penalización. Las estimaciones de coeficientes producidas por este método también se conocen como la <strong>norma L1</strong>.</p>
+<p><span class="math display">\[\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|\]</span></p>
+<blockquote>
+<p>Cuando <span class="math inline">\(\lambda = 0\)</span>, el término de penalización no tiene efecto y las estimaciones serán iguales a mínimos cuadrados.</p>
+</blockquote>
+<blockquote>
+<p>A medida que <span class="math inline">\(\lambda \rightarrow \infty\)</span>, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables).</p>
+</blockquote>
+<p>Este método de regularizacion permite eliminar coeficientes con alta variación, lo cual <strong>ayuda a la selección de variables</strong>.</p>
+</div>
+<div id="comparación-entre-ridge-y-lasso" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Comparación entre Ridge y Lasso<a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La regresión <em>Ridge</em> se puede considerar como la solución de una ecuación, donde la suma de los cuadrados de los coeficientes es menor o igual que <span class="math inline">\(s\)</span>, donde <span class="math inline">\(s\)</span> es una constante que existe para cada valor del factor de contracción <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[\beta_1^2 + \beta_2^2 \leq s\]</span></p>
+<p>Esto implica que los coeficientes de la regresión <em>Ridge</em> tienen el <em>RSS</em> (función de pérdida) más pequeño para todos los puntos que se encuentran dentro del círculo dado por la función de restricción <span class="math inline">\(\beta_1^2 + \beta_2^2 \leq s\)</span>.</p>
+<p>Y en la regresión <em>Lasso</em> se puede considerar como una ecuación en la que la suma del módulo de coeficientes es menor o igual que <span class="math inline">\(s\)</span>.</p>
+<p><span class="math display">\[|\beta_1| + |\beta_2| \leq s\]</span></p>
+<p>Esto implica que los coeficientes de lasso tienen la <em>RSS</em> (función de pérdida) más pequeña para todos los puntos que se encuentran dentro del diamante dado por la función de restricción <span class="math inline">\(|\beta_1| + |\beta_2| \leq s\)</span></p>
+<p><img src="img/10-ml-elasticnet/ridge-lasso.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>La imagen de arriba muestra las funciones de restricción (áreas verdes) para <em>Lasso</em> (izquierda) y <em>Ridge</em> (derecha), junto con contornos para <em>RSS</em> (elipse roja).</p>
+<p>Para un valor muy grande de <span class="math inline">\(s\)</span>, las regiones verdes contendrán el centro de la elipse, lo que hará que las estimaciones de los coeficientes de ambas técnicas de regresión sean iguales a las estimaciones de mínimos cuadrados. Pero este no es el caso en la imagen de arriba.</p>
+<p>En este caso, las estimaciones del coeficiente de regresión de <em>Lasso</em> y <em>Ridge</em> vienen dadas por el primer punto en el que una elipse contacta con la región de restricción. Dado que la regresión <em>Ridge</em> tiene una restricción circular sin puntos agudos, <strong>esta intersección generalmente no ocurrirá en un eje, por lo que las estimaciones del coeficiente de regresión de <em>Ridge</em> serán exclusivamente distintas de cero</strong>.</p>
+<p>Sin embargo, la restricción de <em>Lasso</em> <strong>tiene esquinas en cada uno de los ejes</strong>, por lo que la elipse a menudo intersectará la región de restricción en un eje. <strong>Cuando esto ocurre, uno de los coeficientes será igual a cero</strong>. En dimensiones más altas, muchas de las estimaciones de coeficientes pueden ser iguales a cero simultáneamente.</p>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li><p>Regresión <em>Ridge</em>: Reducirá los coeficientes de los predictores menos importantes, muy cerca de cero. Pero nunca los hará exactamente cero. En otras palabras, el modelo final incluirá todos los predictores.</p></li>
+<li><p>Regresión <em>Lasso</em>: La penalización <em>L1</em> tiene el efecto de forzar algunas de las estimaciones de coeficientes a ser exactamente iguales a cero cuando el parámetro de ajuste <span class="math inline">\(\lambda\)</span> es suficientemente grande. Por lo tanto, este método realiza una selección de variables.</p></li>
+</ul>
+</div>
+<div id="elasticnet" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> ElasticNet<a href="regularización-elasticnet.html#elasticnet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>ElasticNet</em> surgió por primera vez como resultado de la crítica a <em>Lasso</em>, cuya selección de variables puede ser demasiado dependiente de los datos y, por lo tanto, inestable. La solución es <strong>combinar las penalizaciones</strong> de la regresión de <em>Ridge</em> y <em>Lasso</em> para obtener lo mejor de ambas regularizaciones.</p>
+<p><em>ElasticNet</em> tiene como objetivo minimizar la siguiente función de pérdida:</p>
+<p><span class="math display">\[\frac{\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2}{2n} +
+\lambda\left( ({1-\alpha}) \sum_{j=1}^p|\beta_j| + \alpha \sum_{j=1}^p \beta_j ^2\right)\]</span></p>
+<p><span class="math display">\[= \frac{RSS}{2n}+ \lambda\left( ({1-\alpha}) \sum_{j=1}^p|\beta_j| + \alpha \sum_{j=1}^p \beta_j ^2\right)\]</span></p>
+<p>donde <span class="math inline">\(\alpha \in [0,1]\)</span> es el parámetro de mezcla entre la regularización <em>Ridge</em> <span class="math inline">\((\alpha = 0)\)</span> y la regularización <em>Lasso</em> <span class="math inline">\((\alpha = 1)\)</span>.</p>
+<p>La combinación de ambas penalizaciones suele dar lugar a buenos resultados. Una estrategia frecuentemente utilizada es asignarle casi todo el peso a la penalización <em>L1</em> ( <span class="math inline">\(\alpha \approx 1\)</span>) para conseguir seleccionar predictores y menos peso a la regularización <span class="math inline">\(L2\)</span> para dar cierta estabilidad en el caso de que algunos predictores estén correlacionados.</p>
+<p><img src="img/10-ml-elasticnet/elastic-net.png" width="550pt" height="400pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="implementación-en-r-4" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Implementación en R<a href="regularización-elasticnet.html#implementación-en-r-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="regresión-5" class="section level3 hasAnchor" number="10.5.1">
+<h3><span class="header-section-number">10.5.1</span> Regresión<a href="regularización-elasticnet.html#regresión-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Utilizando el modelo <code>linear_reg()</code> del paquete <em>parsnip</em>. Hay varios mecanismos que pueden realizar la regularización/penalización, los paquetes <em>glmnet</em>, <em>sparklyr</em>, <em>keras</em> o <em>stan</em>.</p>
+<p>Usemos el primero aquí. El paquete <em>glmnet</em> solo implementa un método que no es de fórmula, pero <em>parsnip</em> permitirá que se use cualquiera de ellos.</p>
+<p>Cuando se utiliza la regularización, los predictores deben de centrarse y escalarse primero antes de pasar al modelo. El método de la fórmula no lo hará automáticamente, por lo que tendremos que hacerlo nosotros mismos como se hizo en la sección <strong>4.6 Preparación de conjunto de datos</strong> con la receta <code>receta_casas</code>.</p>
+<p>En <em>R</em> existen dos parámetros que nos permiten hacer la regularización:</p>
+<ul>
+<li><p><code>penalty</code>: Es un número no negativo que representa la cantidad total de regularización (solo <em>glmnet</em>, <em>keras</em> y <em>spark</em>).</p></li>
+<li><p><code>mixture</code>: Es un número entre cero y uno (inclusivo) que es la proporción de regularización <em>L1</em> en el modelo. Cuando <code>mixture = 1</code>, es un modelo de <em>Lasso</em> puro, mientras que <code>mixture = 0</code> indica que se está utilizando un modelo <em>Ridge</em>.</p></li>
+</ul>
+<p><strong>Paso 1: Separación inicial de datos ( test, train, KFCV )</strong></p>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="regularización-elasticnet.html#cb765-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb765-2"><a href="regularización-elasticnet.html#cb765-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb765-3"><a href="regularización-elasticnet.html#cb765-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb765-4"><a href="regularización-elasticnet.html#cb765-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb765-5"><a href="regularización-elasticnet.html#cb765-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4595</span>)</span>
+<span id="cb765-6"><a href="regularización-elasticnet.html#cb765-6" aria-hidden="true" tabindex="-1"></a>ames_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb765-7"><a href="regularización-elasticnet.html#cb765-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb765-8"><a href="regularización-elasticnet.html#cb765-8" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(ames_split)</span>
+<span id="cb765-9"><a href="regularización-elasticnet.html#cb765-9" aria-hidden="true" tabindex="-1"></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(ames_split)</span>
+<span id="cb765-10"><a href="regularización-elasticnet.html#cb765-10" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train)</span></code></pre></div>
+<p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="regularización-elasticnet.html#cb766-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb766-2"><a href="regularización-elasticnet.html#cb766-2" aria-hidden="true" tabindex="-1"></a> Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> TotRms_AbvGrd <span class="sc">+</span> Exter_Cond <span class="sc">+</span> Bsmt_Cond <span class="sc">+</span></span>
+<span id="cb766-3"><a href="regularización-elasticnet.html#cb766-3" aria-hidden="true" tabindex="-1"></a>  Year_Sold <span class="sc">+</span> Year_Remod_Add, </span>
+<span id="cb766-4"><a href="regularización-elasticnet.html#cb766-4" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb766-5"><a href="regularización-elasticnet.html#cb766-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb766-6"><a href="regularización-elasticnet.html#cb766-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add,</span>
+<span id="cb766-7"><a href="regularización-elasticnet.html#cb766-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb766-8"><a href="regularización-elasticnet.html#cb766-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb766-9"><a href="regularización-elasticnet.html#cb766-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb766-10"><a href="regularización-elasticnet.html#cb766-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb766-11"><a href="regularización-elasticnet.html#cb766-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb766-12"><a href="regularización-elasticnet.html#cb766-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb766-13"><a href="regularización-elasticnet.html#cb766-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb766-14"><a href="regularización-elasticnet.html#cb766-14" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<pre><code>## Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor          6
+## 
+## Training data contained 2197 data points and no missing data.
+## 
+## Operations:
+## 
+## Variable mutation for ~Year_Sold - Year_Remod_Add, ~forcats::fct... [trained]
+## Re-order factor level to ref_level for Exter_Cond [trained]
+## Centering and scaling for Gr_Liv_Area, TotRms_AbvGrd, Year_Sold, Year_Rem... [trained]
+## Dummy variables from Exter_Cond, Bsmt_Cond [trained]
+## Interactions with (Bsmt_Cond_Fair + Bsmt_Cond_Good + Bsmt_Cond_No_Ba... [trained]</code></pre>
+<p>Recordemos que la función <strong>recipe()</strong> solo son los pasos a seguir, necesitamos usar la función <strong>prep()</strong> que nos devuelve una receta actualizada con las estimaciones y la función <strong>juice()</strong> que nos devuelve la matriz de diseño.</p>
+<p>Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.</p>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="regularización-elasticnet.html#cb768-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;glmnet&quot;)</span></span>
+<span id="cb768-2"><a href="regularización-elasticnet.html#cb768-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb768-3"><a href="regularización-elasticnet.html#cb768-3" aria-hidden="true" tabindex="-1"></a>elasticnet_regression_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(</span>
+<span id="cb768-4"><a href="regularización-elasticnet.html#cb768-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mixture =</span> <span class="fu">tune</span>(),</span>
+<span id="cb768-5"><a href="regularización-elasticnet.html#cb768-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">penalty =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb768-6"><a href="regularización-elasticnet.html#cb768-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb768-7"><a href="regularización-elasticnet.html#cb768-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="regularización-elasticnet.html#cb769-1" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb769-2"><a href="regularización-elasticnet.html#cb769-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(elasticnet_regression_model) <span class="sc">%&gt;%</span></span>
+<span id="cb769-3"><a href="regularización-elasticnet.html#cb769-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(receta_casas)</span></code></pre></div>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="regularización-elasticnet.html#cb770-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">195628</span>)</span>
+<span id="cb770-2"><a href="regularización-elasticnet.html#cb770-2" aria-hidden="true" tabindex="-1"></a>elasticnet_param_grid <span class="ot">&lt;-</span> <span class="fu">grid_random</span>(</span>
+<span id="cb770-3"><a href="regularización-elasticnet.html#cb770-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="dv">0</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb770-4"><a href="regularización-elasticnet.html#cb770-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mixture</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb770-5"><a href="regularización-elasticnet.html#cb770-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">100</span></span>
+<span id="cb770-6"><a href="regularización-elasticnet.html#cb770-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb770-7"><a href="regularización-elasticnet.html#cb770-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb770-8"><a href="regularización-elasticnet.html#cb770-8" aria-hidden="true" tabindex="-1"></a>ctrl_grid <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> T, <span class="at">verbose =</span> T)</span></code></pre></div>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="regularización-elasticnet.html#cb771-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb771-2"><a href="regularización-elasticnet.html#cb771-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-3"><a href="regularización-elasticnet.html#cb771-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb771-4"><a href="regularización-elasticnet.html#cb771-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb771-5"><a href="regularización-elasticnet.html#cb771-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb771-6"><a href="regularización-elasticnet.html#cb771-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-7"><a href="regularización-elasticnet.html#cb771-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de parámetros</span></span>
+<span id="cb771-8"><a href="regularización-elasticnet.html#cb771-8" aria-hidden="true" tabindex="-1"></a>elt1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb771-9"><a href="regularización-elasticnet.html#cb771-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-10"><a href="regularización-elasticnet.html#cb771-10" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb771-11"><a href="regularización-elasticnet.html#cb771-11" aria-hidden="true" tabindex="-1"></a>  elasticnet_workflow,</span>
+<span id="cb771-12"><a href="regularización-elasticnet.html#cb771-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb771-13"><a href="regularización-elasticnet.html#cb771-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> elasticnet_param_grid,</span>
+<span id="cb771-14"><a href="regularización-elasticnet.html#cb771-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae, mape, rmse, rsq),</span>
+<span id="cb771-15"><a href="regularización-elasticnet.html#cb771-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> ctrl_grid</span>
+<span id="cb771-16"><a href="regularización-elasticnet.html#cb771-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb771-17"><a href="regularización-elasticnet.html#cb771-17" aria-hidden="true" tabindex="-1"></a>elt2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); elt2 <span class="sc">-</span> elt1</span>
+<span id="cb771-18"><a href="regularización-elasticnet.html#cb771-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-19"><a href="regularización-elasticnet.html#cb771-19" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb771-20"><a href="regularización-elasticnet.html#cb771-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-21"><a href="regularización-elasticnet.html#cb771-21" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/elasticnet_model_reg.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="regularización-elasticnet.html#cb772-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/elasticnet_model_reg.rds&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<p>Podemos obtener las métricas de cada <em>fold</em> con el siguiente código:</p>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="regularización-elasticnet.html#cb773-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(elasticnet_tune_result)</span></code></pre></div>
+<pre><code>## # A tibble: 400 × 8
+##     penalty mixture .metric .estimator      mean     n   std_err .config        
+##       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;          
+##  1 3.81e-12  0.0139 mae     standard   32607.       10  544.     Preprocessor1_…
+##  2 3.81e-12  0.0139 mape    standard      19.1      10    0.268  Preprocessor1_…
+##  3 3.81e-12  0.0139 rmse    standard   48347.       10 1024.     Preprocessor1_…
+##  4 3.81e-12  0.0139 rsq     standard       0.641    10    0.0176 Preprocessor1_…
+##  5 4.32e- 2  0.0160 mae     standard   32609.       10  543.     Preprocessor1_…
+##  6 4.32e- 2  0.0160 mape    standard      19.1      10    0.268  Preprocessor1_…
+##  7 4.32e- 2  0.0160 rmse    standard   48347.       10 1025.     Preprocessor1_…
+##  8 4.32e- 2  0.0160 rsq     standard       0.641    10    0.0177 Preprocessor1_…
+##  9 7.31e- 8  0.0361 mae     standard   32617.       10  541.     Preprocessor1_…
+## 10 7.31e- 8  0.0361 mape    standard      19.1      10    0.268  Preprocessor1_…
+## # … with 390 more rows</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="regularización-elasticnet.html#cb775-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-550-1.png" width="672" /></p>
+<p>En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.</p>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="regularización-elasticnet.html#cb776-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-551-1.png" width="672" /></p>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<p>Con el siguiente código obtenemos los mejores 10 modelos respecto al <em>rmse</em>.</p>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="regularización-elasticnet.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(elasticnet_tune_result, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 8
+##     penalty mixture .metric .estimator   mean     n std_err .config             
+##       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+##  1 6.18e- 2  0.306  rmse    standard   48342.    10   1029. Preprocessor1_Model…
+##  2 3.03e-11  0.301  rmse    standard   48344.    10   1030. Preprocessor1_Model…
+##  3 8.01e- 6  0.301  rmse    standard   48344.    10   1030. Preprocessor1_Model…
+##  4 9.54e-12  0.246  rmse    standard   48346.    10   1030. Preprocessor1_Model…
+##  5 1.27e- 8  0.278  rmse    standard   48346.    10   1030. Preprocessor1_Model…
+##  6 1.62e-15  0.252  rmse    standard   48346.    10   1029. Preprocessor1_Model…
+##  7 1.91e- 9  0.283  rmse    standard   48346.    10   1030. Preprocessor1_Model…
+##  8 2.17e-15  0.269  rmse    standard   48346.    10   1030. Preprocessor1_Model…
+##  9 6.99e- 5  0.283  rmse    standard   48346.    10   1030. Preprocessor1_Model…
+## 10 3.81e-12  0.0139 rmse    standard   48347.    10   1024. Preprocessor1_Model…</code></pre>
+<p>Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el <em>rmse</em> y haremos las predicciones del conjunto de prueba con este modelo.</p>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="regularización-elasticnet.html#cb779-1" aria-hidden="true" tabindex="-1"></a>best_elasticnet_regression_model <span class="ot">&lt;-</span> <span class="fu">select_best</span>(elasticnet_tune_result, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span>
+<span id="cb779-2"><a href="regularización-elasticnet.html#cb779-2" aria-hidden="true" tabindex="-1"></a>best_elasticnet_regression_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   penalty mixture .config               
+##     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                 
+## 1  0.0618   0.306 Preprocessor1_Model027</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="regularización-elasticnet.html#cb781-1" aria-hidden="true" tabindex="-1"></a>final_elasticnet_regression_model <span class="ot">&lt;-</span> elasticnet_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb781-2"><a href="regularización-elasticnet.html#cb781-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_elasticnet_regression_model) <span class="sc">%&gt;%</span></span>
+<span id="cb781-3"><a href="regularización-elasticnet.html#cb781-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
+<p>Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo.</p>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="regularización-elasticnet.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb782-2"><a href="regularización-elasticnet.html#cb782-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-3"><a href="regularización-elasticnet.html#cb782-3" aria-hidden="true" tabindex="-1"></a>final_elasticnet_regression_model <span class="sc">%&gt;%</span> </span>
+<span id="cb782-4"><a href="regularización-elasticnet.html#cb782-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb782-5"><a href="regularización-elasticnet.html#cb782-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">&quot;col&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb782-6"><a href="regularización-elasticnet.html#cb782-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-555-1.png" width="672" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="regularización-elasticnet.html#cb783-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_elasticnet_regression_model, ames_test) <span class="sc">%&gt;%</span></span>
+<span id="cb783-2"><a href="regularización-elasticnet.html#cb783-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">Sale_Price =</span> ames_test<span class="sc">$</span>Sale_Price) <span class="sc">%&gt;%</span></span>
+<span id="cb783-3"><a href="regularización-elasticnet.html#cb783-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pred_elasticnet_reg =</span> .pred)</span>
+<span id="cb783-4"><a href="regularización-elasticnet.html#cb783-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb783-5"><a href="regularización-elasticnet.html#cb783-5" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<pre><code>## # A tibble: 733 × 2
+##    pred_elasticnet_reg Sale_Price
+##                  &lt;dbl&gt;      &lt;int&gt;
+##  1              95091.     105000
+##  2             175072.     185000
+##  3             189332.     180400
+##  4              85542.     141000
+##  5             244179.     210000
+##  6             214542.     216000
+##  7             164313.     149900
+##  8             122589.     105500
+##  9             122589.      88000
+## 10             164965.     146000
+## # … with 723 more rows</code></pre>
+<p><strong>Métricas de desempeño</strong></p>
+<p>Ahora para calcular las métricas de desempeño usaremos la paquetería <em>MLmetrics</em>. Es posible definir nuestro propio conjunto de métricas que deseamos reportar creando el objeto <em>metric_set</em>:</p>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="regularización-elasticnet.html#cb785-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MLmetrics)</span>
+<span id="cb785-2"><a href="regularización-elasticnet.html#cb785-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb785-3"><a href="regularización-elasticnet.html#cb785-3" aria-hidden="true" tabindex="-1"></a>multi_metric <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(mae, mape, rmse, rsq, ccc)</span>
+<span id="cb785-4"><a href="regularización-elasticnet.html#cb785-4" aria-hidden="true" tabindex="-1"></a><span class="fu">multi_metric</span>(results, <span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_elasticnet_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb785-5"><a href="regularización-elasticnet.html#cb785-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.estimate =</span> <span class="fu">round</span>(.estimate, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb785-6"><a href="regularización-elasticnet.html#cb785-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.estimator)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 2
+##   .metric .estimate
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 mae      34092   
+## 2 mape        20.2 
+## 3 rmse     49397   
+## 4 rsq          0.63
+## 5 ccc          0.76</code></pre>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="regularización-elasticnet.html#cb787-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb787-2"><a href="regularización-elasticnet.html#cb787-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pred_elasticnet_reg, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb787-3"><a href="regularización-elasticnet.html#cb787-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb787-4"><a href="regularización-elasticnet.html#cb787-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb787-5"><a href="regularización-elasticnet.html#cb787-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Prediction&quot;</span>) <span class="sc">+</span></span>
+<span id="cb787-6"><a href="regularización-elasticnet.html#cb787-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb787-7"><a href="regularización-elasticnet.html#cb787-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-558-1.png" width="672" /></p>
+
+</div>
+</div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -538,7 +814,7 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-
+<a href="árboles-de-decisión.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

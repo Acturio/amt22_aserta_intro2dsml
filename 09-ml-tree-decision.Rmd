@@ -1680,8 +1680,8 @@ class_results
 
 ```{r}
 bind_rows(
-  roc_auc(results_cla, truth = Churn, estimate = .pred_Yes),
-  pr_auc(results_cla, truth = Churn, estimate = .pred_Yes)
+  roc_auc(class_results, truth = Churn, estimate = .pred_Yes),
+  pr_auc(class_results, truth = Churn, estimate = .pred_Yes)
 )
 ```
 
