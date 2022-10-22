@@ -216,3 +216,4 @@ comparación-entre-ridge-y-lasso
 elasticnet
 implementación-en-r-4
 regresión-5
+clasificación-6

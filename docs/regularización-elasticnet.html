@@ -483,6 +483,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-4"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
 <ul>
 <li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -783,6 +784,325 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb787-6"><a href="regularización-elasticnet.html#cb787-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
 <span id="cb787-7"><a href="regularización-elasticnet.html#cb787-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-558-1.png" width="672" /></p>
+</div>
+<div id="clasificación-6" class="section level3 hasAnchor" number="10.5.2">
+<h3><span class="header-section-number">10.5.2</span> Clasificación<a href="regularización-elasticnet.html#clasificación-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Paso 1: Separación inicial de datos (test, train)</strong></p>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="regularización-elasticnet.html#cb788-1" aria-hidden="true" tabindex="-1"></a>telco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb788-2"><a href="regularización-elasticnet.html#cb788-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb788-3"><a href="regularización-elasticnet.html#cb788-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb788-4"><a href="regularización-elasticnet.html#cb788-4" aria-hidden="true" tabindex="-1"></a>telco_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telco, <span class="at">prop =</span> .<span class="dv">70</span>)</span>
+<span id="cb788-5"><a href="regularización-elasticnet.html#cb788-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb788-6"><a href="regularización-elasticnet.html#cb788-6" aria-hidden="true" tabindex="-1"></a>telco_train <span class="ot">&lt;-</span> <span class="fu">training</span>(telco_split)</span>
+<span id="cb788-7"><a href="regularización-elasticnet.html#cb788-7" aria-hidden="true" tabindex="-1"></a>telco_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(telco_split)</span>
+<span id="cb788-8"><a href="regularización-elasticnet.html#cb788-8" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(telco_train)</span>
+<span id="cb788-9"><a href="regularización-elasticnet.html#cb788-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb788-10"><a href="regularización-elasticnet.html#cb788-10" aria-hidden="true" tabindex="-1"></a>telco_folds</span></code></pre></div>
+<pre><code>## #  10-fold cross-validation 
+## # A tibble: 10 × 2
+##    splits             id    
+##    &lt;list&gt;             &lt;chr&gt; 
+##  1 &lt;split [4437/493]&gt; Fold01
+##  2 &lt;split [4437/493]&gt; Fold02
+##  3 &lt;split [4437/493]&gt; Fold03
+##  4 &lt;split [4437/493]&gt; Fold04
+##  5 &lt;split [4437/493]&gt; Fold05
+##  6 &lt;split [4437/493]&gt; Fold06
+##  7 &lt;split [4437/493]&gt; Fold07
+##  8 &lt;split [4437/493]&gt; Fold08
+##  9 &lt;split [4437/493]&gt; Fold09
+## 10 &lt;split [4437/493]&gt; Fold10</code></pre>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="regularización-elasticnet.html#cb790-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb790-2"><a href="regularización-elasticnet.html#cb790-2" aria-hidden="true" tabindex="-1"></a>  Churn <span class="sc">~</span> customerID <span class="sc">+</span> TotalCharges <span class="sc">+</span> MonthlyCharges <span class="sc">+</span> SeniorCitizen <span class="sc">+</span> Contract, </span>
+<span id="cb790-3"><a href="regularización-elasticnet.html#cb790-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> telco_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-4"><a href="regularización-elasticnet.html#cb790-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(customerID, <span class="at">new_role =</span> <span class="st">&quot;id variable&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-5"><a href="regularización-elasticnet.html#cb790-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(<span class="at">Contract =</span> <span class="fu">as.factor</span>(Contract)) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-6"><a href="regularización-elasticnet.html#cb790-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-7"><a href="regularización-elasticnet.html#cb790-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-8"><a href="regularización-elasticnet.html#cb790-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb790-9"><a href="regularización-elasticnet.html#cb790-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb790-10"><a href="regularización-elasticnet.html#cb790-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb790-11"><a href="regularización-elasticnet.html#cb790-11" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
+<pre><code>## Recipe
+## 
+## Inputs:
+## 
+##         role #variables
+##  id variable          1
+##      outcome          1
+##    predictor          4
+## 
+## Training data contained 4930 data points and 10 incomplete rows. 
+## 
+## Operations:
+## 
+## Variable mutation for ~as.factor(Contract) [trained]
+## Median imputation for TotalCharges, MonthlyCharges, SeniorCitizen [trained]
+## Centering and scaling for TotalCharges, MonthlyCharges, SeniorCitizen [trained]
+## Dummy variables from Contract [trained]</code></pre>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="regularización-elasticnet.html#cb792-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(</span>
+<span id="cb792-2"><a href="regularización-elasticnet.html#cb792-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">mixture =</span> <span class="fu">tune</span>(), </span>
+<span id="cb792-3"><a href="regularización-elasticnet.html#cb792-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">penalty =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb792-4"><a href="regularización-elasticnet.html#cb792-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&#39;classification&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb792-5"><a href="regularización-elasticnet.html#cb792-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>) </span>
+<span id="cb792-6"><a href="regularización-elasticnet.html#cb792-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb792-7"><a href="regularización-elasticnet.html#cb792-7" aria-hidden="true" tabindex="-1"></a>elasticnet_class_model</span></code></pre></div>
+<pre><code>## Logistic Regression Model Specification (classification)
+## 
+## Main Arguments:
+##   penalty = tune()
+##   mixture = tune()
+## 
+## Computational engine: glmnet</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="regularización-elasticnet.html#cb794-1" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb794-2"><a href="regularización-elasticnet.html#cb794-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(elasticnet_class_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb794-3"><a href="regularización-elasticnet.html#cb794-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(telco_rec)</span>
+<span id="cb794-4"><a href="regularización-elasticnet.html#cb794-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb794-5"><a href="regularización-elasticnet.html#cb794-5" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow</span></code></pre></div>
+<pre><code>## ══ Workflow ══════════════════
+## Preprocessor: Recipe
+## Model: logistic_reg()
+## 
+## ── Preprocessor ──────────────
+## 4 Recipe Steps
+## 
+## • step_mutate()
+## • step_impute_median()
+## • step_normalize()
+## • step_dummy()
+## 
+## ── Model ─────────────────────
+## Logistic Regression Model Specification (classification)
+## 
+## Main Arguments:
+##   penalty = tune()
+##   mixture = tune()
+## 
+## Computational engine: glmnet</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="regularización-elasticnet.html#cb796-1" aria-hidden="true" tabindex="-1"></a>elasticnet_param_grid <span class="ot">&lt;-</span> <span class="fu">grid_random</span>(</span>
+<span id="cb796-2"><a href="regularización-elasticnet.html#cb796-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">penalty</span>(</span>
+<span id="cb796-3"><a href="regularización-elasticnet.html#cb796-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="fl">0.1</span>),</span>
+<span id="cb796-4"><a href="regularización-elasticnet.html#cb796-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">trans =</span> <span class="fu">log10_trans</span>()</span>
+<span id="cb796-5"><a href="regularización-elasticnet.html#cb796-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb796-6"><a href="regularización-elasticnet.html#cb796-6" aria-hidden="true" tabindex="-1"></a>  dials<span class="sc">::</span><span class="fu">mixture</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb796-7"><a href="regularización-elasticnet.html#cb796-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">50</span></span>
+<span id="cb796-8"><a href="regularización-elasticnet.html#cb796-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb796-9"><a href="regularización-elasticnet.html#cb796-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb796-10"><a href="regularización-elasticnet.html#cb796-10" aria-hidden="true" tabindex="-1"></a>elasticnet_param_grid</span></code></pre></div>
+<pre><code>## # A tibble: 50 × 2
+##     penalty mixture
+##       &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.000172   0.756
+##  2 0.194      0.460
+##  3 0.0430     0.978
+##  4 0.0102     0.909
+##  5 0.000735   0.635
+##  6 0.00285    0.129
+##  7 0.172      0.965
+##  8 0.0433     0.723
+##  9 0.000138   0.643
+## 10 0.000504   0.239
+## # … with 40 more rows</code></pre>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="regularización-elasticnet.html#cb798-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb798-2"><a href="regularización-elasticnet.html#cb798-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-3"><a href="regularización-elasticnet.html#cb798-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb798-4"><a href="regularización-elasticnet.html#cb798-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb798-5"><a href="regularización-elasticnet.html#cb798-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb798-6"><a href="regularización-elasticnet.html#cb798-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-7"><a href="regularización-elasticnet.html#cb798-7" aria-hidden="true" tabindex="-1"></a>ctrl_grid <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> T, <span class="at">verbose =</span> T)</span>
+<span id="cb798-8"><a href="regularización-elasticnet.html#cb798-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-9"><a href="regularización-elasticnet.html#cb798-9" aria-hidden="true" tabindex="-1"></a>etnt1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb798-10"><a href="regularización-elasticnet.html#cb798-10" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb798-11"><a href="regularización-elasticnet.html#cb798-11" aria-hidden="true" tabindex="-1"></a>  elasticnet_workflow,</span>
+<span id="cb798-12"><a href="regularización-elasticnet.html#cb798-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> telco_folds,</span>
+<span id="cb798-13"><a href="regularización-elasticnet.html#cb798-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> elasticnet_param_grid,</span>
+<span id="cb798-14"><a href="regularización-elasticnet.html#cb798-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(roc_auc, pr_auc)</span>
+<span id="cb798-15"><a href="regularización-elasticnet.html#cb798-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb798-16"><a href="regularización-elasticnet.html#cb798-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-17"><a href="regularización-elasticnet.html#cb798-17" aria-hidden="true" tabindex="-1"></a>etn2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); etn2 <span class="sc">-</span> etnt1</span>
+<span id="cb798-18"><a href="regularización-elasticnet.html#cb798-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-19"><a href="regularización-elasticnet.html#cb798-19" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb798-20"><a href="regularización-elasticnet.html#cb798-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb798-21"><a href="regularización-elasticnet.html#cb798-21" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/elasticnet_class_model.rds&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="regularización-elasticnet.html#cb799-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/elasticnet_class_model.rds&quot;</span>)</span>
+<span id="cb799-2"><a href="regularización-elasticnet.html#cb799-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb799-3"><a href="regularización-elasticnet.html#cb799-3" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(elasticnet_tune_result)</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 8
+##     penalty  mixture .metric .estimator  mean     n std_err .config             
+##       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+##  1 0.0494   0.000985 pr_auc  binary     0.928    10 0.00365 Preprocessor1_Model…
+##  2 0.0494   0.000985 roc_auc binary     0.822    10 0.00629 Preprocessor1_Model…
+##  3 0.000837 0.0152   pr_auc  binary     0.928    10 0.00362 Preprocessor1_Model…
+##  4 0.000837 0.0152   roc_auc binary     0.823    10 0.00626 Preprocessor1_Model…
+##  5 0.181    0.0240   pr_auc  binary     0.927    10 0.00381 Preprocessor1_Model…
+##  6 0.181    0.0240   roc_auc binary     0.819    10 0.00643 Preprocessor1_Model…
+##  7 0.155    0.0244   pr_auc  binary     0.927    10 0.00380 Preprocessor1_Model…
+##  8 0.155    0.0244   roc_auc binary     0.819    10 0.00645 Preprocessor1_Model…
+##  9 0.0147   0.0368   pr_auc  binary     0.929    10 0.00359 Preprocessor1_Model…
+## 10 0.0147   0.0368   roc_auc binary     0.823    10 0.00626 Preprocessor1_Model…
+## # … with 90 more rows</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="regularización-elasticnet.html#cb801-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(elasticnet_tune_result)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-566-1.png" width="672" /></p>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="regularización-elasticnet.html#cb802-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(elasticnet_tune_result, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;roc_auc&quot;</span>) </span></code></pre></div>
+<pre><code>## # A tibble: 10 × 8
+##     penalty mixture .metric .estimator  mean     n std_err .config              
+##       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+##  1 0.00333   0.0764 roc_auc binary     0.823    10 0.00627 Preprocessor1_Model07
+##  2 0.00561   0.174  roc_auc binary     0.823    10 0.00628 Preprocessor1_Model11
+##  3 0.00513   0.710  roc_auc binary     0.823    10 0.00626 Preprocessor1_Model34
+##  4 0.00283   0.739  roc_auc binary     0.823    10 0.00626 Preprocessor1_Model38
+##  5 0.000202  0.792  roc_auc binary     0.823    10 0.00626 Preprocessor1_Model40
+##  6 0.000216  0.674  roc_auc binary     0.823    10 0.00626 Preprocessor1_Model31
+##  7 0.00272   0.442  roc_auc binary     0.823    10 0.00627 Preprocessor1_Model19
+##  8 0.00383   0.717  roc_auc binary     0.823    10 0.00625 Preprocessor1_Model35
+##  9 0.000101  0.682  roc_auc binary     0.823    10 0.00625 Preprocessor1_Model32
+## 10 0.000232  0.731  roc_auc binary     0.823    10 0.00626 Preprocessor1_Model37</code></pre>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="regularización-elasticnet.html#cb804-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(elasticnet_tune_result, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>) </span></code></pre></div>
+<pre><code>## # A tibble: 10 × 8
+##    penalty mixture .metric .estimator  mean     n std_err .config              
+##      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+##  1 0.0197   0.369  pr_auc  binary     0.929    10 0.00357 Preprocessor1_Model18
+##  2 0.0201   0.613  pr_auc  binary     0.929    10 0.00358 Preprocessor1_Model29
+##  3 0.0132   0.120  pr_auc  binary     0.929    10 0.00359 Preprocessor1_Model08
+##  4 0.0187   0.702  pr_auc  binary     0.929    10 0.00357 Preprocessor1_Model33
+##  5 0.00513  0.710  pr_auc  binary     0.929    10 0.00361 Preprocessor1_Model34
+##  6 0.0272   0.916  pr_auc  binary     0.929    10 0.00357 Preprocessor1_Model46
+##  7 0.00942  0.851  pr_auc  binary     0.929    10 0.00360 Preprocessor1_Model43
+##  8 0.0147   0.0368 pr_auc  binary     0.929    10 0.00359 Preprocessor1_Model05
+##  9 0.00561  0.174  pr_auc  binary     0.929    10 0.00360 Preprocessor1_Model11
+## 10 0.0127   0.923  pr_auc  binary     0.929    10 0.00360 Preprocessor1_Model47</code></pre>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="regularización-elasticnet.html#cb806-1" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model <span class="ot">&lt;-</span> <span class="fu">select_best</span>(elasticnet_tune_result, <span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>)</span>
+<span id="cb806-2"><a href="regularización-elasticnet.html#cb806-2" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   penalty mixture .config              
+##     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                
+## 1  0.0197   0.369 Preprocessor1_Model18</code></pre>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="regularización-elasticnet.html#cb808-1" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model_1se <span class="ot">&lt;-</span> elasticnet_tune_result <span class="sc">%&gt;%</span> </span>
+<span id="cb808-2"><a href="regularización-elasticnet.html#cb808-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">&quot;pr_auc&quot;</span>, <span class="st">&quot;pr_auc&quot;</span>)</span>
+<span id="cb808-3"><a href="regularización-elasticnet.html#cb808-3" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model_1se</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 10
+##   penalty  mixture .metric .estimator  mean     n std_err .config   .best .bound
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+## 1  0.0494 0.000985 pr_auc  binary     0.928    10 0.00365 Preproce… 0.929  0.925</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="regularización-elasticnet.html#cb810-1" aria-hidden="true" tabindex="-1"></a>final_elasticnet_class_model <span class="ot">&lt;-</span> elasticnet_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb810-2"><a href="regularización-elasticnet.html#cb810-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#finalize_workflow(best_elasticnet_class_model) %&gt;% </span></span>
+<span id="cb810-3"><a href="regularización-elasticnet.html#cb810-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_elasticnet_class_model_1se) <span class="sc">%&gt;%</span> </span>
+<span id="cb810-4"><a href="regularización-elasticnet.html#cb810-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> telco_test)</span></code></pre></div>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.</p>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="regularización-elasticnet.html#cb811-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb811-2"><a href="regularización-elasticnet.html#cb811-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb811-3"><a href="regularización-elasticnet.html#cb811-3" aria-hidden="true" tabindex="-1"></a>final_elasticnet_class_model <span class="sc">%&gt;%</span></span>
+<span id="cb811-4"><a href="regularización-elasticnet.html#cb811-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb811-5"><a href="regularización-elasticnet.html#cb811-5" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>() <span class="sc">+</span> </span>
+<span id="cb811-6"><a href="regularización-elasticnet.html#cb811-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-571-1.png" width="672" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="regularización-elasticnet.html#cb812-1" aria-hidden="true" tabindex="-1"></a>class_results <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_elasticnet_class_model, telco_test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb812-2"><a href="regularización-elasticnet.html#cb812-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="at">Churn =</span> telco_test<span class="sc">$</span>Churn) <span class="sc">%&gt;%</span> </span>
+<span id="cb812-3"><a href="regularización-elasticnet.html#cb812-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Churn =</span> <span class="fu">factor</span>(Churn, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;No&#39;</span>))) </span>
+<span id="cb812-4"><a href="regularización-elasticnet.html#cb812-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb812-5"><a href="regularización-elasticnet.html#cb812-5" aria-hidden="true" tabindex="-1"></a>class_results</span></code></pre></div>
+<pre><code>## # A tibble: 2,113 × 3
+##    .pred_No .pred_Yes Churn
+##       &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;
+##  1    0.848    0.152  No   
+##  2    0.442    0.558  Yes  
+##  3    0.715    0.285  No   
+##  4    0.922    0.0782 No   
+##  5    0.921    0.0788 No   
+##  6    0.543    0.457  No   
+##  7    0.883    0.117  No   
+##  8    0.726    0.274  No   
+##  9    0.700    0.300  Yes  
+## 10    0.926    0.0738 No   
+## # … with 2,103 more rows</code></pre>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="regularización-elasticnet.html#cb814-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb814-2"><a href="regularización-elasticnet.html#cb814-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(class_results, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes),</span>
+<span id="cb814-3"><a href="regularización-elasticnet.html#cb814-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pr_auc</span>(class_results, <span class="at">truth =</span> Churn, <span class="at">estimate =</span> .pred_Yes)</span>
+<span id="cb814-4"><a href="regularización-elasticnet.html#cb814-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 roc_auc binary         0.824
+## 2 pr_auc  binary         0.609</code></pre>
+<p>A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:</p>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="regularización-elasticnet.html#cb816-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="ot">&lt;-</span> <span class="fu">roc_curve</span>(</span>
+<span id="cb816-2"><a href="regularización-elasticnet.html#cb816-2" aria-hidden="true" tabindex="-1"></a>  class_results, </span>
+<span id="cb816-3"><a href="regularización-elasticnet.html#cb816-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb816-4"><a href="regularización-elasticnet.html#cb816-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb816-5"><a href="regularización-elasticnet.html#cb816-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb816-6"><a href="regularización-elasticnet.html#cb816-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb816-7"><a href="regularización-elasticnet.html#cb816-7" aria-hidden="true" tabindex="-1"></a>roc_curve_data</span></code></pre></div>
+<pre><code>## # A tibble: 2,085 × 3
+##    .threshold specificity sensitivity
+##         &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1  -Inf         0                  1
+##  2     0.0617    0                  1
+##  3     0.0622    0.000646           1
+##  4     0.0625    0.00129            1
+##  5     0.0626    0.00194            1
+##  6     0.0627    0.00259            1
+##  7     0.0629    0.00323            1
+##  8     0.0629    0.00388            1
+##  9     0.0630    0.00452            1
+## 10     0.0630    0.00517            1
+## # … with 2,075 more rows</code></pre>
+<p>A través de estas métricas es posible crear la curva ROC:</p>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="regularización-elasticnet.html#cb818-1" aria-hidden="true" tabindex="-1"></a>roc_curve_plot <span class="ot">&lt;-</span> roc_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb818-2"><a href="regularización-elasticnet.html#cb818-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
+<span id="cb818-3"><a href="regularización-elasticnet.html#cb818-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb818-4"><a href="regularización-elasticnet.html#cb818-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
+<span id="cb818-5"><a href="regularización-elasticnet.html#cb818-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb818-6"><a href="regularización-elasticnet.html#cb818-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ROC Curve&quot;</span>)<span class="sc">+</span></span>
+<span id="cb818-7"><a href="regularización-elasticnet.html#cb818-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb818-8"><a href="regularización-elasticnet.html#cb818-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb818-9"><a href="regularización-elasticnet.html#cb818-9" aria-hidden="true" tabindex="-1"></a>roc_curve_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-575-1.png" width="672" /></p>
+<p>De igual manera, podemos calcular la precisión y cobertura para cada punte de corte:</p>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="regularización-elasticnet.html#cb819-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="ot">&lt;-</span> <span class="fu">pr_curve</span>(</span>
+<span id="cb819-2"><a href="regularización-elasticnet.html#cb819-2" aria-hidden="true" tabindex="-1"></a>  class_results, </span>
+<span id="cb819-3"><a href="regularización-elasticnet.html#cb819-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">truth =</span> Churn, </span>
+<span id="cb819-4"><a href="regularización-elasticnet.html#cb819-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate =</span> .pred_Yes</span>
+<span id="cb819-5"><a href="regularización-elasticnet.html#cb819-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb819-6"><a href="regularización-elasticnet.html#cb819-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb819-7"><a href="regularización-elasticnet.html#cb819-7" aria-hidden="true" tabindex="-1"></a>pr_curve_data</span></code></pre></div>
+<pre><code>## # A tibble: 2,084 × 3
+##    .threshold  recall precision
+##         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+##  1    Inf     0           1    
+##  2      0.695 0.00177     1    
+##  3      0.666 0.00353     1    
+##  4      0.660 0.00530     1    
+##  5      0.644 0.00530     0.75 
+##  6      0.640 0.00707     0.8  
+##  7      0.638 0.00883     0.833
+##  8      0.633 0.0106      0.857
+##  9      0.632 0.0124      0.875
+## 10      0.629 0.0141      0.889
+## # … with 2,074 more rows</code></pre>
+<p>Y graficar su respectiva curva:</p>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="regularización-elasticnet.html#cb821-1" aria-hidden="true" tabindex="-1"></a>pr_curve_plot <span class="ot">&lt;-</span> pr_curve_data <span class="sc">%&gt;%</span> </span>
+<span id="cb821-2"><a href="regularización-elasticnet.html#cb821-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> recall, <span class="at">y =</span> precision)) <span class="sc">+</span></span>
+<span id="cb821-3"><a href="regularización-elasticnet.html#cb821-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb821-4"><a href="regularización-elasticnet.html#cb821-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb821-5"><a href="regularización-elasticnet.html#cb821-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&#39;lightblue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb821-6"><a href="regularización-elasticnet.html#cb821-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb821-7"><a href="regularización-elasticnet.html#cb821-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Precision vs Recall&quot;</span>)<span class="sc">+</span></span>
+<span id="cb821-8"><a href="regularización-elasticnet.html#cb821-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb821-9"><a href="regularización-elasticnet.html#cb821-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb821-10"><a href="regularización-elasticnet.html#cb821-10" aria-hidden="true" tabindex="-1"></a>pr_curve_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-577-1.png" width="672" /></p>
 
 </div>
 </div>

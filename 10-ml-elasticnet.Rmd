@@ -346,6 +346,234 @@ results %>%
 
 
 
+### Clasificación
+
+**Paso 1: Separación inicial de datos (test, train)**
+
+```{r}
+telco <- read_csv("data/Churn.csv")
+
+set.seed(1234)
+telco_split <- initial_split(telco, prop = .70)
+
+telco_train <- training(telco_split)
+telco_test  <- testing(telco_split)
+telco_folds <- vfold_cv(telco_train)
+
+telco_folds
+```
+
+**Paso 2: Pre-procesamiento e ingeniería de variables**
+
+```{r}
+telco_rec <- recipe(
+  Churn ~ customerID + TotalCharges + MonthlyCharges + SeniorCitizen + Contract, 
+  data = telco_train) %>% 
+  update_role(customerID, new_role = "id variable") %>% 
+  step_mutate(Contract = as.factor(Contract)) %>% 
+  step_impute_median(all_numeric_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  prep()
+
+telco_rec
+```
+
+**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
+
+```{r}
+
+elasticnet_class_model <- logistic_reg(
+   mixture = tune(), 
+   penalty = tune()) %>% 
+  set_mode('classification') %>% 
+  set_engine("glmnet") 
+
+elasticnet_class_model
+```
+
+**Paso 4: Inicialización de workflow o pipeline**
+
+```{r}
+elasticnet_workflow <- workflow() %>% 
+  add_model(elasticnet_class_model) %>% 
+  add_recipe(telco_rec)
+
+elasticnet_workflow
+```
+
+**Paso 5: Creación de grid search**
+```{r}
+elasticnet_param_grid <- grid_random(
+  penalty(
+    range = c(-4, 0.1),
+    trans = log10_trans()
+  ),
+  dials::mixture(range = c(0, 1)),
+  size = 50
+)
+
+elasticnet_param_grid
+```
+
+
+**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
+
+```{r, eval=FALSE}
+library(doParallel)
+
+UseCores <- detectCores() - 1
+cluster <- makeCluster(UseCores)
+registerDoParallel(cluster)
+
+ctrl_grid <- control_grid(save_pred = T, verbose = T)
+
+etnt1 <- Sys.time()
+elasticnet_tune_result <- tune_grid(
+  elasticnet_workflow,
+  resamples = telco_folds,
+  grid = elasticnet_param_grid,
+  metrics = metric_set(roc_auc, pr_auc)
+)
+
+etn2 <- Sys.time(); etn2 - etnt1
+
+stopCluster(cluster)
+
+elasticnet_tune_result %>% saveRDS("models/elasticnet_class_model.rds")
+
+```
+
+**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
+
+```{r}
+elasticnet_tune_result <- readRDS("models/elasticnet_class_model.rds")
+
+collect_metrics(elasticnet_tune_result)
+```
+
+En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:
+
+```{r}
+autoplot(elasticnet_tune_result)
+```
+
+```{r}
+show_best(elasticnet_tune_result, n = 10, metric = "roc_auc") 
+```
+
+```{r}
+show_best(elasticnet_tune_result, n = 10, metric = "pr_auc") 
+```
+
+
+**Paso 8: Selección de modelo a usar**
+
+```{r, message=FALSE, warning=FALSE}
+best_elasticnet_class_model <- select_best(elasticnet_tune_result, metric = "pr_auc")
+best_elasticnet_class_model
+
+best_elasticnet_class_model_1se <- elasticnet_tune_result %>% 
+ select_by_one_std_err(metric = "pr_auc", "pr_auc")
+best_elasticnet_class_model_1se
+```
+
+**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
+
+```{r, message=FALSE, warning=FALSE}
+final_elasticnet_class_model <- elasticnet_workflow %>% 
+  #finalize_workflow(best_elasticnet_class_model) %>% 
+  finalize_workflow(best_elasticnet_class_model_1se) %>% 
+  fit(data = telco_test)
+
+```
+
+Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.
+
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.
+
+```{r}
+library(vip)
+
+final_elasticnet_class_model %>%
+  extract_fit_parsnip() %>%
+  vip::vip() + 
+  ggtitle("Importancia de las variables")
+```
+
+**Paso 10: Validar poder predictivo con datos de prueba**
+
+Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
+
+```{r, message=FALSE, warning=FALSE}
+
+class_results <- predict(final_elasticnet_class_model, telco_test, type = "prob") %>%
+  bind_cols(Churn = telco_test$Churn) %>% 
+  mutate(Churn = factor(Churn, levels = c('Yes', 'No'), labels = c('Yes', 'No'))) 
+
+class_results
+```
+
+```{r}
+bind_rows(
+  roc_auc(class_results, truth = Churn, estimate = .pred_Yes),
+  pr_auc(class_results, truth = Churn, estimate = .pred_Yes)
+)
+```
+
+
+A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:
+
+```{r}
+roc_curve_data <- roc_curve(
+  class_results, 
+  truth = Churn, 
+  estimate = .pred_Yes
+  )
+
+roc_curve_data
+```
+
+A través de estas métricas es posible crear la curva ROC:
+
+```{r}
+roc_curve_plot <- roc_curve_data %>% 
+  ggplot(aes(x = 1 - specificity, y = sensitivity)) +
+  geom_path(size = 1, colour = 'lightblue') +
+  geom_abline() +
+  coord_equal() +
+  ggtitle("ROC Curve")+
+  theme_minimal()
+
+roc_curve_plot
+```
+
+De igual manera, podemos calcular la precisión y cobertura para cada punte de corte:
+
+```{r}
+pr_curve_data <- pr_curve(
+  class_results, 
+  truth = Churn, 
+  estimate = .pred_Yes
+  )
+
+pr_curve_data
+```
+
+Y graficar su respectiva curva:
+
+```{r}
+pr_curve_plot <- pr_curve_data %>% 
+  ggplot(aes(x = recall, y = precision)) +
+  ylim(0, 1) +
+  geom_abline(slope = -1, intercept = 1) +
+  geom_path(size = 1, colour = 'lightblue') +
+  coord_equal() +
+  ggtitle("Precision vs Recall")+
+  theme_minimal()
+
+pr_curve_plot
+```
 
 
 
