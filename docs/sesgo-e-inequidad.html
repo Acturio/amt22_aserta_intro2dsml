@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 12 Sesgo e Inequidad | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="workflowsets-stacking.html"/>
+<link rel="next" href="interpretabilidad-local.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.1/str_view.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado-12-hrs"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado (12 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 1: Introducción</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Conceptos de Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#objetivos"><i class="fa fa-check"></i><b>1.2</b> Objetivos</a></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#requisitos-1"><i class="fa fa-check"></i><b>1.3</b> Requisitos</a></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aplicaciones"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones</a></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#tipos-de-algoritmos"><i class="fa fa-check"></i><b>1.5</b> Tipos de algoritmos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#perfiles-de-un-equipo"><i class="fa fa-check"></i><b>1.6</b> Perfiles de un equipo</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-datos"><i class="fa fa-check"></i>1) Ingeniero de datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#decisor"><i class="fa fa-check"></i>2) Decisor</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista"><i class="fa fa-check"></i>3) Analista</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista-experto"><i class="fa fa-check"></i>4) Analista experto</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#estadístico"><i class="fa fa-check"></i>5) Estadístico</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-machine-learning"><i class="fa fa-check"></i>6) Ingeniero de Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#científico-de-datos"><i class="fa fa-check"></i>7) Científico de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#gerente-de-análisis-líder-de-ciencia-de-datos"><i class="fa fa-check"></i>8) Gerente de Análisis / Líder de Ciencia de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#experto-cualitativo-científico-social"><i class="fa fa-check"></i>9) Experto Cualitativo / Científico Social</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#investigador"><i class="fa fa-check"></i>10) Investigador</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#extra-personal-adicional"><i class="fa fa-check"></i>Extra) Personal Adicional</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#google-data-career-path"><i class="fa fa-check"></i>Google Data Career Path</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#flujo-de-trabajo-en-ml"><i class="fa fa-check"></i><b>1.7</b> Flujo de trabajo en <em>ML</em></a></li>
+<li class="chapter" data-level="1.8" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ciclo-de-un-proyecto"><i class="fa fa-check"></i><b>1.8</b> Ciclo de un proyecto</a></li>
+<li class="chapter" data-level="1.9" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#taller-de-scoping"><i class="fa fa-check"></i><b>1.9</b> Taller de Scoping</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.9.1</b> Data Maturity Framework</a></li>
+<li class="chapter" data-level="1.9.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.9.2</b> Scoping</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ejemplos"><i class="fa fa-check"></i>Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.4.1</b> Operadores de asignación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.2</b> Variables</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.3</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.5</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.6</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.7</b> Listas</a></li>
+<li class="chapter" data-level="2.4.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funbas"><i class="fa fa-check"></i><b>2.5</b> Funciones básicas de R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-una-función-de-r"><i class="fa fa-check"></i><b>2.5.1</b> ¿Qué es una función de R?</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.5.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#pruebas-lógicas"><i class="fa fa-check"></i><b>2.5.3</b> Pruebas lógicas</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-lógicos"><i class="fa fa-check"></i><b>2.5.4</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funciones-sobre-vectores"><i class="fa fa-check"></i><b>2.5.5</b> Funciones sobre vectores</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-rep"><i class="fa fa-check"></i><b>2.5.6</b> Función <code>rep</code></a></li>
+<li class="chapter" data-level="2.5.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-seq"><i class="fa fa-check"></i><b>2.5.7</b> Función <code>seq</code></a></li>
+<li class="chapter" data-level="2.5.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.8</b> EJERCICIOS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#bucles"><i class="fa fa-check"></i><b>2.6</b> Estructuras de control</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-else-if"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción else if</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.7</b> Instrucción <code>repeat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-archivos"><i class="fa fa-check"></i><b>2.7.1</b> Nombres de los archivos</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-objetos"><i class="fa fa-check"></i><b>2.7.2</b> Nombres de los objetos</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#longitud-de-una-línea-de-código"><i class="fa fa-check"></i><b>2.7.3</b> Longitud de una línea de código</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#espacios"><i class="fa fa-check"></i><b>2.7.4</b> Espacios</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#asignación"><i class="fa fa-check"></i><b>2.7.5</b> Asignación</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-de-archivos"><i class="fa fa-check"></i><b>3.1</b> Lectura de archivos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#archivos-csv"><i class="fa fa-check"></i><b>3.1.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#archivos-txt"><i class="fa fa-check"></i><b>3.1.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.1.3" data-path="tidyverse.html"><a href="tidyverse.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.1.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.1.4" data-path="tidyverse.html"><a href="tidyverse.html#archivos-json"><i class="fa fa-check"></i><b>3.1.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.1.5" data-path="tidyverse.html"><a href="tidyverse.html#archivos-rds"><i class="fa fa-check"></i><b>3.1.5</b> Archivos rds</a></li>
+<li class="chapter" data-level="3.1.6" data-path="tidyverse.html"><a href="tidyverse.html#bases-de-datos"><i class="fa fa-check"></i><b>3.1.6</b> Bases de Datos</a></li>
+<li class="chapter" data-level="3.1.7" data-path="tidyverse.html"><a href="tidyverse.html#oracle-database"><i class="fa fa-check"></i><b>3.1.7</b> Oracle Database</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>3.2</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>3.2.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="3.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>3.2.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="3.2.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>3.2.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="3.2.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>3.2.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>3.2.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="3.2.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>3.2.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.2.7" data-path="tidyverse.html"><a href="tidyverse.html#cruces-de-tablas"><i class="fa fa-check"></i><b>3.2.7</b> Cruces de tablas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#orden-y-estructura"><i class="fa fa-check"></i><b>3.3</b> Orden y estructura</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#pivote-horizontal"><i class="fa fa-check"></i><b>3.3.1</b> Pivote horizontal</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#pivote-vertical"><i class="fa fa-check"></i><b>3.3.2</b> Pivote vertical</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tidyverse.html"><a href="tidyverse.html#unión-de-columnas"><i class="fa fa-check"></i><b>3.3.3</b> Unión de columnas</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tidyverse.html"><a href="tidyverse.html#separador-de-columnas"><i class="fa fa-check"></i><b>3.3.4</b> Separador de columnas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-texto"><i class="fa fa-check"></i><b>3.4</b> Manipulación de texto</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="tidyverse.html"><a href="tidyverse.html#caracteres-especiales"><i class="fa fa-check"></i><b>3.4.1</b> Caracteres especiales</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tidyverse.html"><a href="tidyverse.html#tamaño-de-cadena"><i class="fa fa-check"></i><b>3.4.2</b> Tamaño de cadena</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tidyverse.html"><a href="tidyverse.html#concatenar"><i class="fa fa-check"></i><b>3.4.3</b> Concatenar</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tidyverse.html"><a href="tidyverse.html#extraer-y-reemplazar"><i class="fa fa-check"></i><b>3.4.4</b> Extraer y reemplazar</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tidyverse.html"><a href="tidyverse.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.4.5</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tidyverse.html"><a href="tidyverse.html#detectar-coincidencias"><i class="fa fa-check"></i><b>3.4.6</b> Detectar coincidencias</a></li>
+<li class="chapter" data-level="3.4.7" data-path="tidyverse.html"><a href="tidyverse.html#contabilizar-coincidencias"><i class="fa fa-check"></i><b>3.4.7</b> Contabilizar coincidencias</a></li>
+<li class="chapter" data-level="3.4.8" data-path="tidyverse.html"><a href="tidyverse.html#extraer-coincidencias"><i class="fa fa-check"></i><b>3.4.8</b> Extraer coincidencias</a></li>
+<li class="chapter" data-level="3.4.9" data-path="tidyverse.html"><a href="tidyverse.html#reemplazar-coincidencias"><i class="fa fa-check"></i><b>3.4.9</b> Reemplazar coincidencias</a></li>
+<li class="chapter" data-level="3.4.10" data-path="tidyverse.html"><a href="tidyverse.html#divisiones-mediante-patrones"><i class="fa fa-check"></i><b>3.4.10</b> Divisiones mediante patrones</a></li>
+<li class="chapter" data-level="3.4.11" data-path="tidyverse.html"><a href="tidyverse.html#localización-de-coincidencias"><i class="fa fa-check"></i><b>3.4.11</b> Localización de coincidencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-tiempo"><i class="fa fa-check"></i><b>3.5</b> Manipulación de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-y-creación-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.1</b> Lectura y creación de datos temporales</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#iteraciones"><i class="fa fa-check"></i><b>3.6</b> Iteraciones</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse.html"><a href="tidyverse.html#bucles-1"><i class="fa fa-check"></i><b>3.6.1</b> Bucles</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visualización.html"><a href="visualización.html#lo-que-no-se-debe-hacer"><i class="fa fa-check"></i><b>4.2.1</b> Lo que no se debe hacer…</a></li>
+<li class="chapter" data-level="4.2.2" data-path="visualización.html"><a href="visualización.html#principios-de-visualización"><i class="fa fa-check"></i><b>4.2.2</b> Principios de visualización</a></li>
+<li class="chapter" data-level="4.2.3" data-path="visualización.html"><a href="visualización.html#principios-generales-del-diseño-analítico"><i class="fa fa-check"></i><b>4.2.3</b> Principios generales del diseño analítico:</a></li>
+<li class="chapter" data-level="4.2.4" data-path="visualización.html"><a href="visualización.html#técnicas-de-visualización"><i class="fa fa-check"></i><b>4.2.4</b> Técnicas de visualización:</a></li>
+<li class="chapter" data-level="4.2.5" data-path="visualización.html"><a href="visualización.html#indicadores-de-calidad-gráfica"><i class="fa fa-check"></i><b>4.2.5</b> Indicadores de calidad gráfica:</a></li>
+<li class="chapter" data-level="4.2.6" data-path="visualización.html"><a href="visualización.html#gráficos-univariados"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos univariados:</a></li>
+<li class="chapter" data-level="4.2.7" data-path="visualización.html"><a href="visualización.html#gráficos-multivariados"><i class="fa fa-check"></i><b>4.2.7</b> Gráficos multivariados</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualización.html"><a href="visualización.html#creación-de-gráficos"><i class="fa fa-check"></i><b>4.3</b> Creación de gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualización.html"><a href="visualización.html#estéticas"><i class="fa fa-check"></i><b>4.3.1</b> Estéticas</a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualización.html"><a href="visualización.html#objetos-geométricos-o-capas"><i class="fa fa-check"></i><b>4.3.2</b> Objetos geométricos o capas</a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualización.html"><a href="visualización.html#facetas"><i class="fa fa-check"></i><b>4.3.3</b> Facetas</a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualización.html"><a href="visualización.html#más-sobre-estéticas"><i class="fa fa-check"></i><b>4.3.4</b> Más sobre estéticas</a></li>
+<li class="chapter" data-level="4.3.5" data-path="visualización.html"><a href="visualización.html#quick-view"><i class="fa fa-check"></i><b>4.3.5</b> Quick View</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualización.html"><a href="visualización.html#análisis-univariado"><i class="fa fa-check"></i><b>4.4</b> Análisis univariado</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visualización.html"><a href="visualización.html#variables-numéricas"><i class="fa fa-check"></i><b>4.4.1</b> Variables numéricas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a>
+<ul>
+<li class="chapter" data-level="" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i>¡ Warning !</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="visualización.html"><a href="visualización.html#reporte-interactivos"><i class="fa fa-check"></i><b>4.7</b> Reporte interactivos</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 2: Machine Learning</b></span></li>
+<li class="chapter" data-level="5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html"><i class="fa fa-check"></i><b>5</b> Introducción a Machine Learning</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#análisis-supervisado-vs-no-supervisado"><i class="fa fa-check"></i><b>5.1</b> Análisis Supervisado vs No supervisado</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#regresión-vs-clasificación"><i class="fa fa-check"></i><b>5.1.1</b> Regresión vs clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#sesgo-vs-varianza"><i class="fa fa-check"></i><b>5.2</b> Sesgo vs varianza</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#errores-reducibles"><i class="fa fa-check"></i><b>5.2.1</b> Errores reducibles</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-irreducible"><i class="fa fa-check"></i><b>5.2.2</b> Error irreducible</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#balance-entre-sesgo-y-varianza-o-trade-off"><i class="fa fa-check"></i><b>5.2.3</b> Balance entre sesgo y varianza o Trade-off</a></li>
+<li class="chapter" data-level="5.2.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-total"><i class="fa fa-check"></i><b>5.2.4</b> Error total</a></li>
+<li class="chapter" data-level="5.2.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#overfitting"><i class="fa fa-check"></i><b>5.2.5</b> Overfitting</a></li>
+<li class="chapter" data-level="5.2.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#underfitting"><i class="fa fa-check"></i><b>5.2.6</b> Underfitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#orden-y-estructura-de-proyecto"><i class="fa fa-check"></i><b>5.3</b> Orden y estructura de proyecto</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#plantilla-de-estructura-proyecto"><i class="fa fa-check"></i><b>5.3.1</b> Plantilla de estructura proyecto</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#reproducibilidad"><i class="fa fa-check"></i><b>5.3.2</b> Reproducibilidad</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#partición-de-datos"><i class="fa fa-check"></i><b>5.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>5.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="5.4.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#conjunto-de-validación"><i class="fa fa-check"></i><b>5.4.2</b> Conjunto de validación</a></li>
+<li class="chapter" data-level="5.4.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>5.4.3</b> Leave-one-out cross-validation</a></li>
+<li class="chapter" data-level="5.4.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#v-fold-cross-validation"><i class="fa fa-check"></i><b>5.4.4</b> V Fold Cross Validation</a></li>
+<li class="chapter" data-level="5.4.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#medidas-de-ajuste"><i class="fa fa-check"></i><b>5.4.5</b> Medidas de ajuste</a></li>
+<li class="chapter" data-level="5.4.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#validación-cruzada-para-series-de-tiempo"><i class="fa fa-check"></i><b>5.4.6</b> Validación cruzada para series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>5.5</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="5.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#ingeniería-de-datos"><i class="fa fa-check"></i><b>5.6</b> Ingeniería de datos</a></li>
+<li class="chapter" data-level="5.7" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#recetas"><i class="fa fa-check"></i><b>5.7</b> Recetas</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pasos-y-estructura-de-recetas"><i class="fa fa-check"></i><b>5.7.1</b> Pasos y estructura de recetas</a></li>
+<li class="chapter" data-level="5.7.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#imputaciones"><i class="fa fa-check"></i><b>5.7.2</b> Imputaciones</a></li>
+<li class="chapter" data-level="5.7.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#agregar-o-modificar-columnas"><i class="fa fa-check"></i><b>5.7.3</b> Agregar o modificar columnas</a></li>
+<li class="chapter" data-level="5.7.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#interacciones"><i class="fa fa-check"></i><b>5.7.4</b> Interacciones</a></li>
+<li class="chapter" data-level="5.7.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#transformaciones-generales"><i class="fa fa-check"></i><b>5.7.5</b> Transformaciones generales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#datos-y-tipos-de-modelos"><i class="fa fa-check"></i><b>5.8</b> Datos y tipos de modelos</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos"><i class="fa fa-check"></i><b>5.8.1</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta"><i class="fa fa-check"></i><b>5.8.2</b> Definición de la receta</a></li>
+<li class="chapter" data-level="5.8.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos-1"><i class="fa fa-check"></i><b>5.8.3</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta-1"><i class="fa fa-check"></i><b>5.8.4</b> Definición de la receta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regresión-lineal.html"><a href="regresión-lineal.html"><i class="fa fa-check"></i><b>6</b> Regresión Lineal</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#ajuste-de-modelo"><i class="fa fa-check"></i><b>6.1</b> Ajuste de modelo</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-simple"><i class="fa fa-check"></i><b>6.1.1</b> Estimación de parámetros: Regresión lineal simple</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-múltiple"><i class="fa fa-check"></i><b>6.1.2</b> Estimación de parámetros: Regresión lineal múltiple</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#residuos-del-modelo"><i class="fa fa-check"></i><b>6.2</b> Residuos del modelo</a>
+<ul>
+<li class="chapter" data-level="" data-path="regresión-lineal.html"><a href="regresión-lineal.html#condiciones-para-el-ajuste-de-una-regresión-lineal"><i class="fa fa-check"></i>Condiciones para el ajuste de una regresión lineal:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño"><i class="fa fa-check"></i><b>6.3</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4" data-path="regresión-lineal.html"><a href="regresión-lineal.html#implementación-en-r"><i class="fa fa-check"></i><b>6.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#coeficientes-del-modelo"><i class="fa fa-check"></i><b>6.4.1</b> Coeficientes del modelo</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño-1"><i class="fa fa-check"></i><b>6.4.2</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#gráfica-de-ajuste"><i class="fa fa-check"></i><b>6.4.3</b> Gráfica de ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métodos-se-selección-de-variables"><i class="fa fa-check"></i><b>6.5</b> Métodos se selección de variables</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#forward-selection-selección-hacia-adelante"><i class="fa fa-check"></i><b>6.5.1</b> Forward selection (selección hacia adelante)</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#backward-selection-selección-hacia-atrás"><i class="fa fa-check"></i><b>6.5.2</b> Backward selection (selección hacia atrás)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regresión-logística.html"><a href="regresión-logística.html"><i class="fa fa-check"></i><b>7</b> Regresión Logística</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regresión-logística.html"><a href="regresión-logística.html#función-sigmoide"><i class="fa fa-check"></i><b>7.1</b> Función sigmoide</a></li>
+<li class="chapter" data-level="7.2" data-path="regresión-logística.html"><a href="regresión-logística.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>7.2</b> Ajuste del modelo</a></li>
+<li class="chapter" data-level="7.3" data-path="regresión-logística.html"><a href="regresión-logística.html#clasificación-2"><i class="fa fa-check"></i><b>7.3</b> Clasificación</a></li>
+<li class="chapter" data-level="7.4" data-path="regresión-logística.html"><a href="regresión-logística.html#métricas-de-desempeño-2"><i class="fa fa-check"></i><b>7.4</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html"><i class="fa fa-check"></i><b>9</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ajuste-del-modelo-2"><i class="fa fa-check"></i><b>9.1</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#attribute-selective-measure-asm"><i class="fa fa-check"></i><b>9.1.1</b> Attribute Selective Measure (ASM)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regularización-de-árboles"><i class="fa fa-check"></i><b>9.2</b> Regularización de árboles</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
+<li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>9.3</b> Aprendizaje conjunto</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>9.3.1</b> Bagging vs. boosting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#error-out-of-bag"><i class="fa fa-check"></i><b>9.3.2</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging"><i class="fa fa-check"></i><b>9.4</b> Bagging</a></li>
+<li class="chapter" data-level="9.5" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#random-forest"><i class="fa fa-check"></i><b>9.5</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#qué-es"><i class="fa fa-check"></i><b>9.5.1</b> ¿Qué es?</a></li>
+<li class="chapter" data-level="9.5.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.2</b> Características de los bosques aleatorios</a></li>
+<li class="chapter" data-level="9.5.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio"><i class="fa fa-check"></i><b>9.5.3</b> Aplicar árboles de decisión en un bosque aleatorio</a></li>
+<li class="chapter" data-level="9.5.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.4</b> Ventajas y desventjas de bosques aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-rf-en-r"><i class="fa fa-check"></i><b>9.6</b> Implementación de RF en R</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.6.1</b> Regresión</a></li>
+<li class="chapter" data-level="9.6.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#clasificación-5"><i class="fa fa-check"></i><b>9.6.2</b> Clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#boosting"><i class="fa fa-check"></i><b>9.7</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#predicciones-boosting"><i class="fa fa-check"></i><b>9.7.1</b> Predicciones <em>Boosting</em></a></li>
+<li class="chapter" data-level="9.7.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#modelos-boosting"><i class="fa fa-check"></i><b>9.7.2</b> Modelos <em>Boosting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-xgb-en-r"><i class="fa fa-check"></i><b>9.8</b> Implementación de XGB en R</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>9.8.1</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="9.8.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>9.8.2</b> XGBoost para clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>10</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>10.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="10.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>10.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="10.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>10.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="10.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>10.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-3"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>11</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>11.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="11.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>11.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="11.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflowset"><i class="fa fa-check"></i><b>11.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="11.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>11.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="11.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>11.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>11.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>11.6</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>11.6.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="11.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>11.6.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="11.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>11.6.3</b> Comparación de métricas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>12</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>12.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="12.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>12.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>12.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>12.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>12.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="12.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>12.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="12.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>12.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="12.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>12.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="12.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>12.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="12.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>12.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="12.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>12.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html"><i class="fa fa-check"></i><b>13</b> Interpretabilidad local</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-lime"><i class="fa fa-check"></i><b>13.1</b> Interpretabilidad LIME</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#proceso"><i class="fa fa-check"></i><b>13.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="13.1.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#características-principales"><i class="fa fa-check"></i><b>13.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#implementación-con-r"><i class="fa fa-check"></i><b>13.1.3</b> Implementación con <em>R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-dalextra"><i class="fa fa-check"></i><b>13.2</b> Interpretabilidad DALEXtra</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#otros-métodos"><i class="fa fa-check"></i><b>13.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sesgo-e-inequidad" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Capítulo 12</span> Sesgo e Inequidad<a href="sesgo-e-inequidad.html#sesgo-e-inequidad" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Machine Learning por naturaleza es discriminante, pues justo lo que hacemos es discriminar datos a través del uso de la estadística. Sin embargo, <strong>esta discriminación puede ser un problema cuando brinda ventajas sistemáticas a grupos privilegiados y desventajas sistemáticas a grupos no privilegiados</strong>. Por ejemplo: Privilegiar la atención médica a pacientes blancos sobre pacientes afroamericanos.</p>
+<p>Un sesgo en el conjunto de entrenamiento ya sea por prejuicio o por un sobre/sub muestreo lleva a tener modelos sesgados.</p>
+<p><img src="img/12-bias-fairness/sesgo-genero.jpg" width="400pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p>Un mal entendido común al hacer modelos de machine learning consiste en evitar utilizar características que pueden generar una inequidad por ejemplo: sexo, edad, etnia, etc. Sin embargo, no ocuparlos nos lleva a tener puntos ciegos en nuestros modelos para cuantificar si efectivamente tenemos un sesgo o inequidad en algunos grupos.</p>
+<p><strong>Deberemos de ocupar estas características en los modelos, justo porque queremos evitar estos sesgos</strong>. Para ello, identificaremos y cuantificaremos estos sesgos e inequidades en diferentes grupos para después mitigarlos y cuantificar la consecuencia en nuestras métricas de desempeño off line.</p>
+<div id="propósito-vs-error" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Propósito Vs Error<a href="sesgo-e-inequidad.html#propósito-vs-error" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El <a href="https://drive.google.com/file/d/1g2e9BVEm8-OqzQ0wbAte3IF-A_Yj1D6c/view?usp=sharing">siguiente árbol</a> de decisión está desarrollado pensando desde el punto de vista del tomador de decisiones -operativas- al que ayudamos desarrollando un modelo de machine learning para identificar en qué métricas deberíamos de concentrarnos para cuantificar el sesgo y la inequidad (bias y fairness).</p>
+<p><img src="img/12-bias-fairness/fairness_tree_amplified.png" width="600pt" height="600pt" style="display: block; margin: auto;" /></p>
+<p><strong>Métricas</strong></p>
+<ul>
+<li><p><strong>FP/GS:</strong> False Positive over Group Size. Es el riesgo de ser incorrectamente clasificado como positivo, dado el grupo de pertenencia</p></li>
+<li><p><strong>FDR:</strong> False Discovery Rate. Es similar al error tipo 1 en pruebas de hipótesis estadísticas.</p></li>
+<li><p><strong>FPR:</strong> False Positive Rate.</p></li>
+<li><p><strong>Recall:</strong> Cobertura del modelo respecto al total de positivos.</p></li>
+<li><p><strong>FN/GS:</strong> False Negative over Group Size. Es el riesgo de ser incorrectamente clasificado como negativo, dado el grupo de pertenencia</p></li>
+<li><p><strong>FOR:</strong> False Omission Rate. Similar al error tipo 2 en pruebas de hipótesis estadísticas.</p></li>
+<li><p><strong>FNR:</strong> False Negative Rate</p></li>
+</ul>
+<p><strong>Tipo de modelo | Aplicación</strong></p>
+<ul>
+<li><p><strong>Modelo Punitivo:</strong> Corresponde a modelos en donde al menos una de las acciones asociadas a nuestro modelo de predicción está relacionada con un “castigo”. Por ejemplo: Algoritmos donde se predice la probabilidad de reincidencia en algún delito y que es tomada como variable para decidir si dan libertad provisional o no.</p></li>
+<li><p><strong>Modelo Asistivo:</strong> Corresponde a modelos en donde la acción asociada al modelo son del estilo de preventivo. Por ejemplo: Priorización de inspecciones a realizar: médicas, a hogares, a estaciones de generación de energía, etc.</p></li>
+</ul>
+<p><strong>RECORDATORIO</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>PREDICTED</th>
+<th>REAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TP</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>FP</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>TN</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>FN</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[(1-\tau) \leq \text{Medida de disparidad}_\text{grupo i} \leq \frac{1}{(1 - \tau)}, \]</span></p>
+<p>donde <span class="math inline">\(\tau\)</span> es el fairness threshold definido por nosotros. En los siguientes
+ejemplos utilizaremos <span class="math inline">\(\tau=20%\)</span> por lo que cualquier métrica de paridad que se encuentre entre <span class="math inline">\(0.8\)</span> y <span class="math inline">\(1.25\)</span> va a ser tratado como justo (sin sesgo).</p>
+</div>
+<div id="métricas" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Métricas<a href="sesgo-e-inequidad.html#métricas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El paquete <em>fairness</em> implementa <span class="math inline">\(11\)</span> métricas de equidad. Muchos de estos son mutuamente excluyentes: los resultados para un problema de clasificación, a menudo no pueden ser justos en términos de todas las métricas. Dependiendo del contexto, es importante seleccionar una métrica adecuada para evaluar la equidad.</p>
+<p>A continuación, se describen las funciones utilizadas para calcular las métricas implementadas. Cada función tiene un conjunto similar de argumentos:</p>
+<ul>
+<li><p><code>data</code>: <code>data.frame</code> que contiene los datos de entrada y las predicciones del modelo</p></li>
+<li><p><code>grupo</code>: nombre de la columna que indica el grupo base (variable de factor)</p></li>
+<li><p><code>base</code>: nivel base del grupo base para el cálculo de métricas de equidad</p></li>
+<li><p><code>resultado</code>: nombre de la columna que indica la variable de resultado binaria</p></li>
+<li><p><code>result_base</code>: nivel base de la variable de resultado (es decir, clase negativa) para el cálculo de métricas de equidad</p></li>
+</ul>
+<p>También necesitamos proporcionar predicciones de modelos, estas predicciones se pueden agregar al <code>data.frame</code> original o se pueden proporcionar como un vector. Cuando se trabaja con predicciones probabilísticas, algunas métricas requieren un valor de corte para convertir probabilidades en predicciones de clase proporcionadas como límite.</p>
+<div id="equal-parity-or-demographic-or-statistical-parity" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Equal Parity or Demographic or Statistical Parity<a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cuando nos interesa que cada grupo de la variable “protegida” tenga la misma proporción de etiquetas positivas predichas (TP). Por ejemplo: En un modelo que predice si darte o no un crédito, nos gustaría que sin importar el género de la persona tuvieran la misma oportunidad.</p>
+<p>La paridad demográfica se calcula en base a la comparación del número absoluto de todos los individuos clasificados positivamente en todos los subgrupos de datos. En el resultado del vector con nombres, al grupo de referencia se le asignará 1, mientras que a todos los demás grupos se les asignarán valores según si su proporción de observaciones pronosticadas positivamente es menor o mayor en comparación con el grupo de referencia. Las proporciones más bajas se reflejarán en números inferiores a 1 en el vector con resultado de nombre.</p>
+<p>Fórmula: <span class="math inline">\(TP + FP\)</span></p>
+<p>Se utiliza esta métrica cuando:</p>
+<blockquote>
+<ol style="list-style-type: lower-alpha">
+<li>Queremos cambiar el estado actual para “mejorarlo”. Por ejemplo: Ver más personas de grupos desfavorecidos con mayor oportunidad de tener un préstamo.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Conocemos que ha habido una ventaja histórica que afecta los datos con los que construiremos el modelo.</li>
+</ol>
+</blockquote>
+<p>Al querer eliminar las desventajas podríamos poner en más desventaja al grupo que históricamente ha tenido desventaja, ya que no está preparado (literalmente) para recibir esa ventaja. Por ejemplo, si damos créditos a grupos a los que antes de hacer fairness no lo hacíamos, sin ninguna educación financiera o apoyo de educación financiera de nuestra parte, muy probablemente esas personas caerán en default aumentando el sesgo que ya teníamos inicialmente.</p>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="sesgo-e-inequidad.html#cb878-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb878-2"><a href="sesgo-e-inequidad.html#cb878-2" aria-hidden="true" tabindex="-1"></a> tidymodels,</span>
+<span id="cb878-3"><a href="sesgo-e-inequidad.html#cb878-3" aria-hidden="true" tabindex="-1"></a> fairness,</span>
+<span id="cb878-4"><a href="sesgo-e-inequidad.html#cb878-4" aria-hidden="true" tabindex="-1"></a> magrittr</span>
+<span id="cb878-5"><a href="sesgo-e-inequidad.html#cb878-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb878-6"><a href="sesgo-e-inequidad.html#cb878-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb878-7"><a href="sesgo-e-inequidad.html#cb878-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(compas)</span>
+<span id="cb878-8"><a href="sesgo-e-inequidad.html#cb878-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb878-9"><a href="sesgo-e-inequidad.html#cb878-9" aria-hidden="true" tabindex="-1"></a>compas <span class="sc">%&lt;&gt;%</span> </span>
+<span id="cb878-10"><a href="sesgo-e-inequidad.html#cb878-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Two_yr_Recidivism_01 =</span> <span class="fu">if_else</span>(Two_yr_Recidivism <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb878-11"><a href="sesgo-e-inequidad.html#cb878-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb878-12"><a href="sesgo-e-inequidad.html#cb878-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(compas)</span></code></pre></div>
+<pre><code>## Rows: 6,172
+## Columns: 10
+## $ Two_yr_Recidivism    &lt;fct&gt; no, yes, no, no, no, no, yes, yes, yes, no, no, n…
+## $ Number_of_Priors     &lt;dbl&gt; -0.6843578, 2.2668817, -0.6843578, -0.6843578, -0…
+## $ Age_Above_FourtyFive &lt;fct&gt; no, no, no, no, no, no, no, no, no, no, no, no, n…
+## $ Age_Below_TwentyFive &lt;fct&gt; no, no, no, no, no, no, no, no, no, yes, no, no, …
+## $ Female               &lt;fct&gt; Male, Male, Female, Male, Male, Male, Male, Male,…
+## $ Misdemeanor          &lt;fct&gt; yes, no, yes, no, yes, yes, no, no, no, no, no, y…
+## $ ethnicity            &lt;fct&gt; Other, Caucasian, Caucasian, African_American, Hi…
+## $ probability          &lt;dbl&gt; 0.3151557, 0.8854616, 0.2552680, 0.4173908, 0.320…
+## $ predicted            &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1…
+## $ Two_yr_Recidivism_01 &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1…</code></pre>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="sesgo-e-inequidad.html#cb880-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dem_parity</span>(</span>
+<span id="cb880-2"><a href="sesgo-e-inequidad.html#cb880-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb880-3"><a href="sesgo-e-inequidad.html#cb880-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb880-4"><a href="sesgo-e-inequidad.html#cb880-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb880-5"><a href="sesgo-e-inequidad.html#cb880-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb880-6"><a href="sesgo-e-inequidad.html#cb880-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb880-7"><a href="sesgo-e-inequidad.html#cb880-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb880-8"><a href="sesgo-e-inequidad.html#cb880-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                       Caucasian African_American        Asian Hispanic
+## Positively classified      1070      2599.000000  7.000000000    214.0
+## Demographic Parity            1         2.428972  0.006542056      0.2
+## Group size                 2103      3175.000000 31.000000000    509.0
+##                       Native_American       Other
+## Positively classified     7.000000000 152.0000000
+## Demographic Parity        0.006542056   0.1420561
+## Group size               11.000000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-623-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-623-2.png" width="672" /></p>
+</div>
+<div id="proportional-parity-o-impact-parity-o-minimizing-disparate-impact" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Proportional Parity o Impact Parity o Minimizing Disparate Impact<a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cuando nos interesa que cada grupo de la variable “protegida” tenga el mismo impacto. La paridad proporcional se logra si la proporción de predicciones positivas en los subgrupos es cercana entre sí. Similar a la paridad demográfica, esta medida tampoco depende de las etiquetas verdaderas.</p>
+<p>Fórmula: <span class="math inline">\(\frac{TP + FP}{TP + FP + TN + FN}\)</span></p>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="sesgo-e-inequidad.html#cb883-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop_parity</span>(</span>
+<span id="cb883-2"><a href="sesgo-e-inequidad.html#cb883-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb883-3"><a href="sesgo-e-inequidad.html#cb883-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb883-4"><a href="sesgo-e-inequidad.html#cb883-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb883-5"><a href="sesgo-e-inequidad.html#cb883-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb883-6"><a href="sesgo-e-inequidad.html#cb883-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb883-7"><a href="sesgo-e-inequidad.html#cb883-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb883-8"><a href="sesgo-e-inequidad.html#cb883-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                       Caucasian African_American      Asian    Hispanic
+## Proportion             0.508797        0.8185827  0.2258065   0.4204322
+## Proportional Parity    1.000000        1.6088592  0.4438046   0.8263261
+## Group size          2103.000000     3175.0000000 31.0000000 509.0000000
+##                     Native_American       Other
+## Proportion                0.6363636   0.4431487
+## Proportional Parity       1.2507222   0.8709735
+## Group size               11.0000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-624-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-624-2.png" width="672" /></p>
+</div>
+<div id="equalized-odds" class="section level3 hasAnchor" number="12.2.3">
+<h3><span class="header-section-number">12.2.3</span> Equalized odds<a href="sesgo-e-inequidad.html#equalized-odds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Las probabilidades igualadas se logran si las sensibilidades en los subgrupos están cerca unas de otras. Las sensibilidades específicas del grupo indican el número de verdaderos positivos dividido por el número total de positivos en ese grupo.</p>
+<p>Fórmula: <span class="math inline">\(\frac{TP}{TP + FN}\)</span></p>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="sesgo-e-inequidad.html#cb886-1" aria-hidden="true" tabindex="-1"></a><span class="fu">equal_odds</span>(</span>
+<span id="cb886-2"><a href="sesgo-e-inequidad.html#cb886-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb886-3"><a href="sesgo-e-inequidad.html#cb886-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb886-4"><a href="sesgo-e-inequidad.html#cb886-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb886-5"><a href="sesgo-e-inequidad.html#cb886-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb886-6"><a href="sesgo-e-inequidad.html#cb886-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb886-7"><a href="sesgo-e-inequidad.html#cb886-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb886-8"><a href="sesgo-e-inequidad.html#cb886-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                  Caucasian African_American      Asian    Hispanic
+## Sensitivity       0.676399         0.910295  0.2500000   0.5978836
+## Equalized odds    1.000000         1.345796  0.3696043   0.8839214
+## Group size     2103.000000      3175.000000 31.0000000 509.0000000
+##                Native_American       Other
+## Sensitivity          0.6000000   0.6532258
+## Equalized odds       0.8870504   0.9657403
+## Group size          11.0000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-625-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-625-2.png" width="672" /></p>
+</div>
+<div id="predictive-rate-parity" class="section level3 hasAnchor" number="12.2.4">
+<h3><span class="header-section-number">12.2.4</span> Predictive rate parity<a href="sesgo-e-inequidad.html#predictive-rate-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La paridad de tasa predictiva se logra si las precisiones (o valores predictivos positivos) en los subgrupos están cerca unas de otras. La precisión representa el número de verdaderos positivos dividido por el número total de ejemplos predichos positivos dentro de un grupo.</p>
+<p>Fórmula: <span class="math inline">\(\frac{TP}{TP + FP}\)</span></p>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="sesgo-e-inequidad.html#cb889-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pred_rate_parity</span>(</span>
+<span id="cb889-2"><a href="sesgo-e-inequidad.html#cb889-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb889-3"><a href="sesgo-e-inequidad.html#cb889-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb889-4"><a href="sesgo-e-inequidad.html#cb889-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb889-5"><a href="sesgo-e-inequidad.html#cb889-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb889-6"><a href="sesgo-e-inequidad.html#cb889-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb889-7"><a href="sesgo-e-inequidad.html#cb889-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb889-8"><a href="sesgo-e-inequidad.html#cb889-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                           Caucasian African_American      Asian    Hispanic
+## Precision                 0.5196262        0.5817622  0.2857143   0.5280374
+## Predictive Rate Parity    1.0000000        1.1195784  0.5498458   1.0161871
+## Group size             2103.0000000     3175.0000000 31.0000000 509.0000000
+##                        Native_American       Other
+## Precision                    0.4285714   0.5328947
+## Predictive Rate Parity       0.8247688   1.0255348
+## Group size                  11.0000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-626-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-626-2.png" width="672" /></p>
+</div>
+<div id="accuracy-parity" class="section level3 hasAnchor" number="12.2.5">
+<h3><span class="header-section-number">12.2.5</span> Accuracy parity<a href="sesgo-e-inequidad.html#accuracy-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La paridad de precisión se logra si las precisiones (todos los ejemplos clasificados con precisión divididos por el número total de ejemplos) en los subgrupos están cerca entre sí.</p>
+<p>Fórmula: <span class="math inline">\(\frac{TP + TN}{TP + FP + TN + FN}\)</span></p>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="sesgo-e-inequidad.html#cb892-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acc_parity</span>( </span>
+<span id="cb892-2"><a href="sesgo-e-inequidad.html#cb892-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb892-3"><a href="sesgo-e-inequidad.html#cb892-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb892-4"><a href="sesgo-e-inequidad.html#cb892-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb892-5"><a href="sesgo-e-inequidad.html#cb892-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb892-6"><a href="sesgo-e-inequidad.html#cb892-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb892-7"><a href="sesgo-e-inequidad.html#cb892-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb892-8"><a href="sesgo-e-inequidad.html#cb892-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                    Caucasian African_American      Asian    Hispanic
+## Accuracy           0.6291013        0.6107087  0.6451613   0.6522593
+## Accuracy Parity    1.0000000        0.9707637  1.0255285   1.0368113
+## Group size      2103.0000000     3175.0000000 31.0000000 509.0000000
+##                 Native_American       Other
+## Accuracy              0.4545455   0.6676385
+## Accuracy Parity       0.7225314   1.0612575
+## Group size           11.0000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-627-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-627-2.png" width="672" /></p>
+</div>
+<div id="false-negative-parity-o-equal-oppportunity" class="section level3 hasAnchor" number="12.2.6">
+<h3><span class="header-section-number">12.2.6</span> False Negative Parity o Equal Oppportunity<a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La paridad de tasas de falsos negativos se logra si las tasas de falsos negativos (la relación entre el número de falsos negativos y el número total de positivos) en los subgrupos están cerca entre sí.</p>
+<p>Fórmula: <span class="math inline">\(\frac{FN}{TP + FN}\)</span></p>
+<p><img src="img/12-bias-fairness/false_negative_parity.png" width="300pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>Se utiliza esta métrica cuando:</p>
+<blockquote>
+<ol style="list-style-type: lower-alpha">
+<li>El modelo necesita ser muy bueno en detectar la etiqueta positiva.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>No hay -mucho- costo en introducir falsos negativos al sistema -tanto al usuario como a la empresa-. Por ejemplo: Generar FPs en tarjeta de crédito.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>La definición de la variable target no es subjetiva. Por ejemplo: Fraude o No Fraude no es algo subjetivo, buen empleado o no, puede ser muy subjetivo.</li>
+</ol>
+</blockquote>
+<p>Para poder cumplir con tener el mismo porcentaje de TPR en todos los grupos de la variable protegida, incurriremos en agregar más falsos positivos, lo que puede afectar más a ese grupo a largo plazo.</p>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="sesgo-e-inequidad.html#cb895-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fnr_parity</span>( </span>
+<span id="cb895-2"><a href="sesgo-e-inequidad.html#cb895-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb895-3"><a href="sesgo-e-inequidad.html#cb895-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb895-4"><a href="sesgo-e-inequidad.html#cb895-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb895-5"><a href="sesgo-e-inequidad.html#cb895-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb895-6"><a href="sesgo-e-inequidad.html#cb895-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb895-7"><a href="sesgo-e-inequidad.html#cb895-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb895-8"><a href="sesgo-e-inequidad.html#cb895-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##              Caucasian African_American     Asian    Hispanic Native_American
+## FNR           0.323601        0.0897050  0.750000   0.4021164         0.40000
+## FNR Parity    1.000000        0.2772087  2.317669   1.2426304         1.23609
+## Group size 2103.000000     3175.0000000 31.000000 509.0000000        11.00000
+##                  Other
+## FNR          0.3467742
+## FNR Parity   1.0716105
+## Group size 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-629-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-629-2.png" width="672" /></p>
+</div>
+<div id="false-positive-parity" class="section level3 hasAnchor" number="12.2.7">
+<h3><span class="header-section-number">12.2.7</span> False Positive Parity<a href="sesgo-e-inequidad.html#false-positive-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cuando queremos que todos los grupos de la variable protegida tengan la misma tasa de falsos positivos. Es decir, nos equivocamos en las mismas proporciones para etiquetas positivas que eran negativas.</p>
+<p>Fórmula: <span class="math inline">\(\frac{FP}{TN + FP}\)</span></p>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="sesgo-e-inequidad.html#cb898-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fpr_parity</span>( </span>
+<span id="cb898-2"><a href="sesgo-e-inequidad.html#cb898-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb898-3"><a href="sesgo-e-inequidad.html#cb898-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb898-4"><a href="sesgo-e-inequidad.html#cb898-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb898-5"><a href="sesgo-e-inequidad.html#cb898-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb898-6"><a href="sesgo-e-inequidad.html#cb898-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb898-7"><a href="sesgo-e-inequidad.html#cb898-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb898-8"><a href="sesgo-e-inequidad.html#cb898-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##              Caucasian African_American      Asian    Hispanic Native_American
+## FPR           0.401249        0.7179657  0.2173913   0.3156250       0.6666667
+## FPR Parity    1.000000        1.7893269  0.5417865   0.7866063       1.6614786
+## Group size 2103.000000     3175.0000000 31.0000000 509.0000000      11.0000000
+##                  Other
+## FPR          0.3242009
+## FPR Parity   0.8079793
+## Group size 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-630-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-630-2.png" width="672" /></p>
+</div>
+<div id="negative-predictive-value-parity" class="section level3 hasAnchor" number="12.2.8">
+<h3><span class="header-section-number">12.2.8</span> Negative predictive value parity<a href="sesgo-e-inequidad.html#negative-predictive-value-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La paridad de valor predictivo negativo se logra si los valores predictivos negativos en los subgrupos están cerca unos de otros. El valor predictivo negativo se calcula como una relación entre el número de negativos verdaderos y el número total de negativos previstos. Esta función puede considerarse la “inversa” de la paridad de tasa predictiva (predictive rate parity).</p>
+<p>Fórmula: <span class="math inline">\(\frac{TN}{TN + FN}\)</span></p>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="sesgo-e-inequidad.html#cb901-1" aria-hidden="true" tabindex="-1"></a><span class="fu">npv_parity</span>( </span>
+<span id="cb901-2"><a href="sesgo-e-inequidad.html#cb901-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb901-3"><a href="sesgo-e-inequidad.html#cb901-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb901-4"><a href="sesgo-e-inequidad.html#cb901-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb901-5"><a href="sesgo-e-inequidad.html#cb901-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb901-6"><a href="sesgo-e-inequidad.html#cb901-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb901-7"><a href="sesgo-e-inequidad.html#cb901-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb901-8"><a href="sesgo-e-inequidad.html#cb901-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##               Caucasian African_American     Asian    Hispanic Native_American
+## NPV           0.7424976        0.7413194  0.750000   0.7423729       0.5000000
+## NPV Parity    1.0000000        0.9984133  1.010104   0.9998321       0.6734029
+## Group size 2103.0000000     3175.0000000 31.000000 509.0000000      11.0000000
+##                  Other
+## NPV          0.7748691
+## NPV Parity   1.0435982
+## Group size 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-631-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-631-2.png" width="672" /></p>
+</div>
+<div id="specificity-parity" class="section level3 hasAnchor" number="12.2.9">
+<h3><span class="header-section-number">12.2.9</span> Specificity parity<a href="sesgo-e-inequidad.html#specificity-parity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La paridad de especificidad se logra si las especificidades (la relación entre el número de verdaderos negativos y el número total de negativos) en los subgrupos están próximas entre sí. Esta función puede considerarse la “inversa” de las probabilidades igualadas (equalized odds).</p>
+<p>Fórmula: <span class="math inline">\(\frac{TN}{TN + FP}\)</span></p>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="sesgo-e-inequidad.html#cb904-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spec_parity</span>(</span>
+<span id="cb904-2"><a href="sesgo-e-inequidad.html#cb904-2" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> compas, </span>
+<span id="cb904-3"><a href="sesgo-e-inequidad.html#cb904-3" aria-hidden="true" tabindex="-1"></a> <span class="at">outcome =</span> <span class="st">&#39;Two_yr_Recidivism_01&#39;</span>, </span>
+<span id="cb904-4"><a href="sesgo-e-inequidad.html#cb904-4" aria-hidden="true" tabindex="-1"></a> <span class="at">group =</span> <span class="st">&#39;ethnicity&#39;</span>,</span>
+<span id="cb904-5"><a href="sesgo-e-inequidad.html#cb904-5" aria-hidden="true" tabindex="-1"></a> <span class="at">probs =</span> <span class="st">&#39;probability&#39;</span>, </span>
+<span id="cb904-6"><a href="sesgo-e-inequidad.html#cb904-6" aria-hidden="true" tabindex="-1"></a> <span class="at">cutoff =</span> <span class="fl">0.4</span>, </span>
+<span id="cb904-7"><a href="sesgo-e-inequidad.html#cb904-7" aria-hidden="true" tabindex="-1"></a> <span class="at">base =</span> <span class="st">&#39;Caucasian&#39;</span></span>
+<span id="cb904-8"><a href="sesgo-e-inequidad.html#cb904-8" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## $Metric
+##                      Caucasian African_American      Asian   Hispanic
+## Specificity           0.598751        0.2820343  0.7826087   0.684375
+## Specificity Parity    1.000000        0.4710378  1.3070688   1.143004
+## Group size         2103.000000     3175.0000000 31.0000000 509.000000
+##                    Native_American       Other
+## Specificity              0.3333333   0.6757991
+## Specificity Parity       0.5567145   1.1286814
+## Group size              11.0000000 343.0000000
+## 
+## $Metric_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-632-1.png" width="672" /></p>
+<pre><code>## 
+## $Probability_plot</code></pre>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-632-2.png" width="672" /></p>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="workflowsets-stacking.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpretabilidad-local.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

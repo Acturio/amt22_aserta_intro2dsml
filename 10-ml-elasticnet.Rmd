@@ -13,7 +13,7 @@ editor_options:
 
 En muchas técnicas de aprendizaje automático, **el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo**. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.
 
-La regularización consiste en **añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobreajuste**.
+La regularización consiste en **añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobre-ajuste**.
 
 El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o *RSS*. Los coeficientes $\beta$ se eligen de manera que minimicen esta función de pérdida.
 
@@ -65,7 +65,7 @@ $$\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda
 
 > A medida que $\lambda \rightarrow \infty$, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables). 
 
-Este método de regularizacion permite eliminar coeficientes con alta variación, lo cual **ayuda a la selección de variables**.
+Este método de regularización permite eliminar coeficientes con alta variación, lo cual **ayuda a la selección de variables**.
 
 ## Comparación entre Ridge y Lasso
 

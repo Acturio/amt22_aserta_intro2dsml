@@ -1,5 +1,12 @@
-<div class="watermark"><img src="img/header.png" width="400"></div>
+---
+editor_options: 
+  markdown: 
+    wrap: 80
+---
 
+::: watermark
+<img src="img/header.png" width="400"/>
+:::
 # Workflowsets & Stacking
 
 Es común no sepamos ni remotamente cuál es el mejor modelo que podríamos implementar al iniciar un proyecto con datos que nunca antes hemos visto. Es posible que un profesional de datos deba seleccionar muchas combinaciones de modelos y pre-procesadores. También es posible tener poco o ningún conocimiento a priori sobre qué método funcionará mejor con un nuevo conjunto de datos.

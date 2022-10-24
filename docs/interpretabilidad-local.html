@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 13 Interpretabilidad local | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sesgo-e-inequidad.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.1/str_view.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado-12-hrs"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado (12 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 1: Introducción</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Conceptos de Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#objetivos"><i class="fa fa-check"></i><b>1.2</b> Objetivos</a></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#requisitos-1"><i class="fa fa-check"></i><b>1.3</b> Requisitos</a></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aplicaciones"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones</a></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#tipos-de-algoritmos"><i class="fa fa-check"></i><b>1.5</b> Tipos de algoritmos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#perfiles-de-un-equipo"><i class="fa fa-check"></i><b>1.6</b> Perfiles de un equipo</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-datos"><i class="fa fa-check"></i>1) Ingeniero de datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#decisor"><i class="fa fa-check"></i>2) Decisor</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista"><i class="fa fa-check"></i>3) Analista</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista-experto"><i class="fa fa-check"></i>4) Analista experto</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#estadístico"><i class="fa fa-check"></i>5) Estadístico</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-machine-learning"><i class="fa fa-check"></i>6) Ingeniero de Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#científico-de-datos"><i class="fa fa-check"></i>7) Científico de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#gerente-de-análisis-líder-de-ciencia-de-datos"><i class="fa fa-check"></i>8) Gerente de Análisis / Líder de Ciencia de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#experto-cualitativo-científico-social"><i class="fa fa-check"></i>9) Experto Cualitativo / Científico Social</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#investigador"><i class="fa fa-check"></i>10) Investigador</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#extra-personal-adicional"><i class="fa fa-check"></i>Extra) Personal Adicional</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#google-data-career-path"><i class="fa fa-check"></i>Google Data Career Path</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#flujo-de-trabajo-en-ml"><i class="fa fa-check"></i><b>1.7</b> Flujo de trabajo en <em>ML</em></a></li>
+<li class="chapter" data-level="1.8" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ciclo-de-un-proyecto"><i class="fa fa-check"></i><b>1.8</b> Ciclo de un proyecto</a></li>
+<li class="chapter" data-level="1.9" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#taller-de-scoping"><i class="fa fa-check"></i><b>1.9</b> Taller de Scoping</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.9.1</b> Data Maturity Framework</a></li>
+<li class="chapter" data-level="1.9.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.9.2</b> Scoping</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ejemplos"><i class="fa fa-check"></i>Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.4.1</b> Operadores de asignación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.2</b> Variables</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.3</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.5</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.6</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.7</b> Listas</a></li>
+<li class="chapter" data-level="2.4.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funbas"><i class="fa fa-check"></i><b>2.5</b> Funciones básicas de R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-una-función-de-r"><i class="fa fa-check"></i><b>2.5.1</b> ¿Qué es una función de R?</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.5.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#pruebas-lógicas"><i class="fa fa-check"></i><b>2.5.3</b> Pruebas lógicas</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-lógicos"><i class="fa fa-check"></i><b>2.5.4</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funciones-sobre-vectores"><i class="fa fa-check"></i><b>2.5.5</b> Funciones sobre vectores</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-rep"><i class="fa fa-check"></i><b>2.5.6</b> Función <code>rep</code></a></li>
+<li class="chapter" data-level="2.5.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-seq"><i class="fa fa-check"></i><b>2.5.7</b> Función <code>seq</code></a></li>
+<li class="chapter" data-level="2.5.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.8</b> EJERCICIOS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#bucles"><i class="fa fa-check"></i><b>2.6</b> Estructuras de control</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-else-if"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción else if</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.7</b> Instrucción <code>repeat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-archivos"><i class="fa fa-check"></i><b>2.7.1</b> Nombres de los archivos</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-objetos"><i class="fa fa-check"></i><b>2.7.2</b> Nombres de los objetos</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#longitud-de-una-línea-de-código"><i class="fa fa-check"></i><b>2.7.3</b> Longitud de una línea de código</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#espacios"><i class="fa fa-check"></i><b>2.7.4</b> Espacios</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#asignación"><i class="fa fa-check"></i><b>2.7.5</b> Asignación</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-de-archivos"><i class="fa fa-check"></i><b>3.1</b> Lectura de archivos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#archivos-csv"><i class="fa fa-check"></i><b>3.1.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#archivos-txt"><i class="fa fa-check"></i><b>3.1.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.1.3" data-path="tidyverse.html"><a href="tidyverse.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.1.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.1.4" data-path="tidyverse.html"><a href="tidyverse.html#archivos-json"><i class="fa fa-check"></i><b>3.1.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.1.5" data-path="tidyverse.html"><a href="tidyverse.html#archivos-rds"><i class="fa fa-check"></i><b>3.1.5</b> Archivos rds</a></li>
+<li class="chapter" data-level="3.1.6" data-path="tidyverse.html"><a href="tidyverse.html#bases-de-datos"><i class="fa fa-check"></i><b>3.1.6</b> Bases de Datos</a></li>
+<li class="chapter" data-level="3.1.7" data-path="tidyverse.html"><a href="tidyverse.html#oracle-database"><i class="fa fa-check"></i><b>3.1.7</b> Oracle Database</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>3.2</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>3.2.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="3.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>3.2.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="3.2.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>3.2.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="3.2.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>3.2.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>3.2.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="3.2.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>3.2.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.2.7" data-path="tidyverse.html"><a href="tidyverse.html#cruces-de-tablas"><i class="fa fa-check"></i><b>3.2.7</b> Cruces de tablas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#orden-y-estructura"><i class="fa fa-check"></i><b>3.3</b> Orden y estructura</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#pivote-horizontal"><i class="fa fa-check"></i><b>3.3.1</b> Pivote horizontal</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#pivote-vertical"><i class="fa fa-check"></i><b>3.3.2</b> Pivote vertical</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tidyverse.html"><a href="tidyverse.html#unión-de-columnas"><i class="fa fa-check"></i><b>3.3.3</b> Unión de columnas</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tidyverse.html"><a href="tidyverse.html#separador-de-columnas"><i class="fa fa-check"></i><b>3.3.4</b> Separador de columnas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-texto"><i class="fa fa-check"></i><b>3.4</b> Manipulación de texto</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="tidyverse.html"><a href="tidyverse.html#caracteres-especiales"><i class="fa fa-check"></i><b>3.4.1</b> Caracteres especiales</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tidyverse.html"><a href="tidyverse.html#tamaño-de-cadena"><i class="fa fa-check"></i><b>3.4.2</b> Tamaño de cadena</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tidyverse.html"><a href="tidyverse.html#concatenar"><i class="fa fa-check"></i><b>3.4.3</b> Concatenar</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tidyverse.html"><a href="tidyverse.html#extraer-y-reemplazar"><i class="fa fa-check"></i><b>3.4.4</b> Extraer y reemplazar</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tidyverse.html"><a href="tidyverse.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.4.5</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tidyverse.html"><a href="tidyverse.html#detectar-coincidencias"><i class="fa fa-check"></i><b>3.4.6</b> Detectar coincidencias</a></li>
+<li class="chapter" data-level="3.4.7" data-path="tidyverse.html"><a href="tidyverse.html#contabilizar-coincidencias"><i class="fa fa-check"></i><b>3.4.7</b> Contabilizar coincidencias</a></li>
+<li class="chapter" data-level="3.4.8" data-path="tidyverse.html"><a href="tidyverse.html#extraer-coincidencias"><i class="fa fa-check"></i><b>3.4.8</b> Extraer coincidencias</a></li>
+<li class="chapter" data-level="3.4.9" data-path="tidyverse.html"><a href="tidyverse.html#reemplazar-coincidencias"><i class="fa fa-check"></i><b>3.4.9</b> Reemplazar coincidencias</a></li>
+<li class="chapter" data-level="3.4.10" data-path="tidyverse.html"><a href="tidyverse.html#divisiones-mediante-patrones"><i class="fa fa-check"></i><b>3.4.10</b> Divisiones mediante patrones</a></li>
+<li class="chapter" data-level="3.4.11" data-path="tidyverse.html"><a href="tidyverse.html#localización-de-coincidencias"><i class="fa fa-check"></i><b>3.4.11</b> Localización de coincidencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-tiempo"><i class="fa fa-check"></i><b>3.5</b> Manipulación de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-y-creación-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.1</b> Lectura y creación de datos temporales</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#iteraciones"><i class="fa fa-check"></i><b>3.6</b> Iteraciones</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse.html"><a href="tidyverse.html#bucles-1"><i class="fa fa-check"></i><b>3.6.1</b> Bucles</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visualización.html"><a href="visualización.html#lo-que-no-se-debe-hacer"><i class="fa fa-check"></i><b>4.2.1</b> Lo que no se debe hacer…</a></li>
+<li class="chapter" data-level="4.2.2" data-path="visualización.html"><a href="visualización.html#principios-de-visualización"><i class="fa fa-check"></i><b>4.2.2</b> Principios de visualización</a></li>
+<li class="chapter" data-level="4.2.3" data-path="visualización.html"><a href="visualización.html#principios-generales-del-diseño-analítico"><i class="fa fa-check"></i><b>4.2.3</b> Principios generales del diseño analítico:</a></li>
+<li class="chapter" data-level="4.2.4" data-path="visualización.html"><a href="visualización.html#técnicas-de-visualización"><i class="fa fa-check"></i><b>4.2.4</b> Técnicas de visualización:</a></li>
+<li class="chapter" data-level="4.2.5" data-path="visualización.html"><a href="visualización.html#indicadores-de-calidad-gráfica"><i class="fa fa-check"></i><b>4.2.5</b> Indicadores de calidad gráfica:</a></li>
+<li class="chapter" data-level="4.2.6" data-path="visualización.html"><a href="visualización.html#gráficos-univariados"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos univariados:</a></li>
+<li class="chapter" data-level="4.2.7" data-path="visualización.html"><a href="visualización.html#gráficos-multivariados"><i class="fa fa-check"></i><b>4.2.7</b> Gráficos multivariados</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualización.html"><a href="visualización.html#creación-de-gráficos"><i class="fa fa-check"></i><b>4.3</b> Creación de gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualización.html"><a href="visualización.html#estéticas"><i class="fa fa-check"></i><b>4.3.1</b> Estéticas</a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualización.html"><a href="visualización.html#objetos-geométricos-o-capas"><i class="fa fa-check"></i><b>4.3.2</b> Objetos geométricos o capas</a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualización.html"><a href="visualización.html#facetas"><i class="fa fa-check"></i><b>4.3.3</b> Facetas</a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualización.html"><a href="visualización.html#más-sobre-estéticas"><i class="fa fa-check"></i><b>4.3.4</b> Más sobre estéticas</a></li>
+<li class="chapter" data-level="4.3.5" data-path="visualización.html"><a href="visualización.html#quick-view"><i class="fa fa-check"></i><b>4.3.5</b> Quick View</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualización.html"><a href="visualización.html#análisis-univariado"><i class="fa fa-check"></i><b>4.4</b> Análisis univariado</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visualización.html"><a href="visualización.html#variables-numéricas"><i class="fa fa-check"></i><b>4.4.1</b> Variables numéricas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a>
+<ul>
+<li class="chapter" data-level="" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i>¡ Warning !</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="visualización.html"><a href="visualización.html#reporte-interactivos"><i class="fa fa-check"></i><b>4.7</b> Reporte interactivos</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 2: Machine Learning</b></span></li>
+<li class="chapter" data-level="5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html"><i class="fa fa-check"></i><b>5</b> Introducción a Machine Learning</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#análisis-supervisado-vs-no-supervisado"><i class="fa fa-check"></i><b>5.1</b> Análisis Supervisado vs No supervisado</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#regresión-vs-clasificación"><i class="fa fa-check"></i><b>5.1.1</b> Regresión vs clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#sesgo-vs-varianza"><i class="fa fa-check"></i><b>5.2</b> Sesgo vs varianza</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#errores-reducibles"><i class="fa fa-check"></i><b>5.2.1</b> Errores reducibles</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-irreducible"><i class="fa fa-check"></i><b>5.2.2</b> Error irreducible</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#balance-entre-sesgo-y-varianza-o-trade-off"><i class="fa fa-check"></i><b>5.2.3</b> Balance entre sesgo y varianza o Trade-off</a></li>
+<li class="chapter" data-level="5.2.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-total"><i class="fa fa-check"></i><b>5.2.4</b> Error total</a></li>
+<li class="chapter" data-level="5.2.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#overfitting"><i class="fa fa-check"></i><b>5.2.5</b> Overfitting</a></li>
+<li class="chapter" data-level="5.2.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#underfitting"><i class="fa fa-check"></i><b>5.2.6</b> Underfitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#orden-y-estructura-de-proyecto"><i class="fa fa-check"></i><b>5.3</b> Orden y estructura de proyecto</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#plantilla-de-estructura-proyecto"><i class="fa fa-check"></i><b>5.3.1</b> Plantilla de estructura proyecto</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#reproducibilidad"><i class="fa fa-check"></i><b>5.3.2</b> Reproducibilidad</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#partición-de-datos"><i class="fa fa-check"></i><b>5.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>5.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="5.4.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#conjunto-de-validación"><i class="fa fa-check"></i><b>5.4.2</b> Conjunto de validación</a></li>
+<li class="chapter" data-level="5.4.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>5.4.3</b> Leave-one-out cross-validation</a></li>
+<li class="chapter" data-level="5.4.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#v-fold-cross-validation"><i class="fa fa-check"></i><b>5.4.4</b> V Fold Cross Validation</a></li>
+<li class="chapter" data-level="5.4.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#medidas-de-ajuste"><i class="fa fa-check"></i><b>5.4.5</b> Medidas de ajuste</a></li>
+<li class="chapter" data-level="5.4.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#validación-cruzada-para-series-de-tiempo"><i class="fa fa-check"></i><b>5.4.6</b> Validación cruzada para series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>5.5</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="5.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#ingeniería-de-datos"><i class="fa fa-check"></i><b>5.6</b> Ingeniería de datos</a></li>
+<li class="chapter" data-level="5.7" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#recetas"><i class="fa fa-check"></i><b>5.7</b> Recetas</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pasos-y-estructura-de-recetas"><i class="fa fa-check"></i><b>5.7.1</b> Pasos y estructura de recetas</a></li>
+<li class="chapter" data-level="5.7.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#imputaciones"><i class="fa fa-check"></i><b>5.7.2</b> Imputaciones</a></li>
+<li class="chapter" data-level="5.7.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#agregar-o-modificar-columnas"><i class="fa fa-check"></i><b>5.7.3</b> Agregar o modificar columnas</a></li>
+<li class="chapter" data-level="5.7.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#interacciones"><i class="fa fa-check"></i><b>5.7.4</b> Interacciones</a></li>
+<li class="chapter" data-level="5.7.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#transformaciones-generales"><i class="fa fa-check"></i><b>5.7.5</b> Transformaciones generales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#datos-y-tipos-de-modelos"><i class="fa fa-check"></i><b>5.8</b> Datos y tipos de modelos</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos"><i class="fa fa-check"></i><b>5.8.1</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta"><i class="fa fa-check"></i><b>5.8.2</b> Definición de la receta</a></li>
+<li class="chapter" data-level="5.8.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos-1"><i class="fa fa-check"></i><b>5.8.3</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta-1"><i class="fa fa-check"></i><b>5.8.4</b> Definición de la receta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regresión-lineal.html"><a href="regresión-lineal.html"><i class="fa fa-check"></i><b>6</b> Regresión Lineal</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#ajuste-de-modelo"><i class="fa fa-check"></i><b>6.1</b> Ajuste de modelo</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-simple"><i class="fa fa-check"></i><b>6.1.1</b> Estimación de parámetros: Regresión lineal simple</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-múltiple"><i class="fa fa-check"></i><b>6.1.2</b> Estimación de parámetros: Regresión lineal múltiple</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#residuos-del-modelo"><i class="fa fa-check"></i><b>6.2</b> Residuos del modelo</a>
+<ul>
+<li class="chapter" data-level="" data-path="regresión-lineal.html"><a href="regresión-lineal.html#condiciones-para-el-ajuste-de-una-regresión-lineal"><i class="fa fa-check"></i>Condiciones para el ajuste de una regresión lineal:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño"><i class="fa fa-check"></i><b>6.3</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4" data-path="regresión-lineal.html"><a href="regresión-lineal.html#implementación-en-r"><i class="fa fa-check"></i><b>6.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#coeficientes-del-modelo"><i class="fa fa-check"></i><b>6.4.1</b> Coeficientes del modelo</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño-1"><i class="fa fa-check"></i><b>6.4.2</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#gráfica-de-ajuste"><i class="fa fa-check"></i><b>6.4.3</b> Gráfica de ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métodos-se-selección-de-variables"><i class="fa fa-check"></i><b>6.5</b> Métodos se selección de variables</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#forward-selection-selección-hacia-adelante"><i class="fa fa-check"></i><b>6.5.1</b> Forward selection (selección hacia adelante)</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#backward-selection-selección-hacia-atrás"><i class="fa fa-check"></i><b>6.5.2</b> Backward selection (selección hacia atrás)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regresión-logística.html"><a href="regresión-logística.html"><i class="fa fa-check"></i><b>7</b> Regresión Logística</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regresión-logística.html"><a href="regresión-logística.html#función-sigmoide"><i class="fa fa-check"></i><b>7.1</b> Función sigmoide</a></li>
+<li class="chapter" data-level="7.2" data-path="regresión-logística.html"><a href="regresión-logística.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>7.2</b> Ajuste del modelo</a></li>
+<li class="chapter" data-level="7.3" data-path="regresión-logística.html"><a href="regresión-logística.html#clasificación-2"><i class="fa fa-check"></i><b>7.3</b> Clasificación</a></li>
+<li class="chapter" data-level="7.4" data-path="regresión-logística.html"><a href="regresión-logística.html#métricas-de-desempeño-2"><i class="fa fa-check"></i><b>7.4</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html"><i class="fa fa-check"></i><b>9</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ajuste-del-modelo-2"><i class="fa fa-check"></i><b>9.1</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#attribute-selective-measure-asm"><i class="fa fa-check"></i><b>9.1.1</b> Attribute Selective Measure (ASM)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regularización-de-árboles"><i class="fa fa-check"></i><b>9.2</b> Regularización de árboles</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
+<li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>9.3</b> Aprendizaje conjunto</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>9.3.1</b> Bagging vs. boosting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#error-out-of-bag"><i class="fa fa-check"></i><b>9.3.2</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging"><i class="fa fa-check"></i><b>9.4</b> Bagging</a></li>
+<li class="chapter" data-level="9.5" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#random-forest"><i class="fa fa-check"></i><b>9.5</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#qué-es"><i class="fa fa-check"></i><b>9.5.1</b> ¿Qué es?</a></li>
+<li class="chapter" data-level="9.5.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.2</b> Características de los bosques aleatorios</a></li>
+<li class="chapter" data-level="9.5.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio"><i class="fa fa-check"></i><b>9.5.3</b> Aplicar árboles de decisión en un bosque aleatorio</a></li>
+<li class="chapter" data-level="9.5.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.4</b> Ventajas y desventjas de bosques aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-rf-en-r"><i class="fa fa-check"></i><b>9.6</b> Implementación de RF en R</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.6.1</b> Regresión</a></li>
+<li class="chapter" data-level="9.6.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#clasificación-5"><i class="fa fa-check"></i><b>9.6.2</b> Clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#boosting"><i class="fa fa-check"></i><b>9.7</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#predicciones-boosting"><i class="fa fa-check"></i><b>9.7.1</b> Predicciones <em>Boosting</em></a></li>
+<li class="chapter" data-level="9.7.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#modelos-boosting"><i class="fa fa-check"></i><b>9.7.2</b> Modelos <em>Boosting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-xgb-en-r"><i class="fa fa-check"></i><b>9.8</b> Implementación de XGB en R</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>9.8.1</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="9.8.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>9.8.2</b> XGBoost para clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>10</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>10.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="10.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>10.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="10.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>10.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="10.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>10.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-3"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>11</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>11.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="11.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>11.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="11.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflowset"><i class="fa fa-check"></i><b>11.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="11.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>11.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="11.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>11.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>11.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>11.6</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>11.6.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="11.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>11.6.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="11.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>11.6.3</b> Comparación de métricas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>12</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>12.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="12.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>12.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>12.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>12.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>12.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="12.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>12.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="12.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>12.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="12.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>12.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="12.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>12.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="12.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>12.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="12.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>12.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html"><i class="fa fa-check"></i><b>13</b> Interpretabilidad local</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-lime"><i class="fa fa-check"></i><b>13.1</b> Interpretabilidad LIME</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#proceso"><i class="fa fa-check"></i><b>13.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="13.1.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#características-principales"><i class="fa fa-check"></i><b>13.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#implementación-con-r"><i class="fa fa-check"></i><b>13.1.3</b> Implementación con <em>R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-dalextra"><i class="fa fa-check"></i><b>13.2</b> Interpretabilidad DALEXtra</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#otros-métodos"><i class="fa fa-check"></i><b>13.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpretabilidad-local" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Capítulo 13</span> Interpretabilidad local<a href="interpretabilidad-local.html#interpretabilidad-local" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Interpretabilidad:</strong> En Machine Learning, nos referimos a interpretabilidad al grado en el que un humano puede entender la causa de una decisión o clasificación, la cual nos permite identificar y evitar tener sesgo, injusticia, inequidad en los modelos que generamos.</p>
+<p>Poder interpretar nuestros modelos nos brinda más confianza en que lo que estamos haciendo es correcto (además de las métricas de desempeño). Por otro lado, para la gente que lo ocupa, permite transparentar y tener más confianza al modelo.</p>
+<p><strong>Ejemplos</strong></p>
+<ul>
+<li><p>Etiquetado: Google photos (2015) etiqueta incorrectamente personas afroamericanas como gorilas.</p></li>
+<li><p>Facial Recognition (IBM, Microsoft, Megvii): Reconocimiento para hombres blancos 99%, mujeres afroamericanas 35%.</p></li>
+<li><p>Facebook automatic translation: Arresto de un palestino por traducción incorrecta de “buenos días” en hebreo a “atácalos”.</p></li>
+</ul>
+<p><strong>Interpretabilidad en ML</strong></p>
+<ul>
+<li><p>General Data Protection Regulation (GDPR): Desde mayo de 2018 existe el derecho a una explicación Por ejemplo: Algoritmos de predicción de riesgo en créditos hipotecarios.</p></li>
+<li><p>Se puede tener interpretabilidad de modelos de aprendizaje supervisado.</p></li>
+<li><p>Se tiene la creencia equivocada de que en Europa no se puede ocupar Deep Learning debido a la falta de interpretabilidad y el GDPR. Esto no es verdad.</p></li>
+<li><p>Es verdad que preferimos ocupar modelos más simples porque nos permiten entender -y explicar- de manera más sencilla por qué se están tomando las decisiones.</p></li>
+<li><p>Te recomiendo leer el artículo Why should I trust you? (2016) base de mucho de lo desarrollado para interpretabilidad.</p></li>
+</ul>
+<div id="interpretabilidad-lime" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Interpretabilidad LIME<a href="interpretabilidad-local.html#interpretabilidad-lime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Acrónimo de <em>Local Interpretable Model-Agnostic Explanation</em>. El objetivo es tener explicación que un humano pueda entender sobre cualquier modelo supervisado a través de un <strong>modelo local más simple</strong>.</p>
+<p>La explicación se genera para cada predicción realizada. Esta basado en la suposición de que un modelo complejo es lineal en una escala local.</p>
+<p>En el contexto de LIME:</p>
+<ul>
+<li><p>Local: Se refiere a que un modelo simple es lo suficientemente bueno/igual de bueno localmente que uno complejo globalmente.</p></li>
+<li><p>Interpretable: Se refiere a que la explicación debe ser entendida por un ser humano.</p></li>
+<li><p>Model-agnostic: Se refiere a tratar a cualquier modelo de clasificación, complejo o no, como una caja negra a la que metemos observaciones y obtenemos predicciones, no nos interesa cómo genera estas predicciones, lo que nos interesa es generarlas.</p></li>
+</ul>
+<p><img src="img/13-lime/lime.png" width="700pt" height="400pt" style="display: block; margin: auto;" /></p>
+<div id="proceso" class="section level3 hasAnchor" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> Proceso<a href="interpretabilidad-local.html#proceso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El objetivo de <em>LIME</em> es entender por qué el modelo de machine learning hace cierta predicción, para ello <strong><em>LIME</em> prueba qué pasa con las predicciones si le brindamos al modelo las mismas observaciones pero con variaciones.</strong></p>
+<p>Genera un nuevo set de datos que consiste de una muestra permutada con sus predicciones originales. Con este nuevo set <em>LIME</em> entrena un modelo interpretable que puede ser:</p>
+<ul>
+<li>regresión lineal como LASSO</li>
+<li>regresión logística</li>
+<li>árboles de decisión</li>
+<li>Naive Bayes</li>
+<li>K-NN.</li>
+<li>etc.</li>
+</ul>
+<p>Este modelo interpretable es <strong>ponderado por la proximidad de las observaciones en la muestra a la instancia de interés</strong> (la predicción que queremos explicar).</p>
+<p>El modelo generado debe ser una buena aproximación al modelo de caja negra localmente, pero no necesariamente en forma global. A esto se le llama <em>local fidelity</em>.</p>
+<p>Para entrenar el modelo interpretable, seguimos los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Seleccionamos la observación de la que queremos una explicación.</p></li>
+<li><p>Seleccionamos una vecindad para que <em>LIME</em> ajuste el modelo.</p></li>
+<li><p>Seleccionamos el número de features más importantes con los que queremos realizar la explicación (se recomienda que sea menor a <span class="math inline">\(10\)</span>).</p></li>
+<li><p><em>LIME</em> genera perturbaciones en una muestra de datos del conjunto de datos</p></li>
+</ol>
+<ul>
+<li><strong>Texto:</strong> “Agrega” o “quita” palabras del texto original aleatoriamente.</li>
+</ul>
+<p><img src="img/13-lime/lime_text.png" width="600pt" height="120" style="display: block; margin: auto;" /></p>
+<p><img src="img/13-lime/lime_text_2.png" width="600pt" height="200pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/13-lime/lime_text_3.png" width="600" height="210" style="display: block; margin: auto;" /></p>
+<p>La columna de probabilidad corresponde a la probabilidad de que el enunciado sea Spam o no. La columna peso corresponde a la proximidad del enunciado con variación al enunciado original y está calculado como 1 menos la proporción de palabras que fueron eliminadas.</p>
+<p>Por ejemplo: Si una de 7 palabras fueron removidas, el peso correspondería a: <span class="math inline">\(1- 1/7=0.86\)</span>.</p>
+<p>Al pasar dos enunciados al modelo de interpretabilidad se identifica que para los casos donde está la palabra <em>channel!</em> el enunciado será clasificado como spam que es el feature con mayor peso para la etiqueta spam.</p>
+<ul>
+<li><strong>Imágenes:</strong> “Apaga” y “prende” pixeles de la imagen original.</li>
+</ul>
+<p><img src="img/13-lime/frog_lime.png" width="600pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/13-lime/huskie_lime.png" width="400pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/13-lime/tiger.jpeg" width="400pt" height="400pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Datos tabulares:</strong> De cada feature genera nuevas muestras tomadas de una distribución normal con la <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> del feature.</li>
+</ul>
+<p><img src="img/13-lime/lime_tabular_data.png" width="700pt" height="600pt" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>Las observaciones más “cercanas” tendrán más peso que el resto. <em>LIME</em> ocupa un kernel de suavizamiento exponencial.</p>
+</blockquote>
+<blockquote>
+<p>La implementación de <em>LIME</em> ocupa como kernel <span class="math inline">\(0.75\)</span> veces la raíz cuadrada del número de features que tenga nuestro dataset. ¿Eso es bueno o malo? Hasta el momento no hay una justificación matemática o estadística que justifique el definir ese número.</p>
+</blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Obtiene las predicciones del modelo de caja negra para las observaciones generadas en el paso <span class="math inline">\(3\)</span>.</p></li>
+<li><p>Calcula las distancias entre la predicción original y las obtenidas con los datos modificados.</p></li>
+</ol>
+<ul>
+<li><p><strong>Datos tabulares:</strong> Distancia euclidiana por default.</p></li>
+<li><p><strong>Datos numéricos:</strong> Se obtiene la media y desviación estándar y se discretiza a sus cuartiles.</p></li>
+<li><p><strong>Datos categóricos:</strong> Se calcula la frecuencia de cada valor.</p></li>
+<li><p><strong>Texto:</strong> Distancia coseno.</p></li>
+<li><p><strong>Imágenes:</strong> Distancia euclidiana.</p></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Convierte la distancia a un score de similitud.</li>
+</ol>
+<ul>
+<li><p><strong>Datos tabulares:</strong> Utiliza el kernel de suavizamiento exponencial.</p></li>
+<li><p><strong>Texto:</strong> Distancia coseno.</p></li>
+<li><p><strong>Imágenes:</strong></p>
+<ul>
+<li><p>Genera un modelo simple con los datos modificados</p></li>
+<li><p>Selecciona las <span class="math inline">\(m\)</span> mejores características (depende del modelo utilizado para crear el modelo de interpretabilidad) como explicación para la predicción del modelo de caja negra.</p></li>
+</ul></li>
+</ul>
+</div>
+<div id="características-principales" class="section level3 hasAnchor" number="13.1.2">
+<h3><span class="header-section-number">13.1.2</span> Características principales<a href="interpretabilidad-local.html#características-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Vecindad: kernel con suavizamiento exponencial. Peso de influencia</li>
+<li>Similitud: Con respecto a las observaciones originales.</li>
+<li>Selección de variables: Las variables que explican la predicción generada.</li>
+</ul>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>Fácil de implementar.</li>
+<li>Se puede ocupar en datos tabulares, imágenes y texto.</li>
+<li>Existen paquetes de implementación para R (lime) y Python (lime).</li>
+<li>Las explicaciones son cortas (pocos features), por lo que son más fáciles de entender por un humano no entrenado en machine learning.</li>
+<li>La métrica de <em>fidelity</em> nos permite identificar qué tan confiable es el modelo de interpretabilidad en explicar las predicciones del modelo de caja negra en las vecindad del punto de interés.</li>
+<li>Se pueden ocupar otros features en el modelo de interpretabilidad que los ocupados para entrenar el de caja negra.</li>
+</ul>
+<p><strong>Desventajas:</strong></p>
+<ul>
+<li><p>La selección correcta de vecindad es el problema más grave de <em>LIME</em>. Para minimizar este problema deberemos probar con diferentes vecindades y ver cuál(es) son las de mayor sentido.</p></li>
+<li><p>Variación de las observaciones originales: ¿Qué tal que la distribución no es normal? Al muestrear de una distribución gaussiana podemos ignorar correlaciones entre features.</p></li>
+<li><p>Dependiendo del tamaño de la vecindad tendremos resultados muy diferentes. Este es el mayor problema de <em>LIME</em>.</p></li>
+</ul>
+</div>
+<div id="implementación-con-r" class="section level3 hasAnchor" number="13.1.3">
+<h3><span class="header-section-number">13.1.3</span> Implementación con <em>R</em><a href="interpretabilidad-local.html#implementación-con-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="interpretabilidad-local.html#cb907-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdp)</span>
+<span id="cb907-2"><a href="interpretabilidad-local.html#cb907-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb907-3"><a href="interpretabilidad-local.html#cb907-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb907-4"><a href="interpretabilidad-local.html#cb907-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lime)</span></code></pre></div>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="interpretabilidad-local.html#cb908-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb908-2"><a href="interpretabilidad-local.html#cb908-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb908-3"><a href="interpretabilidad-local.html#cb908-3" aria-hidden="true" tabindex="-1"></a>model_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb908-4"><a href="interpretabilidad-local.html#cb908-4" aria-hidden="true" tabindex="-1"></a> <span class="at">x =</span> dplyr<span class="sc">::</span><span class="fu">select</span>(telco_train, <span class="sc">-</span><span class="fu">one_of</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;Churn&quot;</span>)),</span>
+<span id="cb908-5"><a href="interpretabilidad-local.html#cb908-5" aria-hidden="true" tabindex="-1"></a> <span class="at">y =</span> telco_train<span class="sc">$</span>Churn, </span>
+<span id="cb908-6"><a href="interpretabilidad-local.html#cb908-6" aria-hidden="true" tabindex="-1"></a> <span class="at">ntree =</span> <span class="dv">100</span></span>
+<span id="cb908-7"><a href="interpretabilidad-local.html#cb908-7" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="interpretabilidad-local.html#cb909-1" aria-hidden="true" tabindex="-1"></a>explainer_caret <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">lime</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(telco_train, <span class="sc">-</span><span class="fu">one_of</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;Churn&quot;</span>)), model_rf)</span></code></pre></div>
+<p>Veamos cómo llegaron a ser la predicciones, usando <em>Lime</em>.</p>
+<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb910-1"><a href="interpretabilidad-local.html#cb910-1" aria-hidden="true" tabindex="-1"></a>model_type.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x,...){</span>
+<span id="cb910-2"><a href="interpretabilidad-local.html#cb910-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="st">&quot;classification&quot;</span>) </span>
+<span id="cb910-3"><a href="interpretabilidad-local.html#cb910-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb910-4"><a href="interpretabilidad-local.html#cb910-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb910-5"><a href="interpretabilidad-local.html#cb910-5" aria-hidden="true" tabindex="-1"></a>predict_model.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) {</span>
+<span id="cb910-6"><a href="interpretabilidad-local.html#cb910-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(x, newdata, <span class="at">type =</span> type) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb910-7"><a href="interpretabilidad-local.html#cb910-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="interpretabilidad-local.html#cb911-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb911-2"><a href="interpretabilidad-local.html#cb911-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb911-3"><a href="interpretabilidad-local.html#cb911-3" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> telco_train <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">one_of</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;Churn&quot;</span>)) <span class="sc">%&gt;%</span> .[<span class="dv">2</span>,]</span>
+<span id="cb911-4"><a href="interpretabilidad-local.html#cb911-4" aria-hidden="true" tabindex="-1"></a>new_data <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span></code></pre></div>
+<pre><code>##                         [,1]
+## TotalCharges       0.4733424
+## MonthlyCharges     0.6636772
+## SeniorCitizen     -0.4417148
+## Contract_One.year  1.0000000
+## Contract_Two.year  0.0000000</code></pre>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="interpretabilidad-local.html#cb913-1" aria-hidden="true" tabindex="-1"></a>explanation <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb913-2"><a href="interpretabilidad-local.html#cb913-2" aria-hidden="true" tabindex="-1"></a> <span class="at">x =</span> new_data, </span>
+<span id="cb913-3"><a href="interpretabilidad-local.html#cb913-3" aria-hidden="true" tabindex="-1"></a> <span class="at">explainer =</span> explainer_caret, </span>
+<span id="cb913-4"><a href="interpretabilidad-local.html#cb913-4" aria-hidden="true" tabindex="-1"></a> <span class="at">feature_select =</span> <span class="st">&quot;auto&quot;</span>,      <span class="co"># Método de selección de variables</span></span>
+<span id="cb913-5"><a href="interpretabilidad-local.html#cb913-5" aria-hidden="true" tabindex="-1"></a> <span class="at">n_features =</span> <span class="dv">10</span>,              <span class="co"># Número de características para explicar el modelo</span></span>
+<span id="cb913-6"><a href="interpretabilidad-local.html#cb913-6" aria-hidden="true" tabindex="-1"></a> <span class="at">n_labels =</span> <span class="dv">1</span></span>
+<span id="cb913-7"><a href="interpretabilidad-local.html#cb913-7" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb913-8"><a href="interpretabilidad-local.html#cb913-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb913-9"><a href="interpretabilidad-local.html#cb913-9" aria-hidden="true" tabindex="-1"></a>explanation</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 13
+##   model_t…¹ case  label label…² model…³ model…⁴ model…⁵ feature featu…⁶ featur…⁷
+##   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 classifi… 1     No       0.99   0.140   0.772   0.990 TotalC…   0.473  1.28e-1
+## 2 classifi… 1     No       0.99   0.140   0.772   0.990 Monthl…   0.664 -1.43e-1
+## 3 classifi… 1     No       0.99   0.140   0.772   0.990 Senior…  -0.442  1.45e-4
+## 4 classifi… 1     No       0.99   0.140   0.772   0.990 Contra…   1      2.43e-1
+## 5 classifi… 1     No       0.99   0.140   0.772   0.990 Contra…   0     -1.00e-2
+## # … with 3 more variables: feature_desc &lt;chr&gt;, data &lt;list&gt;, prediction &lt;list&gt;,
+## #   and abbreviated variable names ¹​model_type, ²​label_prob, ³​model_r2,
+## #   ⁴​model_intercept, ⁵​model_prediction, ⁶​feature_value, ⁷​feature_weight</code></pre>
+<p>Para obtener una representación más intuitiva, podemos usar <code>plot_features()</code>
+proporcionado para obtener una descripción visual de las explicaciones.</p>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="interpretabilidad-local.html#cb915-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_features</span>(explanation, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-648-1.png" width="672" /></p>
+<p><strong>Otro ejemplo</strong></p>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="interpretabilidad-local.html#cb916-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb916-2"><a href="interpretabilidad-local.html#cb916-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb916-3"><a href="interpretabilidad-local.html#cb916-3" aria-hidden="true" tabindex="-1"></a>new_data2 <span class="ot">&lt;-</span> telco_train <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">one_of</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;Churn&quot;</span>)) <span class="sc">%&gt;%</span> .[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>),]</span>
+<span id="cb916-4"><a href="interpretabilidad-local.html#cb916-4" aria-hidden="true" tabindex="-1"></a>new_data2 <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span></code></pre></div>
+<pre><code>##                         [,1]       [,2]
+## TotalCharges       0.4733424 -0.8504306
+## MonthlyCharges     0.6636772  0.6487142
+## SeniorCitizen     -0.4417148  2.2634452
+## Contract_One.year  1.0000000  0.0000000
+## Contract_Two.year  0.0000000  0.0000000</code></pre>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="interpretabilidad-local.html#cb918-1" aria-hidden="true" tabindex="-1"></a>explanation2 <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb918-2"><a href="interpretabilidad-local.html#cb918-2" aria-hidden="true" tabindex="-1"></a> <span class="at">x =</span> new_data2, </span>
+<span id="cb918-3"><a href="interpretabilidad-local.html#cb918-3" aria-hidden="true" tabindex="-1"></a> <span class="at">explainer =</span> explainer_caret, </span>
+<span id="cb918-4"><a href="interpretabilidad-local.html#cb918-4" aria-hidden="true" tabindex="-1"></a> <span class="at">feature_select =</span> <span class="st">&quot;auto&quot;</span>,      <span class="co"># Método de selección de variables</span></span>
+<span id="cb918-5"><a href="interpretabilidad-local.html#cb918-5" aria-hidden="true" tabindex="-1"></a> <span class="at">n_features =</span> <span class="dv">10</span>,              <span class="co"># Número de características para explicar el modelo</span></span>
+<span id="cb918-6"><a href="interpretabilidad-local.html#cb918-6" aria-hidden="true" tabindex="-1"></a> <span class="at">n_labels =</span> <span class="dv">1</span></span>
+<span id="cb918-7"><a href="interpretabilidad-local.html#cb918-7" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb918-8"><a href="interpretabilidad-local.html#cb918-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb918-9"><a href="interpretabilidad-local.html#cb918-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_features</span>(explanation2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-649-1.png" width="672" /></p>
+</div>
+</div>
+<div id="interpretabilidad-dalextra" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Interpretabilidad DALEXtra<a href="interpretabilidad-local.html#interpretabilidad-dalextra" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El marco <em>tidymodels</em> no contiene software para explicaciones de modelos. En cambio, los modelos entrenados y evaluados con <em>tidymodels</em> se pueden explicar con paquetes complementarios como <em>lime</em>, <em>vip</em> y <em>DALEX</em>:</p>
+<ul>
+<li><em>DALEX</em>: Contiene funciones que usamos cuando queremos usar métodos explicativos independientes del modelo, por lo que se pueden aplicar a cualquier algoritmo.</li>
+</ul>
+<p>Construyamos explicaciones independientes del modelo de regresión de <em>XGBoost</em> para descubrir por qué hacen las predicciones que hacen. Podemos usar el paquete adicional <em>DALEXtra</em> para implementar <em>DALEX</em>, que brinda soporte para <em>tidymodels</em>.</p>
+<div class="sourceCode" id="cb919"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb919-1"><a href="interpretabilidad-local.html#cb919-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se declara el modelo de clasificación</span></span>
+<span id="cb919-2"><a href="interpretabilidad-local.html#cb919-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb919-3"><a href="interpretabilidad-local.html#cb919-3" aria-hidden="true" tabindex="-1"></a>xgboost_reg_model <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
+<span id="cb919-4"><a href="interpretabilidad-local.html#cb919-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb919-5"><a href="interpretabilidad-local.html#cb919-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb919-6"><a href="interpretabilidad-local.html#cb919-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb919-7"><a href="interpretabilidad-local.html#cb919-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb919-8"><a href="interpretabilidad-local.html#cb919-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>(),</span>
+<span id="cb919-9"><a href="interpretabilidad-local.html#cb919-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">tune</span>(),</span>
+<span id="cb919-10"><a href="interpretabilidad-local.html#cb919-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb919-11"><a href="interpretabilidad-local.html#cb919-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>()</span>
+<span id="cb919-12"><a href="interpretabilidad-local.html#cb919-12" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb919-13"><a href="interpretabilidad-local.html#cb919-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;xgboost&quot;</span>)</span>
+<span id="cb919-14"><a href="interpretabilidad-local.html#cb919-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb919-15"><a href="interpretabilidad-local.html#cb919-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Se declara el flujo de trabajo</span></span>
+<span id="cb919-16"><a href="interpretabilidad-local.html#cb919-16" aria-hidden="true" tabindex="-1"></a>xgboost_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb919-17"><a href="interpretabilidad-local.html#cb919-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(xgboost_reg_model) <span class="sc">%&gt;%</span></span>
+<span id="cb919-18"><a href="interpretabilidad-local.html#cb919-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(receta_casas_prep)</span>
+<span id="cb919-19"><a href="interpretabilidad-local.html#cb919-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb919-20"><a href="interpretabilidad-local.html#cb919-20" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/xgboost_model_reg.rds&quot;</span>)</span>
+<span id="cb919-21"><a href="interpretabilidad-local.html#cb919-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb919-22"><a href="interpretabilidad-local.html#cb919-22" aria-hidden="true" tabindex="-1"></a>best_xgboost_model_1se <span class="ot">&lt;-</span> <span class="fu">select_by_one_std_err</span>(</span>
+<span id="cb919-23"><a href="interpretabilidad-local.html#cb919-23" aria-hidden="true" tabindex="-1"></a>  xgboost_tune_result, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>, <span class="st">&quot;rmse&quot;</span>)</span>
+<span id="cb919-24"><a href="interpretabilidad-local.html#cb919-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb919-25"><a href="interpretabilidad-local.html#cb919-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo</span></span>
+<span id="cb919-26"><a href="interpretabilidad-local.html#cb919-26" aria-hidden="true" tabindex="-1"></a>final_xgboost_model <span class="ot">&lt;-</span> xgboost_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb919-27"><a href="interpretabilidad-local.html#cb919-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_xgboost_model_1se) <span class="sc">%&gt;%</span></span>
+<span id="cb919-28"><a href="interpretabilidad-local.html#cb919-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="interpretabilidad-local.html#cb920-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
+<span id="cb920-2"><a href="interpretabilidad-local.html#cb920-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb920-3"><a href="interpretabilidad-local.html#cb920-3" aria-hidden="true" tabindex="-1"></a>explainer_xgb <span class="ot">&lt;-</span> <span class="fu">explain_tidymodels</span>(</span>
+<span id="cb920-4"><a href="interpretabilidad-local.html#cb920-4" aria-hidden="true" tabindex="-1"></a> final_xgboost_model,</span>
+<span id="cb920-5"><a href="interpretabilidad-local.html#cb920-5" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train, </span>
+<span id="cb920-6"><a href="interpretabilidad-local.html#cb920-6" aria-hidden="true" tabindex="-1"></a> <span class="at">y =</span> ames_train<span class="sc">$</span>Sale_Price ,</span>
+<span id="cb920-7"><a href="interpretabilidad-local.html#cb920-7" aria-hidden="true" tabindex="-1"></a> <span class="at">label =</span> <span class="st">&quot;XGBoost&quot;</span>,</span>
+<span id="cb920-8"><a href="interpretabilidad-local.html#cb920-8" aria-hidden="true" tabindex="-1"></a> <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb920-9"><a href="interpretabilidad-local.html#cb920-9" aria-hidden="true" tabindex="-1"></a> )</span></code></pre></div>
+<pre><code>## Preparation of a new explainer is initiated
+##   -&gt; model label       :  XGBoost 
+##   -&gt; data              :  2197  rows  74  cols 
+##   -&gt; data              :  tibble converted into a data.frame 
+##   -&gt; target variable   :  2197  values 
+##   -&gt; predict function  :  yhat.workflow  will be used (  default  )
+##   -&gt; predicted values  :  No value for predict function target column. (  default  )
+##   -&gt; model_info        :  package tidymodels , ver. 1.0.0 , task regression (  default  ) 
+##   -&gt; predicted values  :  numerical, min =  25723.63 , mean =  180537.9 , max =  563293.2  
+##   -&gt; residual function :  difference between y and yhat (  default  )
+##   -&gt; residuals         :  numerical, min =  -150327.6 , mean =  19.60113 , max =  210721.6  
+##   A new explainer has been created!</code></pre>
+<p>Las explicaciones del modelo local proporcionan información sobre una predicción para una sola observación. Por ejemplo, consideremos una casa dúplex antigua en el vecindario de North Ames.</p>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb922-1"><a href="interpretabilidad-local.html#cb922-1" aria-hidden="true" tabindex="-1"></a>duplex <span class="ot">&lt;-</span> ames_train[<span class="dv">537</span>,]</span>
+<span id="cb922-2"><a href="interpretabilidad-local.html#cb922-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb922-3"><a href="interpretabilidad-local.html#cb922-3" aria-hidden="true" tabindex="-1"></a>duplex <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<pre><code>## Rows: 1
+## Columns: 74
+## $ MS_SubClass        &lt;fct&gt; Duplex_All_Styles_and_Ages
+## $ MS_Zoning          &lt;fct&gt; Residential_Low_Density
+## $ Lot_Frontage       &lt;dbl&gt; 60
+## $ Lot_Area           &lt;int&gt; 7200
+## $ Street             &lt;fct&gt; Pave
+## $ Alley              &lt;fct&gt; No_Alley_Access
+## $ Lot_Shape          &lt;fct&gt; Regular
+## $ Land_Contour       &lt;fct&gt; Lvl
+## $ Utilities          &lt;fct&gt; AllPub
+## $ Lot_Config         &lt;fct&gt; Inside
+## $ Land_Slope         &lt;fct&gt; Gtl
+## $ Neighborhood       &lt;fct&gt; North_Ames
+## $ Condition_1        &lt;fct&gt; Norm
+## $ Condition_2        &lt;fct&gt; Norm
+## $ Bldg_Type          &lt;fct&gt; Duplex
+## $ House_Style        &lt;fct&gt; One_Story
+## $ Overall_Cond       &lt;fct&gt; Average
+## $ Year_Built         &lt;int&gt; 1949
+## $ Year_Remod_Add     &lt;int&gt; 1950
+## $ Roof_Style         &lt;fct&gt; Gable
+## $ Roof_Matl          &lt;fct&gt; CompShg
+## $ Exterior_1st       &lt;fct&gt; BrkFace
+## $ Exterior_2nd       &lt;fct&gt; Stone
+## $ Mas_Vnr_Type       &lt;fct&gt; None
+## $ Mas_Vnr_Area       &lt;dbl&gt; 0
+## $ Exter_Cond         &lt;fct&gt; Typical
+## $ Foundation         &lt;fct&gt; Slab
+## $ Bsmt_Cond          &lt;fct&gt; No_Basement
+## $ Bsmt_Exposure      &lt;fct&gt; No_Basement
+## $ BsmtFin_Type_1     &lt;fct&gt; No_Basement
+## $ BsmtFin_SF_1       &lt;dbl&gt; 5
+## $ BsmtFin_Type_2     &lt;fct&gt; No_Basement
+## $ BsmtFin_SF_2       &lt;dbl&gt; 0
+## $ Bsmt_Unf_SF        &lt;dbl&gt; 0
+## $ Total_Bsmt_SF      &lt;dbl&gt; 0
+## $ Heating            &lt;fct&gt; Wall
+## $ Heating_QC         &lt;fct&gt; Fair
+## $ Central_Air        &lt;fct&gt; N
+## $ Electrical         &lt;fct&gt; FuseF
+## $ First_Flr_SF       &lt;int&gt; 1040
+## $ Second_Flr_SF      &lt;int&gt; 0
+## $ Gr_Liv_Area        &lt;int&gt; 1040
+## $ Bsmt_Full_Bath     &lt;dbl&gt; 0
+## $ Bsmt_Half_Bath     &lt;dbl&gt; 0
+## $ Full_Bath          &lt;int&gt; 2
+## $ Half_Bath          &lt;int&gt; 0
+## $ Bedroom_AbvGr      &lt;int&gt; 2
+## $ Kitchen_AbvGr      &lt;int&gt; 2
+## $ TotRms_AbvGrd      &lt;int&gt; 6
+## $ Functional         &lt;fct&gt; Typ
+## $ Fireplaces         &lt;int&gt; 0
+## $ Garage_Type        &lt;fct&gt; Detchd
+## $ Garage_Finish      &lt;fct&gt; Unf
+## $ Garage_Cars        &lt;dbl&gt; 2
+## $ Garage_Area        &lt;dbl&gt; 420
+## $ Garage_Cond        &lt;fct&gt; Typical
+## $ Paved_Drive        &lt;fct&gt; Paved
+## $ Wood_Deck_SF       &lt;int&gt; 0
+## $ Open_Porch_SF      &lt;int&gt; 0
+## $ Enclosed_Porch     &lt;int&gt; 0
+## $ Three_season_porch &lt;int&gt; 0
+## $ Screen_Porch       &lt;int&gt; 0
+## $ Pool_Area          &lt;int&gt; 0
+## $ Pool_QC            &lt;fct&gt; No_Pool
+## $ Fence              &lt;fct&gt; No_Fence
+## $ Misc_Feature       &lt;fct&gt; None
+## $ Misc_Val           &lt;int&gt; 0
+## $ Mo_Sold            &lt;int&gt; 6
+## $ Year_Sold          &lt;int&gt; 2009
+## $ Sale_Type          &lt;fct&gt; WD 
+## $ Sale_Condition     &lt;fct&gt; Normal
+## $ Sale_Price         &lt;int&gt; 90000
+## $ Longitude          &lt;dbl&gt; -93.6089
+## $ Latitude           &lt;dbl&gt; 42.03584</code></pre>
+<p>Existen múltiples enfoques para comprender por qué un modelo predice un precio determinado para esta casa dúplex.</p>
+<p>Una se denomina explicación de “desglose” y calcula cómo las contribuciones atribuidas a características individuales cambian la predicción del modelo medio para una observación en particular, como nuestro dúplex.</p>
+<p>Para el modelo de bosques aleatorios, las variables <code>Total_Bsmt_SF</code>, <code>Gr_Liv_Area</code> y <code>BsmtFin_Type_1</code> son las que más contribuyen a que el precio baje desde la intercepción.</p>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="interpretabilidad-local.html#cb924-1" aria-hidden="true" tabindex="-1"></a>xgb_breakdown <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> explainer_xgb, <span class="at">new_observation =</span> duplex)</span>
+<span id="cb924-2"><a href="interpretabilidad-local.html#cb924-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb924-3"><a href="interpretabilidad-local.html#cb924-3" aria-hidden="true" tabindex="-1"></a>xgb_breakdown <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/xgb_breakdown.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb925-1"><a href="interpretabilidad-local.html#cb925-1" aria-hidden="true" tabindex="-1"></a>xgb_breakdown <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&#39;models/xgb_breakdown.rds&#39;</span>)</span></code></pre></div>
+<div class="infobox note">
+<p><strong>¡¡ <a href="https://ema.drwhy.ai/">TEORÍA</a> !!</strong></p>
+<p>La idea detrás de <em>Shapley Additive Explanations (Lundberg y Lee 2017)</em>, es que las contribuciones promedio de las características se calculan bajo diferentes combinaciones o “coaliciones” de ordenamientos de características.</p>
+</div>
+<p>Calculemos las atribuciones <em>SHAP</em> para nuestra <em>dúplex</em>, usando <code>B = 20</code> ordenaciones aleatorias.</p>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="interpretabilidad-local.html#cb926-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1801</span>)</span>
+<span id="cb926-2"><a href="interpretabilidad-local.html#cb926-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb926-3"><a href="interpretabilidad-local.html#cb926-3" aria-hidden="true" tabindex="-1"></a>shap_duplex <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(</span>
+<span id="cb926-4"><a href="interpretabilidad-local.html#cb926-4" aria-hidden="true" tabindex="-1"></a> <span class="at">explainer =</span> explainer_xgb, </span>
+<span id="cb926-5"><a href="interpretabilidad-local.html#cb926-5" aria-hidden="true" tabindex="-1"></a> <span class="at">new_observation =</span> duplex, </span>
+<span id="cb926-6"><a href="interpretabilidad-local.html#cb926-6" aria-hidden="true" tabindex="-1"></a> <span class="at">type =</span> <span class="st">&quot;shap&quot;</span>,</span>
+<span id="cb926-7"><a href="interpretabilidad-local.html#cb926-7" aria-hidden="true" tabindex="-1"></a> <span class="at">B =</span> <span class="dv">20</span></span>
+<span id="cb926-8"><a href="interpretabilidad-local.html#cb926-8" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb926-9"><a href="interpretabilidad-local.html#cb926-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb926-10"><a href="interpretabilidad-local.html#cb926-10" aria-hidden="true" tabindex="-1"></a>shap_duplex <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&#39;models/shap_duplex.rds&#39;</span>)</span></code></pre></div>
+<p>Los diagramas de caja de la figura siguiente muestran la distribución de las contribuciones en todos los ordenamientos que probamos, y las barras muestran la atribución promedio para cada variable.</p>
+<div class="sourceCode" id="cb927"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb927-1"><a href="interpretabilidad-local.html#cb927-1" aria-hidden="true" tabindex="-1"></a>shap_duplex <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&#39;models/shap_duplex.rds&#39;</span>)</span>
+<span id="cb927-2"><a href="interpretabilidad-local.html#cb927-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb927-3"><a href="interpretabilidad-local.html#cb927-3" aria-hidden="true" tabindex="-1"></a>shap_duplex2 <span class="ot">&lt;-</span> shap_duplex <span class="sc">%&gt;%</span></span>
+<span id="cb927-4"><a href="interpretabilidad-local.html#cb927-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb927-5"><a href="interpretabilidad-local.html#cb927-5" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">filter</span>(contribution <span class="sc">!=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb927-6"><a href="interpretabilidad-local.html#cb927-6" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(contribution)))</span>
+<span id="cb927-7"><a href="interpretabilidad-local.html#cb927-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb927-8"><a href="interpretabilidad-local.html#cb927-8" aria-hidden="true" tabindex="-1"></a>shap_duplex2 <span class="sc">%&gt;%</span> </span>
+<span id="cb927-9"><a href="interpretabilidad-local.html#cb927-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(variable) <span class="sc">%&gt;%</span></span>
+<span id="cb927-10"><a href="interpretabilidad-local.html#cb927-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_val =</span> <span class="fu">mean</span>(contribution)) <span class="sc">%&gt;%</span></span>
+<span id="cb927-11"><a href="interpretabilidad-local.html#cb927-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb927-12"><a href="interpretabilidad-local.html#cb927-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">fct_reorder</span>(variable, <span class="fu">abs</span>(mean_val))) <span class="sc">%&gt;%</span></span>
+<span id="cb927-13"><a href="interpretabilidad-local.html#cb927-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(contribution, variable, <span class="at">fill =</span> mean_val <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb927-14"><a href="interpretabilidad-local.html#cb927-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="sc">~</span><span class="fu">distinct</span>(., variable, mean_val), </span>
+<span id="cb927-15"><a href="interpretabilidad-local.html#cb927-15" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(mean_val, variable), </span>
+<span id="cb927-16"><a href="interpretabilidad-local.html#cb927-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb927-17"><a href="interpretabilidad-local.html#cb927-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb927-18"><a href="interpretabilidad-local.html#cb927-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb927-19"><a href="interpretabilidad-local.html#cb927-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb927-20"><a href="interpretabilidad-local.html#cb927-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-656-1.png" width="672" /></p>
+<p>¿Qué pasa con una observación diferente en nuestro conjunto de datos? Veamos una casa unifamiliar más grande y nueva en el vecindario de Gilbert.</p>
+<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="interpretabilidad-local.html#cb928-1" aria-hidden="true" tabindex="-1"></a>big_house <span class="ot">&lt;-</span> ames_train[<span class="dv">1671</span>,]</span>
+<span id="cb928-2"><a href="interpretabilidad-local.html#cb928-2" aria-hidden="true" tabindex="-1"></a>big_house <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<pre><code>## Rows: 1
+## Columns: 74
+## $ MS_SubClass        &lt;fct&gt; Two_Story_1946_and_Newer
+## $ MS_Zoning          &lt;fct&gt; Residential_Low_Density
+## $ Lot_Frontage       &lt;dbl&gt; 0
+## $ Lot_Area           &lt;int&gt; 8068
+## $ Street             &lt;fct&gt; Pave
+## $ Alley              &lt;fct&gt; No_Alley_Access
+## $ Lot_Shape          &lt;fct&gt; Slightly_Irregular
+## $ Land_Contour       &lt;fct&gt; Lvl
+## $ Utilities          &lt;fct&gt; AllPub
+## $ Lot_Config         &lt;fct&gt; Inside
+## $ Land_Slope         &lt;fct&gt; Gtl
+## $ Neighborhood       &lt;fct&gt; Gilbert
+## $ Condition_1        &lt;fct&gt; Norm
+## $ Condition_2        &lt;fct&gt; Norm
+## $ Bldg_Type          &lt;fct&gt; OneFam
+## $ House_Style        &lt;fct&gt; Two_Story
+## $ Overall_Cond       &lt;fct&gt; Average
+## $ Year_Built         &lt;int&gt; 2002
+## $ Year_Remod_Add     &lt;int&gt; 2002
+## $ Roof_Style         &lt;fct&gt; Gable
+## $ Roof_Matl          &lt;fct&gt; CompShg
+## $ Exterior_1st       &lt;fct&gt; VinylSd
+## $ Exterior_2nd       &lt;fct&gt; VinylSd
+## $ Mas_Vnr_Type       &lt;fct&gt; None
+## $ Mas_Vnr_Area       &lt;dbl&gt; 0
+## $ Exter_Cond         &lt;fct&gt; Typical
+## $ Foundation         &lt;fct&gt; PConc
+## $ Bsmt_Cond          &lt;fct&gt; Typical
+## $ Bsmt_Exposure      &lt;fct&gt; No
+## $ BsmtFin_Type_1     &lt;fct&gt; Unf
+## $ BsmtFin_SF_1       &lt;dbl&gt; 7
+## $ BsmtFin_Type_2     &lt;fct&gt; Unf
+## $ BsmtFin_SF_2       &lt;dbl&gt; 0
+## $ Bsmt_Unf_SF        &lt;dbl&gt; 1010
+## $ Total_Bsmt_SF      &lt;dbl&gt; 1010
+## $ Heating            &lt;fct&gt; GasA
+## $ Heating_QC         &lt;fct&gt; Excellent
+## $ Central_Air        &lt;fct&gt; Y
+## $ Electrical         &lt;fct&gt; SBrkr
+## $ First_Flr_SF       &lt;int&gt; 1010
+## $ Second_Flr_SF      &lt;int&gt; 1257
+## $ Gr_Liv_Area        &lt;int&gt; 2267
+## $ Bsmt_Full_Bath     &lt;dbl&gt; 0
+## $ Bsmt_Half_Bath     &lt;dbl&gt; 0
+## $ Full_Bath          &lt;int&gt; 2
+## $ Half_Bath          &lt;int&gt; 1
+## $ Bedroom_AbvGr      &lt;int&gt; 4
+## $ Kitchen_AbvGr      &lt;int&gt; 1
+## $ TotRms_AbvGrd      &lt;int&gt; 8
+## $ Functional         &lt;fct&gt; Typ
+## $ Fireplaces         &lt;int&gt; 1
+## $ Garage_Type        &lt;fct&gt; BuiltIn
+## $ Garage_Finish      &lt;fct&gt; RFn
+## $ Garage_Cars        &lt;dbl&gt; 2
+## $ Garage_Area        &lt;dbl&gt; 390
+## $ Garage_Cond        &lt;fct&gt; Typical
+## $ Paved_Drive        &lt;fct&gt; Paved
+## $ Wood_Deck_SF       &lt;int&gt; 120
+## $ Open_Porch_SF      &lt;int&gt; 46
+## $ Enclosed_Porch     &lt;int&gt; 0
+## $ Three_season_porch &lt;int&gt; 0
+## $ Screen_Porch       &lt;int&gt; 0
+## $ Pool_Area          &lt;int&gt; 0
+## $ Pool_QC            &lt;fct&gt; No_Pool
+## $ Fence              &lt;fct&gt; No_Fence
+## $ Misc_Feature       &lt;fct&gt; None
+## $ Misc_Val           &lt;int&gt; 0
+## $ Mo_Sold            &lt;int&gt; 12
+## $ Year_Sold          &lt;int&gt; 2009
+## $ Sale_Type          &lt;fct&gt; ConLI
+## $ Sale_Condition     &lt;fct&gt; Normal
+## $ Sale_Price         &lt;int&gt; 200000
+## $ Longitude          &lt;dbl&gt; -93.64331
+## $ Latitude           &lt;dbl&gt; 42.05938</code></pre>
+<p>Calculamos las atribuciones promedio <em>SHAP</em> de la misma manera.</p>
+<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="interpretabilidad-local.html#cb930-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1802</span>)</span>
+<span id="cb930-2"><a href="interpretabilidad-local.html#cb930-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb930-3"><a href="interpretabilidad-local.html#cb930-3" aria-hidden="true" tabindex="-1"></a>shap_house <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(</span>
+<span id="cb930-4"><a href="interpretabilidad-local.html#cb930-4" aria-hidden="true" tabindex="-1"></a> <span class="at">explainer =</span> explainer_xgb, </span>
+<span id="cb930-5"><a href="interpretabilidad-local.html#cb930-5" aria-hidden="true" tabindex="-1"></a> <span class="at">new_observation =</span> big_house, </span>
+<span id="cb930-6"><a href="interpretabilidad-local.html#cb930-6" aria-hidden="true" tabindex="-1"></a> <span class="at">type =</span> <span class="st">&quot;shap&quot;</span>,</span>
+<span id="cb930-7"><a href="interpretabilidad-local.html#cb930-7" aria-hidden="true" tabindex="-1"></a> <span class="at">B =</span> <span class="dv">20</span></span>
+<span id="cb930-8"><a href="interpretabilidad-local.html#cb930-8" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb930-9"><a href="interpretabilidad-local.html#cb930-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb930-10"><a href="interpretabilidad-local.html#cb930-10" aria-hidden="true" tabindex="-1"></a>shap_house <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&#39;models/shap_house.rds&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb931"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb931-1"><a href="interpretabilidad-local.html#cb931-1" aria-hidden="true" tabindex="-1"></a>shap_house <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&#39;models/shap_house.rds&#39;</span>)</span>
+<span id="cb931-2"><a href="interpretabilidad-local.html#cb931-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb931-3"><a href="interpretabilidad-local.html#cb931-3" aria-hidden="true" tabindex="-1"></a>shap_house2 <span class="ot">&lt;-</span> shap_house <span class="sc">%&gt;%</span> </span>
+<span id="cb931-4"><a href="interpretabilidad-local.html#cb931-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb931-5"><a href="interpretabilidad-local.html#cb931-5" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">filter</span>(contribution <span class="sc">!=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb931-6"><a href="interpretabilidad-local.html#cb931-6" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(contribution)))</span>
+<span id="cb931-7"><a href="interpretabilidad-local.html#cb931-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb931-8"><a href="interpretabilidad-local.html#cb931-8" aria-hidden="true" tabindex="-1"></a>shap_house2 <span class="sc">%&gt;%</span> </span>
+<span id="cb931-9"><a href="interpretabilidad-local.html#cb931-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(variable) <span class="sc">%&gt;%</span></span>
+<span id="cb931-10"><a href="interpretabilidad-local.html#cb931-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_val =</span> <span class="fu">mean</span>(contribution)) <span class="sc">%&gt;%</span></span>
+<span id="cb931-11"><a href="interpretabilidad-local.html#cb931-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb931-12"><a href="interpretabilidad-local.html#cb931-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">fct_reorder</span>(variable, <span class="fu">abs</span>(mean_val))) <span class="sc">%&gt;%</span></span>
+<span id="cb931-13"><a href="interpretabilidad-local.html#cb931-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(contribution, variable, <span class="at">fill =</span> mean_val <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb931-14"><a href="interpretabilidad-local.html#cb931-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="sc">~</span><span class="fu">distinct</span>(., variable, mean_val), </span>
+<span id="cb931-15"><a href="interpretabilidad-local.html#cb931-15" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(mean_val, variable), </span>
+<span id="cb931-16"><a href="interpretabilidad-local.html#cb931-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb931-17"><a href="interpretabilidad-local.html#cb931-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb931-18"><a href="interpretabilidad-local.html#cb931-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb931-19"><a href="interpretabilidad-local.html#cb931-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb931-20"><a href="interpretabilidad-local.html#cb931-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-659-1.png" width="672" /></p>
+<p>A diferencia del dúplex, el área habitable, año de construcción y área del segundo piso de esta casa contribuyen a que su precio sea más alto.</p>
+<p>Los paquetes como <em>DALEX</em> y su paquete de soporte <em>DALEXtra</em> y <em>lime</em> se pueden integrar en un análisis de <em>tidymodels</em> para proporcionar este tipo de explicativos de modelos.</p>
+<p>Las explicaciones del modelo son solo una parte de la comprensión de si su modelo es apropiado y efectivo, junto con las estimaciones del rendimiento del modelo.</p>
+<div id="otros-métodos" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Otros métodos<a href="interpretabilidad-local.html#otros-métodos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><em>Partial Dependence Plot (PDP)</em>. Efecto marginal de una o dos variables en la predicción.</p></li>
+<li><p><em>Accumulated Local Effects (ALE)</em>. Cómo las variables influyen en promedio a la predicción.</p></li>
+</ul>
+</div>
+<div id="consejos" class="section level3 hasAnchor" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Consejos<a href="interpretabilidad-local.html#consejos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Trata cada modelo que desarrollas como una afectación de vida o muerte a un humano directamente.</p></li>
+<li><p>Identifica si estas agregando sesgo, inequidad, injusticia con interpretabilidad.</p></li>
+<li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.</p></li>
+<li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad para el usuario final.</p></li>
+</ul>
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sesgo-e-inequidad.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

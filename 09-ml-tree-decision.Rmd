@@ -76,7 +76,7 @@ Para el siguiente nodo, el algoritmo vuelve a comparar el valor de la siguiente 
 
 ### Attribute Selective Measure (ASM)
 
-Al implementar un árbol de decisión, surge el problema principal de cómo seleccionar la mejor variable para el nodo raíz y para los sub-nodos. Para resolver este problemas existe una técnica que se llama medida de selección de atributos o *ASM*. Mediante esta medición, podemos seleccionar fácilmente la mejor variable para los nodos del árbol. Hay dos técnicas populares para *ASM*, que son:
+Al implementar un árbol de decisión, surge el problema principal de cómo seleccionar la mejor variable para el nodo raíz y para los sub-nodos. Para resolver este problemas existe una técnica que se llama medida de selección de atributos o *ASM*. Mediante esta medición, podemos seleccionar fácilmente la mejor variable para los nodos del árbol. Una de las técnicas más populares para *ASM* es:
 
 - Índice de Gini
 
@@ -99,9 +99,9 @@ Para asegurarse de que no exista sobre-ajuste en el modelo, es importante consid
 
 Podríamos preguntarnos cuándo dejar de crecer un árbol. Pueden existir problemas que tengan un gran conjunto de variables y esto da como resultado una gran cantidad de divisiones, lo que a su vez genera un árbol de decisión muy grande. Estos árboles son complejos y pueden provocar un sobre-ajuste. Entonces, necesitamos saber cuándo parar.
 
-1) Una forma de hacer esto es establecer un número mínimo de entradas de entrenamiento para dividir un nodo. 
+1) Una forma de hacer esto, es establecer un número mínimo de entradas de entrenamiento para dividir un nodo (min_n). 
 
-2) Otra forma es establecer la profundidad máxima de su modelo. La profundidad máxima se refiere a la longitud del camino más largo desde el nodo raíz hasta un nodo hoja.
+2) Otra forma, es establecer la profundidad máxima del modelo. La profundidad máxima se refiere a la longitud del camino más largo desde el nodo raíz hasta un nodo hoja (max_depth).
 
 ### Poda de árbol
 
@@ -747,7 +747,7 @@ knitr::include_graphics("img/09-ml-tree/3-13-1-randomforest.png")
 * No producen buenos resultados cuando los datos son muy escasos. En este caso, el subconjunto de características y la muestra de arranque producirán un espacio invariante. Esto conducirá a divisiones improductivas, que afectarán el resultado.
 
 
-## Implementación en R
+## Implementación de RF en R
 
 ### Regresión
 

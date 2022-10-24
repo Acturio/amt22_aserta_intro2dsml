@@ -1,0 +1,549 @@
+<div class="watermark"><img src="img/header.png" width="400"></div>
+
+# Interpretabilidad local
+
+```{r, echo=FALSE, message=FALSE}
+
+# Telco
+pacman::p_load(
+ readr,
+ rsample,
+ dplyr,
+ tidyverse,
+ tidymodels, 
+ recipes,
+ ggplot2,
+ kableExtra,
+ patchwork,
+ dplyr,
+ forecast,
+ fpp,
+ magrittr,
+ forcats,
+ caret,
+ tune,
+ yardstick
+)
+
+telco <- read_csv("data/Churn.csv")
+
+set.seed(1234)
+telco_split <- initial_split(telco, prop = .7)
+telco_train <- training(telco_split)
+telco_test  <- testing(telco_split)
+
+telco_rec <- recipe(
+  Churn ~ customerID + TotalCharges + MonthlyCharges + SeniorCitizen + Contract, 
+  data = telco_train) %>% 
+  update_role(customerID, new_role = "id variable") %>% 
+  step_mutate(Contract = as.factor(Contract)) %>% 
+  step_impute_median(all_numeric_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  step_dummy(all_nominal_predictors())
+
+prep_telco <- prep(telco_rec)
+telco_juiced <- juice(prep_telco)
+telco_train <- telco_rec %>% prep() %>% bake(new_data = telco_train)
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+library(tidymodels)
+
+data(ames)
+
+set.seed(4595)
+ames_split <- initial_split(ames, prop = 0.75)
+
+ames_train <- training(ames_split)
+ames_test  <- testing(ames_split)
+ames_folds <- vfold_cv(ames_train)
+
+receta_casas <- recipe(
+ Sale_Price ~ Gr_Liv_Area + TotRms_AbvGrd + Exter_Cond + Bsmt_Cond + Condition_1 +
+  Year_Sold + Year_Remod_Add + Year_Remod_Add + Bedroom_AbvGr +Total_Bsmt_SF +
+  Pool_Area + Second_Flr_SF + First_Flr_SF + Full_Bath + Bsmt_Full_Bath + Neighborhood, 
+ data = ames_train) %>%
+  step_ratio(Bedroom_AbvGr, denom = denom_vars(Gr_Liv_Area)) %>% 
+  step_ratio(Second_Flr_SF, denom = denom_vars(First_Flr_SF)) %>% 
+  step_mutate(
+    TotalBaths = Full_Bath + Bsmt_Full_Bath,
+    Age_House = Year_Sold - Year_Remod_Add,
+    Pool = ifelse(Pool_Area > 0,1,0),
+    Exter_Cond = forcats::fct_collapse(Exter_Cond, Good = c("Typical", "Good", "Excellent")),
+    Neighborhood = forcats::fct_collapse(Neighborhood, 
+      NoRidge_GrnHill = c("Northridge", "Green_Hills"),
+      ClearCr_Somerst = c("Clear_Creek", "Somerset"))) %>% 
+  step_relevel(Condition_1, ref_level = "Norm") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_interact(~ Age_House:TotRms_AbvGrd) %>%
+  step_interact(~ matches("Bsmt_Cond"):TotRms_AbvGrd) %>% 
+  step_rm(
+    First_Flr_SF, Second_Flr_SF, Year_Remod_Add, Bsmt_Full_Bath, 
+    Total_Bsmt_SF, Pool_Area, Gr_Liv_Area
+  )
+
+receta_casas_prep <- receta_casas %>% prep()
+```
+
+**Interpretabilidad:** En Machine Learning, nos referimos a interpretabilidad al grado en el que un humano puede entender la causa de una decisión o clasificación, la cual nos permite identificar y evitar tener sesgo, injusticia, inequidad en los modelos que generamos.
+
+Poder interpretar nuestros modelos nos brinda más confianza en que lo que estamos haciendo es correcto (además de las métricas de desempeño). Por otro lado, para la gente que lo ocupa, permite transparentar y tener más confianza al modelo.
+
+**Ejemplos**
+
+* Etiquetado: Google photos (2015) etiqueta incorrectamente personas afroamericanas como gorilas.
+
+* Facial Recognition (IBM, Microsoft, Megvii): Reconocimiento para hombres blancos 99%, mujeres afroamericanas 35%.
+
+* Facebook automatic translation: Arresto de un palestino por traducción incorrecta de "buenos días" en hebreo a "atácalos".
+
+
+**Interpretabilidad en ML**
+
+* General Data Protection Regulation (GDPR): Desde mayo de 2018 existe el derecho a una explicación Por ejemplo: Algoritmos de predicción de riesgo en créditos hipotecarios.
+
+* Se puede tener interpretabilidad de modelos de aprendizaje supervisado.
+
+* Se tiene la creencia equivocada de que en Europa no se puede ocupar Deep Learning debido a la falta de interpretabilidad y el GDPR. Esto no es verdad.
+
+* Es verdad que preferimos ocupar modelos más simples porque nos permiten entender -y explicar- de manera más sencilla por qué se están tomando las decisiones.
+
+* Te recomiendo leer el artículo Why should I trust you? (2016) base de mucho de lo desarrollado para interpretabilidad.
+
+## Interpretabilidad LIME
+
+Acrónimo de *Local Interpretable Model-Agnostic Explanation*. El objetivo es tener explicación que un humano pueda entender sobre cualquier modelo supervisado a través de un **modelo local más simple**.
+
+La explicación se genera para cada predicción realizada. Esta basado en la suposición de que un modelo complejo es lineal en una escala local.
+
+En el contexto de LIME:
+
+* Local: Se refiere a que un modelo simple es lo suficientemente bueno/igual de bueno localmente que uno complejo globalmente.
+
+* Interpretable: Se refiere a que la explicación debe ser entendida por un ser humano.
+
+* Model-agnostic: Se refiere a tratar a cualquier modelo de clasificación, complejo o no, como una caja negra a la que metemos observaciones y obtenemos predicciones, no nos interesa cómo genera estas predicciones, lo que nos interesa es generarlas.
+
+```{r echo=FALSE,fig.align='center', out.width='700pt', out.height='400pt'}
+knitr::include_graphics("img/13-lime/lime.png")
+```
+
+
+### Proceso
+
+El objetivo de *LIME* es entender por qué el modelo de machine learning hace cierta predicción, para ello **_LIME_ prueba qué pasa con las predicciones si le brindamos al modelo las mismas observaciones pero con variaciones.**
+
+Genera un nuevo set de datos que consiste de una muestra permutada con sus predicciones originales. Con este nuevo set *LIME* entrena un modelo interpretable que puede ser:
+  
+* regresión lineal como LASSO
+* regresión logística
+* árboles de decisión
+* Naive Bayes
+* K-NN.
+* etc.
+  
+Este modelo interpretable es **ponderado por la proximidad de las observaciones en la muestra a la instancia de interés** (la predicción que queremos explicar).
+
+El modelo generado debe ser una buena aproximación al modelo de caja negra localmente, pero no necesariamente en forma global. A esto se le llama *local fidelity*.
+
+Para entrenar el modelo interpretable, seguimos los siguientes pasos:
+
+1. Seleccionamos la observación de la que queremos una explicación.
+
+2. Seleccionamos una vecindad para que *LIME* ajuste el modelo.
+
+3. Seleccionamos el número de features más importantes con los que queremos realizar la explicación (se recomienda que sea menor a $10$).
+
+4. *LIME* genera perturbaciones en una muestra de datos del conjunto de datos
+
+ * **Texto:** "Agrega" o "quita" palabras del texto original aleatoriamente.
+
+```{r echo=FALSE,fig.align='center', out.height='120', out.width='600pt'}
+knitr::include_graphics("img/13-lime/lime_text.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.height='200pt', out.width='600pt'}
+knitr::include_graphics("img/13-lime/lime_text_2.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.height='210', out.width='600'}
+knitr::include_graphics("img/13-lime/lime_text_3.png")
+```
+
+La columna de probabilidad corresponde a la probabilidad de que el enunciado sea Spam o no. La columna peso corresponde a la proximidad del enunciado con variación al enunciado original y está calculado como 1 menos la proporción de palabras que fueron eliminadas.
+
+Por ejemplo: Si una de 7 palabras fueron removidas, el peso correspondería a: $1- 1/7=0.86$.
+
+Al pasar dos enunciados al modelo de interpretabilidad se identifica que para los casos donde está la palabra *channel!* el enunciado será clasificado como spam que es el feature con mayor peso para la etiqueta spam.
+
+ * **Imágenes:** "Apaga" y "prende" pixeles de la imagen original.
+
+```{r echo=FALSE,fig.align='center', out.height='250pt', out.width='600pt'}
+knitr::include_graphics("img/13-lime/frog_lime.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.height='250pt', out.width='400pt'}
+knitr::include_graphics("img/13-lime/huskie_lime.png")
+```
+
+```{r echo=FALSE,fig.align='center', out.height='400pt', out.width='400pt'}
+knitr::include_graphics("img/13-lime/tiger.jpeg")
+```
+
+ * **Datos tabulares:** De cada feature genera nuevas muestras tomadas de una distribución normal con la $\mu$ y $\sigma$ del feature.
+
+```{r echo=FALSE,fig.align='center', out.height='600pt', out.width='700pt'}
+knitr::include_graphics("img/13-lime/lime_tabular_data.png")
+```
+
+> Las observaciones más "cercanas" tendrán más peso que el resto. *LIME* ocupa un kernel de suavizamiento exponencial.
+
+> La implementación de *LIME* ocupa como kernel $0.75$ veces la raíz cuadrada del número de features que tenga nuestro dataset. ¿Eso es bueno o malo? Hasta el momento no hay una justificación matemática o estadística que justifique el definir ese número.
+
+5. Obtiene las predicciones del modelo de caja negra para las observaciones generadas en el paso $3$.
+
+6. Calcula las distancias entre la predicción original y las obtenidas con los datos modificados.
+
+  * **Datos tabulares:** Distancia euclidiana por default.
+
+  * **Datos numéricos:** Se obtiene la media y desviación estándar y se discretiza a sus cuartiles.
+
+  * **Datos categóricos:** Se calcula la frecuencia de cada valor.
+
+  * **Texto:** Distancia coseno.
+
+  * **Imágenes:** Distancia euclidiana.
+
+7. Convierte la distancia a un score de similitud.
+
+  * **Datos tabulares:** Utiliza el kernel de suavizamiento exponencial.
+
+  * **Texto:** Distancia coseno.
+
+  * **Imágenes:**
+    * Genera un modelo simple con los datos modificados
+
+    * Selecciona las $m$ mejores características (depende del modelo utilizado para crear el modelo de interpretabilidad) como explicación para la predicción del modelo de caja negra.
+
+
+### Características principales
+
+* Vecindad: kernel con suavizamiento exponencial. Peso de influencia
+* Similitud: Con respecto a las observaciones originales.
+* Selección de variables: Las variables que explican la predicción generada.
+
+**Ventajas:**
+
+* Fácil de implementar.
+* Se puede ocupar en datos tabulares, imágenes y texto.
+* Existen paquetes de implementación para R (lime) y Python (lime).
+* Las explicaciones son cortas (pocos features), por lo que son más fáciles de entender por un humano no entrenado en machine learning.
+* La métrica de *fidelity* nos permite identificar qué tan confiable es el modelo de interpretabilidad en explicar las predicciones del modelo de caja negra en las vecindad del punto de interés.
+* Se pueden ocupar otros features en el modelo de interpretabilidad que los ocupados para entrenar el de caja negra. 
+
+**Desventajas:**
+
+* La selección correcta de vecindad es el problema más grave de *LIME*. Para minimizar este problema deberemos probar con diferentes vecindades y ver cuál(es) son las de mayor sentido.
+
+* Variación de las observaciones originales: ¿Qué tal que la distribución no es normal? Al muestrear de una distribución gaussiana podemos ignorar correlaciones entre features.
+
+* Dependiendo del tamaño de la vecindad tendremos resultados muy diferentes. Este es el mayor problema de *LIME*.
+
+### Implementación con *R*
+
+```{r, message=FALSE, warning=FALSE}
+library(pdp)
+library(vip)
+library(randomForest)
+library(lime)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+set.seed(123)
+
+model_rf <- randomForest(
+ x = dplyr::select(telco_train, -one_of("customerID", "Churn")),
+ y = telco_train$Churn, 
+ ntree = 100
+ )
+```
+
+```{r, warning=FALSE, message=FALSE}
+explainer_caret <- lime::lime(dplyr::select(telco_train, -one_of("customerID", "Churn")), model_rf)
+```
+
+Veamos cómo llegaron a ser la predicciones, usando *Lime*.
+
+```{r}
+model_type.randomForest <- function(x,...){
+  return("classification") 
+}
+
+predict_model.randomForest <- function(x, newdata, type = "prob") {
+    predict(x, newdata, type = type) %>% as.data.frame()
+}
+```
+
+```{r}
+set.seed(123)
+
+new_data <- telco_train %>% dplyr::select(-one_of("customerID", "Churn")) %>% .[2,]
+new_data %>% t()
+
+explanation <- lime::explain(
+ x = new_data, 
+ explainer = explainer_caret, 
+ feature_select = "auto",      # Método de selección de variables
+ n_features = 10,              # Número de características para explicar el modelo
+ n_labels = 1
+ )
+
+explanation
+```
+
+
+Para obtener una representación más intuitiva, podemos usar `plot_features()` 
+proporcionado para obtener una descripción visual de las explicaciones.
+
+```{r}
+plot_features(explanation, ncol = 1)
+```
+
+**Otro ejemplo**
+
+```{r}
+set.seed(123)
+
+new_data2 <- telco_train %>% dplyr::select(-one_of("customerID", "Churn")) %>% .[c(2, 4),]
+new_data2 %>% t()
+
+explanation2 <- lime::explain(
+ x = new_data2, 
+ explainer = explainer_caret, 
+ feature_select = "auto",      # Método de selección de variables
+ n_features = 10,              # Número de características para explicar el modelo
+ n_labels = 1
+ )
+
+plot_features(explanation2, ncol = 2)
+```
+
+
+## Interpretabilidad DALEXtra
+
+El marco *tidymodels* no contiene software para explicaciones de modelos. En cambio, los modelos entrenados y evaluados con *tidymodels* se pueden explicar con paquetes complementarios como *lime*, *vip* y *DALEX*:
+
+* *DALEX*: Contiene funciones que usamos cuando queremos usar métodos explicativos independientes del modelo, por lo que se pueden aplicar a cualquier algoritmo.
+
+Construyamos explicaciones independientes del modelo de regresión de *XGBoost* para descubrir por qué hacen las predicciones que hacen. Podemos usar el paquete adicional *DALEXtra* para implementar *DALEX*, que brinda soporte para *tidymodels*. 
+
+```{r, warning=FALSE, message=FALSE}
+# Se declara el modelo de clasificación
+
+xgboost_reg_model <- boost_tree(
+  mode = "regression",
+  trees = 1000,
+  tree_depth = tune(),
+  min_n = tune(),
+  loss_reduction = tune(),
+  sample_size = tune(),
+  mtry = tune(),
+  learn_rate = tune()
+ ) %>% 
+  set_engine("xgboost")
+
+# Se declara el flujo de trabajo
+xgboost_workflow <- workflow() %>%
+  add_model(xgboost_reg_model) %>%
+  add_recipe(receta_casas_prep)
+
+xgboost_tune_result <- readRDS("models/xgboost_model_reg.rds")
+
+best_xgboost_model_1se <- select_by_one_std_err(
+  xgboost_tune_result, metric = "rmse", "rmse")
+
+# Selección del mejor modelo
+final_xgboost_model <- xgboost_workflow %>%
+  finalize_workflow(best_xgboost_model_1se) %>%
+  fit(data = ames_train)
+
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(DALEXtra)
+
+explainer_xgb <- explain_tidymodels(
+ final_xgboost_model,
+ data = ames_train, 
+ y = ames_train$Sale_Price ,
+ label = "XGBoost",
+ verbose = TRUE
+ )
+```
+
+
+Las explicaciones del modelo local proporcionan información sobre una predicción para una sola observación. Por ejemplo, consideremos una casa dúplex antigua en el vecindario de North Ames.
+
+```{r}
+duplex <- ames_train[537,]
+
+duplex %>% glimpse()
+```
+
+Existen múltiples enfoques para comprender por qué un modelo predice un precio determinado para esta casa dúplex.
+
+Una se denomina explicación de "desglose" y calcula cómo las contribuciones atribuidas a características individuales cambian la predicción del modelo medio para una observación en particular, como nuestro dúplex.
+
+Para el modelo de bosques aleatorios, las variables `Total_Bsmt_SF`, `Gr_Liv_Area` y `BsmtFin_Type_1` son las que más contribuyen a que el precio baje desde la intercepción.
+
+```{r, eval=FALSE}
+xgb_breakdown <- predict_parts(explainer = explainer_xgb, new_observation = duplex)
+
+xgb_breakdown %>% saveRDS("models/xgb_breakdown.rds")
+```
+
+```{r}
+xgb_breakdown <- readRDS('models/xgb_breakdown.rds')
+```
+
+::: {.infobox .note data-latex="{note}"}
+**¡¡ [TEORÍA](https://ema.drwhy.ai/) !!**
+
+La idea detrás de *Shapley Additive Explanations (Lundberg y Lee 2017)*, es que las contribuciones promedio de las características se calculan bajo diferentes combinaciones o "coaliciones" de ordenamientos de características. 
+:::
+
+Calculemos las atribuciones *SHAP* para nuestra *dúplex*, usando `B = 20` ordenaciones aleatorias.
+
+```{r, eval=FALSE}
+set.seed(1801)
+
+shap_duplex <- predict_parts(
+ explainer = explainer_xgb, 
+ new_observation = duplex, 
+ type = "shap",
+ B = 20
+ )
+
+shap_duplex %>% saveRDS('models/shap_duplex.rds')
+```
+
+Los diagramas de caja de la figura siguiente muestran la distribución de las contribuciones en todos los ordenamientos que probamos, y las barras muestran la atribución promedio para cada variable.
+
+```{r}
+shap_duplex <- readRDS('models/shap_duplex.rds')
+
+shap_duplex2 <- shap_duplex %>%
+ as_tibble() %>% 
+ dplyr::filter(contribution !=0) %>% 
+ dplyr::arrange(desc(abs(contribution)))
+
+shap_duplex2 %>% 
+  group_by(variable) %>%
+  mutate(mean_val = mean(contribution)) %>%
+  ungroup() %>%
+  mutate(variable = fct_reorder(variable, abs(mean_val))) %>%
+  ggplot(aes(contribution, variable, fill = mean_val > 0)) +
+  geom_col(data = ~distinct(., variable, mean_val), 
+           aes(mean_val, variable), 
+           alpha = 0.5) +
+  geom_boxplot(width = 0.5) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "none") +
+  labs(y = NULL)
+```
+
+¿Qué pasa con una observación diferente en nuestro conjunto de datos? Veamos una casa unifamiliar más grande y nueva en el vecindario de Gilbert.
+
+```{r}
+big_house <- ames_train[1671,]
+big_house %>% glimpse()
+```
+
+Calculamos las atribuciones promedio *SHAP* de la misma manera.
+
+```{r, eval=FALSE}
+set.seed(1802)
+
+shap_house <- predict_parts(
+ explainer = explainer_xgb, 
+ new_observation = big_house, 
+ type = "shap",
+ B = 20
+ )
+
+shap_house %>% saveRDS('models/shap_house.rds')
+
+```
+
+```{r}
+shap_house <- readRDS('models/shap_house.rds')
+
+shap_house2 <- shap_house %>% 
+ as_tibble() %>% 
+ dplyr::filter(contribution !=0) %>% 
+ dplyr::arrange(desc(abs(contribution)))
+
+shap_house2 %>% 
+  group_by(variable) %>%
+  mutate(mean_val = mean(contribution)) %>%
+  ungroup() %>%
+  mutate(variable = fct_reorder(variable, abs(mean_val))) %>%
+  ggplot(aes(contribution, variable, fill = mean_val > 0)) +
+  geom_col(data = ~distinct(., variable, mean_val), 
+           aes(mean_val, variable), 
+           alpha = 0.5) +
+  geom_boxplot(width = 0.5) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "none") +
+  labs(y = NULL)
+```
+
+A diferencia del dúplex, el área habitable, año de construcción y área del segundo piso de esta casa contribuyen a que su precio sea más alto.
+
+Los paquetes como *DALEX* y su paquete de soporte *DALEXtra* y *lime* se pueden integrar en un análisis de *tidymodels* para proporcionar este tipo de explicativos de modelos. 
+
+Las explicaciones del modelo son solo una parte de la comprensión de si su modelo es apropiado y efectivo, junto con las estimaciones del rendimiento del modelo.
+
+### Otros métodos
+
+* *Partial Dependence Plot (PDP)*. Efecto marginal de una o dos variables en la predicción.
+
+* *Accumulated Local Effects (ALE)*. Cómo las variables influyen en promedio a la predicción.
+
+### Consejos
+
+* Trata cada modelo que desarrollas como una afectación de vida o muerte a un humano directamente.
+
+* Identifica si estas agregando sesgo, inequidad, injusticia con interpretabilidad.
+
+* Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.
+
+* Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad para el usuario final.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
