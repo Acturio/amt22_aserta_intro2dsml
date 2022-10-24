@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 11 Workflowsets &amp; Stacking | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regularización-elasticnet.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.1/str_view.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado-12-hrs"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado (12 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 1: Introducción</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Conceptos de Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#objetivos"><i class="fa fa-check"></i><b>1.2</b> Objetivos</a></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#requisitos-1"><i class="fa fa-check"></i><b>1.3</b> Requisitos</a></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aplicaciones"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones</a></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#tipos-de-algoritmos"><i class="fa fa-check"></i><b>1.5</b> Tipos de algoritmos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#perfiles-de-un-equipo"><i class="fa fa-check"></i><b>1.6</b> Perfiles de un equipo</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-datos"><i class="fa fa-check"></i>1) Ingeniero de datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#decisor"><i class="fa fa-check"></i>2) Decisor</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista"><i class="fa fa-check"></i>3) Analista</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista-experto"><i class="fa fa-check"></i>4) Analista experto</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#estadístico"><i class="fa fa-check"></i>5) Estadístico</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-machine-learning"><i class="fa fa-check"></i>6) Ingeniero de Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#científico-de-datos"><i class="fa fa-check"></i>7) Científico de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#gerente-de-análisis-líder-de-ciencia-de-datos"><i class="fa fa-check"></i>8) Gerente de Análisis / Líder de Ciencia de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#experto-cualitativo-científico-social"><i class="fa fa-check"></i>9) Experto Cualitativo / Científico Social</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#investigador"><i class="fa fa-check"></i>10) Investigador</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#extra-personal-adicional"><i class="fa fa-check"></i>Extra) Personal Adicional</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#google-data-career-path"><i class="fa fa-check"></i>Google Data Career Path</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#flujo-de-trabajo-en-ml"><i class="fa fa-check"></i><b>1.7</b> Flujo de trabajo en <em>ML</em></a></li>
+<li class="chapter" data-level="1.8" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ciclo-de-un-proyecto"><i class="fa fa-check"></i><b>1.8</b> Ciclo de un proyecto</a></li>
+<li class="chapter" data-level="1.9" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#taller-de-scoping"><i class="fa fa-check"></i><b>1.9</b> Taller de Scoping</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.9.1</b> Data Maturity Framework</a></li>
+<li class="chapter" data-level="1.9.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.9.2</b> Scoping</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ejemplos"><i class="fa fa-check"></i>Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.4.1</b> Operadores de asignación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.2</b> Variables</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.3</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.5</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.6</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.7</b> Listas</a></li>
+<li class="chapter" data-level="2.4.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funbas"><i class="fa fa-check"></i><b>2.5</b> Funciones básicas de R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-una-función-de-r"><i class="fa fa-check"></i><b>2.5.1</b> ¿Qué es una función de R?</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.5.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#pruebas-lógicas"><i class="fa fa-check"></i><b>2.5.3</b> Pruebas lógicas</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-lógicos"><i class="fa fa-check"></i><b>2.5.4</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funciones-sobre-vectores"><i class="fa fa-check"></i><b>2.5.5</b> Funciones sobre vectores</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-rep"><i class="fa fa-check"></i><b>2.5.6</b> Función <code>rep</code></a></li>
+<li class="chapter" data-level="2.5.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-seq"><i class="fa fa-check"></i><b>2.5.7</b> Función <code>seq</code></a></li>
+<li class="chapter" data-level="2.5.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.8</b> EJERCICIOS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#bucles"><i class="fa fa-check"></i><b>2.6</b> Estructuras de control</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-else-if"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción else if</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.7</b> Instrucción <code>repeat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-archivos"><i class="fa fa-check"></i><b>2.7.1</b> Nombres de los archivos</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-objetos"><i class="fa fa-check"></i><b>2.7.2</b> Nombres de los objetos</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#longitud-de-una-línea-de-código"><i class="fa fa-check"></i><b>2.7.3</b> Longitud de una línea de código</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#espacios"><i class="fa fa-check"></i><b>2.7.4</b> Espacios</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#asignación"><i class="fa fa-check"></i><b>2.7.5</b> Asignación</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-de-archivos"><i class="fa fa-check"></i><b>3.1</b> Lectura de archivos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#archivos-csv"><i class="fa fa-check"></i><b>3.1.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#archivos-txt"><i class="fa fa-check"></i><b>3.1.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.1.3" data-path="tidyverse.html"><a href="tidyverse.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.1.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.1.4" data-path="tidyverse.html"><a href="tidyverse.html#archivos-json"><i class="fa fa-check"></i><b>3.1.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.1.5" data-path="tidyverse.html"><a href="tidyverse.html#archivos-rds"><i class="fa fa-check"></i><b>3.1.5</b> Archivos rds</a></li>
+<li class="chapter" data-level="3.1.6" data-path="tidyverse.html"><a href="tidyverse.html#bases-de-datos"><i class="fa fa-check"></i><b>3.1.6</b> Bases de Datos</a></li>
+<li class="chapter" data-level="3.1.7" data-path="tidyverse.html"><a href="tidyverse.html#oracle-database"><i class="fa fa-check"></i><b>3.1.7</b> Oracle Database</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>3.2</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>3.2.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="3.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>3.2.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="3.2.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>3.2.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="3.2.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>3.2.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>3.2.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="3.2.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>3.2.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.2.7" data-path="tidyverse.html"><a href="tidyverse.html#cruces-de-tablas"><i class="fa fa-check"></i><b>3.2.7</b> Cruces de tablas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#orden-y-estructura"><i class="fa fa-check"></i><b>3.3</b> Orden y estructura</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#pivote-horizontal"><i class="fa fa-check"></i><b>3.3.1</b> Pivote horizontal</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#pivote-vertical"><i class="fa fa-check"></i><b>3.3.2</b> Pivote vertical</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tidyverse.html"><a href="tidyverse.html#unión-de-columnas"><i class="fa fa-check"></i><b>3.3.3</b> Unión de columnas</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tidyverse.html"><a href="tidyverse.html#separador-de-columnas"><i class="fa fa-check"></i><b>3.3.4</b> Separador de columnas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-texto"><i class="fa fa-check"></i><b>3.4</b> Manipulación de texto</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="tidyverse.html"><a href="tidyverse.html#caracteres-especiales"><i class="fa fa-check"></i><b>3.4.1</b> Caracteres especiales</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tidyverse.html"><a href="tidyverse.html#tamaño-de-cadena"><i class="fa fa-check"></i><b>3.4.2</b> Tamaño de cadena</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tidyverse.html"><a href="tidyverse.html#concatenar"><i class="fa fa-check"></i><b>3.4.3</b> Concatenar</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tidyverse.html"><a href="tidyverse.html#extraer-y-reemplazar"><i class="fa fa-check"></i><b>3.4.4</b> Extraer y reemplazar</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tidyverse.html"><a href="tidyverse.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.4.5</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tidyverse.html"><a href="tidyverse.html#detectar-coincidencias"><i class="fa fa-check"></i><b>3.4.6</b> Detectar coincidencias</a></li>
+<li class="chapter" data-level="3.4.7" data-path="tidyverse.html"><a href="tidyverse.html#contabilizar-coincidencias"><i class="fa fa-check"></i><b>3.4.7</b> Contabilizar coincidencias</a></li>
+<li class="chapter" data-level="3.4.8" data-path="tidyverse.html"><a href="tidyverse.html#extraer-coincidencias"><i class="fa fa-check"></i><b>3.4.8</b> Extraer coincidencias</a></li>
+<li class="chapter" data-level="3.4.9" data-path="tidyverse.html"><a href="tidyverse.html#reemplazar-coincidencias"><i class="fa fa-check"></i><b>3.4.9</b> Reemplazar coincidencias</a></li>
+<li class="chapter" data-level="3.4.10" data-path="tidyverse.html"><a href="tidyverse.html#divisiones-mediante-patrones"><i class="fa fa-check"></i><b>3.4.10</b> Divisiones mediante patrones</a></li>
+<li class="chapter" data-level="3.4.11" data-path="tidyverse.html"><a href="tidyverse.html#localización-de-coincidencias"><i class="fa fa-check"></i><b>3.4.11</b> Localización de coincidencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-tiempo"><i class="fa fa-check"></i><b>3.5</b> Manipulación de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-y-creación-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.1</b> Lectura y creación de datos temporales</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#iteraciones"><i class="fa fa-check"></i><b>3.6</b> Iteraciones</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse.html"><a href="tidyverse.html#bucles-1"><i class="fa fa-check"></i><b>3.6.1</b> Bucles</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visualización.html"><a href="visualización.html#lo-que-no-se-debe-hacer"><i class="fa fa-check"></i><b>4.2.1</b> Lo que no se debe hacer…</a></li>
+<li class="chapter" data-level="4.2.2" data-path="visualización.html"><a href="visualización.html#principios-de-visualización"><i class="fa fa-check"></i><b>4.2.2</b> Principios de visualización</a></li>
+<li class="chapter" data-level="4.2.3" data-path="visualización.html"><a href="visualización.html#principios-generales-del-diseño-analítico"><i class="fa fa-check"></i><b>4.2.3</b> Principios generales del diseño analítico:</a></li>
+<li class="chapter" data-level="4.2.4" data-path="visualización.html"><a href="visualización.html#técnicas-de-visualización"><i class="fa fa-check"></i><b>4.2.4</b> Técnicas de visualización:</a></li>
+<li class="chapter" data-level="4.2.5" data-path="visualización.html"><a href="visualización.html#indicadores-de-calidad-gráfica"><i class="fa fa-check"></i><b>4.2.5</b> Indicadores de calidad gráfica:</a></li>
+<li class="chapter" data-level="4.2.6" data-path="visualización.html"><a href="visualización.html#gráficos-univariados"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos univariados:</a></li>
+<li class="chapter" data-level="4.2.7" data-path="visualización.html"><a href="visualización.html#gráficos-multivariados"><i class="fa fa-check"></i><b>4.2.7</b> Gráficos multivariados</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualización.html"><a href="visualización.html#creación-de-gráficos"><i class="fa fa-check"></i><b>4.3</b> Creación de gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualización.html"><a href="visualización.html#estéticas"><i class="fa fa-check"></i><b>4.3.1</b> Estéticas</a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualización.html"><a href="visualización.html#objetos-geométricos-o-capas"><i class="fa fa-check"></i><b>4.3.2</b> Objetos geométricos o capas</a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualización.html"><a href="visualización.html#facetas"><i class="fa fa-check"></i><b>4.3.3</b> Facetas</a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualización.html"><a href="visualización.html#más-sobre-estéticas"><i class="fa fa-check"></i><b>4.3.4</b> Más sobre estéticas</a></li>
+<li class="chapter" data-level="4.3.5" data-path="visualización.html"><a href="visualización.html#quick-view"><i class="fa fa-check"></i><b>4.3.5</b> Quick View</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualización.html"><a href="visualización.html#análisis-univariado"><i class="fa fa-check"></i><b>4.4</b> Análisis univariado</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visualización.html"><a href="visualización.html#variables-numéricas"><i class="fa fa-check"></i><b>4.4.1</b> Variables numéricas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a>
+<ul>
+<li class="chapter" data-level="" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i>¡ Warning !</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="visualización.html"><a href="visualización.html#reporte-interactivos"><i class="fa fa-check"></i><b>4.7</b> Reporte interactivos</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 2: Machine Learning</b></span></li>
+<li class="chapter" data-level="5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html"><i class="fa fa-check"></i><b>5</b> Introducción a Machine Learning</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#análisis-supervisado-vs-no-supervisado"><i class="fa fa-check"></i><b>5.1</b> Análisis Supervisado vs No supervisado</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#regresión-vs-clasificación"><i class="fa fa-check"></i><b>5.1.1</b> Regresión vs clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#sesgo-vs-varianza"><i class="fa fa-check"></i><b>5.2</b> Sesgo vs varianza</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#errores-reducibles"><i class="fa fa-check"></i><b>5.2.1</b> Errores reducibles</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-irreducible"><i class="fa fa-check"></i><b>5.2.2</b> Error irreducible</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#balance-entre-sesgo-y-varianza-o-trade-off"><i class="fa fa-check"></i><b>5.2.3</b> Balance entre sesgo y varianza o Trade-off</a></li>
+<li class="chapter" data-level="5.2.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-total"><i class="fa fa-check"></i><b>5.2.4</b> Error total</a></li>
+<li class="chapter" data-level="5.2.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#overfitting"><i class="fa fa-check"></i><b>5.2.5</b> Overfitting</a></li>
+<li class="chapter" data-level="5.2.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#underfitting"><i class="fa fa-check"></i><b>5.2.6</b> Underfitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#orden-y-estructura-de-proyecto"><i class="fa fa-check"></i><b>5.3</b> Orden y estructura de proyecto</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#plantilla-de-estructura-proyecto"><i class="fa fa-check"></i><b>5.3.1</b> Plantilla de estructura proyecto</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#reproducibilidad"><i class="fa fa-check"></i><b>5.3.2</b> Reproducibilidad</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#partición-de-datos"><i class="fa fa-check"></i><b>5.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>5.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="5.4.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#conjunto-de-validación"><i class="fa fa-check"></i><b>5.4.2</b> Conjunto de validación</a></li>
+<li class="chapter" data-level="5.4.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>5.4.3</b> Leave-one-out cross-validation</a></li>
+<li class="chapter" data-level="5.4.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#v-fold-cross-validation"><i class="fa fa-check"></i><b>5.4.4</b> V Fold Cross Validation</a></li>
+<li class="chapter" data-level="5.4.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#medidas-de-ajuste"><i class="fa fa-check"></i><b>5.4.5</b> Medidas de ajuste</a></li>
+<li class="chapter" data-level="5.4.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#validación-cruzada-para-series-de-tiempo"><i class="fa fa-check"></i><b>5.4.6</b> Validación cruzada para series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>5.5</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="5.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#ingeniería-de-datos"><i class="fa fa-check"></i><b>5.6</b> Ingeniería de datos</a></li>
+<li class="chapter" data-level="5.7" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#recetas"><i class="fa fa-check"></i><b>5.7</b> Recetas</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pasos-y-estructura-de-recetas"><i class="fa fa-check"></i><b>5.7.1</b> Pasos y estructura de recetas</a></li>
+<li class="chapter" data-level="5.7.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#imputaciones"><i class="fa fa-check"></i><b>5.7.2</b> Imputaciones</a></li>
+<li class="chapter" data-level="5.7.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#agregar-o-modificar-columnas"><i class="fa fa-check"></i><b>5.7.3</b> Agregar o modificar columnas</a></li>
+<li class="chapter" data-level="5.7.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#interacciones"><i class="fa fa-check"></i><b>5.7.4</b> Interacciones</a></li>
+<li class="chapter" data-level="5.7.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#transformaciones-generales"><i class="fa fa-check"></i><b>5.7.5</b> Transformaciones generales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#datos-y-tipos-de-modelos"><i class="fa fa-check"></i><b>5.8</b> Datos y tipos de modelos</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos"><i class="fa fa-check"></i><b>5.8.1</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta"><i class="fa fa-check"></i><b>5.8.2</b> Definición de la receta</a></li>
+<li class="chapter" data-level="5.8.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos-1"><i class="fa fa-check"></i><b>5.8.3</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta-1"><i class="fa fa-check"></i><b>5.8.4</b> Definición de la receta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regresión-lineal.html"><a href="regresión-lineal.html"><i class="fa fa-check"></i><b>6</b> Regresión Lineal</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#ajuste-de-modelo"><i class="fa fa-check"></i><b>6.1</b> Ajuste de modelo</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-simple"><i class="fa fa-check"></i><b>6.1.1</b> Estimación de parámetros: Regresión lineal simple</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-múltiple"><i class="fa fa-check"></i><b>6.1.2</b> Estimación de parámetros: Regresión lineal múltiple</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#residuos-del-modelo"><i class="fa fa-check"></i><b>6.2</b> Residuos del modelo</a>
+<ul>
+<li class="chapter" data-level="" data-path="regresión-lineal.html"><a href="regresión-lineal.html#condiciones-para-el-ajuste-de-una-regresión-lineal"><i class="fa fa-check"></i>Condiciones para el ajuste de una regresión lineal:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño"><i class="fa fa-check"></i><b>6.3</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4" data-path="regresión-lineal.html"><a href="regresión-lineal.html#implementación-en-r"><i class="fa fa-check"></i><b>6.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#coeficientes-del-modelo"><i class="fa fa-check"></i><b>6.4.1</b> Coeficientes del modelo</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño-1"><i class="fa fa-check"></i><b>6.4.2</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#gráfica-de-ajuste"><i class="fa fa-check"></i><b>6.4.3</b> Gráfica de ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métodos-se-selección-de-variables"><i class="fa fa-check"></i><b>6.5</b> Métodos se selección de variables</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#forward-selection-selección-hacia-adelante"><i class="fa fa-check"></i><b>6.5.1</b> Forward selection (selección hacia adelante)</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#backward-selection-selección-hacia-atrás"><i class="fa fa-check"></i><b>6.5.2</b> Backward selection (selección hacia atrás)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regresión-logística.html"><a href="regresión-logística.html"><i class="fa fa-check"></i><b>7</b> Regresión Logística</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regresión-logística.html"><a href="regresión-logística.html#función-sigmoide"><i class="fa fa-check"></i><b>7.1</b> Función sigmoide</a></li>
+<li class="chapter" data-level="7.2" data-path="regresión-logística.html"><a href="regresión-logística.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>7.2</b> Ajuste del modelo</a></li>
+<li class="chapter" data-level="7.3" data-path="regresión-logística.html"><a href="regresión-logística.html#clasificación-2"><i class="fa fa-check"></i><b>7.3</b> Clasificación</a></li>
+<li class="chapter" data-level="7.4" data-path="regresión-logística.html"><a href="regresión-logística.html#métricas-de-desempeño-2"><i class="fa fa-check"></i><b>7.4</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html"><i class="fa fa-check"></i><b>9</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ajuste-del-modelo-2"><i class="fa fa-check"></i><b>9.1</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#attribute-selective-measure-asm"><i class="fa fa-check"></i><b>9.1.1</b> Attribute Selective Measure (ASM)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regularización-de-árboles"><i class="fa fa-check"></i><b>9.2</b> Regularización de árboles</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
+<li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>9.3</b> Aprendizaje conjunto</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>9.3.1</b> Bagging vs. boosting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#error-out-of-bag"><i class="fa fa-check"></i><b>9.3.2</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging"><i class="fa fa-check"></i><b>9.4</b> Bagging</a></li>
+<li class="chapter" data-level="9.5" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#random-forest"><i class="fa fa-check"></i><b>9.5</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#qué-es"><i class="fa fa-check"></i><b>9.5.1</b> ¿Qué es?</a></li>
+<li class="chapter" data-level="9.5.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.2</b> Características de los bosques aleatorios</a></li>
+<li class="chapter" data-level="9.5.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio"><i class="fa fa-check"></i><b>9.5.3</b> Aplicar árboles de decisión en un bosque aleatorio</a></li>
+<li class="chapter" data-level="9.5.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.4</b> Ventajas y desventjas de bosques aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-en-r-3"><i class="fa fa-check"></i><b>9.6</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.6.1</b> Regresión</a></li>
+<li class="chapter" data-level="9.6.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#clasificación-5"><i class="fa fa-check"></i><b>9.6.2</b> Clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#boosting"><i class="fa fa-check"></i><b>9.7</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#predicciones-boosting"><i class="fa fa-check"></i><b>9.7.1</b> Predicciones <em>Boosting</em></a></li>
+<li class="chapter" data-level="9.7.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#modelos-boosting"><i class="fa fa-check"></i><b>9.7.2</b> Modelos <em>Boosting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-xgb-en-r"><i class="fa fa-check"></i><b>9.8</b> Implementación de XGB en R</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>9.8.1</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="9.8.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>9.8.2</b> XGBoost para clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>10</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>10.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="10.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>10.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="10.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>10.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="10.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>10.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-4"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>11</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>11.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="11.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>11.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="11.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflowset"><i class="fa fa-check"></i><b>11.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="11.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>11.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="11.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>11.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>11.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>11.6</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>11.6.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="11.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>11.6.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="11.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>11.6.3</b> Comparación de métricas</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="workflowsets-stacking" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Capítulo 11</span> Workflowsets &amp; Stacking<a href="workflowsets-stacking.html#workflowsets-stacking" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Es común no sepamos ni remotamente cuál es el mejor modelo que podríamos implementar al iniciar un proyecto con datos que nunca antes hemos visto. Es posible que un profesional de datos deba seleccionar muchas combinaciones de modelos y pre-procesadores. También es posible tener poco o ningún conocimiento a priori sobre qué método funcionará mejor con un nuevo conjunto de datos.</p>
+<blockquote>
+<p>Una buena estrategia es dedicar un esfuerzo inicial a probar una variedad de enfoques de modelado, determinar qué funciona mejor y luego invertir tiempo adicional ajustando / optimizando un pequeño conjunto de modelos.</p>
+</blockquote>
+<div id="múltiples-recetas" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Múltiples recetas<a href="workflowsets-stacking.html#múltiples-recetas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Algunos modelos requieren predictores que se han centrado y escalado, por lo que algunos flujos de trabajo de modelos requerirán recetas con estos pasos de pre-procesamiento. Para otros modelos, crear interacciones cuadráticas y bi-direccionales. Para estos fines, creamos múltiples recetas:</p>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="workflowsets-stacking.html#cb822-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb822-2"><a href="workflowsets-stacking.html#cb822-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb822-3"><a href="workflowsets-stacking.html#cb822-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb822-4"><a href="workflowsets-stacking.html#cb822-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb822-5"><a href="workflowsets-stacking.html#cb822-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4595</span>)</span>
+<span id="cb822-6"><a href="workflowsets-stacking.html#cb822-6" aria-hidden="true" tabindex="-1"></a>ames_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb822-7"><a href="workflowsets-stacking.html#cb822-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb822-8"><a href="workflowsets-stacking.html#cb822-8" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(ames_split)</span>
+<span id="cb822-9"><a href="workflowsets-stacking.html#cb822-9" aria-hidden="true" tabindex="-1"></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(ames_split)</span>
+<span id="cb822-10"><a href="workflowsets-stacking.html#cb822-10" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train)</span></code></pre></div>
+<ul>
+<li><strong>Receta Original</strong></li>
+</ul>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="workflowsets-stacking.html#cb823-1" aria-hidden="true" tabindex="-1"></a>receta_base <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb823-2"><a href="workflowsets-stacking.html#cb823-2" aria-hidden="true" tabindex="-1"></a> Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> TotRms_AbvGrd <span class="sc">+</span> Exter_Cond <span class="sc">+</span> Bsmt_Cond <span class="sc">+</span></span>
+<span id="cb823-3"><a href="workflowsets-stacking.html#cb823-3" aria-hidden="true" tabindex="-1"></a>  Year_Sold <span class="sc">+</span> Year_Remod_Add, </span>
+<span id="cb823-4"><a href="workflowsets-stacking.html#cb823-4" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb823-5"><a href="workflowsets-stacking.html#cb823-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb823-6"><a href="workflowsets-stacking.html#cb823-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add,</span>
+<span id="cb823-7"><a href="workflowsets-stacking.html#cb823-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb823-8"><a href="workflowsets-stacking.html#cb823-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb823-9"><a href="workflowsets-stacking.html#cb823-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb823-10"><a href="workflowsets-stacking.html#cb823-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb823-11"><a href="workflowsets-stacking.html#cb823-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd)</span>
+<span id="cb823-12"><a href="workflowsets-stacking.html#cb823-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb823-13"><a href="workflowsets-stacking.html#cb823-13" aria-hidden="true" tabindex="-1"></a>receta_base_prep <span class="ot">&lt;-</span> receta_base <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+<ul>
+<li><strong>Receta KNN:</strong></li>
+</ul>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="workflowsets-stacking.html#cb824-1" aria-hidden="true" tabindex="-1"></a>receta_extendida <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb824-2"><a href="workflowsets-stacking.html#cb824-2" aria-hidden="true" tabindex="-1"></a> Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> TotRms_AbvGrd <span class="sc">+</span> Exter_Cond <span class="sc">+</span> Bsmt_Cond <span class="sc">+</span></span>
+<span id="cb824-3"><a href="workflowsets-stacking.html#cb824-3" aria-hidden="true" tabindex="-1"></a>  Year_Sold <span class="sc">+</span> Year_Remod_Add <span class="sc">+</span> Year_Remod_Add <span class="sc">+</span> Bedroom_AbvGr <span class="sc">+</span>Total_Bsmt_SF <span class="sc">+</span></span>
+<span id="cb824-4"><a href="workflowsets-stacking.html#cb824-4" aria-hidden="true" tabindex="-1"></a>  Pool_Area <span class="sc">+</span> Second_Flr_SF <span class="sc">+</span> First_Flr_SF, </span>
+<span id="cb824-5"><a href="workflowsets-stacking.html#cb824-5" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb824-6"><a href="workflowsets-stacking.html#cb824-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb824-7"><a href="workflowsets-stacking.html#cb824-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb824-8"><a href="workflowsets-stacking.html#cb824-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add,</span>
+<span id="cb824-9"><a href="workflowsets-stacking.html#cb824-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalSF   =</span> Gr_Liv_Area <span class="sc">+</span> Total_Bsmt_SF,</span>
+<span id="cb824-10"><a href="workflowsets-stacking.html#cb824-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">AvgRoomSF   =</span> Gr_Liv_Area <span class="sc">/</span> TotRms_AbvGrd,</span>
+<span id="cb824-11"><a href="workflowsets-stacking.html#cb824-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">ifelse</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb824-12"><a href="workflowsets-stacking.html#cb824-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb824-13"><a href="workflowsets-stacking.html#cb824-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb824-14"><a href="workflowsets-stacking.html#cb824-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb824-15"><a href="workflowsets-stacking.html#cb824-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb824-16"><a href="workflowsets-stacking.html#cb824-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>First_Flr_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb824-17"><a href="workflowsets-stacking.html#cb824-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) </span>
+<span id="cb824-18"><a href="workflowsets-stacking.html#cb824-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-19"><a href="workflowsets-stacking.html#cb824-19" aria-hidden="true" tabindex="-1"></a>receta_extendida_prep <span class="ot">&lt;-</span> receta_extendida <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+<ul>
+<li><strong>Receta Experta:</strong></li>
+</ul>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="workflowsets-stacking.html#cb825-1" aria-hidden="true" tabindex="-1"></a>receta_experta <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb825-2"><a href="workflowsets-stacking.html#cb825-2" aria-hidden="true" tabindex="-1"></a> Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> TotRms_AbvGrd <span class="sc">+</span> Exter_Cond <span class="sc">+</span> Bsmt_Cond <span class="sc">+</span> Condition_1 <span class="sc">+</span></span>
+<span id="cb825-3"><a href="workflowsets-stacking.html#cb825-3" aria-hidden="true" tabindex="-1"></a>  Year_Sold <span class="sc">+</span> Year_Remod_Add <span class="sc">+</span> Year_Remod_Add <span class="sc">+</span> Bedroom_AbvGr <span class="sc">+</span>Total_Bsmt_SF <span class="sc">+</span></span>
+<span id="cb825-4"><a href="workflowsets-stacking.html#cb825-4" aria-hidden="true" tabindex="-1"></a>  Pool_Area <span class="sc">+</span> Second_Flr_SF <span class="sc">+</span> First_Flr_SF <span class="sc">+</span> Full_Bath <span class="sc">+</span> Bsmt_Full_Bath <span class="sc">+</span> Neighborhood, </span>
+<span id="cb825-5"><a href="workflowsets-stacking.html#cb825-5" aria-hidden="true" tabindex="-1"></a> <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb825-6"><a href="workflowsets-stacking.html#cb825-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb825-7"><a href="workflowsets-stacking.html#cb825-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Second_Flr_SF, <span class="at">denom =</span> <span class="fu">denom_vars</span>(First_Flr_SF)) <span class="sc">%&gt;%</span> </span>
+<span id="cb825-8"><a href="workflowsets-stacking.html#cb825-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb825-9"><a href="workflowsets-stacking.html#cb825-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalBaths =</span> Full_Bath <span class="sc">+</span> Bsmt_Full_Bath,</span>
+<span id="cb825-10"><a href="workflowsets-stacking.html#cb825-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod_Add,</span>
+<span id="cb825-11"><a href="workflowsets-stacking.html#cb825-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">ifelse</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb825-12"><a href="workflowsets-stacking.html#cb825-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>)),</span>
+<span id="cb825-13"><a href="workflowsets-stacking.html#cb825-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Neighborhood =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Neighborhood, </span>
+<span id="cb825-14"><a href="workflowsets-stacking.html#cb825-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">NoRidge_GrnHill =</span> <span class="fu">c</span>(<span class="st">&quot;Northridge&quot;</span>, <span class="st">&quot;Green_Hills&quot;</span>),</span>
+<span id="cb825-15"><a href="workflowsets-stacking.html#cb825-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">ClearCr_Somerst =</span> <span class="fu">c</span>(<span class="st">&quot;Clear_Creek&quot;</span>, <span class="st">&quot;Somerset&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb825-16"><a href="workflowsets-stacking.html#cb825-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Condition_1, <span class="at">ref_level =</span> <span class="st">&quot;Norm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb825-17"><a href="workflowsets-stacking.html#cb825-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb825-18"><a href="workflowsets-stacking.html#cb825-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb825-19"><a href="workflowsets-stacking.html#cb825-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Age_House<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span></span>
+<span id="cb825-20"><a href="workflowsets-stacking.html#cb825-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb825-21"><a href="workflowsets-stacking.html#cb825-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(</span>
+<span id="cb825-22"><a href="workflowsets-stacking.html#cb825-22" aria-hidden="true" tabindex="-1"></a>    First_Flr_SF, Second_Flr_SF, Year_Remod_Add, Bsmt_Full_Bath, </span>
+<span id="cb825-23"><a href="workflowsets-stacking.html#cb825-23" aria-hidden="true" tabindex="-1"></a>    Total_Bsmt_SF, Pool_Area, Gr_Liv_Area</span>
+<span id="cb825-24"><a href="workflowsets-stacking.html#cb825-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb825-25"><a href="workflowsets-stacking.html#cb825-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb825-26"><a href="workflowsets-stacking.html#cb825-26" aria-hidden="true" tabindex="-1"></a>receta_experta_prep <span class="ot">&lt;-</span> receta_experta <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+</div>
+<div id="múltiples-modelos" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Múltiples modelos<a href="workflowsets-stacking.html#múltiples-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez que tenemos suficientes recetas, podemos experimentar con múltiples modelos para poner a prueba. Usaremos los modelos que hemos aprendido a implementar en todo el curso:</p>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="workflowsets-stacking.html#cb826-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb826-2"><a href="workflowsets-stacking.html#cb826-2" aria-hidden="true" tabindex="-1"></a> rules,</span>
+<span id="cb826-3"><a href="workflowsets-stacking.html#cb826-3" aria-hidden="true" tabindex="-1"></a> baguette,</span>
+<span id="cb826-4"><a href="workflowsets-stacking.html#cb826-4" aria-hidden="true" tabindex="-1"></a> tune,</span>
+<span id="cb826-5"><a href="workflowsets-stacking.html#cb826-5" aria-hidden="true" tabindex="-1"></a> stacks</span>
+<span id="cb826-6"><a href="workflowsets-stacking.html#cb826-6" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb826-7"><a href="workflowsets-stacking.html#cb826-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb826-8"><a href="workflowsets-stacking.html#cb826-8" aria-hidden="true" tabindex="-1"></a>knn_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(</span>
+<span id="cb826-9"><a href="workflowsets-stacking.html#cb826-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb826-10"><a href="workflowsets-stacking.html#cb826-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">neighbors =</span> <span class="fu">tune</span>(<span class="st">&quot;K&quot;</span>),</span>
+<span id="cb826-11"><a href="workflowsets-stacking.html#cb826-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist_power =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-12"><a href="workflowsets-stacking.html#cb826-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_func =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb826-13"><a href="workflowsets-stacking.html#cb826-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;kknn&quot;</span>)</span>
+<span id="cb826-14"><a href="workflowsets-stacking.html#cb826-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb826-15"><a href="workflowsets-stacking.html#cb826-15" aria-hidden="true" tabindex="-1"></a>rforest_model <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
+<span id="cb826-16"><a href="workflowsets-stacking.html#cb826-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb826-17"><a href="workflowsets-stacking.html#cb826-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">500</span>,</span>
+<span id="cb826-18"><a href="workflowsets-stacking.html#cb826-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-19"><a href="workflowsets-stacking.html#cb826-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb826-20"><a href="workflowsets-stacking.html#cb826-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb826-21"><a href="workflowsets-stacking.html#cb826-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb826-22"><a href="workflowsets-stacking.html#cb826-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb826-23"><a href="workflowsets-stacking.html#cb826-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb826-24"><a href="workflowsets-stacking.html#cb826-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb826-25"><a href="workflowsets-stacking.html#cb826-25" aria-hidden="true" tabindex="-1"></a>xgboost_model <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
+<span id="cb826-26"><a href="workflowsets-stacking.html#cb826-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb826-27"><a href="workflowsets-stacking.html#cb826-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">500</span>,</span>
+<span id="cb826-28"><a href="workflowsets-stacking.html#cb826-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-29"><a href="workflowsets-stacking.html#cb826-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-30"><a href="workflowsets-stacking.html#cb826-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-31"><a href="workflowsets-stacking.html#cb826-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-32"><a href="workflowsets-stacking.html#cb826-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-33"><a href="workflowsets-stacking.html#cb826-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb826-34"><a href="workflowsets-stacking.html#cb826-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb826-35"><a href="workflowsets-stacking.html#cb826-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;xgboost&quot;</span>,</span>
+<span id="cb826-36"><a href="workflowsets-stacking.html#cb826-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb826-37"><a href="workflowsets-stacking.html#cb826-37" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb826-38"><a href="workflowsets-stacking.html#cb826-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb826-39"><a href="workflowsets-stacking.html#cb826-39" aria-hidden="true" tabindex="-1"></a>elasticnet_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(</span>
+<span id="cb826-40"><a href="workflowsets-stacking.html#cb826-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb826-41"><a href="workflowsets-stacking.html#cb826-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">penalty =</span> <span class="fu">tune</span>(),</span>
+<span id="cb826-42"><a href="workflowsets-stacking.html#cb826-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">mixture =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb826-43"><a href="workflowsets-stacking.html#cb826-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>) </span></code></pre></div>
+<p><strong>¿Cómo podemos hacer coincidir estos modelos con las recetas desarrolladas, ajustarlos y luego evaluar su rendimiento de manera eficiente? WORKFLOWSETS ofrece una solución.</strong></p>
+</div>
+<div id="creación-de-workflowset" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Creación de workflowset<a href="workflowsets-stacking.html#creación-de-workflowset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los conjuntos de flujo de trabajo toman listas nombradas de pre-procesadores y especificaciones de modelos y las combinan en un objeto que contiene múltiples flujos de trabajo.</p>
+<p>Como primer ejemplo de conjunto de flujo de trabajo, combinemos las recetas creadas en la sección anterior.</p>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="workflowsets-stacking.html#cb827-1" aria-hidden="true" tabindex="-1"></a>workflow_set_models <span class="ot">&lt;-</span> <span class="fu">workflow_set</span>(</span>
+<span id="cb827-2"><a href="workflowsets-stacking.html#cb827-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">preproc =</span> <span class="fu">list</span>(</span>
+<span id="cb827-3"><a href="workflowsets-stacking.html#cb827-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_base =</span> receta_base_prep, </span>
+<span id="cb827-4"><a href="workflowsets-stacking.html#cb827-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_extendida =</span> receta_extendida_prep,</span>
+<span id="cb827-5"><a href="workflowsets-stacking.html#cb827-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_experta =</span> receta_experta_prep</span>
+<span id="cb827-6"><a href="workflowsets-stacking.html#cb827-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb827-7"><a href="workflowsets-stacking.html#cb827-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">models =</span> <span class="fu">list</span>(</span>
+<span id="cb827-8"><a href="workflowsets-stacking.html#cb827-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">knn =</span> knn_model,</span>
+<span id="cb827-9"><a href="workflowsets-stacking.html#cb827-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">rf =</span> rforest_model,</span>
+<span id="cb827-10"><a href="workflowsets-stacking.html#cb827-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">boost =</span> xgboost_model,</span>
+<span id="cb827-11"><a href="workflowsets-stacking.html#cb827-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">elasticnet =</span> elasticnet_model</span>
+<span id="cb827-12"><a href="workflowsets-stacking.html#cb827-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb827-13"><a href="workflowsets-stacking.html#cb827-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="ajuste-y-evaluación-de-modelos" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Ajuste y evaluación de modelos<a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Casi todos estos flujos de trabajo contienen parámetros de ajuste. Para evaluar su rendimiento, podemos utilizar las funciones estándar de ajuste o remuestreo (por ejemplo, <code>tune_grid()</code>).</p>
+<p>La función <code>workflow_map()</code> aplicará la misma función a todos los flujos de trabajo del conjunto; el valor predeterminado es <code>tune_grid()</code>.</p>
+<p>A continuación se declaran los parámetros para cada modelo y el grid:</p>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="workflowsets-stacking.html#cb828-1" aria-hidden="true" tabindex="-1"></a>elasticnet_params <span class="ot">&lt;-</span> elasticnet_model <span class="sc">%&gt;%</span></span>
+<span id="cb828-2"><a href="workflowsets-stacking.html#cb828-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb828-3"><a href="workflowsets-stacking.html#cb828-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb828-4"><a href="workflowsets-stacking.html#cb828-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="fu">penalty</span>(</span>
+<span id="cb828-5"><a href="workflowsets-stacking.html#cb828-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">1</span>),</span>
+<span id="cb828-6"><a href="workflowsets-stacking.html#cb828-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb828-7"><a href="workflowsets-stacking.html#cb828-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mixture =</span> dials<span class="sc">::</span><span class="fu">mixture</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb828-8"><a href="workflowsets-stacking.html#cb828-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb828-9"><a href="workflowsets-stacking.html#cb828-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb828-10"><a href="workflowsets-stacking.html#cb828-10" aria-hidden="true" tabindex="-1"></a>knn_params <span class="ot">&lt;-</span> knn_model <span class="sc">%&gt;%</span></span>
+<span id="cb828-11"><a href="workflowsets-stacking.html#cb828-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb828-12"><a href="workflowsets-stacking.html#cb828-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb828-13"><a href="workflowsets-stacking.html#cb828-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">K =</span> dials<span class="sc">::</span><span class="fu">neighbors</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">150</span>)),</span>
+<span id="cb828-14"><a href="workflowsets-stacking.html#cb828-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist_power =</span> <span class="fu">dist_power</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)),</span>
+<span id="cb828-15"><a href="workflowsets-stacking.html#cb828-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight_func =</span> <span class="fu">weight_func</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;rectangular&quot;</span>, <span class="st">&quot;inv&quot;</span>, <span class="st">&quot;gaussian&quot;</span>, <span class="st">&quot;cos&quot;</span>))</span>
+<span id="cb828-16"><a href="workflowsets-stacking.html#cb828-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb828-17"><a href="workflowsets-stacking.html#cb828-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb828-18"><a href="workflowsets-stacking.html#cb828-18" aria-hidden="true" tabindex="-1"></a>rforest_params <span class="ot">&lt;-</span> rforest_model <span class="sc">%&gt;%</span></span>
+<span id="cb828-19"><a href="workflowsets-stacking.html#cb828-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb828-20"><a href="workflowsets-stacking.html#cb828-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb828-21"><a href="workflowsets-stacking.html#cb828-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">finalize</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">80</span>))),</span>
+<span id="cb828-22"><a href="workflowsets-stacking.html#cb828-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">15</span>))</span>
+<span id="cb828-23"><a href="workflowsets-stacking.html#cb828-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb828-24"><a href="workflowsets-stacking.html#cb828-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb828-25"><a href="workflowsets-stacking.html#cb828-25" aria-hidden="true" tabindex="-1"></a>xgboost_params <span class="ot">&lt;-</span> xgboost_model <span class="sc">%&gt;%</span></span>
+<span id="cb828-26"><a href="workflowsets-stacking.html#cb828-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb828-27"><a href="workflowsets-stacking.html#cb828-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb828-28"><a href="workflowsets-stacking.html#cb828-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">15</span>)),</span>
+<span id="cb828-29"><a href="workflowsets-stacking.html#cb828-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">finalize</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">80</span>))),</span>
+<span id="cb828-30"><a href="workflowsets-stacking.html#cb828-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_depth =</span> <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">50</span>)),</span>
+<span id="cb828-31"><a href="workflowsets-stacking.html#cb828-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">loss_reduction =</span> <span class="fu">loss_reduction</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="fl">1.5</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb828-32"><a href="workflowsets-stacking.html#cb828-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">learn_rate =</span> <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="fl">0.25</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb828-33"><a href="workflowsets-stacking.html#cb828-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">sample_prop</span>()</span>
+<span id="cb828-34"><a href="workflowsets-stacking.html#cb828-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb828-35"><a href="workflowsets-stacking.html#cb828-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb828-36"><a href="workflowsets-stacking.html#cb828-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Declaración del grid</span></span>
+<span id="cb828-37"><a href="workflowsets-stacking.html#cb828-37" aria-hidden="true" tabindex="-1"></a>workflow_tunning_set_models <span class="ot">&lt;-</span> workflow_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb828-38"><a href="workflowsets-stacking.html#cb828-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> knn_params, <span class="at">id =</span> <span class="st">&quot;knn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb828-39"><a href="workflowsets-stacking.html#cb828-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> rforest_params, <span class="at">id =</span> <span class="st">&quot;rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb828-40"><a href="workflowsets-stacking.html#cb828-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> xgboost_params, <span class="at">id =</span> <span class="st">&quot;xgboost&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb828-41"><a href="workflowsets-stacking.html#cb828-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> elasticnet_params, <span class="at">id =</span> <span class="st">&quot;elasticnet&quot;</span>)</span>
+<span id="cb828-42"><a href="workflowsets-stacking.html#cb828-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb828-43"><a href="workflowsets-stacking.html#cb828-43" aria-hidden="true" tabindex="-1"></a>workflow_tunning_set_models</span></code></pre></div>
+<pre><code>## # A workflow set/tibble: 12 ×
+## #   4
+##    wflow_id                    info             option    result    
+##    &lt;chr&gt;                       &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    
+##  1 receta_base_knn             &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  2 receta_base_rf              &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  3 receta_base_boost           &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  4 receta_base_elasticnet      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  5 receta_extendida_knn        &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  6 receta_extendida_rf         &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  7 receta_extendida_boost      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  8 receta_extendida_elasticnet &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  9 receta_experta_knn          &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 10 receta_experta_rf           &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 11 receta_experta_boost        &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 12 receta_experta_elasticnet   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</code></pre>
+<p>Dado que el pre-procesador contiene más de una entrada, la función crea todas las combinaciones de pre-procesadores y modelos.</p>
+<ul>
+<li><p><strong>info:</strong> Contiene un <em>tibble</em> con algunos identificadores y el objeto de flujo de trabajo.</p></li>
+<li><p><strong>option:</strong> Es un marcador de posición para cualquier argumento que se utilice cuando evaluamos el flujo de trabajo.</p></li>
+<li><p><strong>result:</strong> Es un marcador de posición para la salida de las funciones de ajuste o remuestreo.</p></li>
+</ul>
+<p>Para este ejemplo, la búsqueda del <em>grid</em> se aplica al flujo de trabajo.</p>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="workflowsets-stacking.html#cb830-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb830-2"><a href="workflowsets-stacking.html#cb830-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-3"><a href="workflowsets-stacking.html#cb830-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb830-4"><a href="workflowsets-stacking.html#cb830-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb830-5"><a href="workflowsets-stacking.html#cb830-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb830-6"><a href="workflowsets-stacking.html#cb830-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-7"><a href="workflowsets-stacking.html#cb830-7" aria-hidden="true" tabindex="-1"></a>grid_ctrl <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(</span>
+<span id="cb830-8"><a href="workflowsets-stacking.html#cb830-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">save_pred =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb830-9"><a href="workflowsets-stacking.html#cb830-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">save_workflow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb830-10"><a href="workflowsets-stacking.html#cb830-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel_over =</span> <span class="st">&quot;everything&quot;</span></span>
+<span id="cb830-11"><a href="workflowsets-stacking.html#cb830-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb830-12"><a href="workflowsets-stacking.html#cb830-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-13"><a href="workflowsets-stacking.html#cb830-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">536</span>)</span>
+<span id="cb830-14"><a href="workflowsets-stacking.html#cb830-14" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="ot">&lt;-</span> workflow_tunning_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb830-15"><a href="workflowsets-stacking.html#cb830-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow_map</span>(</span>
+<span id="cb830-16"><a href="workflowsets-stacking.html#cb830-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fn =</span> <span class="st">&quot;tune_grid&quot;</span>,</span>
+<span id="cb830-17"><a href="workflowsets-stacking.html#cb830-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">20221022</span>,</span>
+<span id="cb830-18"><a href="workflowsets-stacking.html#cb830-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb830-19"><a href="workflowsets-stacking.html#cb830-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">30</span>,</span>
+<span id="cb830-20"><a href="workflowsets-stacking.html#cb830-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span>  <span class="fu">metric_set</span>(mae, mape, rmse, rsq),</span>
+<span id="cb830-21"><a href="workflowsets-stacking.html#cb830-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> grid_ctrl,</span>
+<span id="cb830-22"><a href="workflowsets-stacking.html#cb830-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb830-23"><a href="workflowsets-stacking.html#cb830-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb830-24"><a href="workflowsets-stacking.html#cb830-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-25"><a href="workflowsets-stacking.html#cb830-25" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb830-26"><a href="workflowsets-stacking.html#cb830-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-27"><a href="workflowsets-stacking.html#cb830-27" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/ensemble_model.rds&quot;</span>)</span></code></pre></div>
+<p><img src="img/10-ml-elasticnet/console-workflow.png" width="550pt" height="400pt" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="workflowsets-stacking.html#cb831-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/ensemble_model.rds&quot;</span>)</span>
+<span id="cb831-2"><a href="workflowsets-stacking.html#cb831-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb831-3"><a href="workflowsets-stacking.html#cb831-3" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb831-4"><a href="workflowsets-stacking.html#cb831-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rank_results</span>(<span class="at">select_best =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb831-5"><a href="workflowsets-stacking.html#cb831-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.config, n, preprocessor, std_err)) <span class="sc">%&gt;%</span></span>
+<span id="cb831-6"><a href="workflowsets-stacking.html#cb831-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> mean) </span></code></pre></div>
+<pre><code>## # A tibble: 12 × 7
+##    wflow_id                    model             rank    mae  mape   rmse   rsq
+##    &lt;chr&gt;                       &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 receta_experta_boost        boost_tree           1 19244.  11.8 29474. 0.863
+##  2 receta_extendida_rf         rand_forest          2 21171.  13.2 32709. 0.829
+##  3 receta_extendida_boost      boost_tree           3 21179.  13.0 32203. 0.836
+##  4 receta_experta_rf           rand_forest          4 21836.  13.6 33843. 0.820
+##  5 receta_extendida_knn        nearest_neighbor     5 23273.  14.4 36006. 0.795
+##  6 receta_experta_knn          nearest_neighbor     6 24639.  14.5 38809. 0.768
+##  7 receta_experta_elasticnet   linear_reg           7 25602.  15.0 38309. 0.771
+##  8 receta_extendida_elasticnet linear_reg           8 27114.  16.1 45859. 0.687
+##  9 receta_base_boost           boost_tree           9 27621.  16.0 42057. 0.726
+## 10 receta_base_rf              rand_forest         10 27863.  16.8 41351. 0.731
+## 11 receta_base_knn             nearest_neighbor    11 31133.  18.5 45870. 0.673
+## 12 receta_base_elasticnet      linear_reg          12 32603.  19.1 48345. 0.641</code></pre>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="workflowsets-stacking.html#cb833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb833-2"><a href="workflowsets-stacking.html#cb833-2" aria-hidden="true" tabindex="-1"></a>  tunning_models_result,</span>
+<span id="cb833-3"><a href="workflowsets-stacking.html#cb833-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb833-4"><a href="workflowsets-stacking.html#cb833-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,   </span>
+<span id="cb833-5"><a href="workflowsets-stacking.html#cb833-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> F) <span class="sc">+</span>   </span>
+<span id="cb833-6"><a href="workflowsets-stacking.html#cb833-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb833-7"><a href="workflowsets-stacking.html#cb833-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Model Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-588-1.png" width="672" /></p>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="workflowsets-stacking.html#cb834-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb834-2"><a href="workflowsets-stacking.html#cb834-2" aria-hidden="true" tabindex="-1"></a>  tunning_models_result,</span>
+<span id="cb834-3"><a href="workflowsets-stacking.html#cb834-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb834-4"><a href="workflowsets-stacking.html#cb834-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,   </span>
+<span id="cb834-5"><a href="workflowsets-stacking.html#cb834-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> T) <span class="sc">+</span></span>
+<span id="cb834-6"><a href="workflowsets-stacking.html#cb834-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> <span class="fl">0.10</span> , <span class="at">label =</span> wflow_id), <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb834-7"><a href="workflowsets-stacking.html#cb834-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb834-8"><a href="workflowsets-stacking.html#cb834-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Model Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-589-1.png" width="672" /></p>
+</div>
+<div id="extracción-de-modelos" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> Extracción de modelos<a href="workflowsets-stacking.html#extracción-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez que hemos realizado una exploración sobre el desempeño de todas las combinaciones de pre-procesamientos con modelos, es posible tomar varios caminos hacia adelante. Algunas de las opciones más comunes son:</p>
+<ul>
+<li><p>Realizar múltiples iteraciones de modificaciones a las recetas para extraer lo mejor de cada una.</p></li>
+<li><p>Realizar mejoras a los hiperparámetros.</p></li>
+<li><p>Eliminar modelos y/o recetas que no tuvieron buen desempeño.</p></li>
+<li><p>Crear un modelo a partir de la combinación de los modelos más competentes.</p></li>
+</ul>
+<p>Para empezar, se realiza una exploración del resultado del desempeño de los mejores modelos y los hiperparámetros usado en cada caso.</p>
+<p><strong>Resultados de XGBoost</strong></p>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="workflowsets-stacking.html#cb835-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb835-2"><a href="workflowsets-stacking.html#cb835-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb835-3"><a href="workflowsets-stacking.html#cb835-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-590-1.png" width="672" /></p>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="workflowsets-stacking.html#cb836-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb836-2"><a href="workflowsets-stacking.html#cb836-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb836-3"><a href="workflowsets-stacking.html#cb836-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb836-4"><a href="workflowsets-stacking.html#cb836-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.estimator, .metric, .config, n))</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 8
+##     mtry min_n tree_depth learn_rate loss_reduction sample_size  mean std_err
+##    &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1    29    10          6     0.0676       1.79e- 5       0.636 0.863 0.00972
+##  2    17    15         15     0.0338       7.80e- 9       0.872 0.854 0.00874
+##  3    25    23          8     0.0443       9.46e- 1       0.986 0.851 0.00787
+##  4    18     6         13     0.160        4.10e-10       0.772 0.849 0.0101 
+##  5    39     2          3     0.285        4.25e- 2       0.593 0.847 0.0112 
+##  6    33    13         10     0.0799       9.73e- 9       0.526 0.846 0.0106 
+##  7    48    27          2     0.128        3.03e+ 1       0.939 0.844 0.0104 
+##  8    12    12          5     0.0534       1.45e- 6       0.366 0.842 0.00874
+##  9    53    38          4     0.120        2.03e- 7       0.692 0.836 0.0106 
+## 10    32    30         12     0.0191       1.10e-10       0.943 0.836 0.00982</code></pre>
+<p><strong>Resultados de Random Forest</strong></p>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="workflowsets-stacking.html#cb838-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb838-2"><a href="workflowsets-stacking.html#cb838-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_extendida_rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb838-3"><a href="workflowsets-stacking.html#cb838-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-591-1.png" width="672" /></p>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="workflowsets-stacking.html#cb839-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb839-2"><a href="workflowsets-stacking.html#cb839-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_extendida_rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb839-3"><a href="workflowsets-stacking.html#cb839-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb839-4"><a href="workflowsets-stacking.html#cb839-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.estimator, .metric, .config, n))</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 4
+##     mtry min_n   mean std_err
+##    &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1     9     7 32513.    823.
+##  2    10     4 32608.    864.
+##  3     5     5 32627.    800.
+##  4    15    16 32693.    799.
+##  5    13    14 32709.    809.
+##  6    12     7 32721.    858.
+##  7    17    13 32764.    724.
+##  8    23     3 32796.    714.
+##  9    18    18 32803.    694.
+## 10    20    11 32828.    694.</code></pre>
+<div id="selección-de-modelo" class="section level3 hasAnchor" number="11.5.1">
+<h3><span class="header-section-number">11.5.1</span> Selección de modelo<a href="workflowsets-stacking.html#selección-de-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Habiendo determinado los hiperparámetros adecuados para la configuración del modelo, procedemos a seleccionar la configuración adecuada para nosotros. Estos pasos son los mismos que corresponden a la selección del modelo con un único workflow.</p>
+<p><strong>Mejor modelo XGBoost</strong></p>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="workflowsets-stacking.html#cb841-1" aria-hidden="true" tabindex="-1"></a>best_xgb_model <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb841-2"><a href="workflowsets-stacking.html#cb841-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb841-3"><a href="workflowsets-stacking.html#cb841-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>, <span class="st">&quot;rsq&quot;</span>)</span>
+<span id="cb841-4"><a href="workflowsets-stacking.html#cb841-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-5"><a href="workflowsets-stacking.html#cb841-5" aria-hidden="true" tabindex="-1"></a>best_xgb_model <span class="sc">%&gt;%</span> </span>
+<span id="cb841-6"><a href="workflowsets-stacking.html#cb841-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb841-7"><a href="workflowsets-stacking.html#cb841-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 2
+##   metric         value                
+##   &lt;chr&gt;          &lt;chr&gt;                
+## 1 mtry           29                   
+## 2 min_n          10                   
+## 3 tree_depth     6                    
+## 4 learn_rate     0.0676325249032833   
+## 5 loss_reduction 1.78986298406448e-05 
+## 6 sample_size    0.636355151841417    
+## 7 .config        Preprocessor1_Model12</code></pre>
+<p><strong>Mejor modelo XGBoost a menos de una desviación estándar</strong></p>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="workflowsets-stacking.html#cb843-1" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_1se <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb843-2"><a href="workflowsets-stacking.html#cb843-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb843-3"><a href="workflowsets-stacking.html#cb843-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>, <span class="st">&quot;rsq&quot;</span>)</span>
+<span id="cb843-4"><a href="workflowsets-stacking.html#cb843-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb843-5"><a href="workflowsets-stacking.html#cb843-5" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_1se <span class="sc">%&gt;%</span> </span>
+<span id="cb843-6"><a href="workflowsets-stacking.html#cb843-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb843-7"><a href="workflowsets-stacking.html#cb843-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 2
+##    metric         value                
+##    &lt;chr&gt;          &lt;chr&gt;                
+##  1 mtry           29                   
+##  2 min_n          10                   
+##  3 tree_depth     6                    
+##  4 learn_rate     0.0676325249032833   
+##  5 loss_reduction 1.78986298406448e-05 
+##  6 sample_size    0.636355151841417    
+##  7 .metric        rsq                  
+##  8 .estimator     standard             
+##  9 mean           0.862749773434049    
+## 10 n              10                   
+## 11 std_err        0.00971605219814996  
+## 12 .config        Preprocessor1_Model12
+## 13 .best          0.862749773434049    
+## 14 .bound         0.853033721235899</code></pre>
+<p><strong>Ajuste del modelo seleccionado</strong></p>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="workflowsets-stacking.html#cb845-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb845-2"><a href="workflowsets-stacking.html#cb845-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb845-3"><a href="workflowsets-stacking.html#cb845-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_regularized_xgb_model_1se) <span class="sc">%&gt;%</span></span>
+<span id="cb845-4"><a href="workflowsets-stacking.html#cb845-4" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
+<pre><code>## [21:35:47] WARNING: amalgamation/../src/learner.cc:627: 
+## Parameters: { &quot;importance&quot; } might not be used.
+## 
+##   This could be a false alarm, with some parameters getting used by language bindings but
+##   then being mistakenly passed down to XGBoost core, or some parameter actually being used
+##   but getting flagged wrongly here. Please open an issue if you find any such cases.</code></pre>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="workflowsets-stacking.html#cb847-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model</span></code></pre></div>
+<pre><code>## ══ Workflow [trained] ════════
+## Preprocessor: Recipe
+## Model: boost_tree()
+## 
+## ── Preprocessor ──────────────
+## 9 Recipe Steps
+## 
+## • step_ratio()
+## • step_ratio()
+## • step_mutate()
+## • step_relevel()
+## • step_normalize()
+## • step_dummy()
+## • step_interact()
+## • step_interact()
+## • step_rm()
+## 
+## ── Model ─────────────────────
+## ##### xgb.Booster
+## raw: 958.3 Kb 
+## call:
+##   xgboost::xgb.train(params = list(eta = 0.0676325249032833, max_depth = 6L, 
+##     gamma = 1.78986298406448e-05, colsample_bytree = 1, colsample_bynode = 0.517857142857143, 
+##     min_child_weight = 10L, subsample = 0.636355151841417), data = x$data, 
+##     nrounds = 500, watchlist = x$watchlist, verbose = 0, importance = &quot;impurity&quot;, 
+##     nthread = 1, objective = &quot;reg:squarederror&quot;)
+## params (as set within xgb.train):
+##   eta = &quot;0.0676325249032833&quot;, max_depth = &quot;6&quot;, gamma = &quot;1.78986298406448e-05&quot;, colsample_bytree = &quot;1&quot;, colsample_bynode = &quot;0.517857142857143&quot;, min_child_weight = &quot;10&quot;, subsample = &quot;0.636355151841417&quot;, importance = &quot;impurity&quot;, nthread = &quot;1&quot;, objective = &quot;reg:squarederror&quot;, validate_parameters = &quot;TRUE&quot;
+## xgb.attributes:
+##   niter
+## callbacks:
+##   cb.evaluation.log()
+## # of features: 56 
+## niter: 500
+## nfeatures : 56 
+## evaluation_log:
+##     iter training_rmse
+##        1     184817.81
+##        2     173355.72
+## ---                   
+##      499      13685.27
+##      500      13675.65</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo</p>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="workflowsets-stacking.html#cb849-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb849-2"><a href="workflowsets-stacking.html#cb849-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb849-3"><a href="workflowsets-stacking.html#cb849-3" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model <span class="sc">%&gt;%</span></span>
+<span id="cb849-4"><a href="workflowsets-stacking.html#cb849-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb849-5"><a href="workflowsets-stacking.html#cb849-5" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb849-6"><a href="workflowsets-stacking.html#cb849-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-595-1.png" width="672" /></p>
+<p>Por último… Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="workflowsets-stacking.html#cb850-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_regularized_xgb_model, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb850-2"><a href="workflowsets-stacking.html#cb850-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">truth =</span> ames_test<span class="sc">$</span>Sale_Price) <span class="sc">%&gt;%</span> </span>
+<span id="cb850-3"><a href="workflowsets-stacking.html#cb850-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pred_xgb_reg =</span> .pred, <span class="at">Sale_Price =</span> truth)</span>
+<span id="cb850-4"><a href="workflowsets-stacking.html#cb850-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb850-5"><a href="workflowsets-stacking.html#cb850-5" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<pre><code>## # A tibble: 733 × 2
+##    pred_xgb_reg Sale_Price
+##           &lt;dbl&gt;      &lt;int&gt;
+##  1      109202.     105000
+##  2      186124.     185000
+##  3      169706.     180400
+##  4      114391.     141000
+##  5      237815.     210000
+##  6      205541.     216000
+##  7      152242.     149900
+##  8      110091.     105500
+##  9      110091.      88000
+## 10      147398.     146000
+## # … with 723 more rows</code></pre>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="workflowsets-stacking.html#cb852-1" aria-hidden="true" tabindex="-1"></a>multi_metric <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq, ccc)</span>
+<span id="cb852-2"><a href="workflowsets-stacking.html#cb852-2" aria-hidden="true" tabindex="-1"></a><span class="fu">multi_metric</span>(results, <span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_xgb_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb852-3"><a href="workflowsets-stacking.html#cb852-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.estimate =</span> <span class="fu">round</span>(.estimate, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard    32077.  
+## 2 mae     standard    21173.  
+## 3 mape    standard       12.9 
+## 4 rsq     standard        0.84
+## 5 ccc     standard        0.91</code></pre>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="workflowsets-stacking.html#cb854-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb854-2"><a href="workflowsets-stacking.html#cb854-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pred_xgb_reg, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb854-3"><a href="workflowsets-stacking.html#cb854-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb854-4"><a href="workflowsets-stacking.html#cb854-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb854-5"><a href="workflowsets-stacking.html#cb854-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Prediction&quot;</span>) <span class="sc">+</span></span>
+<span id="cb854-6"><a href="workflowsets-stacking.html#cb854-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb854-7"><a href="workflowsets-stacking.html#cb854-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-598-1.png" width="672" /></p>
+</div>
+</div>
+<div id="stacking" class="section level2 hasAnchor" number="11.6">
+<h2><span class="header-section-number">11.6</span> Stacking<a href="workflowsets-stacking.html#stacking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>El ensamblaje de modelos es un proceso en el que se utilizan varios modelos base para predecir un resultado.</strong></p>
+<ul>
+<li><p>La motivación para usar modelos de conjunto es reducir el error de generalización de la predicción.</p></li>
+<li><p>Siempre que los modelos base sean diversos e independientes, el error de predicción disminuye cuando se utiliza el enfoque de conjunto.</p></li>
+<li><p>Aunque el modelo de conjunto tiene varios modelos base dentro del modelo, actúa y funciona como un solo modelo.</p></li>
+</ul>
+<p><img src="img/11-stacking/model_ensamble.png" width="600pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p>Un conjunto de modelos, donde las predicciones de varios modelos individuales se agregan para hacer una predicción, puede producir un modelo final de alto rendimiento.</p>
+<p>Los métodos más populares para crear modelos de conjuntos son:</p>
+<ul>
+<li><em>Bagging</em></li>
+<li><em>Bosques aleatorios</em></li>
+<li><em>Boosting</em></li>
+</ul>
+<p>Cada uno de estos métodos combina las predicciones de múltiples versiones del mismo tipo de modelo. Uno de los primeros métodos para crear conjuntos es el apilamiento de modelos (<em>stacking</em>).</p>
+<p><strong><em>Stacking</em> combina las predicciones de múltiples modelos de cualquier tipo.</strong></p>
+<p>Por ejemplo, una regresión logística, un árbol de clasificación y una máquina de vectores de soporte se pueden incluir en un conjunto de apilamiento, así como diferentes configuraciones de un mismo modelo.</p>
+<p>El proceso de construcción de un conjunto apilado es:</p>
+<ol style="list-style-type: decimal">
+<li><p>Reunir el conjunto de entrenamiento de predicciones (producidas mediante remuestreo).</p></li>
+<li><p>Crear un modelo para combinar estas predicciones.</p></li>
+<li><p>Para cada modelo del conjunto, ajustar el modelo en el conjunto de entrenamiento original.</p></li>
+</ol>
+<div id="elección-de-modelos" class="section level3 hasAnchor" number="11.6.1">
+<h3><span class="header-section-number">11.6.1</span> Elección de modelos<a href="workflowsets-stacking.html#elección-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para cada observación en el conjunto de entrenamiento, el apilamiento (<em>stacking</em>) requiere una predicción fuera de la muestra de algún tipo.</p>
+<p>Para comenzar a ensamblar con el paquete <em>stacks</em>, se crea una pila de datos vacía usando la función <code>stacks()</code> y luego se agrega el flujo de trabajo para ajustar una amplia variedad de modelos a estos datos.</p>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="workflowsets-stacking.html#cb855-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb855-2"><a href="workflowsets-stacking.html#cb855-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stacks)</span>
+<span id="cb855-3"><a href="workflowsets-stacking.html#cb855-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="workflowsets-stacking.html#cb856-1" aria-hidden="true" tabindex="-1"></a>concrete_stack <span class="ot">&lt;-</span> <span class="fu">stacks</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb856-2"><a href="workflowsets-stacking.html#cb856-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_candidates</span>(tunning_models_result)</span>
+<span id="cb856-3"><a href="workflowsets-stacking.html#cb856-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb856-4"><a href="workflowsets-stacking.html#cb856-4" aria-hidden="true" tabindex="-1"></a>concrete_stack</span>
+<span id="cb856-5"><a href="workflowsets-stacking.html#cb856-5" aria-hidden="true" tabindex="-1"></a>concrete_stack <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/concrete_stack.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="workflowsets-stacking.html#cb857-1" aria-hidden="true" tabindex="-1"></a>concrete_stack <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/concrete_stack.rds&quot;</span>)</span></code></pre></div>
+<p>La regularización mediante la penalización de lazo tiene varias ventajas:</p>
+<ul>
+<li><p>El uso de la penalización de lazo puede eliminar modelos (y, a veces, tipos de modelos completos) del conjunto.</p></li>
+<li><p>La correlación entre los candidatos del conjunto tiende a ser muy alta y la regularización ayuda a mitigar este problema.</p></li>
+</ul>
+<p>Dado que nuestro resultado es numérico, se utiliza la regresión lineal para el meta-modelo.</p>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="workflowsets-stacking.html#cb858-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb858-2"><a href="workflowsets-stacking.html#cb858-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-3"><a href="workflowsets-stacking.html#cb858-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb858-4"><a href="workflowsets-stacking.html#cb858-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb858-5"><a href="workflowsets-stacking.html#cb858-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb858-6"><a href="workflowsets-stacking.html#cb858-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-7"><a href="workflowsets-stacking.html#cb858-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20220612</span>)</span>
+<span id="cb858-8"><a href="workflowsets-stacking.html#cb858-8" aria-hidden="true" tabindex="-1"></a>assembly <span class="ot">&lt;-</span> concrete_stack <span class="sc">%&gt;%</span> </span>
+<span id="cb858-9"><a href="workflowsets-stacking.html#cb858-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">blend_predictions</span>(<span class="at">metric =</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq))</span>
+<span id="cb858-10"><a href="workflowsets-stacking.html#cb858-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-11"><a href="workflowsets-stacking.html#cb858-11" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb858-12"><a href="workflowsets-stacking.html#cb858-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-13"><a href="workflowsets-stacking.html#cb858-13" aria-hidden="true" tabindex="-1"></a>assembly <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_predictions.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="workflowsets-stacking.html#cb859-1" aria-hidden="true" tabindex="-1"></a>assembly <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_predictions.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="workflowsets-stacking.html#cb860-1" aria-hidden="true" tabindex="-1"></a>assembly</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_experta_boost_1_12   boost_tree       0.303 
+##  2 receta_extendida_boost_1_05 boost_tree       0.172 
+##  3 receta_extendida_boost_1_24 boost_tree       0.157 
+##  4 receta_experta_boost_1_24   boost_tree       0.145 
+##  5 receta_extendida_boost_1_01 boost_tree       0.0777
+##  6 receta_experta_knn_1_15     nearest_neighbor 0.0558
+##  7 receta_experta_knn_1_27     nearest_neighbor 0.0382
+##  8 receta_experta_boost_1_04   boost_tree       0.0345
+##  9 receta_experta_knn_1_24     nearest_neighbor 0.0299
+## 10 receta_experta_boost_1_01   boost_tree       0.0226</code></pre>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="workflowsets-stacking.html#cb862-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly, <span class="st">&quot;weights&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-606-1.png" width="672" /></p>
+<p>Esto evalúa el modelo de meta aprendizaje sobre un grid predefinido de valores de penalización de lazo y utiliza un método de remuestreo interno para determinar el mejor valor.</p>
+<p>El método <code>autoplot()</code> nos ayuda a comprender si el método de penalización predeterminado fue suficiente:</p>
+<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="workflowsets-stacking.html#cb863-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-607-1.png" width="672" /></p>
+<p>El panel de en medio muestra el número promedio de modelos del conjunto retenidos por el modelo de meta aprendizaje.</p>
+<p>Es posible que el rango predeterminado no nos haya servido bien aquí. Para evaluar el modelo de meta aprendizaje con penalizaciones mayores.</p>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="workflowsets-stacking.html#cb864-1" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb864-2"><a href="workflowsets-stacking.html#cb864-2" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb864-3"><a href="workflowsets-stacking.html#cb864-3" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb864-4"><a href="workflowsets-stacking.html#cb864-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb864-5"><a href="workflowsets-stacking.html#cb864-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20220612</span>)</span>
+<span id="cb864-6"><a href="workflowsets-stacking.html#cb864-6" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="ot">&lt;-</span> concrete_stack <span class="sc">%&gt;%</span> </span>
+<span id="cb864-7"><a href="workflowsets-stacking.html#cb864-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">blend_predictions</span>(</span>
+<span id="cb864-8"><a href="workflowsets-stacking.html#cb864-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">metric =</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb864-9"><a href="workflowsets-stacking.html#cb864-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="dv">50</span>)</span>
+<span id="cb864-10"><a href="workflowsets-stacking.html#cb864-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb864-11"><a href="workflowsets-stacking.html#cb864-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb864-12"><a href="workflowsets-stacking.html#cb864-12" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb864-13"><a href="workflowsets-stacking.html#cb864-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb864-14"><a href="workflowsets-stacking.html#cb864-14" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_predictions_v2.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="workflowsets-stacking.html#cb865-1" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_predictions_v2.rds&quot;</span>)</span>
+<span id="cb865-2"><a href="workflowsets-stacking.html#cb865-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb865-3"><a href="workflowsets-stacking.html#cb865-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly_v2)</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-609-1.png" width="672" /></p>
+<p>El valor de penalización asociado a las curvas fue de 1456.34. La impresión del objeto muestra los detalles del modelo de meta aprendizaje:</p>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="workflowsets-stacking.html#cb866-1" aria-hidden="true" tabindex="-1"></a>assembly_v2</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_experta_boost_1_12   boost_tree       0.314 
+##  2 receta_extendida_boost_1_05 boost_tree       0.179 
+##  3 receta_extendida_boost_1_24 boost_tree       0.157 
+##  4 receta_experta_boost_1_24   boost_tree       0.146 
+##  5 receta_experta_knn_1_15     nearest_neighbor 0.0870
+##  6 receta_extendida_boost_1_01 boost_tree       0.0654
+##  7 receta_experta_knn_1_27     nearest_neighbor 0.0301
+##  8 receta_experta_boost_1_01   boost_tree       0.0280
+##  9 receta_experta_boost_1_04   boost_tree       0.0225
+## 10 receta_base_boost_1_24      boost_tree       0.0107</code></pre>
+<p>El modelo de meta aprendizaje contenía cuatro coeficientes de combinación. El método <code>autoplot()</code> se puede usar nuevamente para mostrar las contribuciones de cada tipo de modelo:</p>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="workflowsets-stacking.html#cb868-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly_v2, <span class="st">&quot;weights&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-611-1.png" width="672" /></p>
+<p>El modelo de bosques aleatorios tiene la mayor contribución al conjunto. Para este conjunto, el resultado se predice con la ecuación:</p>
+<span class="math display">\[\begin{aligned}
+\text{Predicción ensamblada} = &amp;- 7172.1435 \\
+&amp;+ 0.0107 * \text{receta_base_boost_1_24} \\
+&amp;+ 0.0051 * \text{receta_extendida_boost_1_08} \\
+&amp;+ 0.1568 * \text{receta_extendida_boost_1_24} \\
+&amp;+ 0.0653 * \text{receta_extendida_boost_1_01} \\
+&amp;+ 0.1788 * \text{receta_extendida_boost_1_05} \\
+&amp;+ 0.0010 * \text{receta_experta_knn_1_14} \\
+&amp;+ 0.0301 * \text{receta_experta_knn_1_27} \\
+&amp;+ 0.0870 * \text{receta_experta_knn_1_15} \\
+&amp;+ 0.0034 * \text{receta_experta_knn_1_24} \\
+&amp;+ 0.0224 * \text{receta_experta_boost_1_04} \\
+&amp;+ 0.3143 * \text{receta_experta_boost_1_12} \\
+&amp;+ 0.1463 * \text{receta_experta_boost_1_24} \\
+&amp;+ 0.0279 * \text{receta_experta_boost_1_01} \\
+&amp;+ 0.0003 * \text{receta_experta_elasticnet_1_06} \\
+&amp;+ 3.74e-05 * \text{receta_experta_elasticnet_1_27} \\
+&amp;+ 4.06e-05 * \text{receta_experta_elasticnet_1_03} \\
+&amp;+ 0.0001 * \text{receta_experta_elasticnet_1_02} \\
+&amp;+ 0.0014 * \text{receta_experta_elasticnet_1_01}
+
+
+
+
+\end{aligned}\]</span>
+<p>Ahora sabemos cómo se pueden combinar sus predicciones en una predicción final para el conjunto. Sin embargo, estos ajustes de modelos individuales aún no se han creado.</p>
+</div>
+<div id="ajuste-final" class="section level3 hasAnchor" number="11.6.2">
+<h3><span class="header-section-number">11.6.2</span> Ajuste final<a href="workflowsets-stacking.html#ajuste-final" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para poder usar el modelo de <em>stacking</em>, se requieren los ajustes de todos los modelos candidatos. Estos utilizan todo el conjunto de entrenamiento con los predictores originales.</p>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="workflowsets-stacking.html#cb869-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb869-2"><a href="workflowsets-stacking.html#cb869-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb869-3"><a href="workflowsets-stacking.html#cb869-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stacks)</span>
+<span id="cb869-4"><a href="workflowsets-stacking.html#cb869-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb869-5"><a href="workflowsets-stacking.html#cb869-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="workflowsets-stacking.html#cb870-1" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb870-2"><a href="workflowsets-stacking.html#cb870-2" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb870-3"><a href="workflowsets-stacking.html#cb870-3" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb870-4"><a href="workflowsets-stacking.html#cb870-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-5"><a href="workflowsets-stacking.html#cb870-5" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="ot">&lt;-</span> <span class="fu">fit_members</span>(assembly_v2)</span>
+<span id="cb870-6"><a href="workflowsets-stacking.html#cb870-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-7"><a href="workflowsets-stacking.html#cb870-7" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb870-8"><a href="workflowsets-stacking.html#cb870-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-9"><a href="workflowsets-stacking.html#cb870-9" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="sc">%&gt;%</span>  <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_fit_members.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="workflowsets-stacking.html#cb871-1" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_fit_members.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="workflowsets-stacking.html#cb872-1" aria-hidden="true" tabindex="-1"></a>fit_assembly</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_experta_boost_1_12   boost_tree       0.314 
+##  2 receta_extendida_boost_1_05 boost_tree       0.179 
+##  3 receta_extendida_boost_1_24 boost_tree       0.157 
+##  4 receta_experta_boost_1_24   boost_tree       0.146 
+##  5 receta_experta_knn_1_15     nearest_neighbor 0.0870
+##  6 receta_extendida_boost_1_01 boost_tree       0.0654
+##  7 receta_experta_knn_1_27     nearest_neighbor 0.0301
+##  8 receta_experta_boost_1_01   boost_tree       0.0280
+##  9 receta_experta_boost_1_04   boost_tree       0.0225
+## 10 receta_base_boost_1_24      boost_tree       0.0107</code></pre>
+<p>Esto actualiza el objeto de apilamiento con los objetos de flujo de trabajo ajustados para cada miembro. En este punto, el modelo de <em>stacking</em> se puede utilizar para la predicción.</p>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="workflowsets-stacking.html#cb874-1" aria-hidden="true" tabindex="-1"></a>regression_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq, ccc)</span>
+<span id="cb874-2"><a href="workflowsets-stacking.html#cb874-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb874-3"><a href="workflowsets-stacking.html#cb874-3" aria-hidden="true" tabindex="-1"></a>fit_assembly_pred_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_assembly, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb874-4"><a href="workflowsets-stacking.html#cb874-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(ames_test)</span>
+<span id="cb874-5"><a href="workflowsets-stacking.html#cb874-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb874-6"><a href="workflowsets-stacking.html#cb874-6" aria-hidden="true" tabindex="-1"></a>stacking_metrics <span class="ot">&lt;-</span> fit_assembly_pred_test <span class="sc">%&gt;%</span> </span>
+<span id="cb874-7"><a href="workflowsets-stacking.html#cb874-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">regression_metrics</span>(Sale_Price, .pred) <span class="sc">%&gt;%</span> </span>
+<span id="cb874-8"><a href="workflowsets-stacking.html#cb874-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="sc">-</span>.estimator) <span class="sc">%&gt;%</span> </span>
+<span id="cb874-9"><a href="workflowsets-stacking.html#cb874-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">rename</span>(<span class="at">stacking =</span> .estimate)</span>
+<span id="cb874-10"><a href="workflowsets-stacking.html#cb874-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb874-11"><a href="workflowsets-stacking.html#cb874-11" aria-hidden="true" tabindex="-1"></a>stacking_metrics</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 2
+##   .metric  stacking
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 rmse    29932.   
+## 2 mae     19800.   
+## 3 mape       12.0  
+## 4 rsq         0.862
+## 5 ccc         0.925</code></pre>
+</div>
+<div id="comparación-de-métricas" class="section level3 hasAnchor" number="11.6.3">
+<h3><span class="header-section-number">11.6.3</span> Comparación de métricas<a href="workflowsets-stacking.html#comparación-de-métricas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para ver la efectividad del ensamblaje, realizamos una comparación con el mejor modelo entrenado anteriormente (XGBoost). Es importante que la comparación se realice utilizando los mismos datos de prueba.</p>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="workflowsets-stacking.html#cb876-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb876-2"><a href="workflowsets-stacking.html#cb876-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">regression_metrics</span>(<span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_xgb_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb876-3"><a href="workflowsets-stacking.html#cb876-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="sc">-</span>.estimator) <span class="sc">%&gt;%</span> </span>
+<span id="cb876-4"><a href="workflowsets-stacking.html#cb876-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">rename</span>(<span class="at">xgboost =</span> .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb876-5"><a href="workflowsets-stacking.html#cb876-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(stacking_metrics, <span class="at">by =</span> <span class="st">&quot;.metric&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb876-6"><a href="workflowsets-stacking.html#cb876-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">map_if</span>(is.numeric, round, <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb876-7"><a href="workflowsets-stacking.html#cb876-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">as_tibble</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .metric   xgboost  stacking
+##   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1 rmse    32077.    29932.   
+## 2 mae     21173.    19800.   
+## 3 mape       12.9      12.0  
+## 4 rsq         0.842     0.862
+## 5 ccc         0.914     0.925</code></pre>
+<p>Este capítulo demuestra cómo combinar diferentes modelos en un conjunto para un mejor desempeño predictivo. El proceso de creación del conjunto puede eliminar automáticamente los modelos candidatos para encontrar un pequeño subconjunto que mejore el rendimiento.</p>
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regularización-elasticnet.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

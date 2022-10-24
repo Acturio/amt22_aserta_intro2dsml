@@ -217,3 +217,14 @@ elasticnet
 implementación-en-r-4
 regresión-5
 clasificación-6
+workflowsets-stacking
+múltiples-recetas
+múltiples-modelos
+creación-de-workflowset
+ajuste-y-evaluación-de-modelos
+extracción-de-modelos
+selección-de-modelo
+stacking
+elección-de-modelos
+ajuste-final
+comparación-de-métricas

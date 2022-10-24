@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="árboles-de-decisión.html"/>
-
+<link rel="next" href="workflowsets-stacking.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -486,6 +486,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>11</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>11.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="11.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>11.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="11.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflowset"><i class="fa fa-check"></i><b>11.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="11.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>11.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="11.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>11.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>11.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>11.6</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>11.6.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="11.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>11.6.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="11.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>11.6.3</b> Comparación de métricas</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -509,7 +526,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="regularización-elasticnet" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">Capítulo 10</span> Regularización Elasticnet<a href="regularización-elasticnet.html#regularización-elasticnet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>En muchas técnicas de aprendizaje automático, <strong>el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo</strong>. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.</p>
-<p>La regularización consiste en <strong>añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobreajuste</strong>.</p>
+<p>La regularización consiste en <strong>añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobre-ajuste</strong>.</p>
 <p>El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o <em>RSS</em>. Los coeficientes <span class="math inline">\(\beta\)</span> se eligen de manera que minimicen esta función de pérdida.</p>
 <p><span class="math display">\[RSS = \sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2\]</span></p>
 <p>Esto ajustará los coeficientes en función de sus datos de entrenamiento. Si hay ruido en los datos de entrenamiento, los coeficientes estimados no se generalizarán bien a los datos futuros. Aquí es donde entra la regularización y reduce o regulariza estas estimaciones aprendidas hacia cero.</p>
@@ -546,7 +563,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p>A medida que <span class="math inline">\(\lambda \rightarrow \infty\)</span>, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables).</p>
 </blockquote>
-<p>Este método de regularizacion permite eliminar coeficientes con alta variación, lo cual <strong>ayuda a la selección de variables</strong>.</p>
+<p>Este método de regularización permite eliminar coeficientes con alta variación, lo cual <strong>ayuda a la selección de variables</strong>.</p>
 </div>
 <div id="comparación-entre-ridge-y-lasso" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Comparación entre Ridge y Lasso<a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1104,6 +1121,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb821-10"><a href="regularización-elasticnet.html#cb821-10" aria-hidden="true" tabindex="-1"></a>pr_curve_plot</span></code></pre></div>
 <p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-577-1.png" width="672" /></p>
 
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
 </div>
 </div>
 </div>
@@ -1134,8 +1154,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="árboles-de-decisión.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="árboles-de-decisión.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="workflowsets-stacking.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
