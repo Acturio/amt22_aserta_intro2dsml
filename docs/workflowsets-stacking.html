@@ -533,6 +533,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>14</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>14.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="14.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>14.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="14.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>14.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>14.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="14.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>14.3.2</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="14.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>14.3.3</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="14.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>14.3.4</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="14.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>14.3.5</b> Distribución muestral</a></li>
+<li class="chapter" data-level="14.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>14.3.6</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>14.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>14.4.1</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>14.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>14.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="14.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>14.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -948,18 +971,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb845-2"><a href="workflowsets-stacking.html#cb845-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb845-3"><a href="workflowsets-stacking.html#cb845-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_regularized_xgb_model_1se) <span class="sc">%&gt;%</span></span>
 <span id="cb845-4"><a href="workflowsets-stacking.html#cb845-4" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
-<pre><code>## [00:41:44] WARNING: amalgamation/../src/learner.cc:627: 
+<pre><code>## [23:09:44] WARNING: amalgamation/../src/learner.cc:627: 
 ## Parameters: { &quot;importance&quot; } might not be used.
 ## 
 ##   This could be a false alarm, with some parameters getting used by language bindings but
 ##   then being mistakenly passed down to XGBoost core, or some parameter actually being used
 ##   but getting flagged wrongly here. Please open an issue if you find any such cases.</code></pre>
 <div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="workflowsets-stacking.html#cb847-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model</span></code></pre></div>
-<pre><code>## ══ Workflow [trained] ═══════════════════════════════════════════════════════════════════════════════════════════════════════════
+<pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: boost_tree()
 ## 
-## ── Preprocessor ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────
 ## 9 Recipe Steps
 ## 
 ## • step_ratio()
@@ -972,7 +995,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • step_interact()
 ## • step_rm()
 ## 
-## ── Model ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────
 ## ##### xgb.Booster
 ## raw: 958.3 Kb 
 ## call:

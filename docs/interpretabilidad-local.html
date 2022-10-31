@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="sesgo-e-inequidad.html"/>
-
+<link rel="next" href="a-b---testing.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -531,6 +531,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="13.2.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#otros-métodos"><i class="fa fa-check"></i><b>13.2.1</b> Otros métodos</a></li>
 <li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>14</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>14.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="14.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>14.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="14.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>14.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>14.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="14.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>14.3.2</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="14.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>14.3.3</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="14.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>14.3.4</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="14.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>14.3.5</b> Distribución muestral</a></li>
+<li class="chapter" data-level="14.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>14.3.6</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>14.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>14.4.1</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>14.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>14.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="14.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>14.5.2</b> Estimación de resultados</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -1059,11 +1082,14 @@ proporcionado para obtener una descripción visual de las explicaciones.</p>
 <h3><span class="header-section-number">13.2.2</span> Consejos<a href="interpretabilidad-local.html#consejos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Trata cada modelo que desarrollas como una afectación de vida o muerte a un humano directamente.</p></li>
-<li><p>Identifica si estas agregando sesgo, inequidad, injusticia con interpretabilidad.</p></li>
+<li><p>Identifica si estás agregando sesgo, inequidad, injusticia con interpretabilidad.</p></li>
 <li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.</p></li>
 <li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad para el usuario final.</p></li>
 </ul>
 
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
 </div>
 </div>
 </div>
@@ -1094,8 +1120,8 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="sesgo-e-inequidad.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="sesgo-e-inequidad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="a-b---testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

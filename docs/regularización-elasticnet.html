@@ -533,6 +533,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>14</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>14.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="14.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>14.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="14.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>14.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>14.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="14.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>14.3.2</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="14.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>14.3.3</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="14.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>14.3.4</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="14.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>14.3.5</b> Distribución muestral</a></li>
+<li class="chapter" data-level="14.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>14.3.6</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>14.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>14.4.1</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>14.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>14.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="14.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>14.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -909,11 +932,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb794-3"><a href="regularización-elasticnet.html#cb794-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(telco_rec)</span>
 <span id="cb794-4"><a href="regularización-elasticnet.html#cb794-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb794-5"><a href="regularización-elasticnet.html#cb794-5" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow</span></code></pre></div>
-<pre><code>## ══ Workflow ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+<pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: logistic_reg()
 ## 
-## ── Preprocessor ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────
 ## 4 Recipe Steps
 ## 
 ## • step_mutate()
@@ -921,7 +944,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • step_normalize()
 ## • step_dummy()
 ## 
-## ── Model ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────
 ## Logistic Regression Model Specification (classification)
 ## 
 ## Main Arguments:

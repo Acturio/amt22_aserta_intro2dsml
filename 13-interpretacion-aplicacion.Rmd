@@ -517,7 +517,7 @@ Las explicaciones del modelo son solo una parte de la comprensión de si su mode
 
 * Trata cada modelo que desarrollas como una afectación de vida o muerte a un humano directamente.
 
-* Identifica si estas agregando sesgo, inequidad, injusticia con interpretabilidad.
+* Identifica si estás agregando sesgo, inequidad, injusticia con interpretabilidad.
 
 * Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.
 
