@@ -66,7 +66,7 @@ knitr::include_graphics("img/12-bias-fairness/fairness_tree_amplified.png")
 $$(1-\tau) \leq \text{Medida de disparidad}_\text{grupo i} \leq \frac{1}{(1 - \tau)}, $$
 
 donde $\tau$ es el fairness threshold definido por nosotros. En los siguientes
-ejemplos utilizaremos $\tau=20%$ por lo que cualquier métrica de paridad que se encuentre entre $0.8$ y $1.25$ va a ser tratado como justo (sin sesgo).
+ejemplos utilizaremos $\tau=0.20%$ por lo que cualquier métrica de paridad que se encuentre entre $0.8$ y $1.25$ va a ser tratado como justo (sin sesgo).
 
 
 ## Métricas
