@@ -788,12 +788,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb947-3"><a href="a-b---testing.html#cb947-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_prob =</span> <span class="fu">min</span>(.pred_Yes),</span>
 <span id="cb947-4"><a href="a-b---testing.html#cb947-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_charge =</span> <span class="fu">mean</span>(MonthlyCharges),</span>
 <span id="cb947-5"><a href="a-b---testing.html#cb947-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_monthly_charge =</span> <span class="fu">sum</span>(MonthlyCharges),</span>
-<span id="cb947-6"><a href="a-b---testing.html#cb947-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_yearly_charge =</span> <span class="fu">sum</span>(MonthlyCharges)<span class="sc">*</span><span class="dv">11</span></span>
+<span id="cb947-6"><a href="a-b---testing.html#cb947-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_yearly_charge =</span> <span class="fu">sum</span>(MonthlyCharges)<span class="sc">*</span><span class="dv">12</span> <span class="sc">-</span> <span class="fu">sum</span>(Profit)</span>
 <span id="cb947-7"><a href="a-b---testing.html#cb947-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 4
 ##   min_prob mean_monthly_charge sum_monthly_charge sum_yearly_charge
 ##      &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;
-## 1    0.290                88.5             44259.           486847.</code></pre>
+## 1    0.290                88.5             44259.           481106.</code></pre>
 <p>A diferencia del primer método, el umbral de probabilidad con esta segunda campaña es cercano a 0.30, lo que implica mayor precisión a costa de menor cobertura. Adicionalmente, el beneficio total de renovación de contrato es menor que el beneficio alcanzado por el primer método en el escenario utópico en que todos los clientes renuevan.</p>
 <p>Estos cálculos sirven exclusivamente para acotar los escenarios, pues no es de esperarse que realmente todos los clientes renueven sus contratos. En las siguientes secciones se procede a realizar experimentos para evaluar cuál de las campañas tiene una mayor tasa de retención de clientes.</p>
 <div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb949-1"><a href="a-b---testing.html#cb949-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13582</span>)</span>
@@ -843,17 +843,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb953-4"><a href="a-b---testing.html#cb953-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb953-5"><a href="a-b---testing.html#cb953-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_charge =</span> <span class="fu">mean</span>(MonthlyCharges),</span>
 <span id="cb953-6"><a href="a-b---testing.html#cb953-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_monthly_charge =</span> <span class="fu">sum</span>(MonthlyCharges),</span>
-<span id="cb953-7"><a href="a-b---testing.html#cb953-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_yearly_charge =</span> <span class="fu">sum</span>(MonthlyCharges)<span class="sc">*</span><span class="dv">11</span></span>
+<span id="cb953-7"><a href="a-b---testing.html#cb953-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_yearly_charge =</span> <span class="fu">sum</span>(MonthlyCharges)<span class="sc">*</span><span class="dv">12</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="dv">100</span>)</span>
 <span id="cb953-8"><a href="a-b---testing.html#cb953-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
 <span id="cb953-9"><a href="a-b---testing.html#cb953-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n), <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb953-10"><a href="a-b---testing.html#cb953-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(prop, <span class="at">.after =</span> n)</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 6
 ##   Churn     n  prop mean_monthly_charge sum_monthly_charge sum_yearly_charge
 ##   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;
-## 1 Yes     320  0.57                87.6             28020.           308221.
-## 2 No      245  0.43                89.6             21953            241483</code></pre>
+## 1 Yes     320  0.57                87.6             28020.           336141.
+## 2 No      245  0.43                89.6             21953            263336</code></pre>
 <p>Hay que observar que se obtiene una mejora en la tasa de cancelación (Churn) cuando se aplica el método de retención basado en descuento de mensualidad.</p>
-<p><span class="math display">\[\text{diferencia} =  \$328,163 - \$246,546 = \$81,617\]</span></p>
+<p><span class="math display">\[\text{diferencia} =  \$348,280 - \$263,336 = \$84,944\]</span></p>
 <p><strong>Esta diferencia es el verdadero beneficio de haber implementado e invertido en ciencia de datos y machine learning</strong>.</p>
 <p>Por supuesto, este resultado deberá ser mayor al esfuerzo de inversión de todo el proyecto. Quizá en la primera iteración se realiza una inversión mayor, no obstante, a lo largo del tiempo deberá ser rentable para el negocio.</p>
 <p>Por supuesto, este resultado es teórico, pues es imposible conocer el contrafactual de la forma en que fue presentado anteriormente debido a que una vez que se implementa un método, se vuelve imposible conocer el resultado de haber hecho otra cosa. Este mismo problema se enfrenta en una gran cantidad de estudios médicos, sociales, de diseño de imagen corporativa, etc, por lo que las mismas técnicas estadísticas serán presentadas para dar solución a esta estimación.</p>

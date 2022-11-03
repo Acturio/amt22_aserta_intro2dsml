@@ -227,7 +227,7 @@ promo_2 %>%
     min_prob = min(.pred_Yes),
     mean_monthly_charge = mean(MonthlyCharges),
     sum_monthly_charge = sum(MonthlyCharges),
-    sum_yearly_charge = sum(MonthlyCharges)*11
+    sum_yearly_charge = sum(MonthlyCharges)*12 - sum(Profit)
     )
 ```
 
@@ -273,7 +273,7 @@ promo_1 %>%
     n = n(),
     mean_monthly_charge = mean(MonthlyCharges),
     sum_monthly_charge = sum(MonthlyCharges),
-    sum_yearly_charge = sum(MonthlyCharges)*11
+    sum_yearly_charge = sum(MonthlyCharges)*12 -sum(100)
     ) %>% 
   mutate(prop = round(n/sum(n), 2)) %>% 
   relocate(prop, .after = n)
@@ -282,7 +282,7 @@ promo_1 %>%
 
 Hay que observar que se obtiene una mejora en la tasa de cancelación (Churn) cuando se aplica el método de retención basado en descuento de mensualidad. 
 
-$$\text{diferencia} =  \$328,163 - \$246,546 = \$81,617$$
+$$\text{diferencia} =  \$348,280 - \$263,336 = \$84,944$$
 
 **Esta diferencia es el verdadero beneficio de haber implementado e invertido en ciencia de datos y machine learning**. 
 
