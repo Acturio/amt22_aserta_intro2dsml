@@ -1,0 +1,240 @@
+<div class="watermark"><img src="img/header.png" width="400"></div>
+
+# Análisis de Componentes Principales
+
+El análisis PCA (por sus siglas en inglés) es una **técnica de reducción de dimensión** útil tanto para el proceso de análisis exploratorio, el inferencial y predictivo. Es una técnica ampliamente usada en muchos estudios, pues permite sintetizar la información relevante y desechar aquello que no aporta tanto. Es particularmente útil en el caso de conjuntos de datos "amplios" en donde las **variables están correlacionadas entre sí** y donde se tienen muchas variables para cada observación. 
+
+```{r, fig.align='center', out.height='400pt', out.width='600pt',echo=F}
+knitr::include_graphics("img/15-pca/dimension_reduction.jpeg")
+```
+
+
+En los conjuntos de datos donde hay muchas variables presentes, no es fácil trazar los datos en su formato original, lo que dificulta tener una idea de las tendencias presentes en ellos. PCA permite ver la estructura general de los datos, identificando qué observaciones son similares entre sí y cuáles son diferentes. Esto puede permitirnos identificar grupos de muestras que son similares y determinar qué variables hacen a un grupo diferente de otro.
+
+
+## Construcción matemática
+
+Sea $X$ una matriz de $n$ renglones y $p$ columnas, se denota por $X_i$ a la *i-ésima* columna que representa una característica del conjunto en su totalidad...
+
+* Se desean crear nuevas variables llamadas **Componentes Principales**, las cuales son creadas como combinación lineal (suma ponderada) de las variables originales, por lo que cada una de las variables nuevas contiene parcialmente información de todas las variables originales.
+
+$$Z_1 = a_{11}X_1 +a_{12}X_2 + ... + a_{1p}X_p$$
+$$Z_2 = a_{21}X_1 +a_{22}X_2 + ... + a_{2p}X_p$$
+$$...$$
+$$Z_p = a_{p1}X_1 +a_{p2}X_2 + ... + a_{pp}X_p$$
+
+Donde: 
+
+> $Z_i$ es la iésima componente nueva creada como combinación de las características originales
+>
+> $X_1, X_2, ... X_p$ son las columnas (variables originales)
+>
+> $a_{ij}$ es el peso o aportación de cada columna *j* a la nueva componente *i*.
+
+
+* Se desea que la primer componente principal capture la mayor varianza posible de todo el conjunto de datos.
+
+$$\forall i \in 2,...,p \quad Var(Z_1)>Var(Z_i)$$
+
+* La segunda componente principal deberá **SER INDEPENDIENTE** de la primera y deberá abarcar la mayor varianza posible del restante. Esta condición se debe cumplir para toda componente *i*, de tal forma que las nuevas componentes creadas son independientes entre sí y acumulan la mayor proporción de varianza en las primeras de ellas, dejando la mínima proporción de varianza a las últimas componentes.
+
+$$Z_1 \perp\!\!\!\perp Z_2 \quad \& \quad Var(Z_1)>Var(Z_2)>Var(Z_i)$$
+
+* El punto anterior permite desechar unas cuantas componentes (las últimas) sin perder mucha varianza. 
+
+::: {.infobox .note data-latex="{note}"}
+**¡¡ RECORDAR !!**
+
+* **A través de CPA se logra retener la mayor cantidad de varianza útil pero usando menos componentes que el número de variables originales.**
+
+* **Para que este proceso sea efectivo, debe existir ALTA correlación entre las variables originales.**
+:::
+
+
+
+Cuando muchas variables se correlacionan entre sí, todas contribuirán fuertemente al mismo componente principal. Cada componente principal suma un cierto porcentaje de la variación total en el conjunto de datos. Cuando sus variables iniciales estén fuertemente correlacionadas entre sí y podrá aproximar la mayor parte de la complejidad de su conjunto de datos con solo unos pocos componentes principales. 
+
+Agregar componentes adicionales hace que la estimación del conjunto de datos total sea más precisa, pero también más difícil de manejar.
+
+
+## Implementación en R
+
+Para ejemplificar el uso de CPA, usaremos los [datos](https://drive.google.com/file/d/1eMBDMxtbRel4BQ0RqMnuwGr-nGNzshgc/view?usp=sharing) de CONAPO para replicar el índice de marginación social, el cual pretende dar una medida de pobreza por regiones, las cuales pueden ser entidades, municipios, localidades, agebs o incluso manzanas\*.
+
+Existen MUUUCHAS librerías que facilitan el análisis de componentes principales. En este [blog](https://aedin.github.io/PCAworkshop/articles/b_PCA.html) se puede encontrar la diferencia en su implementación. Todas ofrecen resultados útiles y confiables.
+
+```{r, warning=FALSE, message=FALSE}
+library(sf)
+library(magrittr)
+library(tidymodels)
+
+indice_marg <- st_read('data/IMEF_2010.dbf', quiet = TRUE)
+glimpse(indice_marg)
+```
+
+```{r}
+pca_recipe <- recipe(IM ~ ., data = indice_marg) %>%
+  update_role(NOM_ENT, GM, new_role = "id") %>%
+  step_normalize(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM) %>%
+  step_pca(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM, num_comp=9, res="res") %>% 
+  step_rm(LUGAR, AÑO, POB_TOT) %>% 
+  prep()
+
+juice(pca_recipe)
+```
+
+Veamos los pasos de esta receta:
+
+* Primero, debemos decirle a la receta qué datos se usan para predecir la variable de respuesta.
+
+* Se actualiza el rol de las variables *nombre de entidad*  y *grado de marginación* con la función `NOM_ENT`, ya que es una variable que queremos mantener por conveniencia como identificador de filas, pero no son un predictor ni variable de respuesta.
+
+* Necesitamos centrar y escalar los predictores numéricos, porque estamos a punto de implementar **PCA**.
+
+* Finalmente, usamos `step_pca()` para realizar el análisis de componentes principales.
+
+* La función `prep()` es la que realiza toda la preparación de la receta.
+
+Una vez que hayamos hecho eso, podremos explorar los resultados del **PCA**. Comencemos por ver cómo resultó el **PCA**. Podemos ordenar los resultados mediante la función `tidy()`, incluido el paso de **PCA**, que es el segundo paso. Luego hagamos una visualización para ver cómo se ven los componentes.
+
+A continuación se muestran la desviación estándar, porcentaje de varianza y porcentaje de varianza acumulada que aporta cada componente principal.
+
+```{r}
+summary(pca_recipe$steps[[2]]$res)
+```
+
+```{r, echo=FALSE, eval=FALSE}
+library(forcats)
+
+tidied_pca <- tidy(pca_recipe, 2)
+
+tidied_pca %>%
+  filter(component %in% paste0("PC", 1:5)) %>%
+  mutate(component = fct_inorder(component)) %>%
+  ggplot(aes(value, terms, fill = terms)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~component, nrow = 1) +
+  labs(y = NULL)+
+  theme_minimal() +
+  ggtitle("Aportación de variables a cada componente principal")
+```
+
+Podemos observar que en la primera componente principal, las $9$ variables que utilizó el Consejo Nacional de Población para obtener el [Índice de Marginación 2010](http://www.conapo.gob.mx/work/models/CONAPO/Resource/862/4/images/06_C_AGEB.pdf) aportan de manera positiva en el primer componente principal.
+
+
+```{r}
+library(tidytext)
+
+tidied_pca <- tidy(pca_recipe, 2)
+
+tidied_pca %>%
+  filter(component %in% paste0("PC", 1:4)) %>%
+  group_by(component) %>%
+  top_n(9, abs(value)) %>%
+  ungroup() %>%
+  mutate(terms = reorder_within(terms, abs(value), component)) %>%
+  ggplot(aes(abs(value), terms, fill = value > 0)) +
+  geom_col() +
+  facet_wrap(~component, scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = NULL, fill = "Positive?"
+  )+
+  theme_minimal()
+```
+
+Notamos que las $9$ variables aportan entre el $25\%$ y el $35\%$ a la
+primera componente principal.
+
+
+## Reducción de dimensión
+
+Existe en la literatura basta información sobre el número de componentes a retener en un análisis de PCA. El siguiente gráfico lleva por nombre **gráfico de codo** y muestra el porcentaje de varianza explicado por cada componente principal.
+
+```{r, message=FALSE, warning=FALSE}
+library(factoextra)
+library(FactoMineR)
+
+res.pca <- indice_marg %>%
+  select(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM) %>% 
+  as.data.frame() %>% 
+  set_rownames(indice_marg$NOM_ENT) %>% 
+  FactoMineR::PCA(graph=FALSE)
+
+fviz_eig(res.pca, addlabels=TRUE, ylim=c(0, 100))
+```
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+fviz_pca_biplot(
+  X = res.pca, repel = T, addEllipses=F, geom = c("point", "text"),
+  habillage=as.factor(indice_marg$GM)
+  )
+```
+
+El gráfico anterior muestra que hay una diferencia muy grande entre la varianza retenida por la 1er componente principal y el resto de las variables. Dependiendo del objetivo del análisis, podrá elegirse el numero adecuado de componentes a retener, no obstante, la literatura sugiere retener 1 o 2 componentes principales.
+
+Es posible realizar el proceso de componentes principales y elegir una de las dos opciones siguientes:
+
+1. Especificar el número de componentes a retener
+
+2. Indicar el porcentaje de varianza a alcanzar
+
+La segunda opción elegirá tantas componentes como sean necesarias hasta alcanzar el hiperparámetro mínimo indicado. A continuación se ejemplifica:
+
+**Caso 1:**
+
+```{r}
+pca_recipe <- recipe(IM ~ ., data = indice_marg) %>%
+  update_role(NOM_ENT, GM, new_role = "id") %>%
+  step_normalize(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM) %>%
+  step_pca(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM,num_comp=2) %>% 
+  step_rm(LUGAR, AÑO, POB_TOT) %>% 
+  prep()
+
+juice(pca_recipe)
+```
+
+**Caso 2:**
+
+```{r}
+pca_recipe <- recipe(IM ~ ., data = indice_marg) %>%
+  update_role(NOM_ENT, GM, new_role = "id") %>%
+  step_normalize(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM) %>%
+  step_pca(ANALF, SPRIM, OVSDE, OVSEE, OVSAE, VHAC, OVPT, PL_5000, PO2SM,threshold=0.90) %>% 
+  step_rm(LUGAR, AÑO, POB_TOT) %>% 
+  prep()
+
+juice(pca_recipe)
+```
+
+Así es como usaremos el análisis de componentes principales para mejorar la estructura de variables que sirven de input para cualquiera de los modelos posteriores. Continuaremos con un paso más de pre-procesamiento antes de comenzar a aprender nuevos modelos.
+
+## Representación gráfica
+
+A partir de estas gráficas, se logran realizar simplificaciones o variaciones de gráficas para estudiar posibles agrupaciones, como se muestra en el siguiente gráfico.
+
+```{r}
+library(ggrepel)
+
+juice(pca_recipe) %>%
+  mutate(GM = factor(GM, levels = c("Muy alto", "Alto", "Medio", "Bajo", "Muy bajo")), 
+         ordered = T) %>% 
+  ggplot(aes(PC1, PC2, label = NOM_ENT)) +
+  geom_point(aes(color = GM), alpha = 0.7, size = 2) +
+  geom_text_repel() +
+  ggtitle("Grado de marginación de entidades")
+
+```
+
+Finalmente, podemos observar como (de izquierda a derecha) los estados con grado de marginación Muy bajo, Bajo, Medio, Alto y Muy Alto respectivamente. 
+
+```{r}
+juice(pca_recipe) %>% 
+  ggplot(aes(x = IM, y = PC1)) +
+  geom_smooth(method = "lm") +
+  geom_point(size = 2) +
+  ggtitle("Comparación: Índice Marginación Vs PCA CP1")
+```
+
+

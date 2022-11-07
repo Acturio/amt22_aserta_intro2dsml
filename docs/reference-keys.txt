@@ -266,3 +266,8 @@ estimación-muestral
 implementación-de-diseño-muestral
 estimación-de-resultados
 estimación-cruzada
+análisis-de-componentes-principales
+construcción-matemática
+implementación-en-r-6
+reducción-de-dimensión
+representación-gráfica
