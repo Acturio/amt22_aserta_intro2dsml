@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning</title>
+  <meta name="description" content="Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning" />
+  
+  <meta name="twitter:description" content="Capítulo 18 Evaluación de clusters | Ciencia de Datos y Machine Learning" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="clustering-jerárquico.html"/>
+<link rel="next" href="actividad-final.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.1/str_view.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/aserta-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#temario"><i class="fa fa-check"></i>Temario</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-1-introducción-a-r-22-hrs"><i class="fa fa-check"></i>Módulo 1: Introducción a R (22 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-2-introducción-a-ciencia-de-datos-18-hrs"><i class="fa fa-check"></i>Módulo 2: Introducción a Ciencia de Datos (18 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-3-machine-learning-supervisado-38-hrs"><i class="fa fa-check"></i>Módulo 3: Machine Learning: Supervisado (38 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#módulo-4-machine-learning-no-supervisado-12-hrs"><i class="fa fa-check"></i>Módulo 4: Machine Learning: No Supervisado (12 hrs)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#requisitos"><i class="fa fa-check"></i>Requisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 1: Introducción</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html"><i class="fa fa-check"></i><b>1</b> Conceptos de Ciencia de Datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#qué-es-ciencia-de-datos"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es Ciencia de Datos?</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#definiendo-conceptos"><i class="fa fa-check"></i>Definiendo conceptos:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#objetivos"><i class="fa fa-check"></i><b>1.2</b> Objetivos</a></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#requisitos-1"><i class="fa fa-check"></i><b>1.3</b> Requisitos</a></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aplicaciones"><i class="fa fa-check"></i><b>1.4</b> Aplicaciones</a></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#tipos-de-algoritmos"><i class="fa fa-check"></i><b>1.5</b> Tipos de algoritmos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.5.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.5.2</b> Aprendizaje no supervisado</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#aprendizaje-por-refuerzo"><i class="fa fa-check"></i><b>1.5.3</b> Aprendizaje por refuerzo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#perfiles-de-un-equipo"><i class="fa fa-check"></i><b>1.6</b> Perfiles de un equipo</a>
+<ul>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-datos"><i class="fa fa-check"></i>1) Ingeniero de datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#decisor"><i class="fa fa-check"></i>2) Decisor</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista"><i class="fa fa-check"></i>3) Analista</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#analista-experto"><i class="fa fa-check"></i>4) Analista experto</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#estadístico"><i class="fa fa-check"></i>5) Estadístico</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ingeniero-de-machine-learning"><i class="fa fa-check"></i>6) Ingeniero de Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#científico-de-datos"><i class="fa fa-check"></i>7) Científico de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#gerente-de-análisis-líder-de-ciencia-de-datos"><i class="fa fa-check"></i>8) Gerente de Análisis / Líder de Ciencia de Datos</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#experto-cualitativo-científico-social"><i class="fa fa-check"></i>9) Experto Cualitativo / Científico Social</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#investigador"><i class="fa fa-check"></i>10) Investigador</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#extra-personal-adicional"><i class="fa fa-check"></i>Extra) Personal Adicional</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#google-data-career-path"><i class="fa fa-check"></i>Google Data Career Path</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#flujo-de-trabajo-en-ml"><i class="fa fa-check"></i><b>1.7</b> Flujo de trabajo en <em>ML</em></a></li>
+<li class="chapter" data-level="1.8" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ciclo-de-un-proyecto"><i class="fa fa-check"></i><b>1.8</b> Ciclo de un proyecto</a></li>
+<li class="chapter" data-level="1.9" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#taller-de-scoping"><i class="fa fa-check"></i><b>1.9</b> Taller de Scoping</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#data-maturity-framework"><i class="fa fa-check"></i><b>1.9.1</b> Data Maturity Framework</a></li>
+<li class="chapter" data-level="1.9.2" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#scoping"><i class="fa fa-check"></i><b>1.9.2</b> Scoping</a></li>
+<li class="chapter" data-level="" data-path="conceptos-de-ciencia-de-datos.html"><a href="conceptos-de-ciencia-de-datos.html#ejemplos"><i class="fa fa-check"></i>Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-r.html"><a href="introducción-a-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#cómo-obtener-r"><i class="fa fa-check"></i><b>2.1</b> ¿Cómo obtener <em>R</em>?</a></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-rstudio"><i class="fa fa-check"></i><b>2.2</b> ¿Qué es RStudio?</a></li>
+<li class="chapter" data-level="2.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#r-como-lenguaje-orientado-a-objetos"><i class="fa fa-check"></i><b>2.3</b> <em>R</em> como lenguaje orientado a objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estructuras-de-almacenamiento"><i class="fa fa-check"></i><b>2.4</b> Estructuras de almacenamiento</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.4.1</b> Operadores de asignación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#variables"><i class="fa fa-check"></i><b>2.4.2</b> Variables</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#vectores"><i class="fa fa-check"></i><b>2.4.3</b> Vectores</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#matrices"><i class="fa fa-check"></i><b>2.4.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#arreglos"><i class="fa fa-check"></i><b>2.4.5</b> Arreglos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#data-frames"><i class="fa fa-check"></i><b>2.4.6</b> Data Frames</a></li>
+<li class="chapter" data-level="2.4.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#listas"><i class="fa fa-check"></i><b>2.4.7</b> Listas</a></li>
+<li class="chapter" data-level="2.4.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios"><i class="fa fa-check"></i><b>2.4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funbas"><i class="fa fa-check"></i><b>2.5</b> Funciones básicas de R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#qué-es-una-función-de-r"><i class="fa fa-check"></i><b>2.5.1</b> ¿Qué es una función de R?</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.5.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#pruebas-lógicas"><i class="fa fa-check"></i><b>2.5.3</b> Pruebas lógicas</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#operadores-lógicos"><i class="fa fa-check"></i><b>2.5.4</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#funciones-sobre-vectores"><i class="fa fa-check"></i><b>2.5.5</b> Funciones sobre vectores</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-rep"><i class="fa fa-check"></i><b>2.5.6</b> Función <code>rep</code></a></li>
+<li class="chapter" data-level="2.5.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#función-seq"><i class="fa fa-check"></i><b>2.5.7</b> Función <code>seq</code></a></li>
+<li class="chapter" data-level="2.5.8" data-path="introducción-a-r.html"><a href="introducción-a-r.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.8</b> EJERCICIOS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#bucles"><i class="fa fa-check"></i><b>2.6</b> Estructuras de control</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if"><i class="fa fa-check"></i><b>2.6.1</b> Instrucción <code>if</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-if-else"><i class="fa fa-check"></i><b>2.6.2</b> Instrucción <code>if</code> <code>else</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-ifelse"><i class="fa fa-check"></i><b>2.6.3</b> Instrucción <code>ifelse</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-else-if"><i class="fa fa-check"></i><b>2.6.4</b> Instrucción else if</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-for"><i class="fa fa-check"></i><b>2.6.5</b> Instrucción <code>for</code></a></li>
+<li class="chapter" data-level="2.6.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-while"><i class="fa fa-check"></i><b>2.6.6</b> Instrucción <code>while</code></a></li>
+<li class="chapter" data-level="2.6.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#instrucción-repeat"><i class="fa fa-check"></i><b>2.6.7</b> Instrucción <code>repeat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introducción-a-r.html"><a href="introducción-a-r.html#estilo"><i class="fa fa-check"></i><b>2.7</b> Guía de estilo</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-archivos"><i class="fa fa-check"></i><b>2.7.1</b> Nombres de los archivos</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introducción-a-r.html"><a href="introducción-a-r.html#nombres-de-los-objetos"><i class="fa fa-check"></i><b>2.7.2</b> Nombres de los objetos</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introducción-a-r.html"><a href="introducción-a-r.html#longitud-de-una-línea-de-código"><i class="fa fa-check"></i><b>2.7.3</b> Longitud de una línea de código</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introducción-a-r.html"><a href="introducción-a-r.html#espacios"><i class="fa fa-check"></i><b>2.7.4</b> Espacios</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introducción-a-r.html"><a href="introducción-a-r.html#asignación"><i class="fa fa-check"></i><b>2.7.5</b> Asignación</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introducción-a-r.html"><a href="introducción-a-r.html#punto-y-coma"><i class="fa fa-check"></i><b>2.7.6</b> Punto y coma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-de-archivos"><i class="fa fa-check"></i><b>3.1</b> Lectura de archivos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#archivos-csv"><i class="fa fa-check"></i><b>3.1.1</b> Archivos <em>csv</em></a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#archivos-txt"><i class="fa fa-check"></i><b>3.1.2</b> Archivos txt</a></li>
+<li class="chapter" data-level="3.1.3" data-path="tidyverse.html"><a href="tidyverse.html#archivos-xls-y-xlsx"><i class="fa fa-check"></i><b>3.1.3</b> Archivos <em>xls</em> y <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.1.4" data-path="tidyverse.html"><a href="tidyverse.html#archivos-json"><i class="fa fa-check"></i><b>3.1.4</b> Archivos json</a></li>
+<li class="chapter" data-level="3.1.5" data-path="tidyverse.html"><a href="tidyverse.html#archivos-rds"><i class="fa fa-check"></i><b>3.1.5</b> Archivos rds</a></li>
+<li class="chapter" data-level="3.1.6" data-path="tidyverse.html"><a href="tidyverse.html#bases-de-datos"><i class="fa fa-check"></i><b>3.1.6</b> Bases de Datos</a></li>
+<li class="chapter" data-level="3.1.7" data-path="tidyverse.html"><a href="tidyverse.html#oracle-database"><i class="fa fa-check"></i><b>3.1.7</b> Oracle Database</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#consultas-de-datos"><i class="fa fa-check"></i><b>3.2</b> Consultas de datos</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="tidyverse.html"><a href="tidyverse.html#seleccionar-columnas"><i class="fa fa-check"></i><b>3.2.1</b> Seleccionar columnas</a></li>
+<li class="chapter" data-level="3.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filtrar-observaciones"><i class="fa fa-check"></i><b>3.2.2</b> Filtrar observaciones</a></li>
+<li class="chapter" data-level="3.2.3" data-path="tidyverse.html"><a href="tidyverse.html#ordenar-registros"><i class="fa fa-check"></i><b>3.2.3</b> Ordenar registros</a></li>
+<li class="chapter" data-level="3.2.4" data-path="tidyverse.html"><a href="tidyverse.html#agregar-modificar"><i class="fa fa-check"></i><b>3.2.4</b> Agregar / Modificar</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverse.html"><a href="tidyverse.html#resumen-estadístico"><i class="fa fa-check"></i><b>3.2.5</b> Resumen estadístico</a></li>
+<li class="chapter" data-level="3.2.6" data-path="tidyverse.html"><a href="tidyverse.html#agrupamiento"><i class="fa fa-check"></i><b>3.2.6</b> Agrupamiento</a></li>
+<li class="chapter" data-level="3.2.7" data-path="tidyverse.html"><a href="tidyverse.html#cruces-de-tablas"><i class="fa fa-check"></i><b>3.2.7</b> Cruces de tablas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#orden-y-estructura"><i class="fa fa-check"></i><b>3.3</b> Orden y estructura</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#pivote-horizontal"><i class="fa fa-check"></i><b>3.3.1</b> Pivote horizontal</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#pivote-vertical"><i class="fa fa-check"></i><b>3.3.2</b> Pivote vertical</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tidyverse.html"><a href="tidyverse.html#unión-de-columnas"><i class="fa fa-check"></i><b>3.3.3</b> Unión de columnas</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tidyverse.html"><a href="tidyverse.html#separador-de-columnas"><i class="fa fa-check"></i><b>3.3.4</b> Separador de columnas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-texto"><i class="fa fa-check"></i><b>3.4</b> Manipulación de texto</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="tidyverse.html"><a href="tidyverse.html#caracteres-especiales"><i class="fa fa-check"></i><b>3.4.1</b> Caracteres especiales</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tidyverse.html"><a href="tidyverse.html#tamaño-de-cadena"><i class="fa fa-check"></i><b>3.4.2</b> Tamaño de cadena</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tidyverse.html"><a href="tidyverse.html#concatenar"><i class="fa fa-check"></i><b>3.4.3</b> Concatenar</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tidyverse.html"><a href="tidyverse.html#extraer-y-reemplazar"><i class="fa fa-check"></i><b>3.4.4</b> Extraer y reemplazar</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tidyverse.html"><a href="tidyverse.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.4.5</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tidyverse.html"><a href="tidyverse.html#detectar-coincidencias"><i class="fa fa-check"></i><b>3.4.6</b> Detectar coincidencias</a></li>
+<li class="chapter" data-level="3.4.7" data-path="tidyverse.html"><a href="tidyverse.html#contabilizar-coincidencias"><i class="fa fa-check"></i><b>3.4.7</b> Contabilizar coincidencias</a></li>
+<li class="chapter" data-level="3.4.8" data-path="tidyverse.html"><a href="tidyverse.html#extraer-coincidencias"><i class="fa fa-check"></i><b>3.4.8</b> Extraer coincidencias</a></li>
+<li class="chapter" data-level="3.4.9" data-path="tidyverse.html"><a href="tidyverse.html#reemplazar-coincidencias"><i class="fa fa-check"></i><b>3.4.9</b> Reemplazar coincidencias</a></li>
+<li class="chapter" data-level="3.4.10" data-path="tidyverse.html"><a href="tidyverse.html#divisiones-mediante-patrones"><i class="fa fa-check"></i><b>3.4.10</b> Divisiones mediante patrones</a></li>
+<li class="chapter" data-level="3.4.11" data-path="tidyverse.html"><a href="tidyverse.html#localización-de-coincidencias"><i class="fa fa-check"></i><b>3.4.11</b> Localización de coincidencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#manipulación-de-tiempo"><i class="fa fa-check"></i><b>3.5</b> Manipulación de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse.html"><a href="tidyverse.html#lectura-y-creación-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.1</b> Lectura y creación de datos temporales</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tidyverse.html"><a href="tidyverse.html#extracción-de-datos-temporales"><i class="fa fa-check"></i><b>3.5.2</b> Extracción de datos temporales</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tidyverse.html"><a href="tidyverse.html#operaciones-temporales"><i class="fa fa-check"></i><b>3.5.3</b> Operaciones temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#iteraciones"><i class="fa fa-check"></i><b>3.6</b> Iteraciones</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse.html"><a href="tidyverse.html#bucles-1"><i class="fa fa-check"></i><b>3.6.1</b> Bucles</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse.html"><a href="tidyverse.html#bucles-dobles"><i class="fa fa-check"></i><b>3.6.2</b> Bucles dobles</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualización.html"><a href="visualización.html"><i class="fa fa-check"></i><b>4</b> Visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualización.html"><a href="visualización.html#eda-análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>4.1</b> EDA: Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="4.2" data-path="visualización.html"><a href="visualización.html#geda-análisis-exploratorio-de-datos-gráficos"><i class="fa fa-check"></i><b>4.2</b> GEDA: Análisis Exploratorio de Datos Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visualización.html"><a href="visualización.html#lo-que-no-se-debe-hacer"><i class="fa fa-check"></i><b>4.2.1</b> Lo que no se debe hacer…</a></li>
+<li class="chapter" data-level="4.2.2" data-path="visualización.html"><a href="visualización.html#principios-de-visualización"><i class="fa fa-check"></i><b>4.2.2</b> Principios de visualización</a></li>
+<li class="chapter" data-level="4.2.3" data-path="visualización.html"><a href="visualización.html#principios-generales-del-diseño-analítico"><i class="fa fa-check"></i><b>4.2.3</b> Principios generales del diseño analítico:</a></li>
+<li class="chapter" data-level="4.2.4" data-path="visualización.html"><a href="visualización.html#técnicas-de-visualización"><i class="fa fa-check"></i><b>4.2.4</b> Técnicas de visualización:</a></li>
+<li class="chapter" data-level="4.2.5" data-path="visualización.html"><a href="visualización.html#indicadores-de-calidad-gráfica"><i class="fa fa-check"></i><b>4.2.5</b> Indicadores de calidad gráfica:</a></li>
+<li class="chapter" data-level="4.2.6" data-path="visualización.html"><a href="visualización.html#gráficos-univariados"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos univariados:</a></li>
+<li class="chapter" data-level="4.2.7" data-path="visualización.html"><a href="visualización.html#gráficos-multivariados"><i class="fa fa-check"></i><b>4.2.7</b> Gráficos multivariados</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualización.html"><a href="visualización.html#creación-de-gráficos"><i class="fa fa-check"></i><b>4.3</b> Creación de gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualización.html"><a href="visualización.html#estéticas"><i class="fa fa-check"></i><b>4.3.1</b> Estéticas</a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualización.html"><a href="visualización.html#objetos-geométricos-o-capas"><i class="fa fa-check"></i><b>4.3.2</b> Objetos geométricos o capas</a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualización.html"><a href="visualización.html#facetas"><i class="fa fa-check"></i><b>4.3.3</b> Facetas</a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualización.html"><a href="visualización.html#más-sobre-estéticas"><i class="fa fa-check"></i><b>4.3.4</b> Más sobre estéticas</a></li>
+<li class="chapter" data-level="4.3.5" data-path="visualización.html"><a href="visualización.html#quick-view"><i class="fa fa-check"></i><b>4.3.5</b> Quick View</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualización.html"><a href="visualización.html#análisis-univariado"><i class="fa fa-check"></i><b>4.4</b> Análisis univariado</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visualización.html"><a href="visualización.html#variables-numéricas"><i class="fa fa-check"></i><b>4.4.1</b> Variables numéricas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="visualización.html"><a href="visualización.html#variables-nominalescategóricas"><i class="fa fa-check"></i><b>4.4.2</b> Variables nominales/categóricas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visualización.html"><a href="visualización.html#análisis-multivariado"><i class="fa fa-check"></i><b>4.5</b> Análisis multivariado</a></li>
+<li class="chapter" data-level="4.6" data-path="visualización.html"><a href="visualización.html#visualización-interactiva"><i class="fa fa-check"></i><b>4.6</b> Visualización interactiva</a>
+<ul>
+<li class="chapter" data-level="" data-path="visualización.html"><a href="visualización.html#warning"><i class="fa fa-check"></i>¡ Warning !</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="visualización.html"><a href="visualización.html#reporte-interactivos"><i class="fa fa-check"></i><b>4.7</b> Reporte interactivos</a></li>
+</ul></li>
+<li class="part"><span><b>Parte 2: Machine Learning</b></span></li>
+<li class="chapter" data-level="5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html"><i class="fa fa-check"></i><b>5</b> Introducción a Machine Learning</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#análisis-supervisado-vs-no-supervisado"><i class="fa fa-check"></i><b>5.1</b> Análisis Supervisado vs No supervisado</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#regresión-vs-clasificación"><i class="fa fa-check"></i><b>5.1.1</b> Regresión vs clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#sesgo-vs-varianza"><i class="fa fa-check"></i><b>5.2</b> Sesgo vs varianza</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#errores-reducibles"><i class="fa fa-check"></i><b>5.2.1</b> Errores reducibles</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-irreducible"><i class="fa fa-check"></i><b>5.2.2</b> Error irreducible</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#balance-entre-sesgo-y-varianza-o-trade-off"><i class="fa fa-check"></i><b>5.2.3</b> Balance entre sesgo y varianza o Trade-off</a></li>
+<li class="chapter" data-level="5.2.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#error-total"><i class="fa fa-check"></i><b>5.2.4</b> Error total</a></li>
+<li class="chapter" data-level="5.2.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#overfitting"><i class="fa fa-check"></i><b>5.2.5</b> Overfitting</a></li>
+<li class="chapter" data-level="5.2.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#underfitting"><i class="fa fa-check"></i><b>5.2.6</b> Underfitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#orden-y-estructura-de-proyecto"><i class="fa fa-check"></i><b>5.3</b> Orden y estructura de proyecto</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#plantilla-de-estructura-proyecto"><i class="fa fa-check"></i><b>5.3.1</b> Plantilla de estructura proyecto</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#reproducibilidad"><i class="fa fa-check"></i><b>5.3.2</b> Reproducibilidad</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#partición-de-datos"><i class="fa fa-check"></i><b>5.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>5.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="5.4.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#conjunto-de-validación"><i class="fa fa-check"></i><b>5.4.2</b> Conjunto de validación</a></li>
+<li class="chapter" data-level="5.4.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>5.4.3</b> Leave-one-out cross-validation</a></li>
+<li class="chapter" data-level="5.4.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#v-fold-cross-validation"><i class="fa fa-check"></i><b>5.4.4</b> V Fold Cross Validation</a></li>
+<li class="chapter" data-level="5.4.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#medidas-de-ajuste"><i class="fa fa-check"></i><b>5.4.5</b> Medidas de ajuste</a></li>
+<li class="chapter" data-level="5.4.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#validación-cruzada-para-series-de-tiempo"><i class="fa fa-check"></i><b>5.4.6</b> Validación cruzada para series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>5.5</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="5.6" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#ingeniería-de-datos"><i class="fa fa-check"></i><b>5.6</b> Ingeniería de datos</a></li>
+<li class="chapter" data-level="5.7" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#recetas"><i class="fa fa-check"></i><b>5.7</b> Recetas</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#pasos-y-estructura-de-recetas"><i class="fa fa-check"></i><b>5.7.1</b> Pasos y estructura de recetas</a></li>
+<li class="chapter" data-level="5.7.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#imputaciones"><i class="fa fa-check"></i><b>5.7.2</b> Imputaciones</a></li>
+<li class="chapter" data-level="5.7.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#agregar-o-modificar-columnas"><i class="fa fa-check"></i><b>5.7.3</b> Agregar o modificar columnas</a></li>
+<li class="chapter" data-level="5.7.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#interacciones"><i class="fa fa-check"></i><b>5.7.4</b> Interacciones</a></li>
+<li class="chapter" data-level="5.7.5" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#transformaciones-generales"><i class="fa fa-check"></i><b>5.7.5</b> Transformaciones generales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#datos-y-tipos-de-modelos"><i class="fa fa-check"></i><b>5.8</b> Datos y tipos de modelos</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos"><i class="fa fa-check"></i><b>5.8.1</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.2" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta"><i class="fa fa-check"></i><b>5.8.2</b> Definición de la receta</a></li>
+<li class="chapter" data-level="5.8.3" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#separación-de-los-datos-1"><i class="fa fa-check"></i><b>5.8.3</b> Separación de los datos</a></li>
+<li class="chapter" data-level="5.8.4" data-path="introducción-a-machine-learning.html"><a href="introducción-a-machine-learning.html#definición-de-la-receta-1"><i class="fa fa-check"></i><b>5.8.4</b> Definición de la receta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regresión-lineal.html"><a href="regresión-lineal.html"><i class="fa fa-check"></i><b>6</b> Regresión Lineal</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#ajuste-de-modelo"><i class="fa fa-check"></i><b>6.1</b> Ajuste de modelo</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-simple"><i class="fa fa-check"></i><b>6.1.1</b> Estimación de parámetros: Regresión lineal simple</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#estimación-de-parámetros-regresión-lineal-múltiple"><i class="fa fa-check"></i><b>6.1.2</b> Estimación de parámetros: Regresión lineal múltiple</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#residuos-del-modelo"><i class="fa fa-check"></i><b>6.2</b> Residuos del modelo</a>
+<ul>
+<li class="chapter" data-level="" data-path="regresión-lineal.html"><a href="regresión-lineal.html#condiciones-para-el-ajuste-de-una-regresión-lineal"><i class="fa fa-check"></i>Condiciones para el ajuste de una regresión lineal:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño"><i class="fa fa-check"></i><b>6.3</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4" data-path="regresión-lineal.html"><a href="regresión-lineal.html#implementación-en-r"><i class="fa fa-check"></i><b>6.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#coeficientes-del-modelo"><i class="fa fa-check"></i><b>6.4.1</b> Coeficientes del modelo</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métricas-de-desempeño-1"><i class="fa fa-check"></i><b>6.4.2</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regresión-lineal.html"><a href="regresión-lineal.html#gráfica-de-ajuste"><i class="fa fa-check"></i><b>6.4.3</b> Gráfica de ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regresión-lineal.html"><a href="regresión-lineal.html#métodos-se-selección-de-variables"><i class="fa fa-check"></i><b>6.5</b> Métodos se selección de variables</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="regresión-lineal.html"><a href="regresión-lineal.html#forward-selection-selección-hacia-adelante"><i class="fa fa-check"></i><b>6.5.1</b> Forward selection (selección hacia adelante)</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regresión-lineal.html"><a href="regresión-lineal.html#backward-selection-selección-hacia-atrás"><i class="fa fa-check"></i><b>6.5.2</b> Backward selection (selección hacia atrás)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regresión-logística.html"><a href="regresión-logística.html"><i class="fa fa-check"></i><b>7</b> Regresión Logística</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regresión-logística.html"><a href="regresión-logística.html#función-sigmoide"><i class="fa fa-check"></i><b>7.1</b> Función sigmoide</a></li>
+<li class="chapter" data-level="7.2" data-path="regresión-logística.html"><a href="regresión-logística.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>7.2</b> Ajuste del modelo</a></li>
+<li class="chapter" data-level="7.3" data-path="regresión-logística.html"><a href="regresión-logística.html#clasificación-2"><i class="fa fa-check"></i><b>7.3</b> Clasificación</a></li>
+<li class="chapter" data-level="7.4" data-path="regresión-logística.html"><a href="regresión-logística.html#métricas-de-desempeño-2"><i class="fa fa-check"></i><b>7.4</b> Métricas de desempeño</a></li>
+<li class="chapter" data-level="7.5" data-path="regresión-logística.html"><a href="regresión-logística.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.6" data-path="regresión-logística.html"><a href="regresión-logística.html#matriz-de-confusión"><i class="fa fa-check"></i><b>7.6</b> Matriz de Confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html"><i class="fa fa-check"></i><b>8</b> K-Nearest-Neighbor</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-3"><i class="fa fa-check"></i><b>8.1</b> Clasificación</a></li>
+<li class="chapter" data-level="8.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-2"><i class="fa fa-check"></i><b>8.2</b> Regresión</a></li>
+<li class="chapter" data-level="8.3" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#ajuste-del-modelo-1"><i class="fa fa-check"></i><b>8.3</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#selección-de-hiper-parámetro-k"><i class="fa fa-check"></i><b>8.3.1</b> Selección de Hiper-parámetro K</a></li>
+<li class="chapter" data-level="8.3.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#métodos-de-cálculo-de-la-distancia-entre-observaciones"><i class="fa fa-check"></i><b>8.3.2</b> Métodos de cálculo de la distancia entre observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#implementación-en-r-2"><i class="fa fa-check"></i><b>8.4</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#regresión-3"><i class="fa fa-check"></i><b>8.4.1</b> Regresión</a></li>
+<li class="chapter" data-level="8.4.2" data-path="k-nearest-neighbor.html"><a href="k-nearest-neighbor.html#clasificación-4"><i class="fa fa-check"></i><b>8.4.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html"><i class="fa fa-check"></i><b>9</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ajuste-del-modelo-2"><i class="fa fa-check"></i><b>9.1</b> Ajuste del modelo</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#attribute-selective-measure-asm"><i class="fa fa-check"></i><b>9.1.1</b> Attribute Selective Measure (ASM)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regularización-de-árboles"><i class="fa fa-check"></i><b>9.2</b> Regularización de árboles</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#nivel-de-profundidad-de-árbol"><i class="fa fa-check"></i><b>9.2.1</b> Nivel de profundidad de árbol</a></li>
+<li class="chapter" data-level="9.2.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#poda-de-árbol"><i class="fa fa-check"></i><b>9.2.2</b> Poda de árbol</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>9.3</b> Aprendizaje conjunto</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>9.3.1</b> Bagging vs. boosting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#error-out-of-bag"><i class="fa fa-check"></i><b>9.3.2</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#bagging"><i class="fa fa-check"></i><b>9.4</b> Bagging</a></li>
+<li class="chapter" data-level="9.5" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#random-forest"><i class="fa fa-check"></i><b>9.5</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#qué-es"><i class="fa fa-check"></i><b>9.5.1</b> ¿Qué es?</a></li>
+<li class="chapter" data-level="9.5.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#características-de-los-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.2</b> Características de los bosques aleatorios</a></li>
+<li class="chapter" data-level="9.5.3" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#aplicar-árboles-de-decisión-en-un-bosque-aleatorio"><i class="fa fa-check"></i><b>9.5.3</b> Aplicar árboles de decisión en un bosque aleatorio</a></li>
+<li class="chapter" data-level="9.5.4" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#ventajas-y-desventjas-de-bosques-aleatorios"><i class="fa fa-check"></i><b>9.5.4</b> Ventajas y desventjas de bosques aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-rf-en-r"><i class="fa fa-check"></i><b>9.6</b> Implementación de RF en R</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#regresión-4"><i class="fa fa-check"></i><b>9.6.1</b> Regresión</a></li>
+<li class="chapter" data-level="9.6.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#clasificación-5"><i class="fa fa-check"></i><b>9.6.2</b> Clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#boosting"><i class="fa fa-check"></i><b>9.7</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#predicciones-boosting"><i class="fa fa-check"></i><b>9.7.1</b> Predicciones <em>Boosting</em></a></li>
+<li class="chapter" data-level="9.7.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#modelos-boosting"><i class="fa fa-check"></i><b>9.7.2</b> Modelos <em>Boosting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#implementación-de-xgb-en-r"><i class="fa fa-check"></i><b>9.8</b> Implementación de XGB en R</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>9.8.1</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="9.8.2" data-path="árboles-de-decisión.html"><a href="árboles-de-decisión.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>9.8.2</b> XGBoost para clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>10</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>10.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="10.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>10.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="10.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>10.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="10.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>10.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="10.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-r-3"><i class="fa fa-check"></i><b>10.5</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión-5"><i class="fa fa-check"></i><b>10.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación-6"><i class="fa fa-check"></i><b>10.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>11</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>11.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="11.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>11.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="11.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflowset"><i class="fa fa-check"></i><b>11.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="11.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>11.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="11.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>11.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>11.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>11.6</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>11.6.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="11.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>11.6.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="11.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>11.6.3</b> Comparación de métricas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>12</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>12.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="12.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>12.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>12.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>12.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>12.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="12.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>12.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="12.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>12.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="12.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>12.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="12.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>12.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="12.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>12.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="12.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>12.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html"><i class="fa fa-check"></i><b>13</b> Interpretabilidad local</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-lime"><i class="fa fa-check"></i><b>13.1</b> Interpretabilidad LIME</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#proceso"><i class="fa fa-check"></i><b>13.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="13.1.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#características-principales"><i class="fa fa-check"></i><b>13.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#implementación-con-r"><i class="fa fa-check"></i><b>13.1.3</b> Implementación con <em>R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#interpretabilidad-dalextra"><i class="fa fa-check"></i><b>13.2</b> Interpretabilidad DALEXtra</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#otros-métodos"><i class="fa fa-check"></i><b>13.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="13.2.2" data-path="interpretabilidad-local.html"><a href="interpretabilidad-local.html#consejos"><i class="fa fa-check"></i><b>13.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>14</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>14.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="14.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>14.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="14.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>14.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>14.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="14.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>14.3.2</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="14.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>14.3.3</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="14.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>14.3.4</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="14.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>14.3.5</b> Distribución muestral</a></li>
+<li class="chapter" data-level="14.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>14.3.6</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>14.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>14.4.1</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>14.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>14.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="14.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>14.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html"><i class="fa fa-check"></i><b>15</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#construcción-matemática"><i class="fa fa-check"></i><b>15.1</b> Construcción matemática</a></li>
+<li class="chapter" data-level="15.2" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#implementación-en-r-6"><i class="fa fa-check"></i><b>15.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="15.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#reducción-de-dimensión"><i class="fa fa-check"></i><b>15.3</b> Reducción de dimensión</a></li>
+<li class="chapter" data-level="15.4" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#representación-gráfica"><i class="fa fa-check"></i><b>15.4</b> Representación gráfica</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html"><i class="fa fa-check"></i><b>16</b> Clustering No Jerárquico</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#cálculo-de-distancia"><i class="fa fa-check"></i><b>16.1</b> Cálculo de distancia</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#distancias-homogéneas"><i class="fa fa-check"></i><b>16.1.1</b> Distancias homogéneas</a></li>
+<li class="chapter" data-level="16.1.2" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#distancias-mixtas"><i class="fa fa-check"></i><b>16.1.2</b> Distancias mixtas</a></li>
+<li class="chapter" data-level="16.1.3" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#visualización-de-distancias"><i class="fa fa-check"></i><b>16.1.3</b> Visualización de distancias</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#k---means"><i class="fa fa-check"></i><b>16.2</b> K - means</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#ajuste-de-modelo-cómo-funciona-el-algortimo"><i class="fa fa-check"></i><b>16.2.1</b> Ajuste de modelo: ¿Cómo funciona el algortimo?</a></li>
+<li class="chapter" data-level="16.2.2" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#calidad-de-ajuste"><i class="fa fa-check"></i><b>16.2.2</b> Calidad de ajuste</a></li>
+<li class="chapter" data-level="16.2.3" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#cómo-seleccionamos-k"><i class="fa fa-check"></i><b>16.2.3</b> ¿Cómo seleccionamos K?</a></li>
+<li class="chapter" data-level="16.2.4" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#implementación-en-r-7"><i class="fa fa-check"></i><b>16.2.4</b> Implementación en R</a></li>
+<li class="chapter" data-level="16.2.5" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#warnings"><i class="fa fa-check"></i><b>16.2.5</b> Warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#partitioning-around-medoids-pam"><i class="fa fa-check"></i><b>16.3</b> Partitioning Around Medoids (PAM)</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#algoritmo-pam"><i class="fa fa-check"></i><b>16.3.1</b> Algoritmo PAM</a></li>
+<li class="chapter" data-level="16.3.2" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#implementación-en-r-8"><i class="fa fa-check"></i><b>16.3.2</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#dbscan"><i class="fa fa-check"></i><b>16.4</b> DBSCAN</a>
+<ul>
+<li class="chapter" data-level="16.4.1" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#algoritmo"><i class="fa fa-check"></i><b>16.4.1</b> Algoritmo</a></li>
+<li class="chapter" data-level="16.4.2" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>16.4.2</b> Estimación de parámetros</a></li>
+<li class="chapter" data-level="16.4.3" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#implementación-en-r-9"><i class="fa fa-check"></i><b>16.4.3</b> Implementación en R</a></li>
+<li class="chapter" data-level="16.4.4" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#ventajas-de-dbscan"><i class="fa fa-check"></i><b>16.4.4</b> Ventajas de DBSCAN</a></li>
+<li class="chapter" data-level="16.4.5" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#aplicación-dbscan"><i class="fa fa-check"></i><b>16.4.5</b> Aplicación DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="clustering-no-jerárquico.html"><a href="clustering-no-jerárquico.html#comparación-de-algoritmos"><i class="fa fa-check"></i><b>16.5</b> Comparación de algoritmos</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html"><i class="fa fa-check"></i><b>17</b> Clustering Jerárquico</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#agglomerative-divise-clustering"><i class="fa fa-check"></i><b>17.1</b> Agglomerative &amp; Divise Clustering</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#algoritmo-1"><i class="fa fa-check"></i><b>17.1.1</b> Algoritmo</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#implementación-en-r-10"><i class="fa fa-check"></i><b>17.2</b> Implementación en R</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#preparación-y-estructuración-de-datos"><i class="fa fa-check"></i><b>17.2.1</b> Preparación y estructuración de datos</a></li>
+<li class="chapter" data-level="17.2.2" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#medidas-de-disimilaridad"><i class="fa fa-check"></i><b>17.2.2</b> Medidas de (di)similaridad</a></li>
+<li class="chapter" data-level="17.2.3" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#función-liga"><i class="fa fa-check"></i><b>17.2.3</b> Función Liga</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#dendogramas"><i class="fa fa-check"></i><b>17.3</b> Dendogramas</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#selección-de-grupos"><i class="fa fa-check"></i><b>17.3.1</b> Selección de grupos</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#heatmaps"><i class="fa fa-check"></i><b>17.4</b> Heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html"><i class="fa fa-check"></i><b>18</b> Evaluación de clusters</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#tendencia-de-factibilidad"><i class="fa fa-check"></i><b>18.1</b> Tendencia de factibilidad</a></li>
+<li class="chapter" data-level="18.2" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#medidas-internas-de-ajuste"><i class="fa fa-check"></i><b>18.2</b> Medidas internas de ajuste</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#inercia-1"><i class="fa fa-check"></i><b>18.2.1</b> Inercia</a></li>
+<li class="chapter" data-level="18.2.2" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#silhouette"><i class="fa fa-check"></i><b>18.2.2</b> Silhouette</a></li>
+<li class="chapter" data-level="18.2.3" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#índice-de-dunn"><i class="fa fa-check"></i><b>18.2.3</b> Índice de Dunn</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#selección-de-algoritmo"><i class="fa fa-check"></i><b>18.3</b> Selección de algoritmo</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="evaluación-de-clusters.html"><a href="evaluación-de-clusters.html#métricas-para-comparar-algoritmos"><i class="fa fa-check"></i><b>18.3.1</b> Métricas para comparar algoritmos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="actividad-final.html"><a href="actividad-final.html"><i class="fa fa-check"></i><b>19</b> ¡Actividad FINAL!</a></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ciencia de Datos y Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="evaluación-de-clusters" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">Capítulo 18</span> Evaluación de clusters<a href="evaluación-de-clusters.html#evaluación-de-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Este análisis es considerado como la evaluación de factibilidad de implementar análisis de clustering. Antes de aplicar cualquier técnica de clustering vale la pena <strong>evaluar si el conjunto de datos contiene clusters naturales significativos</strong> (i.e. estructuras no aleatorias) o no. En caso de que sí existan estructuras conglomeradas naturales, se deberá proceder a identificar el número de clusters a extraer.</p>
+<p><img src="img/17-hclus/14-blindly_analysis.jpg" width="600pt" style="display: block; margin: auto;" /></p>
+<div id="tendencia-de-factibilidad" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> Tendencia de factibilidad<a href="evaluación-de-clusters.html#tendencia-de-factibilidad" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A diferencia de otros tipos de análisis, una desventaja que tiene el análisis de clustering es que en todo momento regresarán clusters incluso cuando los datos no contengan tal estructura, por lo que si <strong>ciegamente</strong> se implementa un método de clustering, este dividirá los datos en clusters debido a que es lo esperado a realizar. las librerías usadas en <em>R</em> serán <em>factoextra</em> y <em>hopkins</em>.</p>
+<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1058-1"><a href="evaluación-de-clusters.html#cb1058-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa</code></pre>
+<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1060-1"><a href="evaluación-de-clusters.html#cb1060-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb1060-2"><a href="evaluación-de-clusters.html#cb1060-2" aria-hidden="true" tabindex="-1"></a>random_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb1060-3"><a href="evaluación-de-clusters.html#cb1060-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">runif</span>(<span class="fu">length</span>(x), <span class="fu">min</span>(x), <span class="fu">max</span>(x))}) <span class="sc">%&gt;%</span> </span>
+<span id="cb1060-4"><a href="evaluación-de-clusters.html#cb1060-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb1060-5"><a href="evaluación-de-clusters.html#cb1060-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1060-6"><a href="evaluación-de-clusters.html#cb1060-6" aria-hidden="true" tabindex="-1"></a>df_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(df)</span>
+<span id="cb1060-7"><a href="evaluación-de-clusters.html#cb1060-7" aria-hidden="true" tabindex="-1"></a>random_df_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(random_df)</span></code></pre></div>
+<p>Se comienza con una evaluación visual sobre los datos para evaluar la significancia de los clusters. Debido a que los más probable es que los datos tengan más de dos dimensiones, se aprovecha el análisis de componentes principales para representar los datos en un espacio de dimensión menor.</p>
+<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1061-1"><a href="evaluación-de-clusters.html#cb1061-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1061-2"><a href="evaluación-de-clusters.html#cb1061-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1061-3"><a href="evaluación-de-clusters.html#cb1061-3" aria-hidden="true" tabindex="-1"></a>iris_plot <span class="ot">&lt;-</span> <span class="fu">fviz_pca_ind</span>(</span>
+<span id="cb1061-4"><a href="evaluación-de-clusters.html#cb1061-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(df_scaled), <span class="at">title =</span> <span class="st">&quot;PCA - Iris data&quot;</span>,</span>
+<span id="cb1061-5"><a href="evaluación-de-clusters.html#cb1061-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># habillage = iris$Species, palette = &quot;jco&quot;,</span></span>
+<span id="cb1061-6"><a href="evaluación-de-clusters.html#cb1061-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>(),</span>
+<span id="cb1061-7"><a href="evaluación-de-clusters.html#cb1061-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="st">&quot;bottom&quot;</span></span>
+<span id="cb1061-8"><a href="evaluación-de-clusters.html#cb1061-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1061-9"><a href="evaluación-de-clusters.html#cb1061-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1061-10"><a href="evaluación-de-clusters.html#cb1061-10" aria-hidden="true" tabindex="-1"></a>random_plot <span class="ot">&lt;-</span> <span class="fu">fviz_pca_ind</span>(</span>
+<span id="cb1061-11"><a href="evaluación-de-clusters.html#cb1061-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(random_df_scaled), <span class="at">title =</span> <span class="st">&quot;PCA - Random data&quot;</span>,</span>
+<span id="cb1061-12"><a href="evaluación-de-clusters.html#cb1061-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>(),</span>
+<span id="cb1061-13"><a href="evaluación-de-clusters.html#cb1061-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="st">&quot;bottom&quot;</span></span>
+<span id="cb1061-14"><a href="evaluación-de-clusters.html#cb1061-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1061-15"><a href="evaluación-de-clusters.html#cb1061-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1061-16"><a href="evaluación-de-clusters.html#cb1061-16" aria-hidden="true" tabindex="-1"></a>iris_plot <span class="sc">+</span> random_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-772-1.png" width="672" /></p>
+<p>Puede observarse en el primer gráfico que, al menos existen 2 clusters significativos, con posibilidad de que sean 3. A diferencia del gráfico de la derecha que no muestra una tendencia en la estructura conglomerativa.</p>
+<p>Es sumamente importante realizar esta evaluación porque</p>
+<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1062-1"><a href="evaluación-de-clusters.html#cb1062-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">135281</span>)</span>
+<span id="cb1062-2"><a href="evaluación-de-clusters.html#cb1062-2" aria-hidden="true" tabindex="-1"></a>km_res2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(random_df_scaled, <span class="dv">3</span>)</span>
+<span id="cb1062-3"><a href="evaluación-de-clusters.html#cb1062-3" aria-hidden="true" tabindex="-1"></a>cluster_plot <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(</span>
+<span id="cb1062-4"><a href="evaluación-de-clusters.html#cb1062-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">data =</span> random_df_scaled, <span class="at">cluster =</span> km_res2<span class="sc">$</span>cluster),</span>
+<span id="cb1062-5"><a href="evaluación-de-clusters.html#cb1062-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ellipse.type =</span> <span class="st">&quot;convex&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">stand =</span> F,</span>
+<span id="cb1062-6"><a href="evaluación-de-clusters.html#cb1062-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>()</span>
+<span id="cb1062-7"><a href="evaluación-de-clusters.html#cb1062-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1062-8"><a href="evaluación-de-clusters.html#cb1062-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1062-9"><a href="evaluación-de-clusters.html#cb1062-9" aria-hidden="true" tabindex="-1"></a>den_plot <span class="ot">&lt;-</span> <span class="fu">fviz_dend</span>(</span>
+<span id="cb1062-10"><a href="evaluación-de-clusters.html#cb1062-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hclust</span>(<span class="fu">dist</span>(random_df_scaled), <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>), <span class="at">k =</span> <span class="dv">3</span>, <span class="at">k_colors =</span> <span class="st">&quot;jco&quot;</span>,</span>
+<span id="cb1062-11"><a href="evaluación-de-clusters.html#cb1062-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">as.gplot =</span> T, <span class="at">show_labels =</span> F</span>
+<span id="cb1062-12"><a href="evaluación-de-clusters.html#cb1062-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1062-13"><a href="evaluación-de-clusters.html#cb1062-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1062-14"><a href="evaluación-de-clusters.html#cb1062-14" aria-hidden="true" tabindex="-1"></a>cluster_plot <span class="sc">+</span> den_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-773-1.png" width="672" /></p>
+<p>Puede observarse que ambos métodos imponen una segmentación a los datos que son <strong>uniformemente aleatorios</strong> y que no contienen ninguna segmentación natural. Por esta razón, <strong>siempre</strong> deberá realizarse este análisis previamente y elegir si se desea proceder con el análisis.</p>
+<p>El método anterior fue totalmente gráfico. Se procede a continuación a mostrar una metodología estadística para determinar la factibilidad de implementar análisis de clustering.</p>
+<p><strong>El estadístico Hopkins</strong> es usado para evaluar la tendencia de clustering en un conjunto de datos. Mide la probabilidad de que un conjunto de datos dado sea generado por una distribución uniforme. En otras palabras, <strong>prueba la aleatoriedad espacial de los datos</strong>. Por ejemplo, Sea <em>D</em> un conjunto de datos real, el estadístico de Hopkins puede ser calculado de la siguiente forma:</p>
+<div class="infobox note">
+<p><strong>Proceso:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Muestrear aleatoriamente <em>n</em> puntos <span class="math inline">\((p_1, p_2, p_3, ..., p_n)\)</span> de D</p></li>
+<li><p>Para cada punto <span class="math inline">\(p_i \in D\)</span>, encontrar su vecino más cercano <span class="math inline">\(p_j\)</span>; luego calcular la distancia entre <span class="math inline">\(p_i\)</span> y <span class="math inline">\(p_j\)</span> y denotarla como <span class="math inline">\(x_i = dist(p_i, p_j)\)</span></p></li>
+<li><p>Generar un conjunto de datos simulado <span class="math inline">\((random_D)\)</span> tomado de una distribución uniformemente aleatoria con <em>n</em> puntos <span class="math inline">\((q_1, q_2, q_3, ..., q_n)\)</span> y de la misma variación que la original del conjunto <em>D</em>.</p></li>
+<li><p>Para cada punto <span class="math inline">\(q_i \in random_D\)</span>, encontrar su vecino más cercano <span class="math inline">\(q_j\)</span> en <em>D</em>; posteriormente, calcular la distancia entre <span class="math inline">\(q_i\)</span> y <span class="math inline">\(q_j\)</span> y denotarla como <span class="math inline">\(y_i=dist(q_i, q_j)\)</span>.</p></li>
+<li><p>Calcular el <strong>estadístico de Hopkins</strong> como la distancia media más cercana de vecinos en los datos aleatorios y dividirlos por la suma de las distancias medias de vecinos más cercanos de los datos reales y aleatorios:</p></li>
+</ol>
+<p><span class="math display">\[H=\frac{\sum_{i=1}^{n}{y_i}}{\sum_{i=1}^{n}{x_i} + \sum_{i=1}^{n}{y_i}}\]</span></p>
+</div>
+<p>Un valor cercano a 0.5 significa que <span class="math inline">\(\sum_{i=1}^{n}{y_i}\)</span> y <span class="math inline">\(\sum_{i=1}^{n}{x_i}\)</span> son similares uno del otro y por lo tanto, <em>D</em> es distribuida aleatoriamente.</p>
+<p>Por lo tanto, las hipótesis nula y alternativa son definidad como sigue:</p>
+<blockquote>
+<ul>
+<li><p>Hipótesis Nula: El conjunto de datos <em>D</em> es uniformemente distribuido (sin clusters significativos).</p></li>
+<li><p>Hipótesis Alternativa: El conjunto de datos <em>D</em> no es distribuido uniformemente (contiene clusters significativos).</p></li>
+</ul>
+</blockquote>
+<p><strong>Cuando el estadístico de Hopkins tiene valores cercanos a cero, entonces puede rechazarse la hipótesis nula y concluir que el conjunto de datos <em>D</em> tiene datos conglomerables significativos.</strong></p>
+<div class="sourceCode" id="cb1063"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1063-1"><a href="evaluación-de-clusters.html#cb1063-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hopkins)</span>
+<span id="cb1063-2"><a href="evaluación-de-clusters.html#cb1063-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1063-3"><a href="evaluación-de-clusters.html#cb1063-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19735</span>)</span>
+<span id="cb1063-4"><a href="evaluación-de-clusters.html#cb1063-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> hopkins<span class="sc">::</span><span class="fu">hopkins</span>(df_scaled, <span class="fu">nrow</span>(df_scaled)<span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 0.005107394</code></pre>
+<p><strong>Este valor sugiere rechazar la hipótesis nula en favor de la alternativa.</strong></p>
+<p>Por último, se compararán otros 2 gráficos con la disimilitud de los dos conjuntos de datos. La metodología de este gráfico lleva por nombre “Visual Assessment of Cluster Tendency” (VAT). Este método consiste de 3 pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Calcula la matriz de disimilaridad (DM) entre objetos usando la distancia Euclidiana.</p></li>
+<li><p>Reordena la DM de forma que los elementos similares estén cercanos unos de otros. Este proceso crea una Matriz de Disimilaridad Ordenada (ODM).</p></li>
+<li><p>La ODM es mostrada como una imagen de disimilaridad ordenada, la cual es la salida visual de VAT.</p></li>
+</ol>
+<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1065-1"><a href="evaluación-de-clusters.html#cb1065-1" aria-hidden="true" tabindex="-1"></a>dis_irirs_plot <span class="ot">&lt;-</span> <span class="fu">fviz_dist</span>(</span>
+<span id="cb1065-2"><a href="evaluación-de-clusters.html#cb1065-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dist</span>(df_scaled),</span>
+<span id="cb1065-3"><a href="evaluación-de-clusters.html#cb1065-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_labels =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb1065-4"><a href="evaluación-de-clusters.html#cb1065-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Iris data&quot;</span>)</span>
+<span id="cb1065-5"><a href="evaluación-de-clusters.html#cb1065-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1065-6"><a href="evaluación-de-clusters.html#cb1065-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1065-7"><a href="evaluación-de-clusters.html#cb1065-7" aria-hidden="true" tabindex="-1"></a>dis_random_plot <span class="ot">&lt;-</span> <span class="fu">fviz_dist</span>(</span>
+<span id="cb1065-8"><a href="evaluación-de-clusters.html#cb1065-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dist</span>(random_df_scaled),</span>
+<span id="cb1065-9"><a href="evaluación-de-clusters.html#cb1065-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_labels =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb1065-10"><a href="evaluación-de-clusters.html#cb1065-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Random data&quot;</span>)</span>
+<span id="cb1065-11"><a href="evaluación-de-clusters.html#cb1065-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1065-12"><a href="evaluación-de-clusters.html#cb1065-12" aria-hidden="true" tabindex="-1"></a>dis_irirs_plot <span class="sc">+</span> dis_random_plot</span></code></pre></div>
+<p><img src="amt22_aserta_intro2dsml_files/figure-html/unnamed-chunk-775-1.png" width="672" /></p>
+<p><strong>Donde:</strong></p>
+<ul>
+<li><p>Rojo: Alta similaridad</p></li>
+<li><p>Azul: Baja similaridad</p></li>
+</ul>
+<p>La matriz de disimilaridad anterior confirma que existe una estructura de cluster en el conjunto de datos Iris, pero no en el aleatorio.</p>
+<p>La técnica <em>VAT</em> detecta la tendencia de clustering de forma visual al contar el número de bloques cuadradas sobre la diagonal en la imagen VAT.</p>
+<p><strong>Ejercicio</strong></p>
+<ul>
+<li><p>Realizar una evaluación de tendencia de conglomeración con los datos de clientes</p></li>
+<li><p>Realizar una evaluación de tendencia de conglomeración con los datos de entidades</p></li>
+</ul>
+</div>
+<div id="medidas-internas-de-ajuste" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">18.2</span> Medidas internas de ajuste<a href="evaluación-de-clusters.html#medidas-internas-de-ajuste" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="inercia-1" class="section level3 hasAnchor" number="18.2.1">
+<h3><span class="header-section-number">18.2.1</span> Inercia<a href="evaluación-de-clusters.html#inercia-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La idea detrás de la agrupación de k-medias consiste en definir agrupaciones de modo que se minimice la variación total dentro de la agrupación (conocida como <em>within cluster variation</em> o <em>inertia</em>).</p>
+<p>Existen distintos algoritmos de k-medias, el algoritmo estándar es el algoritmo de Hartigan-Wong, que define <em>within cluster variation</em> como la suma de las distancias euclidianas entre los elementos y el centroide correspondiente al cuadrado:</p>
+<p><span class="math display">\[W(C_k)=\sum_{x_i \in C_k}(x_i-\mu_k)²\]</span></p>
+<p>donde <span class="math inline">\(x_i\)</span> es una observación que pertenece al <em>cluster</em> <span class="math inline">\(C_k\)</span> y <span class="math inline">\(\mu_k\)</span> es la media del <em>cluster</em> <span class="math inline">\(C_k\)</span></p>
+<p>Cada observación <span class="math inline">\(x_i\)</span> se asigna a un grupo de modo que la suma de cuadrados de la distancia de la observación a sus centroide del grupo asignado <span class="math inline">\(\mu_k\)</span> es mínima.</p>
+<p>Definimos la <em>total within cluster variation</em> total de la siguiente manera:</p>
+<p><span class="math display">\[total \quad within = \sum_{k=1}^{K}W(C_k) = \sum_{k=1}^{K}\sum_{x_i \in C_k}(x_i-\mu_k)²\]</span></p>
+</div>
+<div id="silhouette" class="section level3 hasAnchor" number="18.2.2">
+<h3><span class="header-section-number">18.2.2</span> Silhouette<a href="evaluación-de-clusters.html#silhouette" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El índice de <strong>Silhouette</strong> hace referencia al método de <strong>interpretación y validación de la consistencia dentro de los conglomerados</strong>. La medida de Silhouette es una medida de <strong>qué tan similar es un elemento al interior del cluster en comparación con otros.</strong></p>
+<p>El rango del índice va de -1 a 1, donde un alto valor del índice indica que el objeto es consistente dentro de su cluster y pobremente asociado a otro conglomerado. Si muchos elementos presentan un valor bajo o negativo, entonces la configuración del cluster puede que tenga muy pocos o demasiados conglomerados.</p>
+<p>El índice de Silhouette puede ser calculado con cualquier métrica de distancia, tal como la distancia Euclidiana, Manhattan u otro.</p>
+<p>Se define al índice de <strong>Silhouette</strong> como:</p>
+<p><span class="math display">\[s(i)=\frac{b(i)-a(i)}{max\left\{a(i), b(i)\right\}}; \quad si \quad|C_i|&gt;1; \quad -1 \le s(i) \le 1\]</span></p>
+<p><span class="math display">\[s(i)=0; \quad si \quad|C_i|=1\]</span></p>
+<p>Asumiendo que cada elemento ha sido asignado a un cluster, para cada punto <em>i</em> en <span class="math inline">\(C_i\)</span>, entonces:</p>
+<p><span class="math display">\[a(i)=\frac{1}{|C_i|-1}\sum_{j\in C_i, i \neq j}d(i,j)\]</span></p>
+<ul>
+<li><p><span class="math inline">\(a(i)\)</span> = Es la distancia promedio entre <em>i</em> y el resto de elementos dentro del conglomerado <em>i</em>.</p></li>
+<li><p><span class="math inline">\(|C_i|\)</span> = Es el número de elementos dentro del i-ésimo conglomerado.</p></li>
+<li><p><span class="math inline">\(d(i,j)\)</span> = Es la distancia entre los elementos <em>i</em> y <em>j</em> en el cluster <span class="math inline">\(C_i\)</span>.</p></li>
+</ul>
+<p>Se puede interpretar a <span class="math inline">\(a(i)\)</span> como una métrica de qué tan bien asignado está el elemento <em>i</em> al conglomerado. Entre más pequeño sea el valor, mejor asignado se encuentra.</p>
+<p>Posteriormente, se calcula la <strong>medida de disimilaridad del punto <em>i</em> a algún conglomerado <span class="math inline">\(C_k\)</span></strong> como el promedio de la distancia del punto <em>i</em> a todos los puntos en <span class="math inline">\(C_k\)</span> <span class="math inline">\((C_k \neq C_i)\)</span>.</p>
+<p>Para cada punto <span class="math inline">\(i \in C_i\)</span>, se define:</p>
+<p><span class="math display">\[b(i)=min_{k\neq i}\frac{1}{|C_k|}\sum_{j\in C_k}d(i,j)\]</span></p>
+<p>ser la distancia media más pequeña (de ahí el operador <em>min</em> en la fórmula) de <em>i</em> a todos los puntos en cualquier otro grupo, del cual <em>i</em> no es miembro. Se dice que el conglomerado con esta disimilitud media más pequeña es el “conglomerado vecino” de <em>i</em> porque es el siguiente conglomerado que mejor se ajusta para el punto <em>i</em>.</p>
+</div>
+<div id="índice-de-dunn" class="section level3 hasAnchor" number="18.2.3">
+<h3><span class="header-section-number">18.2.3</span> Índice de Dunn<a href="evaluación-de-clusters.html#índice-de-dunn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El índice de Dunn es otra medida de validación interna de conglomeración que puede calculada como sigue:</p>
+<ol style="list-style-type: decimal">
+<li><p>En cada cluster, se calcula la distancia entre cada uno de los elementos en el cluster y los objetos en otros clusters.</p></li>
+<li><p>Usar la mínima de las distancias (uno a uno) como la separación inter-cluster (min-separation).</p></li>
+<li><p>Para cada cluster, se calcula la distancia entre los elementos dentro del mismo cluster.</p></li>
+<li><p>Se usa la distancia intra-cluster máxima (max-diameter) como la compactividad intra-cluster.</p></li>
+<li><p>Se calcula el índice de <em>Dunn (D)</em> como sigue:</p></li>
+</ol>
+<p><span class="math display">\[D=\frac{min-separation}{max-diameter}\]</span></p>
+</div>
+</div>
+<div id="selección-de-algoritmo" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">18.3</span> Selección de algoritmo<a href="evaluación-de-clusters.html#selección-de-algoritmo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Elegir el mejor algoritmo puede ser una tarea difícil para cualquier analista. EN esta sección se mostrará la paquetería <em>clValid</em>, la cual puede ser usada para comparar simultáneamente múltiples algoritmos de clustering en una simple función que ayuda a identificar el mejor enfoque de aglomeración y el número óptimo de clusters.</p>
+<p>Comencemos por definir algunas métricas…</p>
+<div id="métricas-para-comparar-algoritmos" class="section level3 hasAnchor" number="18.3.1">
+<h3><span class="header-section-number">18.3.1</span> Métricas para comparar algoritmos<a href="evaluación-de-clusters.html#métricas-para-comparar-algoritmos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La librería <em>clValid</em> compara los algoritmos de clustering mediante dos métricas de validación de aglomeración.</p>
+<ol style="list-style-type: lower-alpha">
+<li><strong>Medida interna:</strong> Esta medida usa información intrínseca en los datos para evaluar la calidad de la aglomeración. La medida interna incluye la <em>conectividad</em>, el coeficiente de <em>silhouette</em> y el índice de <em>Dunn</em>.</li>
+</ol>
+<p>Las medidas de validación interna reflejan a menudo la <em>compacidad</em>, <em>conectividad</em> y <em>separación</em> de las particiones de clusters.</p>
+<ul>
+<li><p>Compacidad: También conocida como cohesión de cluster. Mide qué tan cercanos están los objetos dentro del mismo cluster.</p></li>
+<li><p>Conectividad: Corresponde a la medida en que los elementos se colocan en el mismo grupo que sus vecinos más cercanos en el espacio de datos.</p></li>
+<li><p>Separación: Miden qué tan bien separado un cluster está de otro cluster. Este índice incluye: distancias entre centro de clusters y parejas de distancias mínimas entre elementos de diferentes clusters.</p></li>
+</ul>
+<div class="sourceCode" id="cb1066"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1066-1"><a href="evaluación-de-clusters.html#cb1066-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clValid)</span>
+<span id="cb1066-2"><a href="evaluación-de-clusters.html#cb1066-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1066-3"><a href="evaluación-de-clusters.html#cb1066-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests)</span>
+<span id="cb1066-4"><a href="evaluación-de-clusters.html#cb1066-4" aria-hidden="true" tabindex="-1"></a>clmethods <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hierarchical&quot;</span>, <span class="st">&quot;kmeans&quot;</span>, <span class="st">&quot;pam&quot;</span>)</span>
+<span id="cb1066-5"><a href="evaluación-de-clusters.html#cb1066-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1066-6"><a href="evaluación-de-clusters.html#cb1066-6" aria-hidden="true" tabindex="-1"></a>stab <span class="ot">&lt;-</span> <span class="fu">clValid</span>(</span>
+<span id="cb1066-7"><a href="evaluación-de-clusters.html#cb1066-7" aria-hidden="true" tabindex="-1"></a> df, </span>
+<span id="cb1066-8"><a href="evaluación-de-clusters.html#cb1066-8" aria-hidden="true" tabindex="-1"></a> <span class="at">nClust =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, </span>
+<span id="cb1066-9"><a href="evaluación-de-clusters.html#cb1066-9" aria-hidden="true" tabindex="-1"></a> <span class="at">clMethods =</span> clmethods, </span>
+<span id="cb1066-10"><a href="evaluación-de-clusters.html#cb1066-10" aria-hidden="true" tabindex="-1"></a> <span class="at">validation =</span> <span class="st">&quot;internal&quot;</span></span>
+<span id="cb1066-11"><a href="evaluación-de-clusters.html#cb1066-11" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb1066-12"><a href="evaluación-de-clusters.html#cb1066-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1066-13"><a href="evaluación-de-clusters.html#cb1066-13" aria-hidden="true" tabindex="-1"></a><span class="fu">optimalScores</span>(stab)</span></code></pre></div>
+<pre><code>##                  Score       Method Clusters
+## Connectivity 6.6436508 hierarchical        2
+## Dunn         0.2622835 hierarchical        9
+## Silhouette   0.4084890 hierarchical        2</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><strong>Medida de estabilidad:</strong> Es una versión especial de las medidas internas, la cual evalúa la consistencia de una resultado de aglomeración al compararla con los clusters obtenidos después de que cada columna es removida, una a la vez.</li>
+</ol>
+<p>Las medidas de estabilidad de clusters incluyen:</p>
+<blockquote>
+<p>Proporción promedio de no-sobrelape (APN)</p>
+<p>Distancia promedio (AD)</p>
+<p>Distancia promedio entre medias (ADM)</p>
+<p>Figura de mérito (FOM)</p>
+</blockquote>
+<p>estas medidas están basadas en la tabla de clasificación cruzada de la aglomeración original en los datos completos y la aglomeración basada en la eliminación de una columna.</p>
+<ul>
+<li><p>La medida <em>APN</em> mide la proporción promedio de observaciones no puestas en el mismo cluster al aglomerar basado en los datos completos y la aglomeración basada en los datos con una única columna removida.</p></li>
+<li><p>La medida <em>AD</em> mide la distancia promedio entre observaciones puestas en el mismo cluster bajo ambos casos (datos completos y removiendo una columna)</p></li>
+<li><p>La medida <em>AD</em> mide la distancia promedio entre los centros de clusters para observaciones puestas en el mismo cluster bajo ambos casos.</p></li>
+</ul>
+<p>La medida <em>FOM</em> mide el promedio de varianza intra-cluster de la columna removida, donde la aglomeración está basada en las columnas remanentes (no eliminadas)</p>
+<p>Los valores de las medidas APN, ADM y FOM tienen un rango entre 0 y 1, en donde un valor pequeño corresponde a resultados de aglomeración con más alta consistencia. La métrica AD tiene valores entre 0 e infinito, donde nuevamente son preferidos los valores más pequeños.</p>
+<div class="sourceCode" id="cb1068"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1068-1"><a href="evaluación-de-clusters.html#cb1068-1" aria-hidden="true" tabindex="-1"></a>stab <span class="ot">&lt;-</span> <span class="fu">clValid</span>(</span>
+<span id="cb1068-2"><a href="evaluación-de-clusters.html#cb1068-2" aria-hidden="true" tabindex="-1"></a> df, </span>
+<span id="cb1068-3"><a href="evaluación-de-clusters.html#cb1068-3" aria-hidden="true" tabindex="-1"></a> <span class="at">nClust =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, </span>
+<span id="cb1068-4"><a href="evaluación-de-clusters.html#cb1068-4" aria-hidden="true" tabindex="-1"></a> <span class="at">clMethods =</span> clmethods, </span>
+<span id="cb1068-5"><a href="evaluación-de-clusters.html#cb1068-5" aria-hidden="true" tabindex="-1"></a> <span class="at">validation =</span> <span class="st">&quot;stability&quot;</span></span>
+<span id="cb1068-6"><a href="evaluación-de-clusters.html#cb1068-6" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb1068-7"><a href="evaluación-de-clusters.html#cb1068-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1068-8"><a href="evaluación-de-clusters.html#cb1068-8" aria-hidden="true" tabindex="-1"></a><span class="fu">optimalScores</span>(stab)</span></code></pre></div>
+<pre><code>##          Score Method Clusters
+## APN 0.05333333 kmeans        2
+## AD  1.17826405    pam        9
+## ADM 0.16520029 kmeans        2
+## FOM 0.65343054 kmeans        5</code></pre>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="clustering-jerárquico.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="actividad-final.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_aserta_intro2dsml.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

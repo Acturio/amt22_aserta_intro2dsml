@@ -294,4 +294,15 @@ implementación-en-r-9
 ventajas-de-dbscan
 aplicación-dbscan
 comparación-de-algoritmos
+clustering-jerárquico
+agglomerative-divise-clustering
+algoritmo-1
+implementación-en-r-10
+preparación-y-estructuración-de-datos
+medidas-de-disimilaridad
+función-liga
+dendogramas
+selección-de-grupos
+heatmaps
+tendencia-de-factibilidad
 actividad-final
