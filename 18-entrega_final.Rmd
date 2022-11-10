@@ -29,3 +29,10 @@ knitr::opts_chunk$set(
 
 \- Ovidio
 :::
+
+
+# DESPEDIDA
+
+```{r echo=FALSE,fig.align='center'}
+knitr::include_graphics("img/Hastaprontomeme.png")
+```

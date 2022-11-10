@@ -614,6 +614,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.5" data-path="clustering-jerárquico.html"><a href="clustering-jerárquico.html#tendencia-de-factibilidad"><i class="fa fa-check"></i><b>17.5</b> Tendencia de factibilidad</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="actividad-final.html"><a href="actividad-final.html"><i class="fa fa-check"></i><b>18</b> ¡Actividad FINAL!</a></li>
+<li class="chapter" data-level="19" data-path="despedida.html"><a href="despedida.html"><i class="fa fa-check"></i><b>19</b> DESPEDIDA</a></li>
 <li class="divider"></li>
 <li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
 
@@ -835,8 +836,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb828-41"><a href="workflowsets-stacking.html#cb828-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> elasticnet_params, <span class="at">id =</span> <span class="st">&quot;elasticnet&quot;</span>)</span>
 <span id="cb828-42"><a href="workflowsets-stacking.html#cb828-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb828-43"><a href="workflowsets-stacking.html#cb828-43" aria-hidden="true" tabindex="-1"></a>workflow_tunning_set_models</span></code></pre></div>
-<pre><code>## # A workflow set/tibble: 12 ×
-## #   4
+<pre><code>## # A workflow set/tibble: 12 × 4
 ##    wflow_id                    info             option    result    
 ##    &lt;chr&gt;                       &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    
 ##  1 receta_base_knn             &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
@@ -1030,18 +1030,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb845-2"><a href="workflowsets-stacking.html#cb845-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow</span>(<span class="st">&quot;receta_experta_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb845-3"><a href="workflowsets-stacking.html#cb845-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_regularized_xgb_model_1se) <span class="sc">%&gt;%</span></span>
 <span id="cb845-4"><a href="workflowsets-stacking.html#cb845-4" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
-<pre><code>## [23:01:47] WARNING: amalgamation/../src/learner.cc:627: 
+<pre><code>## [01:11:47] WARNING: amalgamation/../src/learner.cc:627: 
 ## Parameters: { &quot;importance&quot; } might not be used.
 ## 
 ##   This could be a false alarm, with some parameters getting used by language bindings but
 ##   then being mistakenly passed down to XGBoost core, or some parameter actually being used
 ##   but getting flagged wrongly here. Please open an issue if you find any such cases.</code></pre>
 <div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="workflowsets-stacking.html#cb847-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model</span></code></pre></div>
-<pre><code>## ══ Workflow [trained] ════════
+<pre><code>## ══ Workflow [trained] ═════════════════════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: boost_tree()
 ## 
-## ── Preprocessor ──────────────
+## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────────────────
 ## 9 Recipe Steps
 ## 
 ## • step_ratio()
@@ -1054,7 +1054,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • step_interact()
 ## • step_rm()
 ## 
-## ── Model ─────────────────────
+## ── Model ──────────────────────────────────────────────────────────────────────────────────────────────────
 ## ##### xgb.Booster
 ## raw: 958.3 Kb 
 ## call:

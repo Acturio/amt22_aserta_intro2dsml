@@ -306,3 +306,4 @@ selección-de-grupos
 heatmaps
 tendencia-de-factibilidad
 actividad-final
+despedida

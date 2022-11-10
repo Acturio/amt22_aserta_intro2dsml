@@ -234,7 +234,8 @@ cor(res_coph, res_dist)
 
 **Ejercicio**
 
-* Usar las distintas ligas y determinar cuál de ellas funciona mejor (*Hint:* La que muestre correlación más alta entre las distancias originales y la distancia cophenetica)
+* Usar las distintas ligas y determinar cuál de ellas funciona mejor 
+ (*Hint:* La que muestre correlación más alta entre las distancias originales y la distancia cophenetica)
 
 
 ### Selección de grupos
@@ -547,11 +548,4 @@ dis_irirs_plot + dis_random_plot
 La matriz de disimilaridad anterior confirma que existe una estructura de cluster en el conjunto de datos Iris, pero no en el aleatorio. 
 
 La técnica *VAT* detecta la tendencia de clustering de forma visual al contar el número de bloques cuadradas sobre la diagonal en la imagen VAT.
-
-
-**Ejercicio**
-
-* Realizar una evaluación de tendencia de conglomeración con los datos de clientes
-
-* Realizar una evaluación de tendencia de conglomeración con los datos de entidades
 
